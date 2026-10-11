@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ImageWithLoader } from "@/components/ImageWithLoader";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, ExternalLink, CheckCircle2, ChevronRight, FileText, Star, GitFork, Eye } from "lucide-react";
-import { ContactStrip, Footer, Scribble, Tape } from "@/components/Paper";
+import { Footer, Scribble, Tape } from "@/components/Paper";
 import { RelatedProjectCard } from "@/components/FolderCard";
 import Reveal from "@/components/Reveal";
 import { noteBySlug, projectBySlug, projects, siteUrl } from "@/lib/site";
@@ -90,8 +90,8 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
       {
         "@type": "ListItem",
         position: 2,
-        name: "Work",
-        item: `${siteUrl}/work`,
+        name: "Projects",
+        item: `${siteUrl}/projects`,
       },
       {
         "@type": "ListItem",
@@ -118,7 +118,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
         <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
           <Link href="/" className="inline-flex min-h-[44px] items-center px-1.5 hover:text-[var(--ca-blue)]">Home</Link>
           <ChevronRight size={14} />
-          <Link href="/work" className="inline-flex min-h-[44px] items-center px-1.5 hover:text-[var(--ca-blue)]">Work</Link>
+          <Link href="/projects" className="inline-flex min-h-[44px] items-center px-1.5 hover:text-[var(--ca-blue)]">Projects</Link>
           <ChevronRight size={14} />
           <span className="inline-flex min-h-[44px] items-center px-1.5 text-[var(--ca-ink)] font-bold">{project.title}</span>
         </nav>
@@ -571,7 +571,6 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
         </section>
       </article>
 
-      <ContactStrip />
       <Footer />
     </div>
   );

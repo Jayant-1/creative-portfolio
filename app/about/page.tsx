@@ -459,7 +459,7 @@ export default function AboutPage() {
 
                 <div className="mt-10 pt-6 pb-3 sm:pb-4 border-t border-[var(--ca-ink)]/10 flex flex-wrap gap-6 items-center">
                   <Link
-                    href="/work"
+                    href="/projects"
                     className="ca-mono min-h-[44px] inline-flex items-center gap-2 border-b-2 border-[var(--ca-ink)] py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] transition-colors hover:text-[var(--ca-blue)]"
                   >
                     Explore production projects

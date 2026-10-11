@@ -233,7 +233,7 @@ export default function ExperiencePage() {
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
               <Link
-                href="/work"
+                href="/projects"
                 className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-yellow)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform hover:-translate-y-0.5 active:translate-y-0"
               >
                 View Projects

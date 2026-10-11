@@ -21,8 +21,34 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Selected Engineering Projects by Jayant Potdar",
+    url: `${siteUrl}/projects`,
+    description:
+      "A curated catalog of full-stack web products, deep-zoom spatial viewers, and AI platforms engineered by Jayant Potdar.",
+    author: {
+      "@id": `${siteUrl}/#jayant`,
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: projects.map((p, idx) => ({
+        "@type": "ListItem",
+        position: idx + 1,
+        url: `${siteUrl}/projects/${p.slug}`,
+        name: p.title,
+        description: p.summary,
+      })),
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <main className="ca-grid min-h-screen px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16 lg:px-20">
         <div className="mb-16">
           <div className="flex flex-col items-center text-center">

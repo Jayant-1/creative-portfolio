@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { notes, projects, siteUrl } from "@/lib/site";
+import { CRAFT_COMPONENTS } from "@/lib/components-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -28,6 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${siteUrl}/components`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
       url: `${siteUrl}/notes`,
       lastModified: new Date(),
       changeFrequency: "weekly",
@@ -53,6 +60,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  const componentRoutes: MetadataRoute.Sitemap = CRAFT_COMPONENTS.map((c) => ({
+    url: `${siteUrl}/components/${c.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.88,
+  }));
+
   const projectRoutes: MetadataRoute.Sitemap = projects.map((p) => ({
     url: `${siteUrl}/projects/${p.slug}`,
     lastModified: new Date(),
@@ -74,5 +88,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...projectRoutes, ...noteRoutes, ...blogRoutes];
+  return [
+    ...staticRoutes,
+    ...componentRoutes,
+    ...projectRoutes,
+    ...noteRoutes,
+    ...blogRoutes,
+  ];
 }

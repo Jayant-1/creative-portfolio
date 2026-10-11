@@ -127,7 +127,7 @@ export default function BlogPage() {
             {/* Action CTA */}
             <div className="mt-8">
               <Link
-                href="/work"
+                href="/projects"
                 className="ca-mono inline-flex min-h-[44px] items-center gap-2 bg-[var(--ca-ink)] px-7 py-3 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-[var(--ca-blue)] active:scale-98"
               >
                 Explore Projects

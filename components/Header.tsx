@@ -79,8 +79,8 @@ const navItems = [
     ),
   },
   {
-    href: "/work",
-    label: "Work",
+    href: "/projects",
+    label: "Projects",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))]">
         <path fillRule="evenodd" clipRule="evenodd" d="M2.25 6A2.25 2.25 0 0 1 4.5 3.75h15A2.25 2.25 0 0 1 21.75 6v12A2.25 2.25 0 0 1 19.5 20.25h-15A2.25 2.25 0 0 1 2.25 18V6Zm5.25 3.75a.75.75 0 0 0-.53 1.28l1.97 1.97-1.97 1.97a.75.75 0 1 0 1.06 1.06l2.5-2.5a.75.75 0 0 0 0-1.06l-2.5-2.5a.75.75 0 0 0-.53-.22Zm5.25 5.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" />
@@ -93,6 +93,15 @@ const navItems = [
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))]">
         <path d="M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zM10 4h4v2h-4V4zm10 15H4v-7h16v7zm0-9H4V8h16v2z" />
+      </svg>
+    ),
+  },
+  {
+    href: "/components",
+    label: "Components",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))]">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -200,7 +209,7 @@ export function Header() {
                   item.href === "/"
                     ? pathname === "/"
                     : pathname.startsWith(item.href) ||
-                      (item.href === "/work" && (pathname.startsWith("/case-studies") || pathname.startsWith("/projects"))) ||
+                      (item.href === "/projects" && (pathname.startsWith("/work") || pathname.startsWith("/case-studies") || pathname.startsWith("/projects"))) ||
                       (item.href === "/blog" && pathname.startsWith("/notes"));
 
                 return (
@@ -296,7 +305,7 @@ export function Header() {
                     item.href === "/"
                       ? pathname === "/"
                       : pathname.startsWith(item.href) ||
-                        (item.href === "/work" && (pathname.startsWith("/case-studies") || pathname.startsWith("/projects"))) ||
+                        (item.href === "/projects" && (pathname.startsWith("/work") || pathname.startsWith("/case-studies") || pathname.startsWith("/projects"))) ||
                         (item.href === "/blog" && pathname.startsWith("/notes"));
 
                   return (

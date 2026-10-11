@@ -36,3 +36,4 @@ project-card-*.png
 reference-*.html
 reference-assets/
 
+.env*

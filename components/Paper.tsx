@@ -302,7 +302,7 @@ export function Footer() {
             <nav className="flex flex-wrap items-center gap-1.5" aria-label="Footer navigation">
               {[
                 { href: "/about", label: "About", rotate: "-rotate-2" },
-                { href: "/work", label: "Work", rotate: "rotate-1" },
+                { href: "/projects", label: "Projects", rotate: "rotate-1" },
                 { href: "/experience", label: "Experience", rotate: "-rotate-1" },
                 { href: "/blog", label: "Blog", rotate: "rotate-2" },
                 { href: "/contact", label: "Contact", rotate: "-rotate-2" },
