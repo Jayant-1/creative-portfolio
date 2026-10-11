@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import url('https://fonts.googleapis.com/css2?family=Six+Caps&display=swap');
 
 @font-face {
   font-family: "Handjet";
@@ -769,4 +770,8 @@ textarea {
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+.font-sixCap {
+  font-family: 'Six Caps', Impact, sans-serif;
 }

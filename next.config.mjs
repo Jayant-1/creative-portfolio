@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  transpilePackages: ['framer-motion', 'motion-dom', 'motion-utils'],
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000,

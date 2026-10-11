@@ -37,3 +37,13 @@ reference-*.html
 reference-assets/
 
 .env*
+
+# Components craft showcase (kept locally, excluded from repository)
+/app/components/
+/components/showcase/
+/components/ui/
+/lib/components-data.ts
+/lib/utils.ts
+/public/components/
+/public/Profile-removebg.png
+/public/mountains-wallpaper.jpg

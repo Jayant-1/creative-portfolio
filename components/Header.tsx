@@ -64,7 +64,7 @@ const navItems = [
     href: "/",
     label: "Home",
     icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))]">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))] transition-transform duration-200 group-hover:-translate-y-0.5">
         <path d="M12 2.5 3 10.5h2.5V21h4.5v-5a2 2 0 0 1 4 0v5h4.5V10.5H21z" />
       </svg>
     ),
@@ -73,7 +73,7 @@ const navItems = [
     href: "/about",
     label: "About",
     icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))]">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))] transition-transform duration-200 group-hover:-translate-y-0.5">
         <path d="M12 3a3.6 3.6 0 100 7.2A3.6 3.6 0 0012 3zM4.8 20a7.2 7.2 0 0114.4 0z" />
       </svg>
     ),
@@ -82,7 +82,7 @@ const navItems = [
     href: "/projects",
     label: "Projects",
     icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))]">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))] transition-transform duration-200 group-hover:-translate-y-0.5">
         <path fillRule="evenodd" clipRule="evenodd" d="M2.25 6A2.25 2.25 0 0 1 4.5 3.75h15A2.25 2.25 0 0 1 21.75 6v12A2.25 2.25 0 0 1 19.5 20.25h-15A2.25 2.25 0 0 1 2.25 18V6Zm5.25 3.75a.75.75 0 0 0-.53 1.28l1.97 1.97-1.97 1.97a.75.75 0 1 0 1.06 1.06l2.5-2.5a.75.75 0 0 0 0-1.06l-2.5-2.5a.75.75 0 0 0-.53-.22Zm5.25 5.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" />
       </svg>
     ),
@@ -91,17 +91,8 @@ const navItems = [
     href: "/experience",
     label: "Experience",
     icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))]">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))] transition-transform duration-200 group-hover:-translate-y-0.5">
         <path d="M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zM10 4h4v2h-4V4zm10 15H4v-7h16v7zm0-9H4V8h16v2z" />
-      </svg>
-    ),
-  },
-  {
-    href: "/components",
-    label: "Components",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))]">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -109,7 +100,7 @@ const navItems = [
     href: "/blog",
     label: "Blog",
     icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))]">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))] transition-transform duration-200 group-hover:-translate-y-0.5">
         <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2z" />
       </svg>
     ),
@@ -217,7 +208,7 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`ca-mono flex items-center justify-center gap-2 px-3.5 py-4 text-xs xl:text-sm font-bold uppercase leading-none tracking-wider text-[var(--ca-ink)] transition-colors ${
+                    className={`ca-mono group flex items-center justify-center gap-2 px-3.5 py-4 text-xs xl:text-sm font-bold uppercase leading-none tracking-wider text-[var(--ca-ink)] transition-colors ${
                       isActive ? "bg-[var(--ca-yellow)]" : "hover:bg-[var(--ca-chrome)]"
                     }`}
                   >
@@ -313,7 +304,7 @@ export function Header() {
                       key={item.href}
                       href={item.href}
                       aria-current={isActive ? "page" : undefined}
-                      className={`ca-mono flex min-h-[48px] items-center gap-3 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-colors ${
+                      className={`ca-mono group flex min-h-[48px] items-center gap-3 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-colors ${
                         isActive
                           ? "bg-[var(--ca-yellow)] text-[var(--ca-ink)]"
                           : "text-[var(--ca-ink)] hover:bg-[var(--ca-chrome)] active:bg-[var(--ca-chrome)]"

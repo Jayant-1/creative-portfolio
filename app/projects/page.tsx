@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Footer, UnderlineDoodle } from "@/components/Paper";
+import { ContactStrip, Footer, UnderlineDoodle } from "@/components/Paper";
 import { FolderProjectCard } from "@/components/FolderCard";
 import { StaggerText } from "@/components/Motion";
 import Reveal from "@/components/Reveal";
@@ -78,6 +78,7 @@ export default function ProjectsPage() {
         </div>
       </main>
 
+      <ContactStrip />
       <Footer />
     </>
   );

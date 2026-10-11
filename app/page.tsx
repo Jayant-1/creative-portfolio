@@ -76,69 +76,9 @@ const SKILL_ROWS = [
   ],
 ];
 
-const PROJECT_TAPES = [
-  // Project 01: AstroPixel (Yellow Card) — Cyan & Soft Pink tapes
-  [
-    {
-      className:
-        "-left-6 -top-3.5 h-[26px] w-[112px] -rotate-[13deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
-    },
-    {
-      className:
-        "-right-4 -top-3 h-[24px] w-[96px] rotate-[8deg] bg-[var(--ca-pink-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
-    },
-    {
-      className:
-        "right-12 -bottom-3 h-[22px] w-[80px] rotate-[3deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.12)] hidden sm:block",
-    },
-  ],
-  // Project 02: Krypton (Cyan Card) — Soft Yellow & Mint tapes
-  [
-    {
-      className:
-        "left-8 -top-3.5 h-[26px] w-[128px] -rotate-[2deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
-    },
-    {
-      className:
-        "-right-4 -top-2.5 h-[20px] w-[70px] rotate-[22deg] bg-[var(--ca-mint)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.14)] hidden sm:block",
-    },
-    {
-      className:
-        "-right-6 -bottom-3.5 h-[26px] w-[112px] rotate-[15deg] bg-[var(--ca-pink-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
-    },
-  ],
-  // Project 03: NeuralNet (Mint Card) — Yellow & Purple tapes
-  [
-    {
-      className:
-        "-left-4 -top-4 h-[26px] w-[96px] -rotate-[21deg] bg-[var(--ca-yellow)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
-    },
-    {
-      className:
-        "-right-6 -top-2.5 h-[24px] w-[112px] rotate-[4deg] bg-[var(--ca-purple)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
-    },
-    {
-      className:
-        "-left-5 -bottom-3 h-[24px] w-[96px] rotate-[11deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.14)]",
-    },
-  ],
-  // Project 04: Nova-Learn (Pink Card) — Soft Yellow & Cyan tapes
-  [
-    {
-      className:
-        "-left-5 -top-3 h-[26px] w-[104px] -rotate-[9deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
-    },
-    {
-      className:
-        "right-14 -top-3.5 h-[24px] w-[112px] rotate-[3deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
-    },
-    {
-      className:
-        "-right-6 -bottom-3.5 h-[26px] w-[104px] -rotate-[14deg] bg-[var(--ca-mint)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
-    },
-  ],
-  // Project 05: AI Malaria Detection (Sky Blue Card) — Mint & Pink & Yellow tapes
-  [
+const PROJECT_TAPES: Record<string, { className: string }[]> = {
+  // Malaria Detection System (Sky Blue Card) — Mint & Pink & Yellow tapes
+  "malaria-detection": [
     {
       className:
         "-left-4 -top-3.5 h-[26px] w-[100px] -rotate-[12deg] bg-[var(--ca-mint)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
@@ -152,7 +92,67 @@ const PROJECT_TAPES = [
         "-right-5 -bottom-3.5 h-[24px] w-[108px] -rotate-[16deg] bg-[var(--ca-yellow)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
     },
   ],
-];
+  // AstroPixel — Cyan & Soft Pink tapes
+  astropixel: [
+    {
+      className:
+        "-left-6 -top-3.5 h-[26px] w-[112px] -rotate-[13deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+    },
+    {
+      className:
+        "-right-4 -top-3 h-[24px] w-[96px] rotate-[8deg] bg-[var(--ca-pink-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+    },
+    {
+      className:
+        "right-12 -bottom-3 h-[22px] w-[80px] rotate-[3deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.12)] hidden sm:block",
+    },
+  ],
+  // Krypton — Soft Yellow & Mint tapes
+  krypton: [
+    {
+      className:
+        "left-8 -top-3.5 h-[26px] w-[128px] -rotate-[2deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+    },
+    {
+      className:
+        "-right-4 -top-2.5 h-[20px] w-[70px] rotate-[22deg] bg-[var(--ca-mint)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.14)] hidden sm:block",
+    },
+    {
+      className:
+        "-right-6 -bottom-3.5 h-[26px] w-[112px] rotate-[15deg] bg-[var(--ca-pink-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+    },
+  ],
+  // NeuralNet — Yellow & Purple tapes
+  neuralnet: [
+    {
+      className:
+        "-left-4 -top-4 h-[26px] w-[96px] -rotate-[21deg] bg-[var(--ca-yellow)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+    },
+    {
+      className:
+        "-right-6 -top-2.5 h-[24px] w-[112px] rotate-[4deg] bg-[var(--ca-purple)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+    },
+    {
+      className:
+        "-left-5 -bottom-3 h-[24px] w-[96px] rotate-[11deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.14)]",
+    },
+  ],
+  // Nova-Learn — Soft Yellow & Cyan tapes
+  "nova-learn": [
+    {
+      className:
+        "-left-5 -top-3 h-[26px] w-[104px] -rotate-[9deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+    },
+    {
+      className:
+        "right-14 -top-3.5 h-[24px] w-[112px] rotate-[3deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+    },
+    {
+      className:
+        "-right-6 -bottom-3.5 h-[26px] w-[104px] -rotate-[14deg] bg-[var(--ca-mint)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+    },
+  ],
+};
 
 function ProjectCardImage({
   src,
@@ -958,7 +958,7 @@ export default function HomePage() {
                   {/* Right Column: Framed Image with Tapes */}
                   <div className="flex items-center justify-center lg:self-center w-full">
                     <div className="relative w-full max-w-[820px]">
-                      {PROJECT_TAPES[idx % PROJECT_TAPES.length].map(
+                      {(PROJECT_TAPES[project.slug] || PROJECT_TAPES.astropixel).map(
                         (tape, tIdx) => (
                           <span
                             key={tIdx}

@@ -138,8 +138,77 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "astropixel",
+    slug: "malaria-detection",
     number: "01",
+    title: "Malaria Detection System",
+    tagline: "AI-Powered Diagnostic System for Rapid Microscopic Blood Smear Screening",
+    date: "Apr 2026",
+    category: ["HEALTHCARE AI", "COMPUTER VISION"],
+    ownership: "Solo Developer",
+    summary:
+      "AI-powered malaria detection system for hospitals with patient management, PDF report generation, and real-time analytics. Built with React, Supabase & FastAPI.",
+    role: "Full-Stack & Computer Vision Developer",
+    timeline: "2 months",
+    team: "Solo build",
+    year: "2026",
+    color: "#0284c7",
+    ink: "#ffffff",
+    hero: "/projects/malariadetectionsystem-home.png",
+    homeHero: "/projects/malariadetectionsystem-home.png",
+    problem:
+      "Manual microscopic examination of peripheral blood smears is labor-intensive, subject to human fatigue, and creates critical diagnostic delays in high-burden clinical environments where rapid triage is vital.",
+    personalContribution:
+      "Engineered the end-to-end computer vision pipeline and clinical web interface: trained a convolutional neural network (CNN) on segmented erythrocyte cell images, built an asynchronous FastAPI inference service for real-time sample processing, implemented confidence probability scoring (parasitized vs uninfected), and designed an automated clinical PDF test report generation workflow.",
+    metrics: {
+      stars: 89,
+      forks: 28,
+      views: "1.8K",
+    },
+    features: [
+      "AI-powered malaria cell detection using Keras & deep CNNs with 94%+ accuracy.",
+      "Hospital patient management system.",
+      "Automated clinical PDF medical report generation in under 30 seconds.",
+      "Real-time analytics dashboard with probability scoring breakdown.",
+      "Hospital laboratory triage workflow integration.",
+      "Secure cloud storage with Supabase & FastAPI.",
+    ],
+    technicalHighlights: [
+      "Deep learning CNN model classifying parasitized vs uninfected thin blood smear cells with over 94% confidence.",
+      "Sub-30 second end-to-end diagnostic turnaround time from sample upload to structured test report.",
+      "Detailed probability metrics breakdown and automated medical diagnostic report generator.",
+      "Responsive, clinical dashboard designed for rapid bedside triage and laboratory technician workflows.",
+    ],
+    challenge:
+      "Microscopic cell images vary widely in staining intensity, illumination, and artifact noise. Classifying single-cell blood smears requires high precision to prevent false negatives while maintaining high inference speed.",
+    approach:
+      "I trained a deep convolutional network using transfer learning with data augmentation (rotations, flips, color jitter) to handle varying stain conditions. The FastAPI backend serves inference with batching support, returning class probabilities and generating standardized clinical laboratory reports.",
+    results:
+      "The system delivers rapid diagnostic inference with 94%+ classification confidence, completing full sample analysis and report generation in under 30 seconds to support hospital diagnostic workflows.",
+    technologies: [
+      "React",
+      "FastAPI",
+      "Supabase",
+      "Keras",
+      "Python",
+      "OpenCV",
+      "Tailwind CSS",
+      "Docker",
+    ],
+    images: [
+      "/projects/malariadetectionsystem1.png",
+      "/projects/malariadetectionsystem2.jpg",
+    ],
+    outcomes: [
+      { value: "94%", label: "DETECTION CONFIDENCE" },
+      { value: "< 30s", label: "DIAGNOSTIC LATENCY" },
+      { value: "Automated", label: "CLINICAL REPORTS" },
+    ],
+    source: "https://github.com/Jayant-1/MalariaDetectionSystem",
+    demo: "https://malariadetectionsystem.jayantpotdar.in/",
+  },
+  {
+    slug: "astropixel",
+    number: "02",
     title: "AstroPixel",
     tagline: "Gigapixel Astronomical & Geospatial Imagery Platform",
     date: "Mar 2026",
@@ -211,7 +280,7 @@ export const projects: Project[] = [
   },
   {
     slug: "krypton",
-    number: "02",
+    number: "03",
     title: "Krypton",
     tagline: "AI Research Assistant with Multi-Signal Paper Ranking",
     date: "Nov 2025",
@@ -286,7 +355,7 @@ export const projects: Project[] = [
   },
   {
     slug: "neuralnet",
-    number: "03",
+    number: "04",
     title: "NeuralNet",
     tagline: "Visual Deep Learning Architecture Studio & Code Compiler",
     date: "Oct 2025",
@@ -359,7 +428,7 @@ export const projects: Project[] = [
   },
   {
     slug: "nova-learn",
-    number: "04",
+    number: "05",
     title: "Nova-Learn",
     tagline: "Adaptive Educational Syllabus Platform with Diagnostic Mastery",
     date: "Aug 2024",
@@ -420,75 +489,6 @@ export const projects: Project[] = [
     ],
     source: "https://github.com/Jayant-1/Nova-Learn",
     demo: "https://nova-learn-jayant.vercel.app/",
-  },
-  {
-    slug: "malaria-detection",
-    number: "05",
-    title: "Malaria Detection System",
-    tagline: "AI-Powered Diagnostic System for Rapid Microscopic Blood Smear Screening",
-    date: "Apr 2026",
-    category: ["HEALTHCARE AI", "COMPUTER VISION"],
-    ownership: "Solo Developer",
-    summary:
-      "AI-powered malaria detection system for hospitals with patient management, PDF report generation, and real-time analytics. Built with React, Supabase & FastAPI.",
-    role: "Full-Stack & Computer Vision Developer",
-    timeline: "2 months",
-    team: "Solo build",
-    year: "2026",
-    color: "#0284c7",
-    ink: "#ffffff",
-    hero: "/projects/malariadetectionsystem-home.png",
-    homeHero: "/projects/malariadetectionsystem-home.png",
-    problem:
-      "Manual microscopic examination of peripheral blood smears is labor-intensive, subject to human fatigue, and creates critical diagnostic delays in high-burden clinical environments where rapid triage is vital.",
-    personalContribution:
-      "Engineered the end-to-end computer vision pipeline and clinical web interface: trained a convolutional neural network (CNN) on segmented erythrocyte cell images, built an asynchronous FastAPI inference service for real-time sample processing, implemented confidence probability scoring (parasitized vs uninfected), and designed an automated clinical PDF test report generation workflow.",
-    metrics: {
-      stars: 89,
-      forks: 28,
-      views: "1.8K",
-    },
-    features: [
-      "AI-powered malaria cell detection using Keras & deep CNNs with 94%+ accuracy.",
-      "Hospital patient management system.",
-      "Automated clinical PDF medical report generation in under 30 seconds.",
-      "Real-time analytics dashboard with probability scoring breakdown.",
-      "Hospital laboratory triage workflow integration.",
-      "Secure cloud storage with Supabase & FastAPI.",
-    ],
-    technicalHighlights: [
-      "Deep learning CNN model classifying parasitized vs uninfected thin blood smear cells with over 94% confidence.",
-      "Sub-30 second end-to-end diagnostic turnaround time from sample upload to structured test report.",
-      "Detailed probability metrics breakdown and automated medical diagnostic report generator.",
-      "Responsive, clinical dashboard designed for rapid bedside triage and laboratory technician workflows.",
-    ],
-    challenge:
-      "Microscopic cell images vary widely in staining intensity, illumination, and artifact noise. Classifying single-cell blood smears requires high precision to prevent false negatives while maintaining high inference speed.",
-    approach:
-      "I trained a deep convolutional network using transfer learning with data augmentation (rotations, flips, color jitter) to handle varying stain conditions. The FastAPI backend serves inference with batching support, returning class probabilities and generating standardized clinical laboratory reports.",
-    results:
-      "The system delivers rapid diagnostic inference with 94%+ classification confidence, completing full sample analysis and report generation in under 30 seconds to support hospital diagnostic workflows.",
-    technologies: [
-      "React",
-      "FastAPI",
-      "Supabase",
-      "Keras",
-      "Python",
-      "OpenCV",
-      "Tailwind CSS",
-      "Docker",
-    ],
-    images: [
-      "/projects/malariadetectionsystem1.png",
-      "/projects/malariadetectionsystem2.jpg",
-    ],
-    outcomes: [
-      { value: "94%", label: "DETECTION CONFIDENCE" },
-      { value: "< 30s", label: "DIAGNOSTIC LATENCY" },
-      { value: "Automated", label: "CLINICAL REPORTS" },
-    ],
-    source: "https://github.com/Jayant-1/MalariaDetectionSystem",
-    demo: "https://malariadetectionsystem.jayantpotdar.in/",
   },
 ];
 
