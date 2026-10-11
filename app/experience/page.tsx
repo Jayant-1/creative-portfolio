@@ -1,0 +1,265 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
+import { ContactStrip, Footer, Polaroid, Scribble, Tape } from "@/components/Paper";
+import { StaggerText } from "@/components/Motion";
+import Reveal from "@/components/Reveal";
+import { CertificateSection } from "@/components/CertificateSection";
+import { achievements, experienceItems, siteUrl } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Experience & Leadership",
+  description:
+    "Explore the technical leadership, student club direction at TechSpark MSSU Pune, hackathon management (100+ attendees), and verified awards of Jayant Potdar.",
+  alternates: {
+    canonical: "/experience",
+  },
+  openGraph: {
+    title: "Experience & Leadership | Jayant Potdar — Full Stack Developer",
+    description:
+      "Engineering leadership at TechSpark, hackathon event organization, and competition awards by Jayant Potdar in Pune.",
+    url: `${siteUrl}/experience`,
+  },
+};
+
+export default function ExperiencePage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Experience",
+        item: `${siteUrl}/experience`,
+      },
+    ],
+  };
+
+  return (
+    <div className="ca-grid min-h-screen pt-12 sm:pt-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c") }}
+      />
+
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Trail */}
+        <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
+          <Link href="/" className="hover:text-[var(--ca-blue)]">Home</Link>
+          <ChevronRight size={14} />
+          <span className="text-[var(--ca-ink)] font-bold">Experience &amp; Leadership</span>
+        </nav>
+
+        {/* Page Header */}
+        <header className="mb-14 sm:mb-20 text-center">
+          <Scribble withDoodle>community leadership &amp; competitive honors</Scribble>
+
+          <h1 className="ca-display mt-4 text-5xl min-[390px]:text-6xl sm:text-8xl md:text-9xl uppercase leading-none tracking-tight text-[var(--ca-ink)]">
+            <StaggerText text="EXPERIENCE" stagger={0.045} />
+          </h1>
+
+          <Reveal delay={120}>
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-[var(--ca-ink)]/85 sm:text-xl font-normal">
+              Balancing independent software engineering with active campus leadership. Here is how I direct web teams, organize hackathons for over a hundred students, and compete in technical project expos.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <span className="ca-mono rounded-full border border-[var(--ca-ink)]/20 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
+                ● TechSpark Technical Club
+              </span>
+              <span className="ca-mono rounded-full border border-[var(--ca-ink)]/20 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
+                ● 100+ Hackathon Participants Directed
+              </span>
+              <span className="ca-mono rounded-full border border-[var(--ca-ink)]/20 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
+                ● Pune, India
+              </span>
+            </div>
+          </Reveal>
+        </header>
+
+        {/* Leadership Roles Section */}
+        <section className="mb-20 sm:mb-28" aria-labelledby="roles-heading">
+          <Reveal delay={60}>
+            <div className="flex items-center gap-3 mb-8">
+              <span className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)]" style={{ backgroundColor: "var(--ca-yellow)" }}>
+                Leadership Roles
+              </span>
+              <div className="h-0.5 flex-1 bg-[var(--ca-ink)]/15" />
+            </div>
+          </Reveal>
+
+          <div className="space-y-8">
+            {experienceItems.map((item, idx) => (
+              <Reveal key={idx} delay={idx * 120}>
+                <article
+                  className="ca-doodle-box relative border-3 border-[var(--ca-ink)] bg-white p-6 sm:p-8 shadow-[4px_6px_0_var(--ca-ink)]"
+                >
+                  <Tape
+                    className={idx % 2 === 0 ? "-left-2 -top-2" : "-right-2 -top-2"}
+                    angle={idx % 2 === 0 ? -8 : 8}
+                    color={idx % 2 === 0 ? "var(--ca-yellow-soft)" : "var(--ca-cyan)"}
+                  />
+
+                  <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+                    <div>
+                      <span className="ca-mono inline-block rounded border border-[var(--ca-ink)]/20 bg-[var(--ca-cyan)] px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs">
+                        {item.type}
+                      </span>
+                      <h2 className="mt-2 text-2xl font-bold text-[var(--ca-ink)] sm:text-3xl">
+                        {item.role}
+                      </h2>
+                      <p className="mt-1 text-base font-semibold text-[var(--ca-ink)]/75">
+                        {item.organization}
+                      </p>
+                    </div>
+                    <span className="ca-mono w-fit rounded-full border border-[var(--ca-ink)] bg-[var(--ca-yellow-soft)] px-3.5 py-1 text-xs font-bold text-[var(--ca-ink)] shrink-0">
+                      {item.period}
+                    </span>
+                  </div>
+
+                  <ul className="mt-6 space-y-2.5 text-base leading-relaxed text-[var(--ca-ink)]/85">
+                    {item.highlights.map((bullet, bIdx) => (
+                      <li key={bIdx} className="flex items-start gap-2.5">
+                        <CheckCircle2 size={18} className="mt-1 shrink-0 text-[var(--ca-blue)]" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* Honors & Hackathon Awards */}
+        <section className="mb-20 sm:mb-28" aria-labelledby="awards-heading">
+          <Reveal delay={60}>
+            <div className="flex items-center gap-3 mb-8">
+              <span className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "var(--ca-magenta)" }}>
+                Honors &amp; Competitions
+              </span>
+              <div className="h-0.5 flex-1 bg-[var(--ca-ink)]/15" />
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {achievements.map((item, idx) => {
+              const bgColors = ["var(--ca-yellow-soft)", "var(--ca-cyan)", "var(--ca-mint)", "var(--ca-pink-soft)"];
+              const bg = bgColors[idx % bgColors.length];
+
+              return (
+                <Reveal key={idx} delay={idx * 80}>
+                  <div
+                    className="ca-stamp-note relative flex flex-col justify-between p-6 shadow-md border border-[var(--ca-ink)]/15 transition-transform duration-200 hover:-translate-y-1 h-full"
+                    style={{ backgroundColor: bg }}
+                  >
+                    <Tape className="-top-2 left-6" angle={idx % 2 === 0 ? -12 : 12} color={idx % 2 === 0 ? "var(--ca-yellow-soft)" : "var(--ca-cyan)"} />
+
+                    <div>
+                      <span className="ca-mono text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)]/70">
+                        {item.year}
+                      </span>
+                      <h3 className="mt-2 text-lg font-black text-[var(--ca-ink)] leading-snug">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-xs font-semibold text-[var(--ca-ink)]/75">
+                        {item.issuer}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          {/* Visual Photographic Verification of Physical Trophies */}
+          <Reveal delay={120}>
+            <div className="mt-8 rounded-sm border-2 border-dashed border-[var(--ca-ink)]/20 bg-white p-6 sm:p-8 shadow-[4px_4px_0_rgba(25,21,16,0.06)]">
+              <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+                <div className="w-full md:w-80 lg:w-96 shrink-0">
+                  <Polaroid
+                    src="/images/img-5.jpeg"
+                    alt="Physical trophies and signed certificates awarded to Jayant Potdar at MSSU"
+                    caption="Foundation Day Week Trophies & Certificates 📜"
+                    aspectClassName="aspect-[4/3]"
+                    className="w-full shadow-md"
+                  />
+                </div>
+                <div className="flex-1 space-y-3 text-center md:text-left">
+                  <span className="ca-mono inline-block rounded bg-[var(--ca-mint)] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
+                    Physical Evidence
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[var(--ca-ink)]">
+                    Tangible University Awards &amp; Official Merit Certificates
+                  </h3>
+                  <p className="text-sm sm:text-base leading-relaxed text-[var(--ca-ink)]/80">
+                    Photographed trophies from Maharashtra State Skills University (MSSU) Foundation Day Week 2025: 1st Prize in Project Expo, 2nd Prize in UX Game Forage, and official Certificates of Appreciation signed by university administration.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+
+        {/* Industry Certifications */}
+        <section className="mb-20 sm:mb-28" aria-labelledby="certifications-heading">
+          <Reveal delay={60}>
+            <div className="flex items-center gap-3 mb-8">
+              <span className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "var(--ca-blue)" }}>
+                Industry Certifications
+              </span>
+              <div className="h-0.5 flex-1 bg-[var(--ca-ink)]/15" />
+            </div>
+          </Reveal>
+
+          <CertificateSection className="mt-6" />
+        </section>
+
+        {/* Recruiter Navigation Bar */}
+        <Reveal delay={120}>
+          <div className="mb-20 rounded-lg border-2 border-[var(--ca-ink)] bg-white p-8 text-center shadow-[4px_4px_0_var(--ca-ink)]">
+            <h2 className="text-2xl font-bold uppercase text-[var(--ca-ink)]">
+              Explore Jayant&apos;s Engineering Work
+            </h2>
+            <p className="mt-2 text-sm text-[var(--ca-ink)]/80">
+              Review code repositories, architecture projects, or reach out directly.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+              <Link
+                href="/work"
+                className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-yellow)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                View Projects
+                <ArrowUpRight size={16} />
+              </Link>
+              <Link
+                href="/blog"
+                className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform hover:-translate-y-0.5 hover:bg-[var(--ca-chrome)] active:translate-y-0"
+              >
+                Engineering Blog
+                <ArrowUpRight size={16} />
+              </Link>
+              <Link
+                href="/contact"
+                className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-[3px_3px_0_var(--ca-ink)] transition-transform hover:-translate-y-0.5 hover:bg-[var(--ca-ink)] active:translate-y-0"
+              >
+                Get in Touch
+                <ArrowUpRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+
+      <ContactStrip />
+      <Footer />
+    </div>
+  );
+}

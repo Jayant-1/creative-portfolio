@@ -1,0 +1,255 @@
+"use client";
+
+import React, { useCallback, useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { usePageAnimationReady } from "@/components/Motion";
+
+interface SectionDef {
+  id: string;
+  label: string;
+  color: string;
+  ink: string;
+  dotBg: string;
+}
+
+const SECTIONS: SectionDef[] = [
+  {
+    id: "bio",
+    label: "Main Bio",
+    color: "var(--ca-yellow)",
+    ink: "var(--ca-surface)",
+    dotBg: "var(--ca-surface)",
+  },
+  {
+    id: "facts",
+    label: "Quick Facts",
+    color: "var(--ca-cyan)",
+    ink: "var(--ca-surface)",
+    dotBg: "var(--ca-surface)",
+  },
+  {
+    id: "story",
+    label: "Story",
+    color: "var(--ca-magenta)",
+    ink: "var(--ca-surface)",
+    dotBg: "var(--ca-surface)",
+  },
+  {
+    id: "leadership",
+    label: "Leadership",
+    color: "var(--ca-blue)",
+    ink: "var(--ca-surface)",
+    dotBg: "var(--ca-surface)",
+  },
+];
+
+const STICKY_TOP = 112; // 7rem (top-28 below header)
+const BADGE_HEIGHT = 40;
+const GAP = 12;
+const BADGE_STEP = BADGE_HEIGHT + GAP; // 52px
+
+interface CachedMetrics {
+  asideTopDoc: number;
+  asideLeft: number;
+  sections: { id: string; topDoc: number; bottomDoc: number }[];
+}
+
+export function AboutAsideNav() {
+  const pageReady = usePageAnimationReady();
+  const shouldReduceMotion = useReducedMotion();
+  const asideRef = useRef<HTMLDivElement>(null);
+  const badgeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const metricsRef = useRef<CachedMetrics | null>(null);
+
+  // Measure document coordinates only when layout changes (mount, resize, content load)
+  // NEVER during scroll — zero layout thrashing!
+  const measure = useCallback(() => {
+    if (!asideRef.current) return;
+    const asideRect = asideRef.current.getBoundingClientRect();
+    const scrollY = window.scrollY;
+    const asideTopDoc = asideRect.top + scrollY;
+    const asideLeft = asideRect.left;
+
+    const sections = SECTIONS.map((sec) => {
+      const el = document.getElementById(sec.id);
+      if (!el) return { id: sec.id, topDoc: 0, bottomDoc: 0 };
+      const rect = el.getBoundingClientRect();
+      return {
+        id: sec.id,
+        topDoc: rect.top + scrollY,
+        bottomDoc: rect.bottom + scrollY,
+      };
+    });
+
+    metricsRef.current = { asideTopDoc, asideLeft, sections };
+  }, []);
+
+  // Update badge positions on scroll using pre-cached boundaries
+  const update = useCallback(() => {
+    const m = metricsRef.current;
+    if (!m) return;
+
+    const scrollY = window.scrollY;
+
+    for (let i = 0; i < SECTIONS.length; i++) {
+      const badgeEl = badgeRefs.current[i];
+      if (!badgeEl) continue;
+
+      const sec = m.sections[i];
+      const badgeStickyTop = STICKY_TOP + i * BADGE_STEP;
+      const viewportBadgeDocY = scrollY + badgeStickyTop;
+
+      // Initial resting position in aside
+      const restingDocY = m.asideTopDoc + i * BADGE_STEP;
+
+      // Lock threshold at the bottom of section i
+      const hasValidSection = sec && sec.bottomDoc > 0;
+      const lockDocY = hasValidSection
+        ? sec.bottomDoc - BADGE_HEIGHT
+        : Infinity;
+
+      if (viewportBadgeDocY < restingDocY) {
+        // 1. Above sticky threshold: parked at natural resting position in aside
+        badgeEl.style.position = "absolute";
+        badgeEl.style.top = `${i * BADGE_STEP}px`;
+        badgeEl.style.left = "0px";
+        badgeEl.style.transition = "none";
+      } else if (hasValidSection && viewportBadgeDocY >= lockDocY) {
+        // 2. Section finished: locked to bottom of section, scrolls away naturally with it
+        const localLockY = Math.max(0, lockDocY - m.asideTopDoc);
+        badgeEl.style.position = "absolute";
+        badgeEl.style.top = `${localLockY}px`;
+        badgeEl.style.left = "0px";
+        badgeEl.style.transition = "none";
+      } else {
+        // 3. Sticking in viewport at its dedicated slot
+        // transition: none guarantees no flying animation from bottom of screen when scrolling up!
+        badgeEl.style.position = "fixed";
+        badgeEl.style.top = `${badgeStickyTop}px`;
+        badgeEl.style.left = `${m.asideLeft}px`;
+        badgeEl.style.transition = "none";
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    let rafId: number | null = null;
+
+    const handleScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        update();
+        rafId = null;
+      });
+    };
+
+    const handleResize = () => {
+      measure();
+      update();
+    };
+
+    measure();
+    update();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
+    window.addEventListener("orientationchange", handleResize, {
+      passive: true,
+    });
+
+    // Re-check after images/fonts settle
+    const t1 = setTimeout(handleResize, 100);
+    const t2 = setTimeout(handleResize, 400);
+    const t3 = setTimeout(handleResize, 1000);
+
+    let observer: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      observer = new ResizeObserver(() => {
+        handleResize();
+      });
+      if (asideRef.current) observer.observe(asideRef.current);
+      SECTIONS.forEach((sec) => {
+        const el = document.getElementById(sec.id);
+        if (el && observer) observer.observe(el);
+      });
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      if (observer) observer.disconnect();
+    };
+  }, [measure, update]);
+
+  return (
+    <div ref={asideRef} className="relative h-full w-full">
+      {SECTIONS.map((sec, idx) => (
+        <div
+          key={sec.id}
+          ref={(el) => {
+            badgeRefs.current[idx] = el;
+          }}
+          style={{
+            position: "absolute",
+            top: `${idx * BADGE_STEP}px`,
+            left: 0,
+          }}
+          className="z-20 will-change-[top]"
+        >
+          <motion.div
+            initial={
+              shouldReduceMotion
+                ? { opacity: 1, x: 0, rotate: 0 }
+                : { opacity: 0, x: -44, rotate: -3 }
+            }
+            animate={
+              shouldReduceMotion || pageReady
+                ? { opacity: 1, x: 0, rotate: 0 }
+                : { opacity: 0, x: -44, rotate: -3 }
+            }
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : {
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 18,
+                    mass: 0.8,
+                    delay: 0.12 + idx * 0.08,
+                    opacity: {
+                      duration: 0.22,
+                      delay: 0.12 + idx * 0.08,
+                      ease: "easeOut",
+                    },
+                  }
+            }
+            style={{
+              willChange: "transform, opacity",
+              transformOrigin: "left center",
+            }}
+          >
+            <a
+              href={`#${sec.id}`}
+              style={{
+                backgroundColor: sec.color,
+                color: sec.ink,
+              }}
+              className="ca-mono inline-flex items-center gap-2 rounded-r-xl border-2 border-[var(--ca-ink)] px-4 py-2.5 text-xs font-bold uppercase tracking-wider shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:translate-x-1.5 focus:translate-x-1.5"
+            >
+              <span
+                className="h-2.5 w-2.5 rounded-full"
+                style={{ backgroundColor: sec.dotBg }}
+              />
+              {sec.label}
+            </a>
+          </motion.div>
+        </div>
+      ))}
+    </div>
+  );
+}

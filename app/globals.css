@@ -1,0 +1,772 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Handjet";
+  src:
+    url("/fonts/handjet.woff2") format("woff2"),
+    url("/fonts/handjet.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Just Me Again Down Here";
+  src: url("/fonts/handwritten.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Mono";
+  src: url("/fonts/dm-mono.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --ca-surface: #fdfdfb;
+  --ca-ink: #191510;
+  --ca-gray: #857b69;
+  --ca-chrome: #ece3d1;
+  --ca-tick: #c0b49d;
+  --ca-grid-line: rgba(25, 21, 16, 0.06);
+  --ca-grid-dot: rgba(25, 21, 16, 0.16);
+  --ca-blue: #2b57d6;
+  --ca-cyan: #b7c6ef;
+  --ca-yellow: #f7c948;
+  --ca-yellow-soft: #f3e2ad;
+  --ca-tan: #f3e2ad;
+  --ca-magenta: #ff4d8d;
+  --ca-pink: #ff4d8d;
+  --ca-green: #16b06a;
+  --ca-mint: #a9dfc6;
+  --ca-pink-soft: #ffc6da;
+  --ca-purple: #c4b5fd;
+  --ca-orange: #ff6a35;
+  --ca-brown: #5c3a2e;
+  --ca-paper: #fbf8ef;
+
+  --font-artsy-display: "Handjet", monospace;
+  --font-artsy-hand: "Just Me Again Down Here", cursive;
+  --font-artsy-mono: "DM Mono", monospace;
+  --font-artsy-sans: "Inter", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--ca-surface);
+  color: var(--ca-ink);
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--ca-surface);
+  color: var(--ca-ink);
+  font-family: var(--font-artsy-sans);
+  overflow-x: clip;
+  max-width: 100vw;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Cross-browser scrollbar hiding utility */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge Legacy */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Cross-browser tactile scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ca-chrome) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--ca-chrome);
+  border: 1.5px solid var(--ca-ink);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--ca-yellow);
+}
+
+::selection {
+  background: var(--ca-yellow);
+  color: var(--ca-ink);
+}
+
+:focus,
+:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+/* Mobile Safe Area Inset Helpers for notched devices */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-area-left {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.safe-area-right {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Notebook paper horizontal ruled lines */
+.ca-grid {
+  background-color: var(--ca-surface);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 33px,
+    var(--ca-grid-dot) 33px,
+    var(--ca-grid-dot) 34px
+  );
+  background-size: 100% 34px;
+}
+
+/* Authentic tactile noise grain */
+.ca-grain {
+  opacity: 0.09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='cn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cn)'/%3E%3C/svg%3E");
+}
+
+/* Organic hand-drawn wobbly box */
+.ca-doodle-box {
+  border-radius: 255px 15px 225px / 15px 225px 15px 255px;
+}
+
+/* Typography Helpers */
+.ca-display {
+  font-family: var(
+    --font-artsy-display,
+    "Arial Black",
+    "Helvetica Neue",
+    sans-serif
+  );
+  font-variation-settings:
+    "wght" 700,
+    "ELGR" 1,
+    "ELSH" 7;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+}
+
+.ca-hand {
+  font-family: var(
+    --font-artsy-hand,
+    "Comic Sans MS",
+    "Bradley Hand",
+    "Segoe Print",
+    cursive
+  );
+  line-height: 1.1;
+}
+
+.ca-mono {
+  font-family: var(
+    --font-artsy-mono,
+    ui-monospace,
+    "SFMono-Regular",
+    "Menlo",
+    monospace
+  );
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Tactile tape elements */
+.ca-tape-strip {
+  opacity: 0.82;
+  filter: drop-shadow(0 1.5px 1px rgba(25, 21, 16, 0.22));
+}
+
+.ca-tape-strip::before {
+  content: "";
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    transparent 34%,
+    rgba(255, 255, 255, 0.18) 60%,
+    transparent 86%
+  );
+  position: absolute;
+  inset: 0;
+}
+
+.ca-tape {
+  position: relative;
+}
+
+.ca-tape::after {
+  content: "";
+  border-top: 0 solid transparent;
+  border-bottom: 15px solid rgba(25, 21, 16, 0.22);
+  border-left: 15px solid transparent;
+  border-right: 0 solid transparent;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/* Exact Millisecond Animations from Portfoliofy */
+@keyframes ca-char-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.72);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.ca-char-pop {
+  animation: ca-char-pop 0.34s cubic-bezier(0.34, 1.35, 0.64, 1) backwards;
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+@keyframes ca-wobble {
+  0%,
+  100% {
+    transform: rotate(6deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes ca-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ca-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.ca-image-shimmer {
+  overflow: hidden;
+}
+.ca-image-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: ca-shimmer 1.8s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes ca-blink {
+  0%,
+  91%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.12);
+  }
+}
+
+@keyframes ca-cycle {
+  0%,
+  49.9% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ca-emoji-swap {
+  0%,
+  48% {
+    opacity: 1;
+  }
+  52%,
+  98% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ca-wobble {
+  animation: 2.8s ease-in-out infinite ca-wobble;
+}
+.ca-spin-slow {
+  animation: 9s linear infinite ca-spin;
+}
+.ca-blink {
+  transform-origin: 50%;
+  animation: 4.4s ease-in-out infinite ca-blink;
+}
+.ca-cycle {
+  animation: 3.2s step-end infinite ca-cycle;
+}
+.ca-cycle-late {
+  animation: 3.2s step-end -1.6s infinite ca-cycle;
+}
+.ca-emoji-a {
+  animation: 4.4s ease-in-out infinite ca-emoji-swap;
+}
+.ca-emoji-b {
+  opacity: 0;
+  animation: 4.4s ease-in-out -2.2s infinite ca-emoji-swap;
+}
+
+/* Sticky folder tab clip paths */
+.folder-tab-shape {
+  -webkit-clip-path: polygon(0 0, calc(100% - 44px) 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 44px) 0, 100% 100%, 0 100%);
+}
+@media (min-width: 640px) {
+  .folder-tab-shape {
+    -webkit-clip-path: polygon(0 0, calc(100% - 76px) 0, 100% 100%, 0 100%);
+    clip-path: polygon(0 0, calc(100% - 76px) 0, 100% 100%, 0 100%);
+  }
+}
+
+.folder-tab-mid-shape {
+  -webkit-clip-path: polygon(44px 0, calc(100% - 44px) 0, 100% 100%, 0 100%);
+  clip-path: polygon(44px 0, calc(100% - 44px) 0, 100% 100%, 0 100%);
+}
+@media (min-width: 640px) {
+  .folder-tab-mid-shape {
+    -webkit-clip-path: polygon(76px 0, calc(100% - 76px) 0, 100% 100%, 0 100%);
+    clip-path: polygon(76px 0, calc(100% - 76px) 0, 100% 100%, 0 100%);
+  }
+}
+
+/* Category badge notched corner */
+.ca-notched-tag {
+  -webkit-clip-path: polygon(0 28%, 12% 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 28%, 12% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Torn paper edge for labels */
+.ca-torn-label {
+  -webkit-clip-path: polygon(
+    2% 6%,
+    12% 0%,
+    25% 4%,
+    40% 1%,
+    55% 5%,
+    70% 0%,
+    85% 4%,
+    98% 1%,
+    96% 15%,
+    100% 30%,
+    97% 45%,
+    100% 60%,
+    96% 75%,
+    99% 90%,
+    97% 98%,
+    85% 96%,
+    70% 100%,
+    55% 96%,
+    40% 100%,
+    25% 95%,
+    12% 100%,
+    3% 97%,
+    1% 85%,
+    4% 70%,
+    0% 55%,
+    3% 40%,
+    0% 25%,
+    2% 12%
+  );
+  clip-path: polygon(
+    2% 6%,
+    12% 0%,
+    25% 4%,
+    40% 1%,
+    55% 5%,
+    70% 0%,
+    85% 4%,
+    98% 1%,
+    96% 15%,
+    100% 30%,
+    97% 45%,
+    100% 60%,
+    96% 75%,
+    99% 90%,
+    97% 98%,
+    85% 96%,
+    70% 100%,
+    55% 96%,
+    40% 100%,
+    25% 95%,
+    12% 100%,
+    3% 97%,
+    1% 85%,
+    4% 70%,
+    0% 55%,
+    3% 40%,
+    0% 25%,
+    2% 12%
+  );
+}
+
+.ca-torn-stamp {
+  -webkit-clip-path: polygon(
+    3% 3%,
+    16% 1%,
+    28% 5%,
+    44% 0%,
+    58% 4%,
+    72% 1%,
+    84% 5%,
+    97% 2%,
+    100% 18%,
+    96% 32%,
+    100% 48%,
+    97% 64%,
+    100% 80%,
+    96% 94%,
+    98% 99%,
+    84% 95%,
+    68% 100%,
+    52% 96%,
+    38% 100%,
+    22% 95%,
+    8% 99%,
+    1% 92%,
+    4% 78%,
+    0% 62%,
+    3% 48%,
+    0% 34%,
+    4% 20%,
+    1% 8%
+  );
+  clip-path: polygon(
+    3% 3%,
+    16% 1%,
+    28% 5%,
+    44% 0%,
+    58% 4%,
+    72% 1%,
+    84% 5%,
+    97% 2%,
+    100% 18%,
+    96% 32%,
+    100% 48%,
+    97% 64%,
+    100% 80%,
+    96% 94%,
+    98% 99%,
+    84% 95%,
+    68% 100%,
+    52% 96%,
+    38% 100%,
+    22% 95%,
+    8% 99%,
+    1% 92%,
+    4% 78%,
+    0% 62%,
+    3% 48%,
+    0% 34%,
+    4% 20%,
+    1% 8%
+  );
+}
+
+.ca-torn-tape {
+  -webkit-clip-path: polygon(
+    2% 10%,
+    40% 4%,
+    98% 8%,
+    96% 30%,
+    100% 50%,
+    96% 70%,
+    99% 92%,
+    60% 96%,
+    8% 93%,
+    4% 71%,
+    0% 50%,
+    4% 30%
+  );
+  clip-path: polygon(
+    2% 10%,
+    40% 4%,
+    98% 8%,
+    96% 30%,
+    100% 50%,
+    96% 70%,
+    99% 92%,
+    60% 96%,
+    8% 93%,
+    4% 71%,
+    0% 50%,
+    4% 30%
+  );
+}
+
+.ca-stamp-note {
+  -webkit-clip-path: polygon(
+    2% 10%,
+    40% 4%,
+    98% 8%,
+    96% 30%,
+    100% 50%,
+    96% 70%,
+    99% 92%,
+    60% 96%,
+    8% 93%,
+    4% 71%,
+    0% 50%,
+    4% 30%
+  );
+  clip-path: polygon(
+    2% 10%,
+    40% 4%,
+    98% 8%,
+    96% 30%,
+    100% 50%,
+    96% 70%,
+    99% 92%,
+    60% 96%,
+    8% 93%,
+    4% 71%,
+    0% 50%,
+    4% 30%
+  );
+}
+
+.ca-torn-fact {
+  -webkit-clip-path: polygon(4% 0, 96% 2%, 100% 25%, 96% 100%, 3% 98%, 0 75%);
+  clip-path: polygon(4% 0, 96% 2%, 100% 25%, 96% 100%, 3% 98%, 0 75%);
+}
+
+/* Scroll reveal utility */
+.reveal-entry {
+  opacity: 0;
+  -webkit-transform: translate3d(0, 28px, 0);
+  transform: translate3d(0, 28px, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-entry.is-visible {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Tactile Spring Hover for Interactive Badges, Stickers & Polaroids */
+.ca-spring-hover {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 0.28s cubic-bezier(0.34, 1.35, 0.64, 1),
+    box-shadow 0.2s ease-out;
+  will-change: transform;
+}
+.ca-spring-hover:hover {
+  -webkit-transform: translate3d(0, 0, 0) scale(1.05);
+  transform: translate3d(0, 0, 0) scale(1.05);
+}
+.ca-spring-hover:active {
+  -webkit-transform: translate3d(0, 0, 0) scale(0.96);
+  transform: translate3d(0, 0, 0) scale(0.96);
+}
+
+/* Tactile Spring Button Hover */
+.ca-btn-spring {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 0.28s cubic-bezier(0.34, 1.35, 0.64, 1),
+    background-color 0.18s ease-out,
+    color 0.18s ease-out,
+    box-shadow 0.2s ease-out;
+  will-change: transform;
+}
+.ca-btn-spring:hover {
+  -webkit-transform: translate3d(0, -2px, 0);
+  transform: translate3d(0, -2px, 0);
+}
+.ca-btn-spring:active {
+  -webkit-transform: translate3d(0, 0, 0) scale(0.97);
+  transform: translate3d(0, 0, 0) scale(0.97);
+}
+
+/* Tactile Inversion Lens with Spring Dynamics:
+ * - Start animation (enter hover): smooth fade-in (200ms) and zoom-in (380ms) with subtle spring overshoot (cubic-bezier(0.34, 1.35, 0.64, 1))
+ * - End animation (leave hover): smooth fade-out (240ms) and zoom-out (280ms) cleanly decaying to scale 0.35
+ */
+.ca-invert-lens {
+  opacity: 0;
+  -webkit-transform: translate3d(-50%, -50%, 0) scale(0.35);
+  transform: translate3d(-50%, -50%, 0) scale(0.35);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition:
+    opacity 240ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: left, top, transform, opacity;
+  -webkit-backdrop-filter: invert(1);
+  backdrop-filter: invert(1);
+}
+
+.group\/name:hover .ca-invert-lens,
+.group\/talk:hover .ca-invert-lens,
+.group:hover .ca-invert-lens {
+  opacity: 1 !important;
+  -webkit-transform: translate3d(-50%, -50%, 0) scale(1) !important;
+  transform: translate3d(-50%, -50%, 0) scale(1) !important;
+  transition:
+    opacity 200ms ease-out,
+    transform 380ms cubic-bezier(0.34, 1.35, 0.64, 1) !important;
+}
+
+/* Circular Card Lens with Matching Spring Dynamics */
+.ca-card-lens {
+  opacity: 0;
+  -webkit-transform: translate3d(-50%, -50%, 0) scale(0.45);
+  transform: translate3d(-50%, -50%, 0) scale(0.45);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition:
+    opacity 240ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: left, top, transform, opacity;
+  -webkit-backdrop-filter: invert(1);
+  backdrop-filter: invert(1);
+}
+
+.group\/card:hover .ca-card-lens,
+.group:hover .ca-card-lens {
+  opacity: 1 !important;
+  -webkit-transform: translate3d(-50%, -50%, 0) scale(1) !important;
+  transform: translate3d(-50%, -50%, 0) scale(1) !important;
+  transition:
+    opacity 200ms ease-out,
+    transform 340ms cubic-bezier(0.34, 1.35, 0.64, 1) !important;
+}
+
+/* Infinite Testimonials Marquee Track (Hardware Accelerated) */
+@keyframes ca-testimonial-scroll {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.ca-infinite-testimonial-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  animation: ca-testimonial-scroll 42s linear infinite;
+}
+
+.ca-infinite-testimonial-track:hover {
+  animation-play-state: paused;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not ((-webkit-backdrop-filter: invert(1)) or (backdrop-filter: invert(1))) {
+  .ca-invert-lens {
+    background-color: rgba(25, 21, 16, 0.85);
+    border: 2px solid var(--ca-yellow);
+  }
+  .ca-card-lens {
+    background-color: var(--ca-ink);
+    color: var(--ca-surface);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal-entry {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

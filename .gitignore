@@ -1,0 +1,38 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Next.js build
+.next
+out
+
+# Environment variables
+.env*.local
+.env
+
+# Vercel
+.vercel
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System & IDE files
+.DS_Store
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+
+# Temporary local testing & reference artifacts
+.playwright-mcp/
+*.bak
+inspect_live.py
+*-hover*.png
+hero-*.png
+contact-*.png
+project-card-*.png
+reference-*.html
+reference-assets/
+
