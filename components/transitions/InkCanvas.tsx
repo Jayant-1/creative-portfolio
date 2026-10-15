@@ -281,7 +281,7 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
       stateRef.current.animating = true;
       stateRef.current.visible = true;
 
-      const duration = 540; // 540ms cover (1080ms total transition)
+      const duration = 360; // 360ms cover (720ms total transition)
       const startTime = performance.now();
       let coverReadyCalled = false;
 
@@ -340,7 +340,7 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
       stateRef.current.reveal = 1.0;
       stateRef.current.animating = true;
 
-      const duration = 540; // 540ms reveal (1080ms total transition)
+      const duration = 360; // 360ms reveal (720ms total transition)
       const startTime = performance.now();
       let visible90Called = false;
 

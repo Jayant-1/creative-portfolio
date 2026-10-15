@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Header } from "@/components/Header";
 import Preloader from "@/components/Preloader";
 import { InkTransitionProvider } from "@/components/transitions/InkTransitionProvider";
-import { author, siteUrl, social } from "@/lib/site";
+import { author, email, siteUrl, social } from "@/lib/site";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -13,37 +13,18 @@ export const viewport: Viewport = {
 };
 
 const metaDescription =
-  "Jayant Potdar is a product-focused Full Stack Developer based in Pune, India, building complete web applications with React, TypeScript, FastAPI, Spring Boot, PostgreSQL, and AI integrations.";
+  "Jayant Potdar is a full stack developer in Pune building expressive React interfaces and production-ready web apps. Explore his projects and get in touch.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Jayant Potdar — Full Stack Developer | Pune, India",
+    default: "Jayant Potdar | Full Stack Developer in Pune",
     template: "%s | Jayant Potdar",
   },
   description: metaDescription,
   applicationName: "Jayant Potdar Portfolio",
   authors: [{ name: author.name, url: siteUrl }],
   creator: author.name,
-  keywords: [
-    "Jayant Potdar",
-    "Jayant Sunil Potdar",
-    "Jayant Potdar developer",
-    "Jayant Potdar portfolio",
-    "Jayant Potdar full stack developer",
-    "Jayant Potdar Pune",
-    "Full Stack Developer Pune",
-    "Full Stack Developer Intern Pune",
-    "React Developer Pune",
-    "Frontend Developer Pune",
-    "Backend Developer Pune",
-    "Software Developer Pune",
-    "Full Stack Developer Portfolio",
-    "FastAPI Python developer Pune",
-    "AstroPixel",
-    "Krypton",
-    "NeuralNet",
-  ],
   alternates: {
     canonical: siteUrl,
   },
@@ -51,21 +32,21 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: siteUrl,
-    siteName: "Jayant Potdar — Full Stack Developer",
-    title: "Jayant Potdar — Full Stack Developer | Pune, India",
+    siteName: "Jayant Potdar",
+    title: "Jayant Potdar | Full Stack Developer in Pune",
     description: metaDescription,
     images: [
       {
         url: "/og",
         width: 1200,
         height: 630,
-        alt: "Jayant Potdar — Full Stack Developer | Pune, India",
+        alt: "Jayant Potdar, full stack developer in Pune",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jayant Potdar — Full Stack Developer | Pune, India",
+    title: "Jayant Potdar | Full Stack Developer in Pune",
     description: metaDescription,
     images: ["/og"],
   },
@@ -97,6 +78,7 @@ const jsonLd = [
     url: siteUrl,
     image: `${siteUrl}/images/img-1.png`,
     jobTitle: author.role,
+    email,
     description: author.summary,
     homeLocation: {
       "@type": "Place",
@@ -108,7 +90,7 @@ const jsonLd = [
       addressRegion: "Maharashtra",
       addressCountry: "IN",
     },
-    alumniOf: {
+    affiliation: {
       "@type": "EducationalOrganization",
       name: author.college,
     },

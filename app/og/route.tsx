@@ -81,7 +81,7 @@ export async function GET() {
             lineHeight: 1.3,
           }}
         >
-          Software that gets out of your way. Spatial image viewers, research companions &amp; visual tooling.
+          Expressive interfaces and production-ready web products, built in Pune.
         </p>
       </div>
     ),

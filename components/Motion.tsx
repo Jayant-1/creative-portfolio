@@ -148,6 +148,30 @@ function ensureGlobalLensListeners() {
   window.addEventListener("resize", handleScrollOrResize, { passive: true });
 }
 
+// Module-level weakmap cache for offscreen 32x32 image canvas sampling contexts
+const canvasCache = new WeakMap<HTMLImageElement, CanvasRenderingContext2D | null>();
+
+function getSamplingContext(img: HTMLImageElement | null): CanvasRenderingContext2D | null {
+  if (!img || !img.complete || img.naturalWidth === 0) return null;
+  if (canvasCache.has(img)) return canvasCache.get(img)!;
+  try {
+    const canvas = document.createElement("canvas");
+    canvas.width = 32;
+    canvas.height = 32;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    if (!ctx) {
+      canvasCache.set(img, null);
+      return null;
+    }
+    ctx.drawImage(img, 0, 0, 32, 32);
+    canvasCache.set(img, ctx);
+    return ctx;
+  } catch {
+    canvasCache.set(img, null);
+    return null;
+  }
+}
+
 /**
  * Custom hook to track mouse cursor and synchronously drive the lens.
  * - Global pointer coordinator captures mouse position anywhere on the screen
@@ -155,6 +179,7 @@ function ensureGlobalLensListeners() {
  * - Synchronous hit-testing during scroll/wheel ensures cards scrolling under a stationary mouse
  *   immediately place the lens at the cursor coordinates before painting (eliminates 50% 50% freeze)
  * - Safe boundary clamping [bounds[0], bounds[1]]
+ * - Dynamic image luminance sampling guarantees text readability on any background color
  */
 export function useLens(bounds: [number, number] = [0, 100]) {
   const lensRef = useRef<HTMLSpanElement>(null);
@@ -185,6 +210,23 @@ export function useLens(bounds: [number, number] = [0, 100]) {
 
       lens.style.left = `${x}%`;
       lens.style.top = `${y}%`;
+
+      // Dynamically adapt lens text color to guarantee readability against any color:
+      // When the underlying card image is light, invert(1) makes the lens circle dark -> text becomes white (#ffffff).
+      // When the underlying card image is dark, invert(1) makes the lens circle light -> text becomes deep ink (var(--ca-ink)).
+      const img = container.querySelector("img");
+      const ctx = getSamplingContext(img);
+      if (ctx) {
+        const px = Math.max(0, Math.min(31, Math.floor((rawX / 100) * 32)));
+        const py = Math.max(0, Math.min(31, Math.floor((rawY / 100) * 32)));
+        try {
+          const pixel = ctx.getImageData(px, py, 1, 1).data;
+          const lum = 0.299 * pixel[0] + 0.587 * pixel[1] + 0.114 * pixel[2];
+          lens.style.setProperty("--ca-lens-text", lum > 128 ? "#ffffff" : "var(--ca-ink)");
+        } catch {
+          // Cross-origin fallback (not triggered for local assets)
+        }
+      }
     },
     [bounds]
   );
@@ -285,19 +327,27 @@ export function MouseLens({
 
 /**
  * Circular "See" Lens for Work / Project Cards
+ * Automatically guaranteed to be 100% readable on ANY color:
+ * - On dark backgrounds (inverted circle turns cream/white), text is deep ink black.
+ * - On light backgrounds (inverted circle turns dark/blackish), text is crisp white.
  */
 export function CardLens({
   lensRef,
+  darkCard = false,
 }: {
   lensRef?: React.RefObject<HTMLSpanElement | null>;
+  darkCard?: boolean;
 }) {
   return (
     <span
       ref={lensRef as React.RefObject<HTMLSpanElement>}
       aria-hidden="true"
+      style={{
+        ["--ca-lens-text" as any]: darkCard ? "var(--ca-ink)" : "#ffffff",
+      }}
       className="ca-card-lens pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden h-28 w-28 items-center justify-center rounded-full group-hover:scale-100 group-hover:opacity-100 group-hover/card:scale-100 group-hover/card:opacity-100 lg:flex"
     >
-      <span className="ca-mono text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)]">
+      <span className="ca-mono text-sm font-bold uppercase tracking-widest text-[var(--ca-lens-text,var(--ca-ink))]">
         See
       </span>
     </span>

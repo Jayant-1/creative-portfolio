@@ -23,6 +23,26 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/components/radial-gradient-animate-card',
+        destination: '/components/radial-gradient-card',
+        permanent: true,
+      },
+      {
+        source: '/projects/nova-learn',
+        destination: '/projects',
+        permanent: true,
+      },
+      {
+        source: '/work',
+        destination: '/projects',
+        permanent: true,
+      },
+      {
+        source: '/work/:slug*',
+        destination: '/projects/:slug*',
+        permanent: true,
+      },
+      {
         source: '/case-studies',
         destination: '/projects',
         permanent: true,

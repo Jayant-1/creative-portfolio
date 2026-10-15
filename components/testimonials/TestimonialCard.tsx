@@ -25,7 +25,7 @@ export function TestimonialCard({
         color={testimonial.tapeColor}
       />
 
-      {/* Quote */}
+      {/* First-person project note */}
       <blockquote className="relative my-auto pt-2">
         <span
           aria-hidden="true"
@@ -38,7 +38,7 @@ export function TestimonialCard({
         </p>
       </blockquote>
 
-      {/* Reviewer Bio & Avatar */}
+      {/* Project identity */}
       <div className="flex items-center gap-3 border-t border-[var(--ca-ink)]/10 pt-3.5">
         <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-[var(--ca-ink)] bg-[var(--ca-chrome)] shadow-[2px_2px_0_var(--ca-ink)]">
           <ImageWithLoader

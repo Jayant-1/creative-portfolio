@@ -1,7 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import url('https://fonts.googleapis.com/css2?family=Six+Caps&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:ital,wght@0,100..900;1,100..900&family=Six+Caps&display=swap');
 
 @font-face {
   font-family: "Handjet";
@@ -707,6 +707,11 @@ textarea {
   backdrop-filter: invert(1);
 }
 
+.ca-card-lens span {
+  color: var(--ca-lens-text, inherit);
+  transition: color 140ms ease-out;
+}
+
 .group\/card:hover .ca-card-lens,
 .group:hover .ca-card-lens {
   opacity: 1 !important;
@@ -774,4 +779,12 @@ textarea {
 
 .font-sixCap {
   font-family: 'Six Caps', Impact, sans-serif;
+}
+
+.font-bebasNeue {
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.font-raleway {
+  font-family: 'Raleway', sans-serif;
 }

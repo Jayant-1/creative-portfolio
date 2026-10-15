@@ -195,7 +195,7 @@ export function ContactStrip() {
         </h2>
 
         <p className="ca-hand mx-auto max-w-xl text-2xl leading-snug text-[var(--ca-ink)]/80 sm:text-3xl">
-          Got a project, a hard engineering problem, or just want to say hi? Send it over. I read every message.
+          Hiring for a full stack role or planning a web project? Email me and we can arrange a call.
         </p>
 
         {/* Dynamic Invert Mouse Lens */}
@@ -304,6 +304,7 @@ export function Footer() {
                 { href: "/about", label: "About", rotate: "-rotate-2" },
                 { href: "/projects", label: "Projects", rotate: "rotate-1" },
                 { href: "/experience", label: "Experience", rotate: "-rotate-1" },
+                { href: "/components", label: "Components", rotate: "-rotate-1" },
                 { href: "/blog", label: "Blog", rotate: "rotate-2" },
                 { href: "/contact", label: "Contact", rotate: "-rotate-2" },
               ].map((item) => (

@@ -124,7 +124,7 @@ export function ImageWithLoader({
             setHasError(true);
             onError?.(e);
           }}
-          className={`object-cover transition-all duration-700 ease-out ${
+          className={`${/\bobject-(contain|cover|fill|none|scale-down)\b/.test(className) ? "" : "object-cover"} transition-all duration-700 ease-out ${
             isLoaded
               ? "opacity-100 scale-100 blur-0"
               : "opacity-0 scale-[1.02] blur-xs"

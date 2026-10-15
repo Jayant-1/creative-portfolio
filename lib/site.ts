@@ -1,24 +1,22 @@
-export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://jayantpotdar.in"
-).replace(/\/$/, "");
+export const siteUrl = "https://jayant.codes";
 export const email = "jayantpotdar2006@gmail.com";
 
 export const author = {
   name: "Jayant Potdar",
   legalName: "Jayant Sunil Potdar",
   role: "Full Stack Developer",
-  secondaryRole: "Full Stack Developer Intern",
+  secondaryRole: "Creative Full Stack Developer",
   location: "Pune, India",
   fullLocation: "Pune, Maharashtra, India",
   college: "Ratan Tata Maharashtra State Skills University (MSSU), Pune",
   degree: "B.Tech in Computer Science & Engineering",
   graduationYear: "2024–2028",
   cgpa: "8.0",
-  headline: "Product-focused Full Stack Developer based in Pune, India.",
+  headline: "Creative full stack developer building expressive, production-ready web products in Pune.",
   summary:
-    "Product-focused Full Stack Developer with hands-on experience building complete web products across frontend, backend, APIs, databases, authentication, and AI integrations. Led development on NeuralNet and Krypton and independently engineered AstroPixel. Strong interest in combining reliable systems engineering with clean, polished UI/UX.",
+    "Jayant Potdar is a full stack developer in Pune who designs expressive interfaces and builds the systems behind them. He built AstroPixel independently and led teams on Krypton, Malaria Detection System, and NeuralNet. He is open to internships, full-time roles, and selected projects.",
   openToWork:
-    "Open to new opportunities — let's build something memorable and interesting.",
+    "Open to internships, full-time roles, and selected projects. Email me to arrange a call.",
 };
 
 export const social = {
@@ -95,6 +93,16 @@ export const skillsByCategory: SkillCategory[] = [
   },
 ];
 
+export type ProjectTradeoff = {
+  decision: string;
+  rationale: string;
+};
+
+export type CategorizedTech = {
+  category: string;
+  items: string[];
+};
+
 export type Project = {
   slug: string;
   number: string;
@@ -119,7 +127,9 @@ export type Project = {
   problem: string;
   personalContribution: string;
   technicalHighlights: string[];
+  tradeoffs?: ProjectTradeoff[];
   features?: string[];
+  categorizedTech?: CategorizedTech[];
   metrics?: {
     stars: number;
     forks: number;
@@ -136,87 +146,22 @@ export type Project = {
   relatedNoteSlug?: string;
 };
 
+export function isDarkProjectHero(slug?: string): boolean {
+  return slug === "astropixel" || slug === "krypton" || slug === "3d-portfolio";
+}
+
 export const projects: Project[] = [
   {
-    slug: "malaria-detection",
-    number: "01",
-    title: "Malaria Detection System",
-    tagline: "AI-Powered Diagnostic System for Rapid Microscopic Blood Smear Screening",
-    date: "Apr 2026",
-    category: ["HEALTHCARE AI", "COMPUTER VISION"],
-    ownership: "Solo Developer",
-    summary:
-      "AI-powered malaria detection system for hospitals with patient management, PDF report generation, and real-time analytics. Built with React, Supabase & FastAPI.",
-    role: "Full-Stack & Computer Vision Developer",
-    timeline: "2 months",
-    team: "Solo build",
-    year: "2026",
-    color: "#0284c7",
-    ink: "#ffffff",
-    hero: "/projects/malariadetectionsystem-home.png",
-    homeHero: "/projects/malariadetectionsystem-home.png",
-    problem:
-      "Manual microscopic examination of peripheral blood smears is labor-intensive, subject to human fatigue, and creates critical diagnostic delays in high-burden clinical environments where rapid triage is vital.",
-    personalContribution:
-      "Engineered the end-to-end computer vision pipeline and clinical web interface: trained a convolutional neural network (CNN) on segmented erythrocyte cell images, built an asynchronous FastAPI inference service for real-time sample processing, implemented confidence probability scoring (parasitized vs uninfected), and designed an automated clinical PDF test report generation workflow.",
-    metrics: {
-      stars: 89,
-      forks: 28,
-      views: "1.8K",
-    },
-    features: [
-      "AI-powered malaria cell detection using Keras & deep CNNs with 94%+ accuracy.",
-      "Hospital patient management system.",
-      "Automated clinical PDF medical report generation in under 30 seconds.",
-      "Real-time analytics dashboard with probability scoring breakdown.",
-      "Hospital laboratory triage workflow integration.",
-      "Secure cloud storage with Supabase & FastAPI.",
-    ],
-    technicalHighlights: [
-      "Deep learning CNN model classifying parasitized vs uninfected thin blood smear cells with over 94% confidence.",
-      "Sub-30 second end-to-end diagnostic turnaround time from sample upload to structured test report.",
-      "Detailed probability metrics breakdown and automated medical diagnostic report generator.",
-      "Responsive, clinical dashboard designed for rapid bedside triage and laboratory technician workflows.",
-    ],
-    challenge:
-      "Microscopic cell images vary widely in staining intensity, illumination, and artifact noise. Classifying single-cell blood smears requires high precision to prevent false negatives while maintaining high inference speed.",
-    approach:
-      "I trained a deep convolutional network using transfer learning with data augmentation (rotations, flips, color jitter) to handle varying stain conditions. The FastAPI backend serves inference with batching support, returning class probabilities and generating standardized clinical laboratory reports.",
-    results:
-      "The system delivers rapid diagnostic inference with 94%+ classification confidence, completing full sample analysis and report generation in under 30 seconds to support hospital diagnostic workflows.",
-    technologies: [
-      "React",
-      "FastAPI",
-      "Supabase",
-      "Keras",
-      "Python",
-      "OpenCV",
-      "Tailwind CSS",
-      "Docker",
-    ],
-    images: [
-      "/projects/malariadetectionsystem1.png",
-      "/projects/malariadetectionsystem2.jpg",
-    ],
-    outcomes: [
-      { value: "94%", label: "DETECTION CONFIDENCE" },
-      { value: "< 30s", label: "DIAGNOSTIC LATENCY" },
-      { value: "Automated", label: "CLINICAL REPORTS" },
-    ],
-    source: "https://github.com/Jayant-1/MalariaDetectionSystem",
-    demo: "https://malariadetectionsystem.jayantpotdar.in/",
-  },
-  {
     slug: "astropixel",
-    number: "02",
+    number: "01",
     title: "AstroPixel",
-    tagline: "Gigapixel Astronomical & Geospatial Imagery Platform",
+    tagline: "Explore enormous space images without overwhelming the browser",
     date: "Mar 2026",
-    category: ["SPATIAL IMAGERY", "FULL STACK"],
+    category: ["SPATIAL IMAGERY", "FULL STACK", "PERFORMANCE"],
     ownership: "Solo Full Stack Project",
     summary:
-      "AstroPixel is a FastAPI + React platform for exploring NASA gigapixel imagery with buttery-smooth deep zoom, annotations, and secure user/admin workflows. It ingests GeoTIFF/PSB files, generates tile pyramids with GDAL, and serves them through an optimized viewer.",
-    role: "Solo Full Stack Developer (Architecture, Pipeline & Frontend)",
+      "AstroPixel turns large astronomical images into browser-friendly tiles. I built the upload pipeline, deep-zoom viewer, annotations, and access controls from end to end.",
+    role: "Solo Full Stack Developer",
     timeline: "4 months",
     team: "Solo build",
     year: "2026",
@@ -225,70 +170,115 @@ export const projects: Project[] = [
     hero: "/projects/astroPixel-home.png",
     homeHero: "/projects/astroPixel-home.png",
     problem:
-      "Uncompressed multi-gigabyte astronomical rasters and GeoTIFFs easily freeze modern web browsers when loaded directly, making scientific imagery inaccessible to non-specialists on standard consumer hardware.",
+      "A full-resolution astronomical image is too large to load and explore comfortably in a normal browser tab.",
     personalContribution:
-      "Independently conceptualized, architected, and built the complete product: designed the automated GDAL ingestion pipeline to produce Deep Zoom Image (DZI) tile pyramids, implemented the FastAPI asynchronous tile server, configured PostGIS for spatial metadata indexing, built the OpenSeadragon viewport renderer with persistent vector annotation layers, and packaged the entire platform with Docker Compose.",
-    metrics: {
-      stars: 152,
-      forks: 42,
-      views: "2.3K",
-    },
+      "I built the GDAL ingestion and tile-generation pipeline, FastAPI APIs, OpenSeadragon viewer, persistent annotations, and role-based access controls. The project taught me to test each stage of a complex system until tiles loaded quickly and reliably.",
     features: [
-      "Deep zoom functionality for gigapixel imagery (GeoTIFF and PSB).",
-      "Automated GDAL tile pyramid generation cutting browser memory consumption to <45MB.",
-      "Persistent vector annotation system pinned across continuous zoom levels.",
-      "Secure user authentication and role-based administrative workflows.",
-      "Cloudflare R2 integration for scalable cloud tile storage and fast global CDN delivery.",
-      "PostgreSQL and PostGIS database for persistent spatial metadata indexing.",
-    ],
+  "Upload GeoTIFF and PSB imagery for processing.",
+  "Explore large images through a tile-based deep-zoom viewer.",
+  "Add and manage persistent image annotations.",
+  "Use authenticated user and administrator workflows.",
+  "Store tiles locally or with the supported Cloudflare R2 integration.",
+  "Inspect datasets and metadata without downloading an entire source image."
+],
     technicalHighlights: [
-      "Automated GDAL tile pyramid generation cutting browser memory consumption from >2GB to under 45MB.",
-      "Asynchronous FastAPI backend streaming only visible viewport tiles on-demand with sub-50ms latency.",
-      "Custom vector annotation system supporting persistent coordinates pinned across continuous zoom levels.",
-      "Role-based authentication protecting upload and dataset administration endpoints.",
-    ],
+  "Built a GDAL pipeline that generates multi-resolution image tiles.",
+  "Connected an OpenSeadragon viewport to FastAPI tile endpoints.",
+  "Implemented annotation tools and access-controlled upload workflows.",
+  "Added optional R2 storage and deployment-ready Docker configuration."
+],
+    tradeoffs: [
+  {
+    "decision": "Tile pyramids instead of full-image loading",
+    "rationale": "Processing images into zoom-level tiles lets the viewer request only the detail needed for the current viewport."
+  },
+  {
+    "decision": "Cloud storage support with a local fallback",
+    "rationale": "The storage layer can serve tiles locally or use Cloudflare R2 when configured, without changing the viewer flow."
+  },
+  {
+    "decision": "Image-space annotation coordinates",
+    "rationale": "Annotations stay attached to their place in the image as a visitor pans and zooms."
+  }
+],
     challenge:
-      "Astronomical and satellite images span tens of thousands of pixels per side (often 2GB to 8GB uncompressed). Standard browser `<canvas>` or `<img>` elements choke, causing severe memory spikes, dropped frames, and tab crashes.",
+      "Large image files need to be processed, stored, and delivered at several zoom levels without making the viewer wait for the entire original file.",
     approach:
-      "I built a processing pipeline using GDAL to generate multi-resolution tile pyramids. When a visitor inspects an image, the React frontend uses OpenSeadragon to request only the exact 256×256 px tiles required for the current viewport and zoom level. The FastAPI backend serves cached tiles with aggressive HTTP caching and gzip compression.",
+      "GDAL creates a multi-resolution tile pyramid. OpenSeadragon requests the tiles visible at the current zoom level, while FastAPI handles ingestion, metadata, authentication, and tile delivery. Cloudflare R2 is supported for cloud tile storage.",
     results:
-      "AstroPixel placed 3rd in the university-level Ideation Competition 3.0. It delivers 60fps smooth pan-and-zoom across multi-gigapixel datasets on ordinary laptops with no tab lag, proving that client-side spatial exploration can be accessible and fast.",
-    technologies: [
+      "AstroPixel placed third at Ideation Competition 3.0. It is a working, independently built deep-zoom product with image upload, tiled viewing, annotations, and administrative workflows.",
+    categorizedTech: [
+  {
+    "category": "Frontend & Viewer",
+    "items": [
       "React",
+      "OpenSeadragon",
+      "Tailwind CSS",
+      "Vite"
+    ]
+  },
+  {
+    "category": "Backend & Processing",
+    "items": [
       "FastAPI",
       "Python",
       "GDAL",
-      "OpenSeadragon",
-      "PostgreSQL",
-      "PostGIS",
+      "SQLAlchemy"
+    ]
+  },
+  {
+    "category": "Storage & Deployment",
+    "items": [
+      "SQLite / PostgreSQL",
+      "Cloudflare R2 support",
       "Docker",
-      "Tailwind CSS",
-    ],
+      "Vercel"
+    ]
+  }
+],
+    technologies: [
+  "React",
+  "FastAPI",
+  "Python",
+  "GDAL",
+  "OpenSeadragon",
+  "SQLAlchemy",
+  "Cloudflare R2",
+  "Docker"
+],
     images: [
       "/projects/astroPixel1.jpg",
       "/projects/astroPixel2.jpg",
       "/projects/astroPixel3.jpg",
     ],
     outcomes: [
-      { value: "3rd", label: "IDEATION COMPETITION" },
-      { value: "60 FPS", label: "DEEP-ZOOM PANNING" },
-      { value: "45 MB", label: "CLIENT RAM FOOTPRINT" },
-    ],
+  {
+    "value": "3rd",
+    "label": "IDEATION 3.0"
+  },
+  {
+    "value": "Tiled",
+    "label": "DEEP-ZOOM VIEWER"
+  },
+  {
+    "value": "Solo",
+    "label": "END-TO-END BUILD"
+  }
+],
     source: "https://github.com/Jayant-1/AstroPixel",
     demo: "https://astropixel.jayantpotdar.in/",
-    relatedNoteSlug: "astropixel-large-imagery-gdal",
   },
   {
     slug: "krypton",
-    number: "03",
+    number: "02",
     title: "Krypton",
-    tagline: "AI Research Assistant with Multi-Signal Paper Ranking",
+    tagline: "Find, rank, and understand academic papers in one place",
     date: "Nov 2025",
-    category: ["RESEARCH TOOLS", "AI"],
+    category: ["RESEARCH TOOLS", "AI / ML", "FULL STACK"],
     ownership: "Team Leader",
     summary:
-      "Krypton is an AI-powered research assistant that searches arXiv and OpenAlex, ranks papers by relevance, recency, and citations, and helps users understand literature faster with Gemini-generated summaries, structured insights, research-gap analysis, and personalized topic recommendations in a FastAPI + React app.",
-    role: "Team Leader & Core Backend/ML Developer",
+      "Krypton brings arXiv and OpenAlex results into one search flow, ranks papers with visible criteria, and uses Gemini to help readers summarize and explore the literature.",
+    role: "Team Leader & Backend Developer",
     timeline: "3 months",
     team: "Lead of 3-student engineering team",
     year: "2025",
@@ -297,45 +287,88 @@ export const projects: Project[] = [
     hero: "/projects/Krypton-home.png",
     homeHero: "/projects/Krypton-home.png",
     problem:
-      "Researchers waste hours filtering through hundreds of raw search results across disconnected preprint servers, where black-box search engines hide their ranking logic and hallucinating AI summaries detach from source citations.",
+      "A literature search can scatter useful papers across sources and leave readers without a clear reason for the order of results.",
     personalContribution:
-      "Led technical architecture and development: designed the dual-source ingestion engine for arXiv and OpenAlex, wrote the multi-factor scoring formula balancing TF-IDF lexical relevance, citation velocity, and publication recency, implemented an in-memory TTL caching tier to respect external API rate limits, and integrated the Google Gemini API with strict prompt contracts for verbatim-supported synthesis.",
-    metrics: {
-      stars: 152,
-      forks: 42,
-      views: "2.3K",
-    },
+      "I led a three-student team and worked on the FastAPI search pipeline, the weighted ranking service, result caching, and Gemini-assisted paper insights. The default rank combines 40% text relevance, 30% recency, and 30% citation score.",
     features: [
-      "Multi-source paper search across arXiv and OpenAlex in one query flow.",
-      "Intelligent ranking using relevance (TF-IDF), recency, and citation-based scoring.",
-      "AI-generated paper understanding with plain-English summaries and key contributions.",
-      "Structured insight extraction for each paper: problem, method, result, and limitation.",
-      "Research gap analysis that finds open questions and thematic opportunity clusters.",
-      "Personalized research experience with user profiles, topic recommendations, and goal-aware suggestions.",
-    ],
+  "Search arXiv and OpenAlex from one interface.",
+  "Rank results using relevance, recency, and citation signals.",
+  "Show paper summaries and structured research insights.",
+  "Save user profiles, interests, and search history.",
+  "Suggest topics and reading paths based on a research goal.",
+  "Cache repeated external requests to reduce unnecessary API calls."
+],
     technicalHighlights: [
-      "Deterministic composite ranking algorithm balancing term relevance, citation authority, and exponential decay on recency.",
-      "Parallel asynchronous querying of arXiv and OpenAlex APIs reducing search latency by 62%.",
-      "Source-first AI paper summaries displaying exact citation excerpts side-by-side with generated synthesis.",
-      "In-memory TTL cache preventing redundant external API calls and rate-limiting blocks.",
-    ],
+  "Implemented a weighted ranking service with a 40/30/30 default formula.",
+  "Combined arXiv and OpenAlex search results in a FastAPI pipeline.",
+  "Added citation enrichment, caching, and user-aware score adjustments.",
+  "Connected Gemini-assisted summaries to the paper exploration flow."
+],
+    tradeoffs: [
+  {
+    "decision": "Readable ranking signals over an opaque score",
+    "rationale": "Relevance, recency, and citations give readers a clearer reason for where a paper appears."
+  },
+  {
+    "decision": "Combine sources before ranking",
+    "rationale": "Searching multiple academic indexes in one flow broadens discovery while keeping one results list."
+  },
+  {
+    "decision": "Grounded AI assistance with source links",
+    "rationale": "Generated summaries are presented alongside source papers so readers can check the underlying research."
+  }
+],
     challenge:
-      "Academic literature discovery suffers from two extremes: traditional keyword searches that drown users in dated papers, and generative AI search engines that hallucinate findings without verifiable source anchors.",
+      "A useful paper search has to merge results from different APIs, handle missing citation data, and make ranking understandable to the person reading it.",
     approach:
-      "Our team built a transparent pipeline. The user's query searches arXiv and OpenAlex concurrently. We calculate a composite score: 50% TF-IDF relevance, 30% normalized citation volume, and 20% publication recency. Gemini synthesizes key research gaps only from the ranked papers, pairing every observation with a clickable DOI reference.",
+      "The backend searches arXiv and OpenAlex, enriches citation data, and scores results with TF-IDF relevance, publication recency, and citation counts. Personalization can adjust the weights for a reader’s interests and goals.",
     results:
-      "Krypton won 1st Place at the university Project Expo. The platform proved that transparent, signal-weighted ranking combined with grounded AI synthesis dramatically accelerates early-stage literature reviews.",
-    technologies: [
+      "Krypton won first place at the university Project Expo. The live product offers multi-source search, transparent ranking, paper summaries, and a reading-plan interface.",
+    categorizedTech: [
+  {
+    "category": "Frontend",
+    "items": [
       "React",
-      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion"
+    ]
+  },
+  {
+    "category": "Search Backend",
+    "items": [
       "FastAPI",
       "Python",
-      "Google Gemini API",
+      "scikit-learn",
+      "SQLAlchemy"
+    ]
+  },
+  {
+    "category": "Research & AI APIs",
+    "items": [
       "arXiv API",
       "OpenAlex API",
-      "scikit-learn",
-      "Tailwind CSS",
-    ],
+      "Google Gemini API"
+    ]
+  },
+  {
+    "category": "Data & Delivery",
+    "items": [
+      "SQLite",
+      "TTL Cache",
+      "Docker"
+    ]
+  }
+],
+    technologies: [
+  "React",
+  "FastAPI",
+  "Python",
+  "scikit-learn",
+  "arXiv API",
+  "OpenAlex API",
+  "Google Gemini API",
+  "SQLite"
+],
     images: [
       "/projects/krypton1.png",
       "/projects/krypton2.png",
@@ -345,25 +378,267 @@ export const projects: Project[] = [
       "/projects/krypton6.png",
     ],
     outcomes: [
-      { value: "1st", label: "PROJECT EXPO WINNER" },
-      { value: "3 Signals", label: "TRANSPARENT RANKING" },
-      { value: "0 Hallucinations", label: "STRICT CITATION AUDIT" },
-    ],
+  {
+    "value": "1st",
+    "label": "PROJECT EXPO"
+  },
+  {
+    "value": "3",
+    "label": "RANKING SIGNALS"
+  },
+  {
+    "value": "2",
+    "label": "PAPER SOURCES"
+  }
+],
     source: "https://github.com/Jayant-1/Krypton",
     demo: "https://krypton.jayantpotdar.in/",
-    relatedNoteSlug: "academic-paper-ranking-tfidf-citations",
+  },
+  {
+    slug: "3d-portfolio",
+    number: "03",
+    title: "3D Portfolio",
+    tagline: "A space-themed portfolio built as an interactive experience",
+    date: "Jul 2025",
+    category: ["3D GRAPHICS", "CREATIVE TECH", "PERFORMANCE"],
+    ownership: "Solo Developer",
+    summary:
+      "My first 3D portfolio brings together React, Three.js, React Three Fiber, and a Spline skills keyboard in a responsive space-themed website.",
+    role: "Solo Creative Frontend Developer",
+    timeline: "3 weeks",
+    team: "Solo build",
+    year: "2025",
+    color: "#4338ca",
+    ink: "#ffffff",
+    hero: "/projects/3d-portfolio-home.png",
+    homeHero: "/projects/3d-portfolio-home.png",
+    problem:
+      "I wanted a portfolio that let people experience my interest in creative engineering, rather than only read a list of skills.",
+    personalContribution:
+      "I built the site independently: Three.js scenes, particle effects, the Spline skills keyboard, animated project sections, contact flow, and mobile adaptations. I tuned canvas pixel ratios and loading behavior for smaller devices.",
+    features: [
+  "Explore interactive Three.js scenes and a particle starfield.",
+  "Use the Spline-powered skills keyboard on desktop.",
+  "Browse projects, skills, achievements, and contact information.",
+  "See a lighter skills experience on mobile.",
+  "Move through animated sections built with GSAP and Framer Motion.",
+  "Use responsive layouts and touch-friendly navigation."
+],
+    technicalHighlights: [
+  "Built desktop and Earth scenes with React Three Fiber.",
+  "Integrated a Spline keyboard with hover-driven skill content.",
+  "Tuned canvas pixel ratios for desktop and mobile devices.",
+  "Combined animations, project cards, and contact into one responsive experience."
+],
+    tradeoffs: [
+  {
+    "decision": "3D scenes with a mobile fallback",
+    "rationale": "Desktop visitors can explore the full spatial experience while mobile visitors retain a usable, lighter path through the content."
+  },
+  {
+    "decision": "Device-aware canvas rendering",
+    "rationale": "Lower pixel ratios on mobile reduce the graphics work required for each frame."
+  },
+  {
+    "decision": "Motion in service of navigation",
+    "rationale": "Section transitions and hover responses reinforce the portfolio story without hiding the underlying content."
+  }
+],
+    challenge:
+      "3D scenes can be visually engaging while still slowing a page or trapping touch gestures on mobile.",
+    approach:
+      "I combined React Three Fiber scenes with a Spline keyboard, used motion selectively throughout the page, and set lower canvas pixel ratios on mobile. A simpler keycap experience supports smaller screens.",
+    results:
+      "The deployed site is a working creative portfolio with interactive 3D scenes, motion-led navigation, projects, achievements, skills, and a contact flow.",
+    categorizedTech: [
+  {
+    "category": "3D & Graphics",
+    "items": [
+      "Three.js",
+      "React Three Fiber",
+      "@react-three/drei",
+      "Spline"
+    ]
+  },
+  {
+    "category": "Frontend & Motion",
+    "items": [
+      "React",
+      "JavaScript",
+      "GSAP",
+      "Framer Motion",
+      "Tailwind CSS"
+    ]
+  },
+  {
+    "category": "Build & Delivery",
+    "items": [
+      "Vite",
+      "Vercel",
+      "Git & GitHub"
+    ]
+  }
+],
+    technologies: [
+  "React",
+  "Three.js",
+  "React Three Fiber",
+  "Spline",
+  "GSAP",
+  "Framer Motion",
+  "Tailwind CSS",
+  "Vite"
+],
+    images: [
+      "/projects/3d-portfolio-home.png",
+      "/projects/3d-portfolio-skills.png",
+      "/projects/3d-portfolio-about.png",
+      "/projects/3d-portfolio-contact.png",
+      "/projects/3d-portfolio-projects.png",
+      "/projects/3d-portfolio-achievements.png",
+    ],
+    outcomes: [
+  {
+    "value": "3D",
+    "label": "INTERACTIVE SCENES"
+  },
+  {
+    "value": "Spline",
+    "label": "SKILLS KEYBOARD"
+  },
+  {
+    "value": "Mobile",
+    "label": "ADAPTIVE EXPERIENCE"
+  }
+],
+    source: "https://github.com/Jayant-1/3D-Portfolio",
+    demo: "https://jayant-1.vercel.app/",
+  },
+  {
+    slug: "malaria-detection",
+    number: "04",
+    title: "Malaria Detection System",
+    tagline: "An AI-assisted blood-smear screening prototype",
+    date: "Apr 2026",
+    category: ["HEALTHCARE AI", "COMPUTER VISION", "FULL STACK"],
+    ownership: "Team Leader",
+    summary:
+      "A team-built prototype that connects image-based malaria screening with patient records, role-based dashboards, and downloadable reports. It has not been clinically validated.",
+    role: "Team Leader & Full Stack Developer",
+    timeline: "2 months",
+    team: "Student engineering team",
+    year: "2026",
+    color: "#0284c7",
+    ink: "#ffffff",
+    hero: "/projects/malariadetectionsystem-home.png",
+    homeHero: "/projects/malariadetectionsystem-home.png",
+    problem:
+      "Reviewing blood-smear images and managing test records are separate steps in many workflows. Our team explored how software could bring them into one interface.",
+    personalContribution:
+      "I led the team building the prototype and contributed to its React dashboard, FastAPI inference flow, patient and report workflows, and integration with Supabase. The model result is presented as a research demonstration, not a clinical diagnosis.",
+    features: [
+  "Upload a cell image for prototype model inference.",
+  "Manage patient records and test results in role-specific views.",
+  "Generate and download PDF reports.",
+  "Review analytics and activity in the dashboard.",
+  "Use doctor, patient, and administrator flows.",
+  "Store application data through Supabase and PostgreSQL."
+],
+    technicalHighlights: [
+  "Connected a Keras inference model to FastAPI endpoints.",
+  "Built patient and report flows in a React dashboard.",
+  "Used Supabase authentication and database services.",
+  "Designed the result view to show the model output within a broader record workflow."
+],
+    tradeoffs: [
+  {
+    "decision": "Prototype screening rather than clinical diagnosis",
+    "rationale": "The model and interface demonstrate a workflow; they have not been clinically validated and cannot replace a qualified medical assessment."
+  },
+  {
+    "decision": "Separate inference API from the dashboard",
+    "rationale": "FastAPI handles model loading and prediction while the React application manages user tasks and records."
+  },
+  {
+    "decision": "Role-specific views for the same workflow",
+    "rationale": "Doctor, patient, and administrator screens expose the information each role needs."
+  }
+],
+    challenge:
+      "The product needed a clear way to move from an uploaded cell image to a model output and an associated patient record, while making the limits of the prototype visible.",
+    approach:
+      "The React interface handles doctor, patient, and administrator views. FastAPI loads a Keras model for image inference, while Supabase supports account and data workflows. The application can generate and share PDF reports.",
+    results:
+      "The live prototype demonstrates an end-to-end image analysis and report workflow. It is a student software project and has not been tested or approved for clinical use.",
+    categorizedTech: [
+  {
+    "category": "Frontend & UI",
+    "items": [
+      "React",
+      "Tailwind CSS",
+      "Vite",
+      "Recharts"
+    ]
+  },
+  {
+    "category": "Backend & Model",
+    "items": [
+      "FastAPI",
+      "Python",
+      "Keras",
+      "TensorFlow"
+    ]
+  },
+  {
+    "category": "Data & Reports",
+    "items": [
+      "Supabase",
+      "PostgreSQL",
+      "jsPDF"
+    ]
+  }
+],
+    technologies: [
+  "React",
+  "FastAPI",
+  "Supabase",
+  "Keras",
+  "Python",
+  "Tailwind CSS",
+  "jsPDF"
+],
+    images: [
+      "/projects/malariadetectionsystem1.png",
+      "/projects/malariadetectionsystem2.jpg",
+    ],
+    outcomes: [
+  {
+    "value": "Team",
+    "label": "LEADERSHIP"
+  },
+  {
+    "value": "3 roles",
+    "label": "WORKFLOW VIEWS"
+  },
+  {
+    "value": "PDF",
+    "label": "REPORT FLOW"
+  }
+],
+    source: "https://github.com/Jayant-1/MalariaDetectionSystem",
+    demo: "https://malariadetectionsystem.jayantpotdar.in/",
   },
   {
     slug: "neuralnet",
-    number: "04",
+    number: "05",
     title: "NeuralNet",
-    tagline: "Visual Deep Learning Architecture Studio & Code Compiler",
+    tagline: "Design neural networks visually and generate Keras code",
     date: "Oct 2025",
-    category: ["VISUAL TOOLING", "ML"],
+    category: ["VISUAL TOOLING", "ML", "SYSTEMS"],
     ownership: "Team Leader",
     summary:
-      "NeuralNet is a full-stack visual deep learning studio where you design neural networks with drag-and-drop nodes, compile to Keras, train with real TensorFlow metrics, and deploy secure prediction APIs.",
-    role: "Team Leader & Full-Stack System Architect",
+      "NeuralNet is a visual model-building prototype. Users connect layers in a React canvas and turn the graph into inspectable Keras code. The current hosted training view uses simulated metrics.",
+    role: "Team Leader & Full Stack Developer",
     timeline: "3 months",
     team: "Lead of 3-student engineering team",
     year: "2025",
@@ -372,45 +647,79 @@ export const projects: Project[] = [
     hero: "/projects/neuralnet-home.png",
     homeHero: "/projects/neuralnet-home.png",
     problem:
-      "Deep learning beginners and engineers frequently struggle with tensor shape mismatches and hyperparameter bugs declared across hundred-line code files where layer connection errors only surface at runtime.",
+      "A model architecture written only in code can be hard to understand before its layers and connections are visible.",
     personalContribution:
-      "Led the project from conception to working prototype: created the interactive node-graph canvas using React Flow, engineered the topological sorting graph compiler in FastAPI that converts node JSON into valid TensorFlow/Keras Python scripts, and built the WebSocket-backed training monitoring interface that streams live epoch loss curves.",
-    metrics: {
-      stars: 152,
-      forks: 42,
-      views: "2.3K",
-    },
+      "I led a three-student team building the graph editor and backend compiler. The React Flow canvas captures layer connections, and a FastAPI service topologically sorts the graph before generating Keras Python code.",
     features: [
-      "Drag-and-drop layer nodes and connect them to design a model visually.",
-      "Converts the visual graph into executable TensorFlow/Keras model code.",
-      "Supports built-in datasets like MNIST, Fashion-MNIST, CIFAR-10, CIFAR-100, and custom dataset uploads.",
-      "Lets users configure training and view metrics such as loss and accuracy over epochs in real time.",
-      "Trained models can be deployed as production API endpoints with generated API keys.",
-      "Provides an in-browser UI to test deployed models by sending inference requests and viewing predictions.",
-    ],
+  "Create model architectures with drag-and-drop layer nodes.",
+  "Connect layers and inspect the graph visually.",
+  "Generate Keras Python code from graph data.",
+  "Explore built-in dataset and upload interfaces.",
+  "Preview a training workflow with simulated metrics in the hosted demo.",
+  "Explore deployment and prediction interfaces as prototype flows."
+],
     technicalHighlights: [
-      "Topological sort compiler converting arbitrary directed acyclic graphs into clean, PEP-8 compliant Keras code.",
-      "Real-time tensor shape validation catching dimensional mismatches before training begins.",
-      "WebSocket streaming of training metrics (loss, accuracy, validation loss) rendered with live charts.",
-      "One-click export of saved `.keras` models accompanied by an auto-generated FastAPI inference endpoint.",
-    ],
+  "Built a React Flow editor for visual layer composition.",
+  "Implemented topological sorting and AST-based Keras code generation.",
+  "Created dataset, training, and deployment interface flows.",
+  "Made the current demo state clear: hosted training metrics are simulated."
+],
+    tradeoffs: [
+  {
+    "decision": "Generated source code over runtime evaluation",
+    "rationale": "An AST-based compiler creates code visitors can inspect and export instead of executing arbitrary graph text."
+  },
+  {
+    "decision": "Graph validation before training",
+    "rationale": "Topological sorting catches cycles and gives layers a reliable generation order."
+  },
+  {
+    "decision": "Demonstration mode for hosted training",
+    "rationale": "The current deployed route simulates training metrics to avoid the cost of running TensorFlow on its hosting tier."
+  }
+],
     challenge:
-      "Translating a visual DAG (directed acyclic graph) into valid sequential or functional Keras code requires strict validation: cyclic loops must be blocked, branching tensor dimensions must align, and layer parameters must typecheck.",
+      "A visual graph must reject invalid connections and produce code in a consistent order without relying on unsafe runtime evaluation.",
     approach:
-      "I implemented client-side connection constraints in XYFlow, and built a backend validation engine that performs topological sorting on the graph JSON. The compiler constructs a clean Keras script, executes local training in an isolated process, and pushes real-time epoch statistics over WebSockets.",
+      "The editor stores layers and connections as graph data. The backend checks their order and generates Python source through an AST-based compiler. The current deployed training screen demonstrates the intended workflow with simulated metrics.",
     results:
-      "The working prototype lets users compose Dense, Conv2D, MaxPooling, and Dropout layers visually, train models on standard classification datasets, and instantly generate a production-ready Python inference endpoint.",
-    technologies: [
+      "The live prototype supports visual architecture design and Keras code generation. Training and deployment are represented in the interface, but the hosted training route currently runs in mock mode.",
+    categorizedTech: [
+  {
+    "category": "Graph Editor",
+    "items": [
       "React",
-      "XYFlow",
-      "TypeScript",
+      "XYFlow / React Flow",
+      "JavaScript",
+      "Tailwind CSS"
+    ]
+  },
+  {
+    "category": "Backend & Compiler",
+    "items": [
       "FastAPI",
       "Python",
-      "TensorFlow",
-      "Keras",
-      "WebSockets",
-      "Tailwind CSS",
-    ],
+      "AST Code Generation",
+      "Topological Sort"
+    ]
+  },
+  {
+    "category": "Prototype Flows",
+    "items": [
+      "Dataset UI",
+      "Training Preview",
+      "Deployment UI"
+    ]
+  }
+],
+    technologies: [
+  "React",
+  "XYFlow",
+  "FastAPI",
+  "Python",
+  "Keras Code Generation",
+  "Tailwind CSS"
+],
     images: [
       "/projects/neuralnet1.png",
       "/projects/neuralnet2.png",
@@ -418,77 +727,21 @@ export const projects: Project[] = [
       "/projects/neuralnet4.png",
     ],
     outcomes: [
-      { value: "Visual", label: "DAG GRAPH COMPILER" },
-      { value: "Live", label: "WEBSOCKET METRICS" },
-      { value: "Zero Code", label: "MODEL TO API" },
-    ],
-    source: "https://github.com/Jayant-1/NeuralNet",
-    demo: "https://neuralnet.jayantpotdar.in/",
-    relatedNoteSlug: "building-visual-neural-network-editor",
+  {
+    "value": "Graph",
+    "label": "VISUAL BUILDER"
   },
   {
-    slug: "nova-learn",
-    number: "05",
-    title: "Nova-Learn",
-    tagline: "Adaptive Educational Syllabus Platform with Diagnostic Mastery",
-    date: "Aug 2024",
-    category: ["EDUCATION", "AI"],
-    ownership: "Team Developer",
-    summary:
-      "NovaLearn is an AI-powered platform that creates personalized learning paths with interactive content and quizzes. Designed with a futuristic 3D UI, it makes learning immersive, efficient, and goal-driven.",
-    role: "Frontend Engineer & Interface Designer",
-    timeline: "2 months",
-    team: "Collaborative student engineering team",
-    year: "2024",
-    color: "#ff4d8d",
-    ink: "#ffffff",
-    hero: "/projects/novalearn-home.png",
-    homeHero: "/projects/novalearn-home.png",
-    problem:
-      "One-size-fits-all curriculum tracks force beginners to tackle advanced material without prerequisites, while experienced students waste hours on concepts they already understand.",
-    personalContribution:
-      "Designed the responsive web interface, built the interactive syllabus node graph view, managed client-side mastery state with React Context, and implemented diagnostic quiz checkpoint evaluations.",
-    metrics: {
-      stars: 127,
-      forks: 35,
-      views: "3.1K",
-    },
-    features: [
-      "Personalized learning path generation from diagnostic quizzes.",
-      "Interactive 3D user interface designed with Spline.",
-      "Dynamic quiz generation with real-time mastery tracking.",
-      "Progress tracking and learning analytics dashboard.",
-      "Futuristic design system and responsive mobile learning experience.",
-      "Backend built with Node.js, Flask, and SQLite3.",
-    ],
-    technicalHighlights: [
-      "Dynamic mastery calculation adjusting recommended next modules based on student quiz scores.",
-      "Interactive SVG curriculum tree displaying locked, in-progress, and mastered learning modules.",
-      "Fast, responsive layout optimized for mobile study sessions.",
-    ],
-    challenge:
-      "Creating an intuitive visualization for branching learning paths that updates instantly as students pass diagnostic quizzes without confusing the learner.",
-    approach:
-      "We built dynamic skill trees where module completion unblocks dependent topic nodes. I focused on responsive state management, clear visual feedback for mastered competencies, and accessible assessment forms.",
-    results:
-      "Delivered an engaging educational prototype demonstrating how personalized branching paths help students master technical subjects at their own speed.",
-    technologies: [
-      "React",
-      "JavaScript",
-      "Tailwind CSS",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "Spline",
-    ],
-    images: ["/projects/novalearn1.png", "/projects/novalearn2.png"],
-    outcomes: [
-      { value: "Adaptive", label: "BRANCHING PATHS" },
-      { value: "Instant", label: "MASTERY FEEDBACK" },
-      { value: "Visual", label: "SYLLABUS GRAPH" },
-    ],
-    source: "https://github.com/Jayant-1/Nova-Learn",
-    demo: "https://nova-learn-jayant.vercel.app/",
+    "value": "AST",
+    "label": "CODE GENERATION"
+  },
+  {
+    "value": "Demo",
+    "label": "TRAINING PREVIEW"
+  }
+],
+    source: "https://github.com/Jayant-1/NeuralNet",
+    demo: "https://neuralnet.jayantpotdar.in/",
   },
 ];
 
@@ -504,89 +757,28 @@ export type Note = {
   content: string[];
 };
 
-export const notes: Note[] = [
-  {
-    slug: "astropixel-large-imagery-gdal",
-    title:
-      "Handling Gigabyte-Scale Images in the Browser: Tile Pyramids, GDAL, and OpenSeadragon",
-    tagline:
-      "How AstroPixel renders multi-gigabyte astronomical rasters at 60fps without browser memory crashes.",
-    date: "Mar 15, 2026",
-    readTime: "7 min read",
-    category: "Geospatial & Performance",
-    summary:
-      "Standard web browsers choke when asked to load uncompressed gigapixel images. In this note, I detail the architectural pipeline behind AstroPixel: generating multi-resolution Deep Zoom Image (DZI) pyramids with GDAL, serving asynchronous tiles via FastAPI, and streaming viewport-bounded canvas tiles with OpenSeadragon.",
-    projectSlug: "astropixel",
-    content: [
-      "When I started building AstroPixel, the initial attempt was straightforward: load a high-resolution 12,000×12,000 px astronomical composite from NASA directly into an HTML5 canvas. The browser tab promptly crashed after consuming over 2.4 GB of RAM. Mobile browsers didn't even get that far—they terminated the page immediately with out-of-memory errors.",
-      "The fundamental problem is resolution disparity. A modern laptop display only renders roughly 2 to 3 million pixels at any given second. Loading a 144-megapixel raster forces the browser to decode and store millions of invisible pixels that the user cannot even see until they zoom in.",
-      "The engineering solution lies in multi-resolution tile pyramids, the same fundamental architecture powering Google Maps and OpenStreetMap. Using GDAL (Geospatial Data Abstraction Library), I built an ingestion pipeline that slices raw GeoTIFF and PSB images into 256×256 px JPEG tiles organized in pyramid levels (Level 0 being a single 256px thumbnail, up to Level N representing 1:1 sensor resolution).",
-      "On the backend, FastAPI delivers tiles over an asynchronous endpoint with strict HTTP caching headers (`Cache-Control: public, max-age=31536000, immutable`). On the frontend, OpenSeadragon calculates the exact pyramid level and (x, y) coordinates intersecting the user's current viewport. It fetches only 12 to 24 tiles at a time—consuming less than 45 MB of RAM while maintaining 60fps pan and zoom.",
-      "Key architectural takeaway: Never make the client render what it cannot display. Processing resolution on the server and streaming bounded viewport tiles turns an intractable gigabyte-scale memory problem into a fast, predictable web experience.",
-    ],
-  },
-  {
-    slug: "building-visual-neural-network-editor",
-    title:
-      "Building a Visual Deep Learning Studio: Compiling Graph JSON to Executable Keras Code",
-    tagline:
-      "Transforming interactive React Flow DAGs into topologically sorted TensorFlow models with live WebSocket training.",
-    date: "Feb 10, 2026",
-    readTime: "8 min read",
-    category: "Full Stack & Machine Learning",
-    summary:
-      "Visual programming tools often suffer from clumsy code generation. Here is how we engineered NeuralNet's compilation engine: enforcing connection rules on a directed acyclic graph, running topological sort in Python, validating tensor shape compatibility, and streaming training metrics over WebSockets.",
-    projectSlug: "neuralnet",
-    content: [
-      "Most deep learning tutorials introduce neural networks as lines of code in Python notebooks. But deep networks are fundamentally graphs: tensor activations flow from input layers through transformations, convolutions, and pooling layers to final loss functions. Syntax bugs like mismatched channel dimensions or invalid kernel sizes are frustrating when they only appear ten minutes into training.",
-      "With NeuralNet, our goal was to make architecture inspection tactile. Users drag layer blocks (Dense, Conv2D, Dropout, Flatten) onto a canvas and wire connections visually. The challenge was building a compiler that treats this visual graph with the same rigor as an AST (Abstract Syntax Tree).",
-      "First, we enforced client-side acyclic constraints in React Flow. Neural networks cannot contain feedback cycles in standard feedforward settings. When the user clicks 'Compile', the front end serializes the graph into a JSON payload of nodes and directed edges.",
-      "On the FastAPI backend, we run Kahn's algorithm for topological sorting to determine the exact execution order of the layers. As each node is visited, the compiler calculates output shapes based on input tensor dimensions, padding ('same' vs. 'valid'), and stride parameters. If a Flatten layer hasn't been placed before a Dense layer following a Conv2D block, the compiler rejects the payload with an explicit error identifying the offending node ID.",
-      "Once validated, the backend generates idiomatic, PEP-8 compliant Python code using Keras Sequential or Functional APIs. We spawn training in an isolated background thread and push epoch-by-epoch loss and accuracy metrics over a WebSocket connection, rendering real-time SVG charts in the browser.",
-    ],
-  },
-  {
-    slug: "academic-paper-ranking-tfidf-citations",
-    title:
-      "Ranking Academic Papers Without Black-Box Search: Blending TF-IDF, Citations, and Recency",
-    tagline:
-      "Designing a transparent literature ranking algorithm that balances lexical relevance, citation authority, and publication velocity.",
-    date: "Jan 18, 2026",
-    readTime: "6 min read",
-    category: "Algorithms & Search",
-    summary:
-      "Academic literature discovery suffers when search engines either hide their ranking logic or over-index on historical citations. This article explains the multi-signal ranking algorithm we designed for Krypton to surface relevant papers from arXiv and OpenAlex.",
-    projectSlug: "krypton",
-    content: [
-      "When beginning an engineering literature review, two failure modes repeatedly occur: search by citation count, and you receive foundational papers from 2012 that miss the last decade of breakthroughs; search by pure keyword relevance on preprint servers, and you are flooded with low-quality unvetted drafts that coincidentally match keywords.",
-      "In Krypton, we set out to build a transparent ranking algorithm where the researcher can inspect exactly why a paper was surfaced. We ingest metadata from both arXiv and OpenAlex simultaneously.",
-      "The scoring model combines three normalized signals into a composite index: 1) Lexical relevance calculated via TF-IDF over the title, abstract, and author keywords; 2) Citation velocity normalized against the paper's publication field; and 3) An exponential decay function applied to publication age.",
-      "By balancing these signals (0.50 TF-IDF + 0.30 Normalized Citations + 0.20 Recency), recent high-impact preprints surface alongside seminal foundational work, while outdated non-relevant papers are naturally demoted.",
-      "Crucially, we pair this deterministic ranking with LLM synthesis from Gemini. Rather than asking the LLM to search the web (which invites hallucinations), we feed it only the top-ranked papers with strict instructions to generate summaries with verbatim citation citations. Transparent math for discovery, grounded AI for synthesis.",
-    ],
-  },
-];
+export const notes: Note[] = [];
 
 export const experienceItems = [
   {
     role: "Head of Web Development",
     organization: "TechSpark Technical Club, MSSU Pune",
-    period: "2024 to Present",
+    period: "2025 to Present",
     type: "Leadership & Engineering",
     highlights: [
-      "Direct technical web initiatives, manage technical deployments, and organize hackathons and engineering workshops for university students.",
-      "Lead and mentor a team of junior student developers in modern web engineering, Git workflows, and production deployment standards.",
-      "Architected event registration platforms and digital showcase portals handling hundreds of concurrent student submissions.",
+      "Lead the club's web initiatives and help ship sites and tools for university events.",
+      "Mentor student developers on React, Git workflows, and deployment.",
+      "Organize engineering workshops and collaborate with event teams on their digital presence.",
     ],
   },
   {
     role: "Web Development Co-Head",
     organization: "TechSpark Technical Club, MSSU Pune",
-    period: "2023 to 2024",
+    period: "2024 to 2025",
     type: "Club Leadership",
     highlights: [
-      "Co-led the technical club's digital presence and collaborated on university event platforms and promotional web tools.",
-      "Conducted introductory coding bootcamps on HTML, CSS, JavaScript, and React for incoming freshmen.",
+      "Co-led the club's web work and contributed to event pages and promotional tools.",
+      "Helped students get started with HTML, CSS, JavaScript, and React.",
     ],
   },
 ];
@@ -851,7 +1043,7 @@ export const certifications: Certification[] = [
   {
     name: "CS50 SQL: Computer Science for Databases",
     issuer: "Harvard University / edX",
-    year: "2024",
+    year: "2026",
     description:
       "In-depth training in relational database design, normalization, complex joins, subqueries, indexing, and optimization.",
     skills: ["Database Design", "Normalization", "Indexing", "Query Optimization"],

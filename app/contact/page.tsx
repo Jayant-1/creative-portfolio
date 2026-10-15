@@ -4,15 +4,15 @@ import ContactForm from "@/components/ContactForm";
 import { author, email, siteUrl, social } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact Jayant Potdar — Full Stack Developer",
+  title: "Contact",
   description:
-    "Get in touch with Jayant Potdar, Full Stack Developer based in Pune, India. Open to internships, software engineering roles, and high-impact web engineering.",
+    "Contact Jayant Potdar about a full stack internship, full-time role, or web project. Email him to arrange a call. Based in Pune and open to hybrid or remote work.",
   alternates: {
     canonical: "/contact",
   },
   openGraph: {
     title: "Contact Jayant Potdar | Full Stack Developer",
-    description: "Get in touch with Jayant Potdar regarding software engineering roles and collaborations.",
+    description: "Email Jayant Potdar about hiring, a project, or arranging a call.",
     url: `${siteUrl}/contact`,
   },
 };
@@ -29,7 +29,6 @@ export default function ContactPage() {
       name: author.name,
       jobTitle: author.role,
       email: email,
-      telephone: "+91 80108 55431",
       url: siteUrl,
       address: {
         "@type": "PostalAddress",
@@ -41,7 +40,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="ca-grid relative flex flex-1 flex-col px-4 py-10 sm:py-4 min-h-[calc(100svh-64px)]">
+    <div className="ca-grid relative flex flex-1 flex-col px-4 py-10 sm:py-4 min-h-[calc(100svh-64px)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd).replace(/</g, "\\u003c") }}
@@ -51,27 +50,27 @@ export default function ContactPage() {
       <div className="pointer-events-none absolute inset-0 hidden lg:block overflow-hidden" aria-hidden="true">
         {/* Left Polaroid */}
         <div
-          className="absolute left-[9%] top-[14%] w-60 xl:w-72 transition-transform duration-500 hover:rotate-0"
+          className="group absolute left-[8%] 2xl:left-[10%] top-[14%] w-60 xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
           style={{ transform: "rotate(-14.4deg)" }}
         >
           <div className="pointer-events-auto block w-full">
-            <figure className="relative inline-block bg-white p-2 pb-1 shadow-[0_6px_18px_rgba(17,18,18,0.22)] w-full">
-              <span className="absolute -left-4 -top-2 z-10 h-5 w-16 -rotate-[38deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.15)]" />
-              <span className="absolute -right-4 -top-2 z-10 h-5 w-16 rotate-[38deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.15)]" />
-              <div className="aspect-[4/5] w-full overflow-hidden relative">
+            <figure className="relative inline-block bg-white p-2.5 pb-2 shadow-[0_8px_24px_rgba(17,18,18,0.20)] group-hover:shadow-[0_16px_36px_rgba(17,18,18,0.28)] transition-shadow duration-500 w-full rounded-xs">
+              <span className="absolute -left-4 -top-2.5 z-10 h-5 w-16 -rotate-[38deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.15)]" />
+              <span className="absolute -right-4 -top-2.5 z-10 h-5 w-16 rotate-[38deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.15)]" />
+              <div className="aspect-[4/5] w-full overflow-hidden relative rounded-xs">
                 <ImageWithLoader
                   src="/images/img-1.png"
                   alt="Jayant Potdar"
                   fill
-                  sizes="288px"
+                  sizes="(max-width: 1280px) 480px, 600px"
+                  quality={95}
                   loaderVariant="photo"
                   loaderText="Developing..."
                   className="object-cover"
-                  priority
-                  fetchPriority="high"
                 />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <figcaption className="ca-hand mt-1 text-center text-lg leading-tight text-[var(--ca-ink)]/70">
+              <figcaption className="ca-hand mt-1.5 text-center text-lg leading-tight text-[var(--ca-ink)]/80">
                 Jayant Potdar
               </figcaption>
             </figure>
@@ -80,26 +79,31 @@ export default function ContactPage() {
 
         {/* Right Polaroid */}
         <div
-          className="absolute right-[9%] top-[18%] w-60 xl:w-72 transition-transform duration-500 hover:rotate-0"
-          style={{ transform: "rotate(16.2deg)" }}
+          className="group absolute right-[8%] 2xl:right-[10%] top-[17%] w-60 xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
+          style={{ transform: "rotate(15.5deg)" }}
         >
           <div className="pointer-events-auto block w-full">
-            <figure className="relative inline-block bg-white p-2 pb-1 shadow-[0_6px_18px_rgba(17,18,18,0.22)] w-full">
-              <span className="absolute -left-4 -top-2 z-10 h-5 w-16 -rotate-[38deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.15)]" />
-              <span className="absolute -right-4 -top-2 z-10 h-5 w-16 rotate-[38deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.15)]" />
-              <div className="aspect-[4/5] w-full overflow-hidden relative">
+            <figure className="relative inline-block bg-white p-2.5 pb-2 shadow-[0_8px_24px_rgba(17,18,18,0.20)] group-hover:shadow-[0_16px_36px_rgba(17,18,18,0.28)] transition-shadow duration-500 w-full rounded-xs">
+              <span className="absolute -left-4 -top-2.5 z-10 h-5 w-16 -rotate-[38deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.15)]" />
+              <span className="absolute -right-4 -top-2.5 z-10 h-5 w-16 rotate-[38deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.15)]" />
+              <div
+                className="w-full overflow-hidden relative rounded-xs"
+                style={{ aspectRatio: "2688 / 2997" }}
+              >
                 <ImageWithLoader
-                  src="/images/img-8.jpeg"
-                  alt="Jayant Potdar at Bandra-Worli Sea Link, Mumbai"
+                  src="/images/img-9.jpeg"
+                  alt="Jayant Potdar overlooking Sahyadri mountain valley from historic fort bastion"
                   fill
-                  sizes="288px"
+                  sizes="(max-width: 1280px) 600px, 800px"
+                  quality={95}
                   loaderVariant="photo"
                   loaderText="Developing..."
-                  className="object-cover"
+                  className="object-cover object-center"
                 />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <figcaption className="ca-hand mt-1 text-center text-lg leading-tight text-[var(--ca-ink)]/70">
-                Bandra-Worli Sea Link 🌊
+              <figcaption className="ca-hand mt-1.5 text-center text-lg leading-tight text-[var(--ca-ink)]/80">
+                Sahyadri Forts ⛰️
               </figcaption>
             </figure>
           </div>
@@ -163,7 +167,7 @@ export default function ContactPage() {
             <path d="M36 14l6 4-7 3" />
           </svg>
           <p data-pf-block="hero.status" className="ca-hand text-2xl text-[var(--ca-ink)] sm:text-3xl">
-            Open to new work and good problems
+            Hiring, projects, or a call? Email me.
           </p>
         </div>
 
@@ -221,6 +225,6 @@ export default function ContactPage() {
           </a>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

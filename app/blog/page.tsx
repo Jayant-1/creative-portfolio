@@ -7,12 +7,13 @@ import Reveal from "@/components/Reveal";
 import { siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Engineering Blog — Coming Soon | Jayant Potdar",
+  title: "Engineering Blog — Coming Soon",
   description:
     "Engineering write-ups and technical breakdowns by Jayant Potdar are coming soon: deep-zoom geospatial pipelines, visual DAG neural network compilers, and multi-signal search algorithms.",
   alternates: {
     canonical: "/blog",
   },
+  robots: { index: false, follow: true },
   openGraph: {
     title: "Engineering Blog — Coming Soon | Jayant Potdar",
     description:
@@ -121,7 +122,7 @@ export default function BlogPage() {
             </h2>
 
             <p className="ca-mono mx-auto mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-[var(--ca-ink)]/75">
-              Technical breakdowns, architecture deep-dives, and production notes are currently in the works.
+              I am preparing technical breakdowns from the projects above. Explore the live work while the first article is in progress.
             </p>
 
             {/* Action CTA */}

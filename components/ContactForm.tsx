@@ -110,7 +110,7 @@ export default function ContactForm() {
             data-pf-block="contact.description"
             className="ca-mono text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)]"
           >
-            Got a project, a hard problem, or just want to say hi? Send it over. I read every message.
+            Hiring for a full stack role or planning a project? Tell me about it, and we can arrange a call.
           </p>
 
           <div className="grid mt-3">
@@ -131,7 +131,7 @@ export default function ContactForm() {
                     setError("");
                   }
                 }}
-                placeholder="Tell me a story, or a project idea…"
+                placeholder="Tell me about your role or project…"
                 aria-label="Your message"
                 className="block min-h-28 w-full border-0 bg-transparent p-0 text-base text-[var(--ca-ink)] shadow-none placeholder:text-[var(--ca-ink)]/65 focus-visible:ring-0 focus-visible:outline-none resize-none"
               />

@@ -13,7 +13,7 @@ import {
   UnderlineDoodle,
   WavyDivider,
 } from "@/components/Paper";
-import { author, projects } from "@/lib/site";
+import { author, projects, isDarkProjectHero } from "@/lib/site";
 import {
   MouseLens,
   CardLens,
@@ -56,7 +56,7 @@ const SKILL_ROWS = [
   ],
   [
     {
-      name: "User Research",
+      name: "Backend Systems",
       color: "var(--ca-magenta)",
       textColor: "text-white",
       emojiA: "👀",
@@ -137,19 +137,19 @@ const PROJECT_TAPES: Record<string, { className: string }[]> = {
         "-left-5 -bottom-3 h-[24px] w-[96px] rotate-[11deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.14)]",
     },
   ],
-  // Nova-Learn — Soft Yellow & Cyan tapes
-  "nova-learn": [
+  // 3D Cosmic Portfolio — Purple, Cyan & Soft Yellow tapes
+  "3d-portfolio": [
     {
       className:
-        "-left-5 -top-3 h-[26px] w-[104px] -rotate-[9deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+        "-left-5 -top-3.5 h-[26px] w-[116px] -rotate-[14deg] bg-[var(--ca-purple)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
     },
     {
       className:
-        "right-14 -top-3.5 h-[24px] w-[112px] rotate-[3deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+        "right-10 -top-3 h-[24px] w-[100px] rotate-[7deg] bg-[var(--ca-cyan)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
     },
     {
       className:
-        "-right-6 -bottom-3.5 h-[26px] w-[104px] -rotate-[14deg] bg-[var(--ca-mint)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
+        "-right-4 -bottom-3.5 h-[24px] w-[112px] -rotate-[12deg] bg-[var(--ca-yellow-soft)] opacity-90 shadow-[0_1px_4px_rgba(17,18,18,0.16)]",
     },
   ],
 };
@@ -158,10 +158,12 @@ function ProjectCardImage({
   src,
   alt,
   href,
+  darkCard = false,
 }: {
   src: string;
   alt: string;
   href: string;
+  darkCard?: boolean;
 }) {
   const { containerRef, lensRef, onMove, onMouseEnter, onMouseLeave } = useLens(
     [0, 100],
@@ -188,7 +190,7 @@ function ProjectCardImage({
           loaderText="Loading Preview..."
         />
       </div>
-      <CardLens lensRef={lensRef} />
+      <CardLens lensRef={lensRef} darkCard={darkCard} />
     </Link>
   );
 }
@@ -217,15 +219,13 @@ export default function HomePage() {
                 <span className="flex h-28 w-28 2xl:h-32 2xl:w-32 -rotate-6 items-center justify-center rounded-full bg-[var(--ca-orange)] p-2 shadow-lg transition-transform duration-300">
                   <div className="relative h-full w-full overflow-hidden rounded-full">
                     <ImageWithLoader
-                      src="/images/hero-flank-left.jpg"
+                      src="/images/img-10.jpeg"
                       alt={`${author.name} on scenic mountain outlook`}
                       fill
                       sizes="(max-width: 1536px) 112px, 128px"
-                      className="object-cover"
+                      className="object-cover scale-[1.75] object-[50%_25%]"
                       loaderVariant="avatar"
                       loaderText="Loading..."
-                      priority
-                      fetchPriority="high"
                     />
                   </div>
                 </span>
@@ -250,8 +250,6 @@ export default function HomePage() {
                       className="object-cover"
                       loaderVariant="avatar"
                       loaderText="Loading..."
-                      priority
-                      fetchPriority="high"
                     />
                   </div>
                 </span>
@@ -572,11 +570,11 @@ export default function HomePage() {
               <p className="ca-mono mx-auto mt-6 max-w-2xl text-center text-xs font-bold uppercase leading-relaxed tracking-[0.16em] text-[var(--ca-ink)] sm:max-w-3xl sm:text-sm">
                 <span className="inline-flex items-center gap-2">
                   <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--ca-blue)]" />
-                  <span>Open to new opportunities</span>
+                  <span>Open to internships &amp; full-time roles</span>
                 </span>
                 <br />
                 <span className="inline-block sm:whitespace-nowrap">
-                  Let&apos;s build something memorable and interesting.
+                  Based in Pune · open to hybrid and remote work.
                 </span>
               </p>
             </Pop>
@@ -589,7 +587,7 @@ export default function HomePage() {
           <Pop delay={0.22} inView={false} trigger={heroReady}>
             <h1 className="mt-10 max-w-3xl text-4xl font-semibold leading-[1.15] tracking-tight text-[var(--ca-ink)] sm:mt-14 sm:text-6xl">
               <span>
-                I build software that <SpinningGear /> gets out of your way.{" "}
+                I design expressive interfaces <SpinningGear /> and build the systems behind them.{" "}
                 <SpinningFlower />
               </span>
             </h1>
@@ -696,8 +694,8 @@ export default function HomePage() {
             >
               <Polaroid
                 src="/images/img-4.jpeg"
-                alt="AstroPixel Ideation 3.0 ₹1 Lakh Award"
-                caption="AstroPixel • ₹1 Lakh Win 🏆"
+                alt="AstroPixel Ideation 3.0 award"
+                caption="AstroPixel • Ideation 3.0 🏆"
                 aspectClassName="aspect-[4/3]"
                 className="w-full transition-transform duration-300 hover:rotate-0 hover:scale-105"
               />
@@ -719,10 +717,10 @@ export default function HomePage() {
 
             <div className="mt-10">
               <p className="ca-hand mx-auto max-w-3xl text-3xl font-medium leading-[1.2] text-[var(--ca-ink)] sm:text-4xl lg:text-5xl">
-                I&apos;m a full stack developer who gets a little too excited
-                about making complicated things feel simple. ✨ I care about the
-                small details, the edge cases everyone forgets, and shipping
-                work that genuinely makes someone&apos;s day easier. 🧑🏻‍💻
+                I like taking complex ideas apart, learning how every piece
+                works, and building them back into useful products. ✨ My
+                favorite work combines a distinctive interface with the
+                engineering needed to ship it. 🧑🏻‍💻
               </p>
             </div>
 
@@ -739,8 +737,8 @@ export default function HomePage() {
               <DropIn y={-24} rotate={3} delay={0.2} className="w-48 sm:w-60">
                 <Polaroid
                   src="/images/img-4.jpeg"
-                  alt="AstroPixel ₹1 Lakh Win"
-                  caption="₹1 Lakh Win 🎉"
+                  alt="AstroPixel Ideation 3.0 award"
+                  caption="Ideation 3.0 🎉"
                   aspectClassName="aspect-[4/3]"
                 />
               </DropIn>
@@ -809,14 +807,14 @@ export default function HomePage() {
             <UnderlineDoodle className="mt-1 h-3 w-24" />
           </div>
 
-          <span className="mt-6 block text-center">
+          <div className="mt-6 block text-center">
             <h2
               id="featured-works-title"
               className="ca-display max-w-[10ch] text-center text-6xl leading-[0.92] tracking-tight text-[var(--ca-ink)] sm:text-8xl lg:text-9xl inline-block"
             >
               <StaggerText text="FEATURED PROJECTS" stagger={0.05} />
             </h2>
-          </span>
+          </div>
         </div>
 
         {/* Stacking Sticky Folder Cards */}
@@ -824,10 +822,11 @@ export default function HomePage() {
           {projects.map((project, idx) => {
             const tabMargins = [
               "0",
-              "min(calc(18% - 50px), calc(100% - 340px))",
-              "min(calc(36% - 50px), calc(100% - 340px))",
-              "min(calc(54% - 50px), calc(100% - 340px))",
-              "min(calc(72% - 50px), calc(100% - 340px))",
+              "min(calc(15.5% - 25px), calc(100% - 340px))",
+              "min(calc(31% - 25px), calc(100% - 340px))",
+              "min(calc(46.5% - 25px), calc(100% - 340px))",
+              "min(calc(62% - 25px), calc(100% - 340px))",
+              "min(calc(77.5% - 25px), calc(100% - 340px))",
             ];
             const isFirst = idx === 0;
 
@@ -843,10 +842,10 @@ export default function HomePage() {
                   style={{ marginLeft: tabMargins[idx] || "0" }}
                 >
                   <span
-                    className={`ca-mono inline-flex items-center gap-2 py-3.5 pr-14 text-xs font-bold uppercase tracking-[0.2em] sm:gap-3.5 sm:py-6 sm:pr-28 sm:text-base ${
+                    className={`ca-mono inline-flex items-center gap-2 whitespace-nowrap py-3.5 pr-14 text-xs font-bold uppercase tracking-[0.2em] sm:gap-3 sm:py-5 sm:pr-20 sm:text-sm lg:text-base ${
                       isFirst
-                        ? "pl-5 folder-tab-shape sm:pl-9"
-                        : "pl-12 folder-tab-mid-shape sm:pl-24"
+                        ? "pl-5 folder-tab-shape sm:pl-8"
+                        : "pl-10 folder-tab-mid-shape sm:pl-18 lg:pl-20"
                     }`}
                     style={{
                       backgroundColor: project.color,
@@ -971,6 +970,7 @@ export default function HomePage() {
                         src={project.homeHero || project.hero}
                         alt={project.title}
                         href={`/projects/${project.slug}`}
+                        darkCard={isDarkProjectHero(project.slug)}
                       />
                     </div>
                   </div>

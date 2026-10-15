@@ -97,6 +97,26 @@ const navItems = [
     ),
   },
   {
+    href: "/components",
+    label: "Components",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        stroke="#ffffff"
+        strokeWidth="2.5"
+        strokeLinejoin="round"
+        paintOrder="stroke"
+        className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))] transition-transform duration-300 ease-out origin-center group-hover:rotate-45 group-hover:scale-110"
+      >
+        <path d="M12 1.5L17 6.5L12 11.5L7 6.5Z" />
+        <path d="M6.5 7L11.5 12L6.5 17L1.5 12Z" />
+        <path d="M17.5 7L22.5 12L17.5 17L12.5 12Z" />
+        <path d="M12 12.5L17 17.5L12 22.5L7 17.5Z" />
+      </svg>
+    ),
+  },
+  {
     href: "/blog",
     label: "Blog",
     icon: (
@@ -200,7 +220,7 @@ export function Header() {
                   item.href === "/"
                     ? pathname === "/"
                     : pathname.startsWith(item.href) ||
-                      (item.href === "/projects" && (pathname.startsWith("/work") || pathname.startsWith("/case-studies") || pathname.startsWith("/projects"))) ||
+                      (item.href === "/projects" && pathname.startsWith("/case-studies")) ||
                       (item.href === "/blog" && pathname.startsWith("/notes"));
 
                 return (
@@ -296,7 +316,7 @@ export function Header() {
                     item.href === "/"
                       ? pathname === "/"
                       : pathname.startsWith(item.href) ||
-                        (item.href === "/projects" && (pathname.startsWith("/work") || pathname.startsWith("/case-studies") || pathname.startsWith("/projects"))) ||
+                        (item.href === "/projects" && pathname.startsWith("/case-studies")) ||
                         (item.href === "/blog" && pathname.startsWith("/notes"));
 
                   return (

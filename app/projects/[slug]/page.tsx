@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ImageWithLoader } from "@/components/ImageWithLoader";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, ExternalLink, CheckCircle2, ChevronRight, FileText, Star, GitFork, Eye } from "lucide-react";
+import {
+  ExternalLink,
+  ChevronRight,
+  Star,
+  Eye,
+  FileText,
+  ArrowRight,
+  Layers,
+  Wrench,
+  ArrowUpRight,
+} from "lucide-react";
 import { Footer, Scribble, Tape } from "@/components/Paper";
 import { RelatedProjectCard } from "@/components/FolderCard";
-import Reveal from "@/components/Reveal";
+import { ProjectShowcaseStage } from "@/components/ProjectShowcaseStage";
 import { noteBySlug, projectBySlug, projects, siteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -16,8 +25,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const project = projectBySlug(params.slug);
   if (!project) return {};
 
-  const title = `${project.title} — Project & Architecture`;
-  const description = `${project.summary} Engineered by Jayant Potdar. Learn about the technical challenge, architecture decisions, and measured outcomes.`;
+  const title = `${project.title} — Project Case Study`;
+  const description = `${project.title}: ${project.tagline}. Read Jayant Potdar's case study, see the source code, and explore the live demo.`;
 
   return {
     title,
@@ -39,6 +48,12 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
         },
       ],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} — Jayant Potdar`,
+      description,
+      images: [`${siteUrl}${project.hero}`],
+    },
   };
 }
 
@@ -54,6 +69,8 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
   const project = projectBySlug(params.slug);
   if (!project) notFound();
 
+  const currentIdx = projects.findIndex((p) => p.slug === project.slug);
+  const nextProject = projects[(currentIdx + 1) % projects.length];
   const relatedNote = project.relatedNoteSlug ? noteBySlug(project.relatedNoteSlug) : undefined;
   const relatedProjects = projects.filter((p) => p.slug !== project.slug).slice(0, 2);
 
@@ -61,18 +78,16 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: project.title,
-    applicationCategory: "DeveloperApplication",
+    applicationCategory: "Web Application",
+    applicationSubCategory: project.category.join(", "),
     operatingSystem: "Web Browser",
     description: project.summary,
-    url: `${siteUrl}/projects/${project.slug}`,
+    url: project.demo || project.source,
+    mainEntityOfPage: `${siteUrl}/projects/${project.slug}`,
+    sameAs: project.source,
     image: `${siteUrl}${project.hero}`,
     author: {
       "@id": `${siteUrl}/#jayant`,
-    },
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
     },
     inLanguage: "en-IN",
   };
@@ -102,8 +117,14 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
     ],
   };
 
+  const ownershipBg = project.ownership.includes("Solo")
+    ? "var(--ca-cyan)"
+    : project.ownership.includes("Leader")
+    ? "var(--ca-yellow-soft)"
+    : "var(--ca-mint)";
+
   return (
-    <div className="ca-grid min-h-screen pt-12 sm:pt-16">
+    <div className="ca-grid min-h-screen pt-10 sm:pt-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd).replace(/</g, "\\u003c") }}
@@ -114,369 +135,161 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
       />
 
       <article className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        {/* Layer 1: Recruiter-First Header (0–5 Seconds Law) */}
         {/* Breadcrumb Trail */}
-        <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
-          <Link href="/" className="inline-flex min-h-[44px] items-center px-1.5 hover:text-[var(--ca-blue)]">Home</Link>
-          <ChevronRight size={14} />
-          <Link href="/projects" className="inline-flex min-h-[44px] items-center px-1.5 hover:text-[var(--ca-blue)]">Projects</Link>
-          <ChevronRight size={14} />
-          <span className="inline-flex min-h-[44px] items-center px-1.5 text-[var(--ca-ink)] font-bold">{project.title}</span>
+        <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
+          <Link href="/" className="inline-flex min-h-[44px] items-center px-1.5 hover:text-[var(--ca-blue)]">
+            Home
+          </Link>
+          <ChevronRight size={14} className="shrink-0 text-[var(--ca-ink)]/40" />
+          <Link href="/projects" className="inline-flex min-h-[44px] items-center px-1.5 hover:text-[var(--ca-blue)]">
+            Projects
+          </Link>
+          <ChevronRight size={14} className="shrink-0 text-[var(--ca-ink)]/40" />
+          <span className="inline-flex min-h-[44px] items-center px-1.5 text-[var(--ca-ink)] font-bold truncate max-w-[200px] min-[400px]:max-w-[280px] sm:max-w-none">
+            {project.title}
+          </span>
         </nav>
 
-        {/* Header Grid: Left Title & Summary, Right 2x2 Torn Fact Notes */}
-        <header className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14 pb-12 sm:pb-16">
-          <div>
-            <div className="flex flex-wrap items-center gap-2.5">
-              <span className="ca-mono inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[var(--ca-ink)]">
-                <span className="h-2.5 w-2.5 rounded-full bg-[var(--ca-blue)]" />
-                {project.date}
-              </span>
+        {/* Recruiter-First Header Hero */}
+        <header className="pb-10 sm:pb-14">
+          {/* Metadata Badges Row */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* Date Badge */}
+            <span className="ca-mono inline-flex items-center gap-1.5 rounded-full border border-[var(--ca-ink)]/20 bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs">
+              <span className="h-2 w-2 rounded-full bg-[var(--ca-blue)] animate-pulse" />
+              {project.date}
+            </span>
+
+            {/* Ownership Badge */}
+            <span
+              className="ca-mono inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] border border-[var(--ca-ink)]/20 shadow-2xs"
+              style={{ backgroundColor: ownershipBg }}
+            >
+              {project.ownership}
+            </span>
+
+            {/* Category / Domain Tags */}
+            {project.category.map((cat) => (
               <span
-                className="ca-mono inline-block rounded-full px-3 py-0.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]"
-                style={{
-                  backgroundColor:
-                    project.ownership === "Solo Full Stack Project"
-                      ? "var(--ca-cyan)"
-                      : "var(--ca-yellow-soft)",
-                }}
+                key={cat}
+                className="ca-mono inline-block rounded-full border border-[var(--ca-ink)]/20 bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/80 shadow-2xs"
               >
-                {project.ownership}
+                {cat}
               </span>
-            </div>
+            ))}
 
-            <h1 className="ca-display mt-4 text-5xl min-[390px]:text-6xl sm:text-8xl md:text-9xl uppercase leading-none tracking-tight text-[var(--ca-ink)]">
-              {project.title}
-            </h1>
-
-            <p className="mt-3 text-lg font-bold text-[var(--ca-blue)] sm:text-xl">
-              {project.tagline}
-            </p>
-
+            {/* Public Proof Metrics */}
             {project.metrics && (
-              <div className="mt-3.5 flex flex-wrap items-center gap-2">
-                <span className="ca-mono inline-flex items-center gap-1.5 rounded-sm border border-[var(--ca-ink)]/20 bg-white px-2.5 py-1 text-xs font-bold text-[var(--ca-ink)] shadow-2xs">
-                  <Star size={13} className="text-amber-500 fill-amber-500" />
-                  {project.metrics.stars} Stars
+              <div className="flex items-center gap-1.5">
+                <span className="ca-mono inline-flex items-center gap-1 rounded-full border border-[var(--ca-ink)]/20 bg-white px-2.5 py-1 text-xs font-bold text-[var(--ca-ink)] shadow-2xs" title="GitHub Stars">
+                  <Star size={12} className="text-amber-500 fill-amber-500" />
+                  {project.metrics.stars}
                 </span>
-                <span className="ca-mono inline-flex items-center gap-1.5 rounded-sm border border-[var(--ca-ink)]/20 bg-white px-2.5 py-1 text-xs font-bold text-[var(--ca-ink)] shadow-2xs">
-                  <GitFork size={13} className="text-[var(--ca-blue)]" />
-                  {project.metrics.forks} Forks
-                </span>
-                <span className="ca-mono inline-flex items-center gap-1.5 rounded-sm border border-[var(--ca-ink)]/20 bg-white px-2.5 py-1 text-xs font-bold text-[var(--ca-ink)] shadow-2xs">
-                  <Eye size={13} className="text-emerald-600" />
-                  {project.metrics.views} Views
+                <span className="ca-mono inline-flex items-center gap-1 rounded-full border border-[var(--ca-ink)]/20 bg-white px-2.5 py-1 text-xs font-bold text-[var(--ca-ink)] shadow-2xs" title="Project Views">
+                  <Eye size={12} className="text-emerald-600" />
+                  {project.metrics.views}
                 </span>
               </div>
             )}
-
-            <p className="mt-5 text-xl leading-relaxed text-[var(--ca-ink)]/80 sm:text-2xl font-medium">
-              {project.summary}
-            </p>
-
-            {/* Category Tags */}
-            <div className="mt-8 flex flex-wrap gap-2.5">
-              {project.category.map((tag, tIdx) => {
-                const tagColors = [
-                  "var(--ca-yellow-soft)",
-                  "var(--ca-mint)",
-                  "var(--ca-cyan)",
-                  "var(--ca-pink-soft)",
-                  "var(--ca-purple)",
-                ];
-                const tagBg = tagColors[tIdx % tagColors.length];
-                return (
-                  <span
-                    key={tag}
-                    className="ca-mono ca-notched-tag px-4 pb-2 pt-2.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] border border-[var(--ca-ink)]/20 shadow-2xs"
-                    style={{ backgroundColor: tagBg }}
-                  >
-                    {tag}
-                  </span>
-                );
-              })}
-            </div>
           </div>
 
-          {/* 2x2 Pastel Scalloped Stamp Fact Notes */}
-          <div className="grid grid-cols-2 gap-4 pt-2">
-            <div
-              className="ca-stamp-note relative p-5 shadow-[2px_4px_12px_rgba(25,21,16,0.12)] -rotate-1 transition-transform duration-200 hover:rotate-0"
-              style={{ backgroundColor: "var(--ca-cyan)" }}
-            >
-              <Tape className="-left-2 -top-2" angle={-30} color="var(--ca-yellow-soft)" />
-              <strong className="ca-mono block text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-                ROLE
-              </strong>
-              <span className="mt-1 block text-sm font-semibold text-[var(--ca-ink)] sm:text-base">
-                {project.role}
-              </span>
-            </div>
+          {/* Massive Display Title */}
+          <h1 className="ca-display mt-4 text-5xl min-[390px]:text-6xl sm:text-7xl md:text-8xl lg:text-9xl uppercase leading-[0.92] tracking-tight text-[var(--ca-ink)]">
+            {project.title}
+          </h1>
 
-            <div
-              className="ca-stamp-note relative p-5 shadow-[2px_4px_12px_rgba(25,21,16,0.12)] rotate-1 transition-transform duration-200 hover:rotate-0"
-              style={{ backgroundColor: "var(--ca-yellow-soft)" }}
-            >
-              <Tape className="-right-2 -top-2" angle={30} color="var(--ca-cyan)" />
-              <strong className="ca-mono block text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-                TIMELINE
-              </strong>
-              <span className="mt-1 block text-sm font-semibold text-[var(--ca-ink)] sm:text-base">
-                {project.timeline}
-              </span>
-            </div>
+          {/* High-Signal Tagline */}
+          <p className="mt-3 text-lg font-bold text-[var(--ca-blue)] sm:text-2xl">
+            {project.tagline}
+          </p>
 
-            <div
-              className="ca-stamp-note relative p-5 shadow-[2px_4px_12px_rgba(25,21,16,0.12)] rotate-1 transition-transform duration-200 hover:rotate-0"
-              style={{ backgroundColor: "var(--ca-mint)" }}
-            >
-              <Tape className="-left-2 -top-2" angle={-25} color="var(--ca-pink-soft)" />
-              <strong className="ca-mono block text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-                TEAM STRUCTURE
-              </strong>
-              <span className="mt-1 block text-sm font-semibold text-[var(--ca-ink)] sm:text-base">
-                {project.team}
-              </span>
-            </div>
+          {/* Recruiter Quick Actions: Immediate proof access (0-3s scan right under title & tagline) */}
+          <div className="mt-5 flex flex-wrap items-center gap-3.5">
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-ink)]"
+              >
+                <ExternalLink size={15} />
+                Launch Live App
+              </a>
+            )}
 
-            <div
-              className="ca-stamp-note relative p-5 shadow-[2px_4px_12px_rgba(25,21,16,0.12)] -rotate-1 transition-transform duration-200 hover:rotate-0"
-              style={{ backgroundColor: "var(--ca-pink-soft)" }}
+            <a
+              href={project.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-yellow)]"
             >
-              <Tape className="-right-2 -top-2" angle={25} color="var(--ca-yellow-soft)" />
-              <strong className="ca-mono block text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-                YEAR
-              </strong>
-              <span className="mt-1 block text-sm font-semibold text-[var(--ca-ink)] sm:text-base">
-                {project.year}
-              </span>
-            </div>
+              <GithubIcon className="h-4 w-4" />
+              View Source
+            </a>
+
+            {relatedNote && (
+              <Link
+                href={`/notes/${relatedNote.slug}`}
+                className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border border-[var(--ca-ink)]/30 bg-[var(--ca-surface)] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs transition-colors hover:bg-white"
+              >
+                <FileText size={14} className="text-[var(--ca-blue)]" />
+                Engineering Deep Dive
+              </Link>
+            )}
           </div>
+
+          {/* Executive Summary */}
+          <p className="mt-5 max-w-3xl text-base leading-relaxed text-[var(--ca-ink)]/85 sm:text-xl font-medium">
+            {project.summary}
+          </p>
         </header>
 
-        {/* Large Framed Hero Image with Translucent Corner Tape */}
-        <div className="relative mb-20 sm:mb-28">
-          <Tape className="-left-4 -top-3 z-10" angle={-14} color="var(--ca-cyan)" />
-          <Tape className="-right-4 -top-3 z-10" angle={14} color="var(--ca-yellow-soft)" />
-          <div className="relative aspect-[16/10] w-full overflow-hidden border-4 border-[var(--ca-ink)] bg-white shadow-xl">
-            <ImageWithLoader
-              src={project.hero}
-              alt={`${project.title} primary interface`}
-              fill
-              priority
-              fetchPriority="high"
-              loaderVariant="project"
-              loaderText="Loading Hero Preview..."
-              className="object-cover"
-              sizes="(max-width: 1024px) 96vw, 1000px"
-            />
-          </div>
-        </div>
+        {/* Layer 2: Visual Proof Showcase Stage (5–15 Seconds Law) */}
+        <ProjectShowcaseStage
+          title={project.title}
+          slug={project.slug}
+          hero={project.hero}
+          images={project.images}
+          demo={project.demo}
+          source={project.source}
+          color={project.color}
+        />
 
-        {/* Ownership & Contribution Box */}
-        <section className="mb-20 sm:mb-28 border-3 border-[var(--ca-ink)] bg-white p-6 sm:p-10 shadow-[6px_8px_0_var(--ca-ink)]" aria-labelledby="contribution-heading">
-          <span className="ca-mono inline-block rounded-full bg-[var(--ca-ink)] px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-white">
-            Architectural Ownership
-          </span>
-          <h2 id="contribution-heading" className="mt-3 text-2xl font-bold uppercase text-[var(--ca-ink)] sm:text-3xl">
-            What Jayant Potdar Built &amp; Owned
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-[var(--ca-ink)]/85 sm:text-lg">
-            {project.personalContribution}
-          </p>
-
-          <div className="mt-6">
-            <h3 className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] mb-3">
-              Key Technical Decisions:
-            </h3>
-            <ul className="space-y-2.5 text-sm sm:text-base text-[var(--ca-ink)]/85">
-              {project.technicalHighlights.map((highlight, hIdx) => (
-                <li key={hIdx} className="flex items-start gap-3">
-                  <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-[var(--ca-blue)]" />
-                  <span>{highlight}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {project.features && project.features.length > 0 && (
-            <div className="mt-8 rounded-md border border-[var(--ca-ink)]/15 bg-[var(--ca-chrome)]/40 p-5">
-              <h3 className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] mb-3">
-                Core System Features &amp; Capabilities:
-              </h3>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm sm:text-base text-[var(--ca-ink)]/85">
-                {project.features.map((feat, fIdx) => (
-                  <li key={fIdx} className="flex items-start gap-2.5">
-                    <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[var(--ca-blue)] text-[10px] font-bold text-white">
-                      ✓
-                    </span>
-                    <span className="leading-snug">{feat}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </section>
-
-        {/* Story Section 1: The Challenge */}
-        <section className="mb-20 sm:mb-28 text-center" aria-labelledby="challenge-heading">
-          <Scribble withDoodle>
-            <span id="challenge-heading">the challenge</span>
-          </Scribble>
-
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-[var(--ca-ink)]/85 sm:text-xl font-normal text-left sm:text-center">
-            {project.challenge}
-          </p>
-
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <Reveal>
-              <div className="relative">
-                <Tape
-                  className="-left-3.5 -top-2.5 z-20 h-5.5 w-20 shadow-[0_2px_4px_rgba(17,18,18,0.18)]"
-                  angle={-22}
-                  color="var(--ca-yellow-soft)"
-                />
-                <div className="relative aspect-[4/3] w-full overflow-hidden border-4 border-[var(--ca-ink)] bg-white shadow-md">
-                  <ImageWithLoader
-                    src={project.images[0]}
-                    alt={`${project.title} challenge illustration`}
-                    fill
-                    loaderVariant="project"
-                    loaderText="Loading Preview..."
-                    className="object-cover"
-                    sizes="(max-width: 768px) 92vw, 46vw"
-                  />
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={100}>
-              <div className="relative">
-                <Tape
-                  className="-right-3.5 -top-2.5 z-20 h-5.5 w-20 shadow-[0_2px_4px_rgba(17,18,18,0.18)]"
-                  angle={22}
-                  color="var(--ca-cyan)"
-                />
-                <div className="relative aspect-[4/3] w-full overflow-hidden border-4 border-[var(--ca-ink)] bg-white shadow-md">
-                  <ImageWithLoader
-                    src={project.images[1] || project.images[0]}
-                    alt={`${project.title} alternative view`}
-                    fill
-                    loaderVariant="project"
-                    loaderText="Loading Preview..."
-                    className="object-cover"
-                    sizes="(max-width: 768px) 92vw, 46vw"
-                  />
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* Story Section 2: My Approach */}
-        <section className="mb-20 sm:mb-28 text-center" aria-labelledby="approach-heading">
-          <Scribble withDoodle>
-            <span id="approach-heading">architectural approach</span>
-          </Scribble>
-
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-[var(--ca-ink)]/85 sm:text-xl font-normal text-left sm:text-center">
-            {project.approach}
-          </p>
-
-          {/* Full-width Architecture Diagram / Screenshot */}
-          <Reveal className="mt-12">
-            <div className="relative">
-              <Tape className="-left-4 -top-3 z-20 h-5.5 w-20 shadow-[0_2px_4px_rgba(17,18,18,0.18)]" angle={-14} color="var(--ca-mint)" />
-              <Tape className="-right-4 -top-3 z-20 h-5.5 w-20 shadow-[0_2px_4px_rgba(17,18,18,0.18)]" angle={14} color="var(--ca-pink-soft)" />
-              <div className="relative aspect-[16/9] w-full overflow-hidden border-4 border-[var(--ca-ink)] bg-white shadow-lg">
-                <ImageWithLoader
-                  src={project.images[2] || project.images[0]}
-                  alt={`${project.title} technical architecture and implementation`}
-                  fill
-                  loaderVariant="project"
-                  loaderText="Loading Architecture..."
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 94vw, 980px"
-                />
-              </div>
-            </div>
-          </Reveal>
-        </section>
-
-        {/* Visual Interface Gallery & All Project Screenshots */}
-        {project.images.length > 0 && (
-          <section className="mb-20 sm:mb-28 text-center" aria-labelledby="gallery-heading">
+        {/* Editorial Story Section: Challenge, Architectural Approach, Results & Metrics */}
+        <section className="mb-20 sm:mb-28 text-center" aria-labelledby="story-challenge-heading">
+          {/* 1. The Challenge */}
+          <div className="text-center">
             <Scribble withDoodle>
-              <span id="gallery-heading">interface gallery &amp; screenshots</span>
+              <span id="story-challenge-heading">the challenge</span>
             </Scribble>
+          </div>
+          <p className="mx-auto mt-4 max-w-3xl text-center text-base sm:text-lg text-[var(--ca-ink)]/90 leading-relaxed font-medium">
+            {project.challenge || project.problem}
+          </p>
 
-            <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-[var(--ca-ink)]/85 sm:text-xl font-normal text-left sm:text-center">
-              Detailed interface walkthrough, diagnostic panels, and feature screenshots for {project.title}.
-            </p>
+          {/* 2. Architectural Approach */}
+          <div className="mt-16 sm:mt-20 text-center">
+            <Scribble withDoodle>
+              <span>architectural approach</span>
+            </Scribble>
+          </div>
+          <p className="mx-auto mt-4 max-w-3xl text-center text-base sm:text-lg text-[var(--ca-ink)]/90 leading-relaxed font-medium">
+            {project.approach || project.personalContribution}
+          </p>
 
-            <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
-              {project.images.map((imgSrc, imgIdx) => {
-                const tapeTones = [
-                  "var(--ca-yellow-soft)",
-                  "var(--ca-cyan)",
-                  "var(--ca-mint)",
-                  "var(--ca-pink-soft)",
-                  "var(--ca-yellow)",
-                  "var(--ca-purple)",
-                ];
-                const angles = [-14, 15, -11, 13, -16, 12];
-                const tapeColor = tapeTones[imgIdx % tapeTones.length];
-                const tapeAngle = angles[imgIdx % angles.length];
-
-                return (
-                  <Reveal key={imgSrc} delay={imgIdx * 80}>
-                    <div className="group relative flex flex-col border-3 border-[var(--ca-ink)] bg-white p-3.5 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                      <Tape
-                        className={imgIdx % 2 === 0 ? "-left-3 -top-2.5 z-20" : "-right-3 -top-2.5 z-20"}
-                        angle={tapeAngle}
-                        color={tapeColor}
-                      />
-                      <div className="relative aspect-[16/10] w-full overflow-hidden border border-[var(--ca-ink)]/20 bg-[var(--ca-surface)]">
-                        <ImageWithLoader
-                          src={imgSrc}
-                          alt={`${project.title} screenshot ${imgIdx + 1}`}
-                          fill
-                          loaderVariant="project"
-                          loaderText={`Loading Screen #${String(imgIdx + 1).padStart(2, "0")}...`}
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                          sizes="(max-width: 768px) 96vw, (max-width: 1200px) 46vw, 600px"
-                        />
-                      </div>
-                      <div className="mt-3 flex items-center justify-between px-1">
-                        <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/75">
-                          {project.title} — Screen #{String(imgIdx + 1).padStart(2, "0")}
-                        </span>
-                        <span
-                          className="ca-mono rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--ca-ink)]"
-                          style={{ backgroundColor: tapeColor }}
-                        >
-                          View {imgIdx + 1}
-                        </span>
-                      </div>
-                    </div>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </section>
-        )}
-
-        {/* Story Section 3: The Results & Factual Outcomes */}
-        <section className="mb-24 sm:mb-32 text-center" aria-labelledby="results-heading">
-          <Scribble withDoodle>
-            <span id="results-heading">the results &amp; metrics</span>
-          </Scribble>
-
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-[var(--ca-ink)]/85 sm:text-xl font-normal text-left sm:text-center">
+          {/* 3. The Results & Metrics */}
+          <div className="mt-16 sm:mt-20 text-center">
+            <Scribble withDoodle>
+              <span>what shipped</span>
+            </Scribble>
+          </div>
+          <p className="mx-auto mt-4 max-w-3xl text-center text-base sm:text-lg text-[var(--ca-ink)]/90 leading-relaxed font-medium">
             {project.results}
           </p>
 
-          {/* Factual Outcome Metric Cards */}
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {/* The 3 Tactile Scalloped Metric Stamp Cards */}
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3 max-w-4xl mx-auto">
             {project.outcomes.map((outcome, idx) => {
               const bgColors = ["var(--ca-cyan)", "var(--ca-yellow-soft)", "var(--ca-mint)"];
               const angles = [-1.5, 1.2, -1];
@@ -492,70 +305,165 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
                     transform: `rotate(${angle}deg)`,
                   }}
                 >
-                  <Tape className="-top-2 left-6" angle={angle * -8} color={["var(--ca-yellow-soft)", "var(--ca-pink-soft)", "var(--ca-cyan)"][idx % 3]} />
+                  <Tape
+                    className="-top-2.5 left-6"
+                    angle={angle * -8}
+                    color={["var(--ca-yellow-soft)", "var(--ca-pink-soft)", "var(--ca-cyan)"][idx % 3]}
+                  />
                   <strong className="text-3xl font-extrabold tracking-tight text-[var(--ca-ink)] sm:text-4xl">
                     {outcome.value}
                   </strong>
-                  <span className="ca-mono mt-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/80">
+                  <span className="ca-mono mt-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/85">
                     {outcome.label}
                   </span>
                 </div>
               );
             })}
           </div>
+        </section>
 
-          {/* Related Engineering Deep Dive Link */}
-          {relatedNote && (
-            <div className="mx-auto mt-14 max-w-2xl rounded-lg border-2 border-dashed border-[var(--ca-ink)]/40 bg-white/90 p-6 text-left shadow-sm">
-              <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-blue)]">
-                Technical Deep Dive
-              </span>
-              <h3 className="mt-1 text-lg font-bold text-[var(--ca-ink)]">
-                <Link href={`/notes/${relatedNote.slug}`} className="hover:text-[var(--ca-blue)]">
-                  {relatedNote.title}
-                </Link>
-              </h3>
-              <p className="mt-2 text-sm text-[var(--ca-ink)]/75">
-                {relatedNote.tagline}
-              </p>
+        {/* Layer 4: System Blueprint & Technical Specs (Clean, Minimalist Tech Folio) */}
+        <div
+          role="region"
+          aria-labelledby="blueprint-heading"
+          className="relative mb-16 sm:mb-20 rounded-2xl border-2 border-[var(--ca-ink)]/15 bg-white/95 p-6 sm:p-8 md:p-9 shadow-[4px_6px_0_rgba(25,21,16,0.06)]"
+        >
+          {/* Subtle scrapbook washi tape accent */}
+          <Tape className="-top-2.5 right-8 z-10" angle={3} color="var(--ca-cyan)" />
+
+          {/* Section Header: Title + Inline Architectural Deep Dive link */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--ca-ink)]/10 pb-5">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-blue)] animate-pulse" />
+                <span className="ca-mono text-[11px] font-bold uppercase tracking-widest text-[var(--ca-blue)]">
+                  System Blueprint
+                </span>
+              </div>
+              <h2
+                id="blueprint-heading"
+                className="mt-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--ca-ink)]"
+              >
+                Technical Specs &amp; Highlights
+              </h2>
+            </div>
+
+            {relatedNote && (
               <Link
                 href={`/notes/${relatedNote.slug}`}
-                className="ca-mono mt-3 inline-flex min-h-[44px] items-center gap-1.5 py-1 text-xs font-bold uppercase tracking-wider text-[var(--ca-blue)] hover:underline"
+                className="ca-mono group inline-flex items-center gap-2 rounded-full border border-[var(--ca-ink)]/20 bg-[var(--ca-surface)] px-3.5 py-1.5 text-xs font-bold text-[var(--ca-ink)] shadow-2xs transition-all duration-200 hover:border-[var(--ca-blue)] hover:bg-white hover:text-[var(--ca-blue)]"
               >
-                <FileText size={14} />
-                Read the engineering note ({relatedNote.readTime})
-                <ArrowUpRight size={14} />
+                <FileText size={13} className="text-[var(--ca-blue)] transition-transform duration-200 group-hover:scale-110" />
+                <span>Technical Writeup ({relatedNote.readTime})</span>
+                <ArrowUpRight size={13} className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
-            </div>
-          )}
-
-          {/* External links */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6">
-            <a
-              href={project.source}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ca-mono inline-flex min-h-[44px] items-center gap-2 border-2 border-[var(--ca-ink)] bg-white px-5 py-3 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[4px_4px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-1 hover:bg-[var(--ca-yellow)]"
-            >
-              <GithubIcon className="h-4 w-4" />
-              Source Code
-            </a>
-
-            {project.demo && (
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ca-mono inline-flex min-h-[44px] items-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] px-5 py-3 text-sm font-bold uppercase tracking-widest text-white shadow-[4px_4px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-1 hover:bg-[var(--ca-ink)]"
-              >
-                <ExternalLink size={18} />
-                Live Demo
-              </a>
             )}
+          </div>
+
+          {/* Block 1: Technologies & Architecture */}
+          <div className="pt-6">
+            <div className="mb-3.5 flex items-center justify-between">
+              <span className="ca-mono flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/70">
+                <Layers size={14} className="text-[var(--ca-blue)]" />
+                Technologies &amp; Architecture
+              </span>
+              <span className="ca-mono text-[11px] font-semibold text-[var(--ca-ink)]/45">
+                {project.technologies.length} core technologies
+              </span>
+            </div>
+
+            {project.categorizedTech && project.categorizedTech.length > 0 ? (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {project.categorizedTech.map((group) => (
+                  <div key={group.category} className="space-y-2">
+                    <span className="ca-mono block text-[11px] font-bold uppercase tracking-wider text-[var(--ca-ink)]/50">
+                      {group.category}
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {group.items.map((tech) => (
+                        <span
+                          key={tech}
+                          className="ca-mono rounded-md border border-[var(--ca-ink)]/15 bg-[var(--ca-surface)] px-2.5 py-1 text-xs font-semibold text-[var(--ca-ink)] transition-colors duration-150 hover:border-[var(--ca-ink)]/40 hover:bg-white"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="ca-mono rounded-md border border-[var(--ca-ink)]/15 bg-[var(--ca-surface)] px-3 py-1.5 text-xs font-semibold text-[var(--ca-ink)] transition-colors duration-150 hover:border-[var(--ca-ink)]/40 hover:bg-white"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Elegant subtle divider */}
+          <div className="my-6 sm:my-7 border-t border-[var(--ca-ink)]/10" />
+
+          {/* Block 2: Core Engineering Highlights */}
+          <div>
+            <div className="mb-3.5 flex items-center gap-1.5">
+              <Wrench size={14} className="text-[var(--ca-blue)]" />
+              <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/70">
+                Core Engineering Highlights
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {project.technicalHighlights.slice(0, 4).map((highlight, idx) => (
+                <div
+                  key={idx}
+                  className="group flex items-start gap-3 rounded-lg border border-[var(--ca-ink)]/10 bg-[var(--ca-surface)]/70 p-3.5 transition-all duration-200 hover:border-[var(--ca-ink)]/25 hover:bg-white hover:shadow-2xs"
+                >
+                  <span className="ca-mono mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-xs bg-[var(--ca-yellow-soft)] text-[11px] font-bold text-[var(--ca-ink)] transition-colors duration-200 group-hover:bg-[var(--ca-yellow)]">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <p className="text-xs sm:text-sm font-medium leading-relaxed text-[var(--ca-ink)]/90">
+                    {highlight}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+
+        {/* Layer 6: Recruiter High-Conversion Action Banner */}
+        <section className="mb-20 sm:mb-28 overflow-hidden rounded-xl border-3 border-[var(--ca-ink)] bg-[var(--ca-yellow)] p-8 sm:p-12 shadow-[6px_8px_0_var(--ca-ink)] text-center">
+          <h2 className="ca-display text-4xl sm:text-6xl uppercase tracking-tight text-[var(--ca-ink)]">
+            Looking for this skill set?
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-base font-semibold text-[var(--ca-ink)]/85 sm:text-lg">
+            Jayant is open to full-stack engineering roles, internships, and high-impact software challenges.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/contact"
+              className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-[var(--ca-ink)] px-6 py-3 text-xs font-bold uppercase tracking-widest text-white shadow-[3px_3px_0_white] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-blue)]"
+            >
+              Get In Touch With Jayant
+              <ArrowRight size={14} />
+            </Link>
+            <Link
+              href={`/projects/${nextProject.slug}`}
+              className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-yellow-soft)]"
+            >
+              Next Project: {nextProject.title}
+              <ChevronRight size={14} />
+            </Link>
           </div>
         </section>
 
-        {/* More Projects Section */}
+        {/* Layer 7: More Projects Discovery */}
         <section className="mb-20 sm:mb-28 border-t-2 border-[var(--ca-ink)]/15 pt-16" aria-labelledby="related-heading">
           <div className="flex flex-col items-center text-center">
             <Scribble withDoodle>

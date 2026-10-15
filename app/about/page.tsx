@@ -9,16 +9,16 @@ import { TechnicalSkillsetPicker } from "@/components/TechnicalSkillsetPicker";
 import { author, siteUrl, skillsByCategory } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About Jayant Potdar — Full Stack Developer in Pune",
+  title: "About · Full Stack Developer in Pune",
   description:
-    "Learn about Jayant Potdar (Jayant Sunil Potdar), a product-focused Full Stack Developer based in Pune, India. B.Tech CSE student at MSSU Pune building reliable backends, deep-zoom spatial systems, and tactile web interfaces.",
+    "Meet Jayant Potdar, a full stack developer in Pune studying Computer Science at Ratan Tata Maharashtra State Skills University. Learn how he builds expressive interfaces and complete web products.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
     title: "About Jayant Potdar | Full Stack Developer in Pune",
     description:
-      "Background, engineering philosophy, education at MSSU Pune, and verified technical credentials of Jayant Potdar.",
+      "Background, education, engineering approach, and project experience of Jayant Potdar.",
     url: `${siteUrl}/about`,
   },
 };
@@ -41,7 +41,7 @@ export default function AboutPage() {
         "https://github.com/Jayant-1",
         "https://www.linkedin.com/in/jayant-potdar-161614275/",
       ],
-      alumniOf: {
+      affiliation: {
         "@type": "EducationalOrganization",
         name: author.college,
         address: {
@@ -193,15 +193,15 @@ export default function AboutPage() {
                 </div>
 
                 <h2 id="bio-heading" className="ca-hand text-3xl font-medium leading-[1.25] text-[var(--ca-ink)] sm:text-4xl lg:text-5xl">
-                  I&apos;m Jayant Potdar — a product-focused Full Stack Developer based in Pune, India. ✨ I build dependable backends, low-latency APIs, and tactile web interfaces that feel simple to use.
+                  I&apos;m Jayant Potdar — a creative full stack developer in Pune. ✨ I design interfaces with character and build the systems that make them work.
                 </h2>
 
                 <div className="mt-6 space-y-4 text-base leading-relaxed text-[var(--ca-ink)]/85 sm:text-lg">
                   <p>
-                    I study Computer Science &amp; Engineering at <strong>Ratan Tata Maharashtra State Skills University (MSSU), Pune</strong> (Class of 2024–2028, current CGPA 8.0). My focus is building complete, working products where systems engineering meets clean user interfaces.
+                    I study Computer Science &amp; Engineering at <strong>Ratan Tata Maharashtra State Skills University (MSSU), Pune</strong> (Class of 2024–2028, current CGPA 8.0). I like solving the whole problem: how a product looks, how it behaves, and how its data moves behind the scenes.
                   </p>
                   <p>
-                    Over the past two years, I independently engineered <strong>AstroPixel</strong> (a deep-zoom platform rendering multi-gigapixel rasters in the browser without memory crashes using FastAPI, GDAL, and OpenSeadragon) and led student engineering teams to build <strong>Krypton</strong> (an AI literature search assistant with transparent multi-signal ranking) and <strong>NeuralNet</strong> (an interactive visual deep learning studio compiling graph JSON to executable Keras code).
+                    I built <strong>AstroPixel</strong> independently, learning through repeated experiments with image processing, tile delivery, and browser rendering. I led student teams on <strong>Krypton</strong>, <strong>Malaria Detection System</strong>, and <strong>NeuralNet</strong>. Each project pushed me to understand another complex system well enough to make it usable.
                   </p>
                   <p>
                     Outside of code, I serve as <strong>Head of Web Development</strong> at MSSU&apos;s TechSpark technical club, where I mentor junior students in modern web engineering, run workshops, and organized the flagship Pixel Perfection Hackathon with 100+ participants.
@@ -223,7 +223,7 @@ export default function AboutPage() {
                     style={{ backgroundColor: "var(--ca-mint)" }}
                   >
                     <p className="font-semibold">
-                      💼 <strong>Status:</strong> Actively interviewing for Full Stack Developer internships and product engineering roles across Pune, Mumbai, and remote.
+                      💼 <strong>Status:</strong> Open to full stack internships and full-time roles in Pune, with hybrid or remote options.
                     </p>
                   </div>
                 </div>
@@ -238,14 +238,14 @@ export default function AboutPage() {
                 className="ca-mono ca-torn-label inline-block px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)]"
                 style={{ backgroundColor: "var(--ca-cyan)" }}
               >
-                Quick Facts &amp; Verification
+                Quick Facts
               </span>
 
               <div className="relative mt-6 border-3 border-[var(--ca-ink)] bg-white p-6 sm:p-10 shadow-[6px_8px_0_var(--ca-ink)]">
                 <Tape className="-top-3 right-8" angle={8} color="var(--ca-yellow-soft)" />
 
                 <h2 id="facts-heading" className="text-2xl sm:text-3xl font-extrabold uppercase text-[var(--ca-ink)]">
-                  Entity Breakdown: Jayant Sunil Potdar
+                  Jayant Potdar at a glance
                 </h2>
                 <p className="mt-2 text-sm text-[var(--ca-ink)]/75">
                   Direct answers to common questions about Jayant Potdar&apos;s background, skills, and availability.
@@ -257,7 +257,7 @@ export default function AboutPage() {
                       <MapPin size={16} /> Location &amp; Base
                     </div>
                     <p className="mt-2 text-sm sm:text-base text-[var(--ca-ink)] font-medium">
-                      Based in <strong>Pune, Maharashtra, India</strong>. Open to on-site roles in Pune and Mumbai, as well as hybrid or remote roles globally.
+                      Based in <strong>Pune, Maharashtra, India</strong>. Open to roles in Pune, as well as hybrid or remote work.
                     </p>
                   </div>
 
@@ -275,13 +275,13 @@ export default function AboutPage() {
                       <Briefcase size={16} /> What Does Jayant Build?
                     </div>
                     <p className="mt-2 text-sm sm:text-base text-[var(--ca-ink)] font-medium">
-                      Production web products combining <strong>React / Next.js / TypeScript</strong> frontends with <strong>FastAPI / Python / PostgreSQL / Docker</strong> backends and pragmatic AI integrations (Gemini API, TF-IDF ranking, Keras models).
+                      Expressive web interfaces and complete applications using <strong>React, Next.js, and TypeScript</strong> alongside <strong>Python, FastAPI, databases, and AI tools</strong>.
                     </p>
                   </div>
 
                   <div className="border border-[var(--ca-ink)]/15 bg-[var(--ca-cyan)]/40 p-5 rounded">
                     <div className="flex items-center gap-2 text-[var(--ca-blue)] font-bold text-sm ca-mono uppercase">
-                      <Award size={16} /> Verified Honors
+                      <Award size={16} /> Awards &amp; Certificates
                     </div>
                     <p className="mt-2 text-sm sm:text-base text-[var(--ca-ink)] font-medium">
                       1st Place Web Design Competition, 2nd Place Project Expo 2025, 3rd Place University Ideation 3.0 (AstroPixel), and Oracle Cloud Infrastructure Generative AI Certified Professional.
@@ -324,12 +324,13 @@ export default function AboutPage() {
           {/* Section 3: Story */}
           <section id="story" className="scroll-mt-28 min-w-0" aria-labelledby="story-heading">
             <Reveal delay={100}>
-              <span
+              <h2
+                id="story-heading"
                 className="ca-mono ca-torn-label inline-block px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-white"
                 style={{ backgroundColor: "var(--ca-magenta)" }}
               >
                 Engineering Philosophy
-              </span>
+              </h2>
             </Reveal>
 
             <div className="mt-8 space-y-12">
@@ -348,7 +349,7 @@ export default function AboutPage() {
                           Build the full loop
                         </h3>
                         <p className="mt-2 text-base leading-relaxed text-[var(--ca-ink)]/90 sm:text-lg">
-                          I don&apos;t enjoy working only on a sliced-off UI mockup or an isolated database script. The best engineering happens when you understand how a user gesture in React converts to an asynchronous task in FastAPI, hits a PostGIS index, and returns without UI stutter.
+                          I enjoy following a feature through the entire system, from a gesture in React to an API, a database, and back to the screen. AstroPixel made that habit essential: tile generation, storage, requests, and rendering all had to work together.
                         </p>
                       </div>
                     </div>
@@ -394,7 +395,7 @@ export default function AboutPage() {
                           Ground AI in deterministic math
                         </h3>
                         <p className="mt-2 text-base leading-relaxed text-[var(--ca-ink)]/90 sm:text-lg">
-                          Instead of throwing fuzzy prompts at an LLM and hoping for truth, I use transparent mathematical algorithms (TF-IDF ranking, topological graph sorts, tile pyramids) to establish the ground truth before bringing in generative models for synthesis.
+                          I like systems that can be inspected and explained. In Krypton, a weighted ranking step makes paper selection visible; in NeuralNet, graph validation and code generation expose how an architecture becomes Keras code.
                         </p>
                       </div>
                     </div>
@@ -425,7 +426,7 @@ export default function AboutPage() {
                         </h2>
                       </div>
                       <span className="ca-mono inline-block w-fit rounded-full border border-[var(--ca-ink)]/20 bg-[var(--ca-cyan)] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs">
-                        2024 to Present
+                        2025 to Present
                       </span>
                     </div>
                     <p className="mt-1 pl-6 text-sm font-medium text-[var(--ca-ink)]/70">
@@ -462,7 +463,7 @@ export default function AboutPage() {
                     href="/projects"
                     className="ca-mono min-h-[44px] inline-flex items-center gap-2 border-b-2 border-[var(--ca-ink)] py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] transition-colors hover:text-[var(--ca-blue)]"
                   >
-                    Explore production projects
+                    Explore my projects
                     <ArrowUpRight size={18} />
                   </Link>
 

@@ -72,7 +72,7 @@ export function InkTransitionProvider({ children }: { children: ReactNode }) {
         router.prefetch(href);
       } catch {}
 
-      // Failsafe reset after 2200ms to guarantee user is never stuck
+      // Failsafe reset after 1600ms to guarantee user is never stuck
       clearFailsafe();
       timeoutIdRef.current = setTimeout(() => {
         if (isTransitioningRef.current) {
@@ -86,9 +86,9 @@ export function InkTransitionProvider({ children }: { children: ReactNode }) {
             window.dispatchEvent(new CustomEvent("ca-page-animation-ready"));
           }
         }
-      }, 2200);
+      }, 1600);
 
-      // Play ink cover (540ms total)
+      // Play ink cover (360ms total)
       inkCanvasRef.current?.playLeave(
         originX,
         originY,
@@ -107,11 +107,28 @@ export function InkTransitionProvider({ children }: { children: ReactNode }) {
 
   const navigate = useCallback(
     (href: string, origin?: { x: number; y: number }) => {
+      try {
+        const dest = new URL(href, window.location.origin);
+        const currentPath = window.location.pathname;
+        const isComponentSwitch =
+          currentPath.startsWith("/components") && dest.pathname.startsWith("/components");
+        const isCurrentProject =
+          currentPath.startsWith("/projects") || currentPath.startsWith("/work");
+        const isDestProject =
+          dest.pathname.startsWith("/projects") || dest.pathname.startsWith("/work");
+        const isProjectSwitch = isCurrentProject && isDestProject;
+
+        if (isComponentSwitch || isProjectSwitch) {
+          router.push(href);
+          return;
+        }
+      } catch {}
+
       const x = origin?.x ?? window.innerWidth / 2;
       const y = origin?.y ?? window.innerHeight / 2;
       startTransition(href, x, y);
     },
-    [startTransition]
+    [startTransition, router]
   );
 
   // Watch for route change completion
@@ -120,7 +137,7 @@ export function InkTransitionProvider({ children }: { children: ReactNode }) {
       // New page mounted in DOM
       window.scrollTo(0, 0);
 
-      // Immediately start aperture reveal (540ms) with zero pause
+      // Immediately start aperture reveal (360ms) with zero pause
       inkCanvasRef.current?.playEnter(
         // onPageVisible90: triggered once the page is 90% visible!
         () => {
@@ -188,6 +205,24 @@ export function InkTransitionProvider({ children }: { children: ReactNode }) {
           dest.pathname === window.location.pathname &&
           dest.search === window.location.search
         ) {
+          return;
+        }
+
+        const currentPath = window.location.pathname;
+
+        // 1. Bypass transition when switching between components (/components or /components/*)
+        const isComponentSwitch =
+          currentPath.startsWith("/components") && dest.pathname.startsWith("/components");
+
+        // 2. Bypass transition when switching between projects (/projects or /projects/*, or legacy /work)
+        const isCurrentProject =
+          currentPath.startsWith("/projects") || currentPath.startsWith("/work");
+        const isDestProject =
+          dest.pathname.startsWith("/projects") || dest.pathname.startsWith("/work");
+        const isProjectSwitch = isCurrentProject && isDestProject;
+
+        if (isComponentSwitch || isProjectSwitch) {
+          // Allow instant native Next.js router navigation without transition screen
           return;
         }
 

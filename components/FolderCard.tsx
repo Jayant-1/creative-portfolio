@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useLens, CardLens } from "@/components/Motion";
 import { ImageWithLoader } from "@/components/ImageWithLoader";
-import type { Project } from "@/lib/site";
+import { type Project, isDarkProjectHero } from "@/lib/site";
 
 /**
  * Manila Folder Card with Mouse Interactive "See" Invert Lens
@@ -55,7 +55,7 @@ export function FolderProjectCard({
           </div>
 
           {/* Mouse Interactive Circular Invert Cursor Lens */}
-          <CardLens lensRef={lensRef} />
+          <CardLens lensRef={lensRef} darkCard={isDarkProjectHero(project.slug)} />
         </div>
       </div>
 
@@ -118,7 +118,7 @@ export function RelatedProjectCard({
           </div>
 
           {/* Mouse Interactive Circular Invert Cursor Lens */}
-          <CardLens lensRef={lensRef} />
+          <CardLens lensRef={lensRef} darkCard={isDarkProjectHero(project.slug)} />
         </div>
       </div>
 

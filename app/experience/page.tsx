@@ -10,7 +10,7 @@ import { achievements, experienceItems, siteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Experience & Leadership",
   description:
-    "Explore the technical leadership, student club direction at TechSpark MSSU Pune, hackathon management (100+ attendees), and verified awards of Jayant Potdar.",
+    "Jayant Potdar leads web development at TechSpark, mentors student developers, and has organized technical events at Ratan Tata Maharashtra State Skills University in Pune.",
   alternates: {
     canonical: "/experience",
   },
@@ -67,7 +67,7 @@ export default function ExperiencePage() {
 
           <Reveal delay={120}>
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-[var(--ca-ink)]/85 sm:text-xl font-normal">
-              Balancing independent software engineering with active campus leadership. Here is how I direct web teams, organize hackathons for over a hundred students, and compete in technical project expos.
+              I lead web development at TechSpark, help students build and ship projects, and organize hands-on technical events alongside my own software work.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -88,9 +88,9 @@ export default function ExperiencePage() {
         <section className="mb-20 sm:mb-28" aria-labelledby="roles-heading">
           <Reveal delay={60}>
             <div className="flex items-center gap-3 mb-8">
-              <span className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)]" style={{ backgroundColor: "var(--ca-yellow)" }}>
+              <h2 id="roles-heading" className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)]" style={{ backgroundColor: "var(--ca-yellow)" }}>
                 Leadership Roles
-              </span>
+              </h2>
               <div className="h-0.5 flex-1 bg-[var(--ca-ink)]/15" />
             </div>
           </Reveal>
@@ -112,9 +112,9 @@ export default function ExperiencePage() {
                       <span className="ca-mono inline-block rounded border border-[var(--ca-ink)]/20 bg-[var(--ca-cyan)] px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs">
                         {item.type}
                       </span>
-                      <h2 className="mt-2 text-2xl font-bold text-[var(--ca-ink)] sm:text-3xl">
+                      <h3 className="mt-2 text-2xl font-bold text-[var(--ca-ink)] sm:text-3xl">
                         {item.role}
-                      </h2>
+                      </h3>
                       <p className="mt-1 text-base font-semibold text-[var(--ca-ink)]/75">
                         {item.organization}
                       </p>
@@ -142,9 +142,9 @@ export default function ExperiencePage() {
         <section className="mb-20 sm:mb-28" aria-labelledby="awards-heading">
           <Reveal delay={60}>
             <div className="flex items-center gap-3 mb-8">
-              <span className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "var(--ca-magenta)" }}>
+              <h2 id="awards-heading" className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "var(--ca-magenta)" }}>
                 Honors &amp; Competitions
-              </span>
+              </h2>
               <div className="h-0.5 flex-1 bg-[var(--ca-ink)]/15" />
             </div>
           </Reveal>
@@ -212,9 +212,9 @@ export default function ExperiencePage() {
         <section className="mb-20 sm:mb-28" aria-labelledby="certifications-heading">
           <Reveal delay={60}>
             <div className="flex items-center gap-3 mb-8">
-              <span className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "var(--ca-blue)" }}>
+              <h2 id="certifications-heading" className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "var(--ca-blue)" }}>
                 Industry Certifications
-              </span>
+              </h2>
               <div className="h-0.5 flex-1 bg-[var(--ca-ink)]/15" />
             </div>
           </Reveal>

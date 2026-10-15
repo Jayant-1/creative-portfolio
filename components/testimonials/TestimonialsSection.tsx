@@ -16,7 +16,9 @@ export function TestimonialsSection() {
       {/* Section Header */}
       <header className="mb-10 text-center px-4">
         <Reveal>
-          <Scribble withDoodle>words from clients &amp; peers</Scribble>
+          <h2 id="testimonials-heading">
+            <Scribble withDoodle>notes from the build</Scribble>
+          </h2>
         </Reveal>
       </header>
 
