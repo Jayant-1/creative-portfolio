@@ -288,7 +288,7 @@ export default function HomePage() {
                   className="ca-mono inline-block -rotate-4 rounded-full border-[3px] border-white px-4 py-1.5 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[0_4px_10px_rgba(25,21,16,0.25)]"
                   style={{ backgroundColor: "var(--ca-purple)" }}
                 >
-                  Made things
+                  Simple over clever
                 </span>
               </DropIn>
               <DropIn
@@ -302,7 +302,7 @@ export default function HomePage() {
                   className="ca-mono inline-block rotate-4 rounded-full border-[3px] border-white px-4 py-1.5 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[0_4px_10px_rgba(25,21,16,0.25)]"
                   style={{ backgroundColor: "var(--ca-yellow-soft)" }}
                 >
-                  Sweat the details
+                  Built for real users
                 </span>
               </DropIn>
             </div>
@@ -372,7 +372,7 @@ export default function HomePage() {
                         className="ca-mono inline-block rounded-full border-[3px] border-white px-4 py-1.5 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[0_4px_10px_rgba(25,21,16,0.25)] transition-shadow duration-200 hover:shadow-[0_2px_6px_rgba(25,21,16,0.2)]"
                         style={{ backgroundColor: "var(--ca-purple)" }}
                       >
-                        Made things
+                        Simple over clever
                       </span>
                     </motion.div>
                   </DropIn>
@@ -414,7 +414,7 @@ export default function HomePage() {
                         className="ca-mono inline-block rounded-full border-[3px] border-white px-4 py-1.5 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[0_4px_10px_rgba(25,21,16,0.25)] transition-shadow duration-200 hover:shadow-[0_2px_6px_rgba(25,21,16,0.2)]"
                         style={{ backgroundColor: "var(--ca-yellow-soft)" }}
                       >
-                        Sweat the details
+                        Built for real users
                       </span>
                     </motion.div>
                   </DropIn>
@@ -513,7 +513,7 @@ export default function HomePage() {
                         className="ca-hand inline-block px-4 py-2 text-2xl leading-snug text-[var(--ca-ink)] shadow-[2px_3px_8px_rgba(17,18,18,0.18)]"
                         style={{ backgroundColor: "var(--ca-mint)" }}
                       >
-                        {author.location}
+                        {author.secondaryRole}
                       </span>
                     </motion.div>
                   </DropIn>
@@ -560,7 +560,7 @@ export default function HomePage() {
                   className="ca-hand cursor-default select-none inline-block rotate-2 px-4 py-2 text-xl sm:text-2xl text-[var(--ca-ink)] shadow-[2px_3px_8px_rgba(17,18,18,0.18)]"
                   style={{ backgroundColor: "var(--ca-mint)" }}
                 >
-                  {author.location}
+                  {author.secondaryRole}
                 </motion.span>
               </DropIn>
             </div>

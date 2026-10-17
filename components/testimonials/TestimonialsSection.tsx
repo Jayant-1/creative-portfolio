@@ -10,7 +10,7 @@ export function TestimonialsSection() {
   return (
     <section
       id="testimonials"
-      className="ca-grid relative scroll-mt-24 py-16 sm:py-24 border-t-2 border-[var(--ca-ink)]/10 overflow-hidden w-full"
+      className="ca-grid ca-section-contain relative scroll-mt-24 py-16 sm:py-24 border-t-2 border-[var(--ca-ink)]/10 overflow-hidden w-full"
       aria-labelledby="testimonials-heading"
     >
       {/* Section Header */}

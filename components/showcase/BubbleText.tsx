@@ -1,25 +1,25 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 export type BubbleTextProps = {
-  text: string;
+  text?: string;
   className?: string;
   style?: React.CSSProperties;
   charClassName?: string;
   charStyle?: React.CSSProperties;
 };
 
-export const BubbleText = ({
+export const BubbleText: React.FC<BubbleTextProps> = ({
   text = "Bbbbbbble text",
   className,
   style,
   charClassName,
   charStyle,
   ...props
-}: BubbleTextProps) => {
+}) => {
   const [currentHoverValue, setCurrentHoverValue] = useState<number | null>(null);
 
   const chars = useMemo(() => {
@@ -29,7 +29,7 @@ export const BubbleText = ({
   return (
     <h2
       className={twMerge(
-        "font-raleway cursor-default text-center text-6xl sm:text-7xl md:text-8xl font-thin wrap-anywhere text-indigo-300",
+        "font-raleway text-center text-7xl sm:text-8xl md:text-9xl font-thin wrap-anywhere text-indigo-300 select-none",
         className
       )}
       style={style}
@@ -41,10 +41,11 @@ export const BubbleText = ({
         return (
           <motion.span
             key={idx}
-            className={twMerge("inline-block transition-all hover:font-black", charClassName)}
+            className={twMerge(
+              "transition-all hover:font-black inline-block",
+              charClassName
+            )}
             style={charStyle}
-            onMouseEnter={() => setCurrentHoverValue(idx)}
-            onMouseLeave={() => setCurrentHoverValue(null)}
             animate={{
               fontWeight:
                 distance === 0
@@ -57,6 +58,12 @@ export const BubbleText = ({
               opacity: currentHoverValue === null ? 0.5 : 1,
             }}
             transition={{ duration: 0 }}
+            onMouseEnter={() => {
+              setCurrentHoverValue(idx);
+            }}
+            onMouseLeave={() => {
+              setCurrentHoverValue(null);
+            }}
           >
             {child === " " ? "\u00A0" : child}
           </motion.span>

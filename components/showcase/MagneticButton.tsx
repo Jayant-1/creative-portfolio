@@ -18,7 +18,7 @@ export type MagneticButtonProps = HTMLMotionProps<"button"> & {
   mass?: number;
 };
 
-export const MagneticButton = ({
+export const MagneticButton: React.FC<MagneticButtonProps> = ({
   style,
   bgStyle,
   className,
@@ -27,17 +27,17 @@ export const MagneticButton = ({
   stiffness = 150,
   damping = 10,
   mass = 0.1,
-  children,
+  children = "Hover Me",
   ...props
-}: MagneticButtonProps) => {
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  // Motion values avoid React re-renders during mousemove
+  // Motion values to avoid React re-renders during mousemove
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
 
-  // Smooth physics spring applied to raw coordinates
+  // Smooth physics spring applied to the raw coordinates
   const x = useSpring(rawX, { stiffness, damping, mass });
   const y = useSpring(rawY, { stiffness, damping, mass });
 

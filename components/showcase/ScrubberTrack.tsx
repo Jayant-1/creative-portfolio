@@ -85,8 +85,29 @@ export const ScrubberTrack: React.FC<ScrubberTrackProps> = ({
       {/* Tactile Track Bar */}
       <div
         ref={trackRef}
+        role="slider"
+        tabIndex={0}
+        aria-label={label}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+            e.preventDefault();
+            onChange(Math.min(max, value + step));
+          } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+            e.preventDefault();
+            onChange(Math.max(min, value - step));
+          } else if (e.key === "Home") {
+            e.preventDefault();
+            onChange(min);
+          } else if (e.key === "End") {
+            e.preventDefault();
+            onChange(max);
+          }
+        }}
         onPointerDown={handlePointerDown}
-        className="group relative h-6 w-full cursor-pointer flex items-center"
+        className="group relative h-6 w-full cursor-pointer flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-full"
       >
         {/* Sunken Groove */}
         <div className="relative h-2 w-full rounded-full bg-neutral-200 dark:bg-neutral-800 overflow-hidden shadow-inner">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
+import React, { useEffect, useRef, useImperativeHandle, forwardRef, useCallback } from "react";
 
 export interface InkCanvasHandle {
   playLeave: (
@@ -146,10 +146,11 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
 
   const animFrameIdRef = useRef<number | null>(null);
 
-  // Initialize WebGL
-  useEffect(() => {
+  // Lazy WebGL initialization helper
+  const initGL = useCallback(() => {
+    if (glRef.current && programRef.current) return true;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return false;
 
     let gl = canvas.getContext("webgl", {
       alpha: true,
@@ -163,7 +164,7 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
 
     if (!gl) {
       console.warn("WebGL not supported for InkCanvas transition, falling back to basic transitions.");
-      return;
+      return false;
     }
 
     glRef.current = gl;
@@ -171,10 +172,10 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
     const vs = createShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER_SRC);
     const fs = createShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER_SRC);
 
-    if (!vs || !fs) return;
+    if (!vs || !fs) return false;
 
     const program = gl.createProgram();
-    if (!program) return;
+    if (!program) return false;
 
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
@@ -182,7 +183,7 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
 
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
       console.error("Program link error:", gl.getProgramInfoLog(program));
-      return;
+      return false;
     }
 
     programRef.current = program;
@@ -209,7 +210,17 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
       color: gl.getUniformLocation(program, "u_color"),
     };
 
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    return true;
+  }, []);
+
+  useEffect(() => {
     const handleResize = () => {
+      const canvas = canvasRef.current;
+      const gl = glRef.current;
       if (!canvas || !gl) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = window.innerWidth * dpr;
@@ -217,16 +228,30 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
       gl.viewport(0, 0, canvas.width, canvas.height);
     };
 
-    handleResize();
     window.addEventListener("resize", handleResize);
+
+    // Pre-warm WebGL during idle time so navigation is instantaneous
+    let idleId: number | null = null;
+    let timerId: NodeJS.Timeout | null = null;
+    if (typeof window !== "undefined") {
+      if ("requestIdleCallback" in window) {
+        idleId = (window as any).requestIdleCallback(() => initGL(), { timeout: 2000 });
+      } else {
+        timerId = setTimeout(() => initGL(), 1000);
+      }
+    }
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      if (idleId && "cancelIdleCallback" in window) {
+        (window as any).cancelIdleCallback(idleId);
+      }
+      if (timerId) clearTimeout(timerId);
       if (animFrameIdRef.current) {
         cancelAnimationFrame(animFrameIdRef.current);
       }
     };
-  }, []);
+  }, [initGL]);
 
   const renderFrame = () => {
     const gl = glRef.current;
@@ -266,7 +291,7 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
       }
 
       // Check reduced motion
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !initGL()) {
         onCoverReady();
         onComplete();
         return;
@@ -329,7 +354,7 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
       }
 
       // Check reduced motion
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !initGL()) {
         canvas.style.display = "none";
         canvas.style.pointerEvents = "none";
         onPageVisible90();

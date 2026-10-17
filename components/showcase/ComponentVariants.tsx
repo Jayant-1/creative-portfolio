@@ -1,33 +1,29 @@
 "use client";
 
 import React, { useState } from "react";
-import { Copy, Check, Code as CodeIcon, Eye } from "lucide-react";
+import { Copy, Check, Code as CodeIcon, Eye, Play, Sparkles } from "lucide-react";
 import { CraftComponent } from "@/lib/components-data";
-import { MagneticButton } from "./MagneticButton";
-import { BubbleText } from "./BubbleText";
-import { RadialGradientAnimateCard } from "./RadialGradientAnimateCard";
-import { BinaryGrid } from "./BinaryGrid";
-import { OverlappingTextHero } from "./OverlappingTextHero";
-import { TelescopeHero } from "./TelescopeHero";
 import { highlightLine } from "./CodeViewer";
 
 interface ComponentVariantsProps {
   component: CraftComponent;
 }
 
-interface ExampleCardProps {
+interface VariantCardProps {
   id: string;
   badge: string;
   title: string;
   description: string;
+  presetProps: Record<string, any>;
   codeSnippet: string;
   children: React.ReactNode;
 }
 
-const ExampleCard: React.FC<ExampleCardProps> = ({
+const AceternityVariantCard: React.FC<VariantCardProps> = ({
   badge,
   title,
   description,
+  presetProps,
   codeSnippet,
   children,
 }) => {
@@ -40,48 +36,84 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy code snippet", err);
+      console.warn("Failed to copy code snippet", err);
     }
+  };
+
+  const handleTryInPreview = () => {
+    window.dispatchEvent(
+      new CustomEvent("TRY_COMPONENT_VARIANT", {
+        detail: { props: presetProps },
+      })
+    );
   };
 
   const codeLines = codeSnippet.trim().split("\n");
 
   return (
-    <article className="flex flex-col rounded-2xl border border-[var(--ca-ink)]/15 dark:border-white/10 bg-white/80 dark:bg-[#121316] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
-      {/* Card Header */}
-      <div className="flex flex-col gap-1 p-5 border-b border-[var(--ca-ink)]/10 dark:border-white/10 bg-[#faf8f4]/60 dark:bg-[#15161b]/60">
-        <div className="flex items-center justify-between gap-2">
-          <span className="font-mono text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md bg-[var(--ca-ink)]/5 dark:bg-white/10 text-[var(--ca-orange)] border border-[var(--ca-ink)]/10 dark:border-white/10">
-            {badge}
-          </span>
+    <article className="w-full flex flex-col rounded-2xl border border-[var(--ca-ink)]/15 dark:border-white/10 bg-white/90 dark:bg-[#121316]/90 shadow-sm overflow-hidden transition-all hover:shadow-md">
+      {/* Top Header */}
+      <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:px-6 bg-[#faf8f4]/80 dark:bg-[#15161b]/80 border-b border-[var(--ca-ink)]/10 dark:border-white/10">
+        <div className="flex flex-col gap-1 max-w-xl">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[10px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-md bg-[var(--ca-orange)]/10 text-[var(--ca-orange)] border border-[var(--ca-orange)]/25">
+              {badge}
+            </span>
+            <h3 className="font-mono text-base sm:text-lg font-bold text-[var(--ca-ink)] dark:text-white">
+              {title}
+            </h3>
+          </div>
+          <p className="font-sans text-xs sm:text-sm text-[var(--ca-ink)]/70 dark:text-neutral-400">
+            {description}
+          </p>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex items-center gap-2">
           <button
-            onClick={() => setShowCode((prev) => !prev)}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-all ${
+            onClick={handleTryInPreview}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-[var(--ca-orange)] text-white shadow-xs hover:opacity-90 transition-all"
+            title="Load preset into main sandbox preview"
+          >
+            <Play size={12} fill="currentColor" />
+            <span>Try in Preview</span>
+          </button>
+
+          <button
+            onClick={() => setShowCode(!showCode)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-medium border transition-all ${
               showCode
-                ? "bg-[var(--ca-orange)] text-white shadow-xs"
-                : "bg-[var(--ca-ink)]/5 dark:bg-white/10 text-[var(--ca-ink)]/70 dark:text-neutral-300 hover:bg-[var(--ca-ink)]/10"
+                ? "bg-[var(--ca-ink)]/10 dark:bg-white/10 border-[var(--ca-ink)]/20 dark:border-white/20 font-bold"
+                : "bg-white dark:bg-neutral-900 border-[var(--ca-ink)]/15 dark:border-white/10 text-[var(--ca-ink)] dark:text-white hover:bg-[var(--ca-ink)]/5"
             }`}
           >
-            {showCode ? <Eye size={12} /> : <CodeIcon size={12} />}
-            <span>{showCode ? "Hide Code" : "View Code"}</span>
+            <CodeIcon size={12} />
+            <span>{showCode ? "Hide Code" : "Code"}</span>
+          </button>
+
+          <button
+            onClick={handleCopy}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-medium border shadow-xs transition-all ${
+              copied
+                ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold"
+                : "bg-white dark:bg-neutral-900 border-[var(--ca-ink)]/15 dark:border-white/10 text-[var(--ca-ink)] dark:text-white hover:bg-[var(--ca-ink)]/5"
+            }`}
+            title="Copy usage snippet"
+          >
+            {copied ? <Check size={12} className="text-emerald-500" /> : <Copy size={12} />}
+            <span>{copied ? "Copied" : "Copy"}</span>
           </button>
         </div>
-        <h3 className="font-mono text-base font-bold text-[var(--ca-ink)] dark:text-white mt-1">
-          {title}
-        </h3>
-        <p className="font-sans text-xs text-[var(--ca-ink)]/70 dark:text-neutral-400 leading-relaxed">
-          {description}
-        </p>
       </div>
 
-      {/* Live Interactive Mini-Preview */}
-      <div className="relative p-4 sm:p-6 bg-[#0c0d12] flex items-center justify-center overflow-hidden min-h-[260px]">
-        {/* Subtle dot background */}
+      {/* Static Visual Representation Card */}
+      <div className="relative w-full min-h-[220px] sm:min-h-[260px] bg-[#0c0d12] flex items-center justify-center p-6 overflow-hidden">
+        {/* Subtle grid pattern */}
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
           style={{
             backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)",
-            backgroundSize: "16px 16px",
+            backgroundSize: "20px 20px",
           }}
         />
         <div className="relative z-10 w-full flex items-center justify-center">
@@ -91,25 +123,11 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
 
       {/* Expandable Code Snippet */}
       {showCode && (
-        <div className="border-t border-[var(--ca-ink)]/10 dark:border-white/10 bg-[#0d0f14] flex flex-col">
-          <div className="flex items-center justify-between px-4 py-2 bg-[#14161f] border-b border-white/10 text-xs font-mono">
-            <span className="text-neutral-400 text-[11px]">Usage Snippet</span>
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1 px-2 py-0.5 rounded text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              {copied ? (
-                <Check size={12} className="text-emerald-400" />
-              ) : (
-                <Copy size={12} />
-              )}
-              <span>{copied ? "Copied" : "Copy"}</span>
-            </button>
-          </div>
-          <div className="p-3 max-h-[220px] overflow-auto scrollbar-thin select-text font-mono text-[11px] leading-5 text-neutral-300">
+        <div className="bg-[#0d0f14] border-t border-[var(--ca-ink)]/10 dark:border-white/10 overflow-hidden">
+          <div className="p-4 max-h-[360px] overflow-auto select-text font-mono text-xs leading-6 text-neutral-300">
             {codeLines.map((line, idx) => (
-              <div key={idx} className="flex min-w-full">
-                <span className="w-8 select-none text-neutral-600 text-right pr-3 shrink-0 tabular-nums">
+              <div key={idx} className="flex min-w-full hover:bg-white/[0.04]">
+                <span className="w-10 select-none text-neutral-600 text-right pr-4 shrink-0 tabular-nums">
                   {idx + 1}
                 </span>
                 <span className="flex-1 whitespace-pre">{highlightLine(line)}</span>
@@ -131,8 +149,7 @@ export const ComponentVariants: React.FC<ComponentVariantsProps> = ({
       : component.slug;
 
   return (
-    /* XPath: .../main/div/section[1] */
-    <section className="w-full flex flex-col gap-6">
+    <section className="w-full flex flex-col gap-6 my-10">
       {/* Section Header */}
       <div className="flex flex-col gap-1 border-b border-[var(--ca-ink)]/10 dark:border-white/10 pb-4">
         <div className="flex items-center gap-2">
@@ -140,23 +157,34 @@ export const ComponentVariants: React.FC<ComponentVariantsProps> = ({
             [01 // VARIATIONS]
           </span>
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--ca-ink)] dark:text-white font-sans">
-            Real-World Examples
+            Examples & Variations
           </h2>
         </div>
         <p className="text-xs sm:text-sm font-sans text-[var(--ca-ink)]/70 dark:text-neutral-400 mt-1">
-          Production patterns, responsive presets, and motion tunings across varying use-cases.
+          Explore static visual presets and configurations. Click &ldquo;Try in Preview&rdquo; to load any configuration directly into the live sandbox above.
         </p>
       </div>
 
-      {/* OVERLAPPING TEXT HERO EXAMPLES */}
-      {normalizedSlug === "overlapping-text-hero" && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <ExampleCard
-            id="spiderman-hero"
-            badge="VARIANT 01 // COMIC"
-            title="Spider-Man Hero Banner"
-            description="Hero banner featuring Spider-Man cutout, bold Six Caps typography, and halftone aperture."
-            codeSnippet={`<OverlappingTextHero
+      <div className="flex flex-col gap-6 w-full">
+        {/* OVERLAPPING TEXT HERO VARIANTS */}
+        {normalizedSlug === "overlapping-text-hero" && (
+          <>
+            <AceternityVariantCard
+              id="spiderman-hero"
+              badge="VARIANT 01 // COMIC HERO"
+              title="Spider-Man Cinematic Cutout"
+              description="High-contrast comic hero banner featuring Six Caps display typography, dual halftone aperture masks, and responsive frame contraction."
+              presetProps={{
+                title: "SPIDER-MAN",
+                subTitle1: "FRIENDLY NEIGHBORHOOD",
+                subTitle1Color: "#2563eb",
+                subTitle2: "WEB-SLINGER",
+                subTitle2Color: "#dc2626",
+                imgPath: "/sipderman.png",
+                textColor: "#dc2626",
+                bgColor: "#e2e4e9",
+              }}
+              codeSnippet={`<OverlappingTextHero
   title="SPIDER-MAN"
   subTitle1="FRIENDLY NEIGHBORHOOD"
   subTitle1Color="#2563eb"
@@ -166,411 +194,436 @@ export const ComponentVariants: React.FC<ComponentVariantsProps> = ({
   textColor="#dc2626"
   bgColor="#e2e4e9"
 />`}
-          >
-            <div className="w-full h-[220px] rounded-xl overflow-hidden relative flex items-center justify-center bg-[#0d0e12]">
-              <OverlappingTextHero
-                title="SPIDER-MAN"
-                subTitle1="FRIENDLY NEIGHBORHOOD"
-                subTitle1Color="#2563eb"
-                subTitle2="WEB-SLINGER"
-                subTitle2Color="#dc2626"
-                imgPath="/sipderman.png"
-                textColor="#dc2626"
-                bgColor="#e2e4e9"
-                compactMode={true}
-                fontSize="3rem"
-              />
-            </div>
-          </ExampleCard>
+            >
+              <div className="relative w-full max-w-xl h-44 rounded-xl bg-[#e2e4e9] p-4 flex flex-col justify-between overflow-hidden shadow-inner border border-neutral-300">
+                <div className="font-sixCap text-7xl text-[#dc2626] tracking-tight leading-none">
+                  SPIDER-MAN
+                </div>
+                <div className="flex justify-between font-inter text-xs font-semibold">
+                  <span className="text-[#2563eb]">FRIENDLY NEIGHBORHOOD</span>
+                  <span className="text-[#dc2626]">WEB-SLINGER</span>
+                </div>
+                <img
+                  src="/sipderman.png"
+                  alt="Spider-Man"
+                  className="absolute right-6 -bottom-4 h-36 object-contain pointer-events-none"
+                />
+              </div>
+            </AceternityVariantCard>
 
-          <ExampleCard
-            id="editorial-ochre"
-            badge="VARIANT 02 // EDITORIAL"
-            title="Editorial Ochre Portfolio"
-            description="Warm terracotta typography on cream textured paper with dual radial apertures."
-            codeSnippet={`<OverlappingTextHero
+            <AceternityVariantCard
+              id="portfolio-hero"
+              badge="VARIANT 02 // PERSONAL PORTFOLIO"
+              title="Developer Portfolio Hero"
+              description="Warm editorial portfolio header with full-name typography, qualification subtitle flags, and personal cutout image."
+              presetProps={{
+                title: "JAYANT POTDAR",
+                subTitle1: "B.TECH",
+                subTitle1Color: "#475569",
+                subTitle2: "FULL STACK WEB DEVELOPER",
+                subTitle2Color: "#dc2626",
+                imgPath: "/Profile-removebg.png",
+                textColor: "#db4b29",
+                bgColor: "#e3e2dd",
+              }}
+              codeSnippet={`<OverlappingTextHero
   title="JAYANT POTDAR"
   subTitle1="B.TECH"
-  subTitle1Color="#191510"
-  subTitle2="FULL STACK DEVELOPER"
-  subTitle2Color="#db4b29"
+  subTitle1Color="#475569"
+  subTitle2="FULL STACK WEB DEVELOPER"
+  subTitle2Color="#dc2626"
   imgPath="/Profile-removebg.png"
   textColor="#db4b29"
   bgColor="#e3e2dd"
 />`}
-          >
-            <div className="w-full h-[220px] rounded-xl overflow-hidden relative flex items-center justify-center bg-[#0d0e12]">
-              <OverlappingTextHero
-                title="JAYANT POTDAR"
-                subTitle1="B.TECH"
-                subTitle1Color="#191510"
-                subTitle2="FULL STACK DEVELOPER"
-                subTitle2Color="#db4b29"
-                imgPath="/Profile-removebg.png"
-                textColor="#db4b29"
-                bgColor="#e3e2dd"
-                compactMode={true}
-                fontSize="2.8rem"
-              />
-            </div>
-          </ExampleCard>
+            >
+              <div className="relative w-full max-w-xl h-44 rounded-xl bg-[#e3e2dd] p-4 flex flex-col justify-between overflow-hidden shadow-inner border border-neutral-300">
+                <div className="font-sixCap text-7xl text-[#db4b29] tracking-tight leading-none">
+                  JAYANT POTDAR
+                </div>
+                <div className="flex justify-between font-inter text-xs font-semibold">
+                  <span className="text-[#475569]">B.TECH</span>
+                  <span className="text-[#dc2626]">FULL STACK WEB DEVELOPER</span>
+                </div>
+                <img
+                  src="/Profile-removebg.png"
+                  alt="Jayant Potdar"
+                  className="absolute right-6 -bottom-4 h-36 object-contain pointer-events-none"
+                />
+              </div>
+            </AceternityVariantCard>
 
-          <ExampleCard
-            id="cyber-matrix"
-            badge="VARIANT 03 // CYBER"
-            title="Stealth Cyan Matrix"
-            description="High-contrast phosphor cyan title on pitch space background with sharp halftone aperture."
-            codeSnippet={`<OverlappingTextHero
-  title="CREATIVE TECH"
-  subTitle1="THREE.JS & SHADERS"
-  subTitle1Color="#06b6d4"
-  subTitle2="FRAMER MOTION"
-  subTitle2Color="#38bdf8"
-  imgPath="/Profile-removebg.png"
-  textColor="#06b6d4"
-  bgColor="#090b10"
+            <AceternityVariantCard
+              id="dark-knight-hero"
+              badge="VARIANT 03 // NEO-NOIR"
+              title="Dark Knight Neo-Noir"
+              description="Deep slate monochrome canvas with high-voltage amber accents for dramatic nighttime landing pages."
+              presetProps={{
+                title: "BATMAN",
+                subTitle1: "DARK KNIGHT",
+                subTitle1Color: "#eab308",
+                subTitle2: "GOTHAM PROTECTOR",
+                subTitle2Color: "#64748b",
+                imgPath: "/sipderman.png",
+                textColor: "#0f172a",
+                bgColor: "#cbd5e1",
+              }}
+              codeSnippet={`<OverlappingTextHero
+  title="BATMAN"
+  subTitle1="DARK KNIGHT"
+  subTitle1Color="#eab308"
+  subTitle2="GOTHAM PROTECTOR"
+  subTitle2Color="#64748b"
+  imgPath="/sipderman.png"
+  textColor="#0f172a"
+  bgColor="#cbd5e1"
 />`}
-          >
-            <div className="w-full h-[220px] rounded-xl overflow-hidden relative flex items-center justify-center bg-[#0d0e12]">
-              <OverlappingTextHero
-                title="CREATIVE TECH"
-                subTitle1="THREE.JS & SHADERS"
-                subTitle1Color="#06b6d4"
-                subTitle2="FRAMER MOTION"
-                subTitle2Color="#38bdf8"
-                imgPath="/Profile-removebg.png"
-                textColor="#06b6d4"
-                bgColor="#090b10"
-                compactMode={true}
-                fontSize="2.8rem"
-              />
-            </div>
-          </ExampleCard>
-        </div>
-      )}
+            >
+              <div className="relative w-full max-w-xl h-44 rounded-xl bg-[#cbd5e1] p-4 flex flex-col justify-between overflow-hidden shadow-inner border border-neutral-400">
+                <div className="font-sixCap text-7xl text-[#0f172a] tracking-tight leading-none">
+                  BATMAN
+                </div>
+                <div className="flex justify-between font-inter text-xs font-semibold">
+                  <span className="text-[#eab308]">DARK KNIGHT</span>
+                  <span className="text-[#64748b]">GOTHAM PROTECTOR</span>
+                </div>
+              </div>
+            </AceternityVariantCard>
+          </>
+        )}
 
-      {/* TELESCOPE HERO EXAMPLES */}
-      {normalizedSlug === "telescope-hero" && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <ExampleCard
-            id="alpine-expedition"
-            badge="VARIANT 01 // NATURE"
-            title="Alpine Mountain Vista"
-            description="Multi-plane nature photography drifting through 3D focal depths into panoramic summit."
-            codeSnippet={`<TelescopeHero
+        {/* TELESCOPE HERO VARIANTS */}
+        {normalizedSlug === "telescope-hero" && (
+          <>
+            <AceternityVariantCard
+              id="alpine-telescope"
+              badge="VARIANT 01 // NATURE PANORAMA"
+              title="Alpine Vista Telescope"
+              description="3D camera-depth flight through layered perspective frames into an expansive snow-capped mountain range."
+              presetProps={{
+                quote: "Life is either a daring adventure or nothing at all",
+                bgImage: "/mountains-wallpaper.jpg",
+              }}
+              codeSnippet={`<TelescopeHero
   quote="Life is either a daring adventure or nothing at all"
   bgImage="/mountains-wallpaper.jpg"
 />`}
-          >
-            <div className="w-full h-[220px] rounded-xl overflow-hidden relative flex items-center justify-center bg-[#090a0e]">
-              <TelescopeHero
-                quote="Life is either a daring adventure or nothing at all"
-                bgImage="/mountains-wallpaper.jpg"
-                compactMode={true}
-                fontSize="1.6rem"
-              />
-            </div>
-          </ExampleCard>
+            >
+              <div className="relative w-full max-w-xl h-44 rounded-xl overflow-hidden border border-white/20 shadow-xl flex items-center justify-center">
+                <img
+                  src="/mountains-wallpaper.jpg"
+                  alt="Alpine Vista"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+                <div className="relative z-10 font-bebasNeue text-3xl sm:text-4xl text-white text-center font-bold tracking-wide px-4">
+                  Life is either a daring adventure or nothing at all
+                </div>
+              </div>
+            </AceternityVariantCard>
 
-          <ExampleCard
-            id="cosmic-stellar"
-            badge="VARIANT 02 // COSMIC"
-            title="Stellar Deep Void"
-            description="Perspective z-axis coordinate drift calibrated for astronomical exploratory themes."
-            codeSnippet={`<TelescopeHero
-  quote="The cosmos is within us, we are made of star-stuff"
-  bgImage="/mountains-wallpaper.jpg"
+            <AceternityVariantCard
+              id="cosmic-telescope"
+              badge="VARIANT 02 // COSMIC EXPLORATION"
+              title="Deep Space Telescope"
+              description="Astronomical parallax telescope navigating through starry deep space into cosmic nebula formations."
+              presetProps={{
+                quote: "Somewhere, something incredible is waiting to be known",
+                bgImage: "https://images.unsplash.com/photo-1618083707368-b3823daa2726?q=80&w=1470&auto=format&fit=crop",
+              }}
+              codeSnippet={`<TelescopeHero
+  quote="Somewhere, something incredible is waiting to be known"
+  bgImage="https://images.unsplash.com/photo-1618083707368-b3823daa2726?q=80&w=1470&auto=format&fit=crop"
 />`}
-          >
-            <div className="w-full h-[220px] rounded-xl overflow-hidden relative flex items-center justify-center bg-[#090a0e]">
-              <TelescopeHero
-                quote="The cosmos is within us, we are made of star-stuff"
-                bgImage="/mountains-wallpaper.jpg"
-                compactMode={true}
-                fontSize="1.5rem"
-              />
-            </div>
-          </ExampleCard>
+            >
+              <div className="relative w-full max-w-xl h-44 rounded-xl overflow-hidden border border-white/20 shadow-xl flex items-center justify-center bg-indigo-950">
+                <img
+                  src="https://images.unsplash.com/photo-1618083707368-b3823daa2726?q=80&w=1470&auto=format&fit=crop"
+                  alt="Cosmic Starfield"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/50" />
+                <div className="relative z-10 font-bebasNeue text-3xl sm:text-4xl text-white text-center font-bold tracking-wide px-4">
+                  Somewhere, something incredible is waiting to be known
+                </div>
+              </div>
+            </AceternityVariantCard>
+          </>
+        )}
 
-          <ExampleCard
-            id="brutalist-arch"
-            badge="VARIANT 03 // ARCHITECTURE"
-            title="Brutalist Concrete Scale"
-            description="Minimalist concrete structural photography with smooth reverse-scroll focal clipping."
-            codeSnippet={`<TelescopeHero
-  quote="Simplicity is the ultimate sophistication"
-  bgImage="/mountains-wallpaper.jpg"
-/>`}
-          >
-            <div className="w-full h-[220px] rounded-xl overflow-hidden relative flex items-center justify-center bg-[#090a0e]">
-              <TelescopeHero
-                quote="Simplicity is the ultimate sophistication"
-                bgImage="/mountains-wallpaper.jpg"
-                compactMode={true}
-                fontSize="1.6rem"
-              />
-            </div>
-          </ExampleCard>
-        </div>
-      )}
-
-      {/* MAGNETIC BUTTON EXAMPLES */}
-      {normalizedSlug === "magnetic-button" && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <ExampleCard
-            id="launch-trigger"
-            badge="VARIANT 01 // ACTION"
-            title="Snappy Amber Trigger"
-            description="High spring stiffness (180) providing an elastic snap on cursor proximity."
-            codeSnippet={`<MagneticButton
-  maxDistance={35}
-  stiffness={180}
-  damping={12}
-  mass={0.1}
-  className="bg-[#f59e0b] hover:bg-[#d97706] text-black font-mono font-bold px-6 py-3 rounded-xl text-xs uppercase"
->
-  Launch App
-</MagneticButton>`}
-          >
-            <div className="p-8 flex items-center justify-center">
-              <MagneticButton
-                maxDistance={35}
-                stiffness={180}
-                damping={12}
-                mass={0.1}
-                className="bg-[#f59e0b] hover:bg-[#d97706] text-black font-mono font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-wider shadow-md"
-              >
-                <span>Launch App</span>
-              </MagneticButton>
-            </div>
-          </ExampleCard>
-
-          <ExampleCard
-            id="cyber-command"
-            badge="VARIANT 02 // TERMINAL"
-            title="Cyber Console Command"
-            description="Expanded 50px attraction radius suited for technical console HUDs and commands."
-            codeSnippet={`<MagneticButton
-  maxDistance={50}
-  stiffness={130}
-  damping={9}
-  mass={0.12}
-  className="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 font-mono font-bold px-6 py-3 rounded-lg text-xs uppercase shadow-[0_0_15px_rgba(6,182,212,0.2)]"
->
-  > EXECUTE_NODE
-</MagneticButton>`}
-          >
-            <div className="p-8 flex items-center justify-center">
-              <MagneticButton
-                maxDistance={50}
-                stiffness={130}
-                damping={9}
-                mass={0.12}
-                className="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 font-mono font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.2)]"
-              >
-                <span>&gt; EXECUTE_NODE</span>
-              </MagneticButton>
-            </div>
-          </ExampleCard>
-
-          <ExampleCard
-            id="minimal-pill"
-            badge="VARIANT 03 // MINIMAL"
-            title="Minimalist Ivory Pill"
-            description="Gentle micro-pull physics with higher damping for understated navigational elements."
-            codeSnippet={`<MagneticButton
-  maxDistance={25}
-  stiffness={200}
-  damping={16}
-  mass={0.08}
-  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-mono font-medium px-6 py-3 rounded-full text-xs uppercase tracking-wider"
->
-  Explore Works
-</MagneticButton>`}
-          >
-            <div className="p-8 flex items-center justify-center">
-              <MagneticButton
-                maxDistance={25}
-                stiffness={200}
-                damping={16}
-                mass={0.08}
-                className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-mono font-medium px-6 py-3 rounded-full text-xs uppercase tracking-wider"
-              >
-                <span>Explore Works</span>
-              </MagneticButton>
-            </div>
-          </ExampleCard>
-        </div>
-      )}
-
-      {/* BUBBLE TEXT EXAMPLES */}
-      {normalizedSlug === "bubble-text" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ExampleCard
-            id="bubble-cyberpunk"
-            badge="VARIANT 01 // DISPLAY"
-            title="Cyberpunk Terminal Wave"
-            description="Phosphor emerald proximity weight wave radiating across bold display characters."
-            codeSnippet={`<BubbleText
-  text="NEO TOKYO 2088"
-  className="font-black text-4xl sm:text-5xl text-emerald-400 tracking-wider"
-/>`}
-          >
-            <div className="p-8 w-full flex items-center justify-center">
-              <BubbleText
-                text="NEO TOKYO 2088"
-                className="font-black text-3xl sm:text-4xl text-emerald-400 tracking-wider"
-              />
-            </div>
-          </ExampleCard>
-
-          <ExampleCard
-            id="bubble-editorial"
-            badge="VARIANT 02 // EDITORIAL"
-            title="Editorial Monospace Scale"
-            description="Classic warm typography wave on paper background with progressive letter weight."
-            codeSnippet={`<BubbleText
-  text="CREATIVE STUDIO"
-  className="font-mono text-3xl sm:text-4xl text-[#f97316] font-light tracking-tight"
-/>`}
-          >
-            <div className="p-8 w-full flex items-center justify-center">
-              <BubbleText
-                text="CREATIVE STUDIO"
-                className="font-mono text-3xl sm:text-4xl text-[#f97316] font-light tracking-tight"
-              />
-            </div>
-          </ExampleCard>
-        </div>
-      )}
-
-      {/* BINARY GRID EXAMPLES */}
-      {normalizedSlug === "binary-grid" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ExampleCard
-            id="binary-vault"
-            badge="VARIANT 01 // PRECISION"
-            title="High Precision Aperture"
-            description="Concentrated 60px aperture with tight spring stiffness for surgical matrix inspection."
-            codeSnippet={`<BinaryGrid
+        {/* BINARY GRID VARIANTS */}
+        {normalizedSlug === "binary-grid" && (
+          <>
+            <AceternityVariantCard
+              id="matrix-spotlight"
+              badge="VARIANT 01 // CYBERPUNK LAB"
+              title="Decrypted Cyber Matrix"
+              description="Precision cursor aperture revealing hidden hacker alphanumeric streams with dynamic radial feathering."
+              presetProps={{
+                circleSize: 60,
+                stiffness: 300,
+                damping: 30,
+              }}
+              codeSnippet={`<BinaryGrid
   circleSize={60}
-  stiffness={400}
-  damping={25}
+  stiffness={300}
+  damping={30}
 />`}
-          >
-            <div className="w-full">
-              <BinaryGrid circleSize={60} stiffness={400} damping={25} />
-            </div>
-          </ExampleCard>
+            >
+              <div className="relative w-full max-w-xl h-44 rounded-xl bg-neutral-950 border border-neutral-800 p-4 font-mono text-[11px] text-neutral-600 overflow-hidden flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="h-28 w-28 rounded-full bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+                    <span className="text-cyan-300 font-bold text-xs tracking-wider">
+                      H A P P Y
+                    </span>
+                  </div>
+                </div>
+                <div className="pointer-events-none select-none opacity-40 break-all leading-4">
+                  01001000 01000001 01010000 01010000 01011001 01011111 01000011 01001111 01000100 01001001 01001110 01000111
+                </div>
+              </div>
+            </AceternityVariantCard>
 
-          <ExampleCard
-            id="binary-expansive"
-            badge="VARIANT 02 // EXPANSIVE"
-            title="Expansive Stream Reveal"
-            description="Wide 120px radial aura revealing broad cross-sections of the decrypted data stream."
-            codeSnippet={`<BinaryGrid
-  circleSize={120}
+            <AceternityVariantCard
+              id="broad-beam-grid"
+              badge="VARIANT 02 // SEARCHLIGHT APERTURE"
+              title="Broad Tactical Beam"
+              description="Extra-wide cursor radius with softer spring damping for gentle organic exploration."
+              presetProps={{
+                circleSize: 110,
+                stiffness: 220,
+                damping: 22,
+              }}
+              codeSnippet={`<BinaryGrid
+  circleSize={110}
   stiffness={220}
-  damping={40}
+  damping={22}
 />`}
-          >
-            <div className="w-full">
-              <BinaryGrid circleSize={120} stiffness={220} damping={40} />
-            </div>
-          </ExampleCard>
-        </div>
-      )}
-
-      {/* RADIAL GRADIENT CARD EXAMPLES */}
-      {normalizedSlug === "radial-gradient-card" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ExampleCard
-            id="card-violet"
-            badge="VARIANT 01 // VIOLET"
-            title="Violet Focus Specimen"
-            description="Pointer-responsive violet spotlight illuminating dark glass container surface."
-            codeSnippet={`<RadialGradientAnimateCard
-  radialGradient={{
-    color1: "rgba(139, 92, 246, 0.5)",
-    size: "14rem",
-    shape: "circle",
-    opacity: 0.6,
-  }}
-  className="w-full bg-[#111218] border border-white/10 rounded-2xl p-6 text-white"
->
-  <h4 className="font-mono text-lg font-bold">Violet Focus Card</h4>
-  <p className="font-sans text-xs text-white/70">Reactive radial highlight</p>
-</RadialGradientAnimateCard>`}
-          >
-            <div className="w-full max-w-sm">
-              <RadialGradientAnimateCard
-                radialGradient={{
-                  color1: "rgba(139, 92, 246, 0.5)",
-                  size: "14rem",
-                  shape: "circle",
-                  opacity: 0.6,
-                }}
-                className="w-full bg-[#111218] border border-white/10 rounded-2xl p-6 text-white"
-              >
-                <div className="flex flex-col gap-2">
-                  <span className="font-mono text-[10px] font-bold tracking-wider text-purple-400 uppercase">
-                    PRESET 01 / VIOLET
-                  </span>
-                  <h4 className="font-mono text-base font-bold text-white">
-                    Violet Focus Card
-                  </h4>
-                  <p className="font-sans text-xs text-white/70">
-                    Pointer-responsive glow tracking hover coordinates across surface.
-                  </p>
+            >
+              <div className="relative w-full max-w-xl h-44 rounded-xl bg-neutral-950 border border-neutral-800 p-4 font-mono text-[11px] text-neutral-600 overflow-hidden flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="h-36 w-36 rounded-full bg-white/10 border border-white/30 flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.15)]">
+                    <span className="text-white font-bold text-xs tracking-wider">
+                      SPOTLIGHT
+                    </span>
+                  </div>
                 </div>
-              </RadialGradientAnimateCard>
-            </div>
-          </ExampleCard>
-
-          <ExampleCard
-            id="card-amber"
-            badge="VARIANT 02 // AMBER"
-            title="Warm Amber Spotlight"
-            description="Incandescent amber glow designed for warm editorial drafting cards."
-            codeSnippet={`<RadialGradientAnimateCard
-  radialGradient={{
-    color1: "rgba(245, 158, 11, 0.5)",
-    size: "14rem",
-    shape: "circle",
-    opacity: 0.6,
-  }}
-  className="w-full bg-[#111218] border border-white/10 rounded-2xl p-6 text-white"
->
-  <h4 className="font-mono text-lg font-bold">Amber Focus Card</h4>
-  <p className="font-sans text-xs text-white/70">Warm incandescent highlight</p>
-</RadialGradientAnimateCard>`}
-          >
-            <div className="w-full max-w-sm">
-              <RadialGradientAnimateCard
-                radialGradient={{
-                  color1: "rgba(245, 158, 11, 0.5)",
-                  size: "14rem",
-                  shape: "circle",
-                  opacity: 0.6,
-                }}
-                className="w-full bg-[#111218] border border-white/10 rounded-2xl p-6 text-white"
-              >
-                <div className="flex flex-col gap-2">
-                  <span className="font-mono text-[10px] font-bold tracking-wider text-amber-400 uppercase">
-                    PRESET 02 / AMBER
-                  </span>
-                  <h4 className="font-mono text-base font-bold text-white">
-                    Amber Focus Card
-                  </h4>
-                  <p className="font-sans text-xs text-white/70">
-                    Warm drafting illumination following the pointer with smooth fading.
-                  </p>
+                <div className="pointer-events-none select-none opacity-40 break-all leading-4">
+                  01001000 01000001 01010000 01010000 01011001 01011111 01000011 01001111 01000100 01001001 01001110 01000111
                 </div>
-              </RadialGradientAnimateCard>
-            </div>
-          </ExampleCard>
-        </div>
-      )}
+              </div>
+            </AceternityVariantCard>
+          </>
+        )}
+
+        {/* BUBBLE TEXT VARIANTS */}
+        {normalizedSlug === "bubble-text" && (
+          <>
+            <AceternityVariantCard
+              id="indigo-bubble"
+              badge="VARIANT 01 // INTERACTIVE TITLE"
+              title="Indigo Proximity Wave"
+              description="Dynamic Raleway character weight modulation calculating cursor distance with 900-700-500-100 falloffs."
+              presetProps={{
+                text: "Bbbbbbble text",
+              }}
+              codeSnippet={`<BubbleText text="Bbbbbbble text" />`}
+            >
+              <div className="w-full max-w-xl h-44 rounded-xl bg-[#0e1017] border border-indigo-900/40 p-4 flex items-center justify-center">
+                <span className="font-raleway text-4xl sm:text-5xl font-thin text-indigo-300 tracking-wide">
+                  <span>B</span>
+                  <span className="font-black text-white">b</span>
+                  <span className="font-bold text-indigo-200">b</span>
+                  <span className="font-medium text-indigo-300">b</span>
+                  <span className="font-thin text-indigo-400">b</span>
+                  <span>bble text</span>
+                </span>
+              </div>
+            </AceternityVariantCard>
+
+            <AceternityVariantCard
+              id="portfolio-bubble"
+              badge="VARIANT 02 // EDITORIAL ACCENT"
+              title="Headline Display Wave"
+              description="Creative headline lettering providing tactile typographic feedback on mouse proximity."
+              presetProps={{
+                text: "Creative Portfolio",
+              }}
+              codeSnippet={`<BubbleText text="Creative Portfolio" />`}
+            >
+              <div className="w-full max-w-xl h-44 rounded-xl bg-[#0e1017] border border-indigo-900/40 p-4 flex items-center justify-center">
+                <span className="font-raleway text-3xl sm:text-4xl font-thin text-indigo-300 tracking-wide">
+                  <span>C</span>
+                  <span className="font-black text-white">r</span>
+                  <span className="font-bold text-indigo-200">e</span>
+                  <span className="font-medium text-indigo-300">a</span>
+                  <span>tive Portfolio</span>
+                </span>
+              </div>
+            </AceternityVariantCard>
+          </>
+        )}
+
+        {/* MAGNETIC BUTTON VARIANTS */}
+        {normalizedSlug === "magnetic-button" && (
+          <>
+            <AceternityVariantCard
+              id="dashed-magnet"
+              badge="VARIANT 01 // CALL TO ACTION"
+              title="Dashed Target Boundary"
+              description="Physics-driven attraction button revealing a dashed boundary ring on hover with snappy spring mechanics."
+              presetProps={{
+                children: "Hover Me",
+                maxDistance: 30,
+                stiffness: 150,
+                damping: 10,
+                mass: 0.1,
+              }}
+              codeSnippet={`<MagneticButton
+  maxDistance={30}
+  stiffness={150}
+  damping={10}
+  mass={0.1}
+>
+  Hover Me
+</MagneticButton>`}
+            >
+              <div className="w-full max-w-xl h-44 rounded-xl bg-[#0a0a0c] border border-neutral-800 p-4 flex items-center justify-center">
+                <div className="rounded-2xl border-2 border-dashed border-zinc-200 bg-zinc-900 p-2">
+                  <div className="rounded-xl bg-zinc-200 px-6 py-3 font-mono text-xs font-bold text-zinc-900 shadow-md">
+                    Hover Me
+                  </div>
+                </div>
+              </div>
+            </AceternityVariantCard>
+
+            <AceternityVariantCard
+              id="heavy-pull-magnet"
+              badge="VARIANT 02 // FIRM TRAJECTORY"
+              title="Heavy Magnet Pull"
+              description="Higher magnetic pull distance with stiffer spring damping for a weighty, authoritative feel."
+              presetProps={{
+                children: "Follow Cursor",
+                maxDistance: 50,
+                stiffness: 260,
+                damping: 18,
+                mass: 0.15,
+              }}
+              codeSnippet={`<MagneticButton
+  maxDistance={50}
+  stiffness={260}
+  damping={18}
+  mass={0.15}
+>
+  Follow Cursor
+</MagneticButton>`}
+            >
+              <div className="w-full max-w-xl h-44 rounded-xl bg-[#0a0a0c] border border-neutral-800 p-4 flex items-center justify-center">
+                <div className="rounded-2xl border-2 border-dashed border-zinc-500 bg-zinc-900 p-2.5">
+                  <div className="rounded-xl bg-zinc-100 px-7 py-3.5 font-mono text-xs font-bold text-zinc-900 shadow-lg">
+                    Follow Cursor
+                  </div>
+                </div>
+              </div>
+            </AceternityVariantCard>
+          </>
+        )}
+
+        {/* RADIAL GRADIENT CARD VARIANTS */}
+        {normalizedSlug === "radial-gradient-card" && (
+          <>
+            <AceternityVariantCard
+              id="cobalt-radial"
+              badge="VARIANT 01 // SAAS FEATURE"
+              title="Cobalt Electric Spotlight"
+              description="Smooth cursor-tracking cobalt radial glow across deep obsidian surface with zero layout re-renders."
+              presetProps={{
+                color1: "rgba(59, 130, 246)",
+                shape: "circle",
+                size: "10rem",
+                opacity: 0.5,
+              }}
+              codeSnippet={`<RadialGradientAnimateCard
+  radialGradient={{
+    color1: "rgba(59, 130, 246)",
+    color2: "transparent",
+    shape: "circle",
+    size: "10rem",
+    opacity: 0.5,
+  }}
+>
+  <div className="flex flex-col gap-2">
+    <h4 className="text-xl font-bold text-white">Enterprise Cloud</h4>
+    <p className="text-xs text-neutral-400">Reactive cursor lighting with zero re-renders.</p>
+  </div>
+</RadialGradientAnimateCard>`}
+            >
+              <div className="relative w-full max-w-sm rounded-xl border border-blue-500/30 bg-[#090d16] p-6 shadow-2xl overflow-hidden">
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(circle 8rem at 70% 40%, rgba(59, 130, 246, 0.4), transparent)",
+                  }}
+                />
+                <span className="text-[10px] font-mono text-blue-400 font-bold uppercase">
+                  Feature Spotlight
+                </span>
+                <h4 className="mt-1 text-lg font-bold text-white">
+                  Enterprise Cloud
+                </h4>
+                <p className="mt-1 text-xs text-neutral-400">
+                  Reactive cursor spotlight projection across obsidian cards.
+                </p>
+              </div>
+            </AceternityVariantCard>
+
+            <AceternityVariantCard
+              id="magenta-radial"
+              badge="VARIANT 02 // GAMING & CREATIVE"
+              title="Cyberpunk Magenta Beam"
+              description="Vibrant high-contrast magenta and violet radial illumination for gaming platforms and web3 showcases."
+              presetProps={{
+                color1: "rgba(236, 72, 153)",
+                shape: "ellipse",
+                size: "14rem",
+                opacity: 0.65,
+              }}
+              codeSnippet={`<RadialGradientAnimateCard
+  radialGradient={{
+    color1: "rgba(236, 72, 153)",
+    color2: "transparent",
+    shape: "ellipse",
+    size: "14rem",
+    opacity: 0.65,
+  }}
+>
+  <div className="flex flex-col gap-2">
+    <h4 className="text-xl font-bold text-white">Cyberpunk Arcade</h4>
+    <p className="text-xs text-neutral-400">High-contrast magenta beam tracking.</p>
+  </div>
+</RadialGradientAnimateCard>`}
+            >
+              <div className="relative w-full max-w-sm rounded-xl border border-pink-500/30 bg-[#090d16] p-6 shadow-2xl overflow-hidden">
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(ellipse 10rem at 30% 50%, rgba(236, 72, 153, 0.4), transparent)",
+                  }}
+                />
+                <span className="text-[10px] font-mono text-pink-400 font-bold uppercase">
+                  Creative Canvas
+                </span>
+                <h4 className="mt-1 text-lg font-bold text-white">
+                  Cyberpunk Arcade
+                </h4>
+                <p className="mt-1 text-xs text-neutral-400">
+                  High-contrast magenta illumination with elliptical aperture.
+                </p>
+              </div>
+            </AceternityVariantCard>
+          </>
+        )}
+      </div>
     </section>
   );
 };

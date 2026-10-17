@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
 import { email } from "@/lib/site";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_t4ykead";
@@ -48,6 +47,7 @@ export default function ContactForm() {
     setError("");
 
     try {
+      const emailjs = (await import("@emailjs/browser")).default;
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,

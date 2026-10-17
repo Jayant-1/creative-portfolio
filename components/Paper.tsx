@@ -166,7 +166,7 @@ export function ContactStrip() {
   const { containerRef, lensRef, onMove, onMouseEnter, onMouseLeave } = useLens([3, 97]);
 
   return (
-    <section id="contact" className="ca-grid relative scroll-mt-24 overflow-hidden" aria-labelledby="talk-title">
+    <section id="contact" className="ca-grid ca-section-contain relative scroll-mt-24 overflow-hidden" aria-labelledby="talk-title">
       <div
         ref={containerRef as React.RefObject<HTMLDivElement>}
         onMouseMove={onMove}

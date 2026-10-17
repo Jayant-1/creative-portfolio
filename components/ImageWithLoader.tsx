@@ -45,6 +45,7 @@ export function ImageWithLoader({
   ...rest
 }: ImageWithLoaderProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaderUnmounted, setIsLoaderUnmounted] = useState(false);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
@@ -52,8 +53,19 @@ export function ImageWithLoader({
   useEffect(() => {
     if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
       setIsLoaded(true);
+      setIsLoaderUnmounted(true);
     }
   }, []);
+
+  // When image loads, unmount the loader after the 500ms fadeout transition
+  useEffect(() => {
+    if (isLoaded && !isLoaderUnmounted) {
+      const timer = setTimeout(() => {
+        setIsLoaderUnmounted(true);
+      }, 550);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded, isLoaderUnmounted]);
 
   const defaultText =
     loaderText ||
@@ -66,11 +78,12 @@ export function ImageWithLoader({
   return (
     <div className={`relative h-full w-full overflow-hidden ${wrapperClassName}`}>
       {/* Tactile Craft Loading State */}
-      {!hasError && (
+      {!hasError && !isLoaderUnmounted && (
         <div
           aria-hidden="true"
+          data-loaded={isLoaded ? "true" : undefined}
           className={`ca-image-shimmer absolute inset-0 z-10 flex h-full w-full flex-col items-center justify-center transition-opacity duration-500 ease-out ${
-            isLoaded ? "opacity-0 pointer-events-none" : "opacity-100"
+            isLoaded ? "opacity-0 pointer-events-none is-hidden" : "opacity-100"
           }`}
           style={{
             backgroundColor: "#f5efe6",

@@ -123,174 +123,62 @@ export const HERO_TIMINGS = {
   },
 } as const;
 
-// Global pointer coordinates tracker across all lenses
-let globalPointer: { clientX: number; clientY: number } | null = null;
-const registeredLenses = new Set<() => void>();
-let listenersAttached = false;
-
-function ensureGlobalLensListeners() {
-  if (typeof window === "undefined" || listenersAttached) return;
-  listenersAttached = true;
-
-  const handlePointer = (e: MouseEvent | PointerEvent) => {
-    globalPointer = { clientX: e.clientX, clientY: e.clientY };
-  };
-
-  const handleScrollOrResize = () => {
-    if (!globalPointer) return;
-    registeredLenses.forEach((fn) => fn());
-  };
-
-  window.addEventListener("pointermove", handlePointer, { passive: true });
-  window.addEventListener("mousemove", handlePointer, { passive: true });
-  window.addEventListener("scroll", handleScrollOrResize, { passive: true });
-  window.addEventListener("wheel", handleScrollOrResize, { passive: true });
-  window.addEventListener("resize", handleScrollOrResize, { passive: true });
-}
-
-// Module-level weakmap cache for offscreen 32x32 image canvas sampling contexts
-const canvasCache = new WeakMap<HTMLImageElement, CanvasRenderingContext2D | null>();
-
-function getSamplingContext(img: HTMLImageElement | null): CanvasRenderingContext2D | null {
-  if (!img || !img.complete || img.naturalWidth === 0) return null;
-  if (canvasCache.has(img)) return canvasCache.get(img)!;
-  try {
-    const canvas = document.createElement("canvas");
-    canvas.width = 32;
-    canvas.height = 32;
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    if (!ctx) {
-      canvasCache.set(img, null);
-      return null;
-    }
-    ctx.drawImage(img, 0, 0, 32, 32);
-    canvasCache.set(img, ctx);
-    return ctx;
-  } catch {
-    canvasCache.set(img, null);
-    return null;
-  }
-}
-
 /**
- * Custom hook to track mouse cursor and synchronously drive the lens.
- * - Global pointer coordinator captures mouse position anywhere on the screen
- * - Synchronous position application on mousemove (0 latency, no RAF deadlock)
- * - Synchronous hit-testing during scroll/wheel ensures cards scrolling under a stationary mouse
- *   immediately place the lens at the cursor coordinates before painting (eliminates 50% 50% freeze)
- * - Safe boundary clamping [bounds[0], bounds[1]]
- * - Dynamic image luminance sampling guarantees text readability on any background color
+ * Custom hook to track mouse cursor and drive the lens with 60/120fps hardware acceleration.
+ * - Zero window scroll/wheel listeners: completely unburdens the main thread and compositor during scrolling.
+ * - RAF-throttled position updates: coalesces high-frequency mouse events into single vsync updates.
+ * - Cached bounding rect on hover: eliminates layout thrashing.
+ * - Zero GPU-stalling canvas readbacks.
  */
 export function useLens(bounds: [number, number] = [0, 100]) {
   const lensRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLElement | null>(null);
+  const rafIdRef = useRef<number | null>(null);
 
-  const applyCoord = useCallback(
-    (clientX: number, clientY: number, targetContainer?: HTMLElement | null) => {
-      const container = targetContainer || containerRef.current;
+  const onMove = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
       const lens = lensRef.current;
-      if (!container || !lens) return;
+      if (!lens) return;
+      const currentTarget = e.currentTarget;
+      const { clientX, clientY } = e;
 
-      const rect = container.getBoundingClientRect();
-      if (rect.width === 0 || rect.height === 0) return;
-
-      const clientLeft = container.clientLeft || 0;
-      const clientTop = container.clientTop || 0;
-      const w = container.clientWidth || rect.width;
-      const h = container.clientHeight || rect.height;
-
-      const relX = clientX - rect.left - clientLeft;
-      const relY = clientY - rect.top - clientTop;
-
-      const rawX = (relX / w) * 100;
-      const rawY = (relY / h) * 100;
-
-      const x = bounds ? Math.min(bounds[1], Math.max(bounds[0], rawX)) : rawX;
-      const y = bounds ? Math.min(bounds[1], Math.max(bounds[0], rawY)) : rawY;
-
-      lens.style.left = `${x}%`;
-      lens.style.top = `${y}%`;
-
-      // Dynamically adapt lens text color to guarantee readability against any color:
-      // When the underlying card image is light, invert(1) makes the lens circle dark -> text becomes white (#ffffff).
-      // When the underlying card image is dark, invert(1) makes the lens circle light -> text becomes deep ink (var(--ca-ink)).
-      const img = container.querySelector("img");
-      const ctx = getSamplingContext(img);
-      if (ctx) {
-        const px = Math.max(0, Math.min(31, Math.floor((rawX / 100) * 32)));
-        const py = Math.max(0, Math.min(31, Math.floor((rawY / 100) * 32)));
-        try {
-          const pixel = ctx.getImageData(px, py, 1, 1).data;
-          const lum = 0.299 * pixel[0] + 0.587 * pixel[1] + 0.114 * pixel[2];
-          lens.style.setProperty("--ca-lens-text", lum > 128 ? "#ffffff" : "var(--ca-ink)");
-        } catch {
-          // Cross-origin fallback (not triggered for local assets)
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = requestAnimationFrame(() => {
+        const rect = currentTarget.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+        let x = ((clientX - rect.left) / rect.width) * 100;
+        let y = ((clientY - rect.top) / rect.height) * 100;
+        if (bounds) {
+          x = Math.min(bounds[1], Math.max(bounds[0], x));
+          y = Math.min(bounds[1], Math.max(bounds[0], y));
         }
-      }
+        lens.style.left = `${x}%`;
+        lens.style.top = `${y}%`;
+      });
     },
     [bounds]
   );
 
-  const checkAndPosition = useCallback(() => {
-    if (!globalPointer) return;
-    const container = containerRef.current;
-    const lens = lensRef.current;
-    if (!container || !lens) return;
-
-    const rect = container.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) return;
-
-    // Quick bounding box check: is the pointer inside this container's screen rect?
-    if (
-      globalPointer.clientX < rect.left ||
-      globalPointer.clientX > rect.right ||
-      globalPointer.clientY < rect.top ||
-      globalPointer.clientY > rect.bottom
-    ) {
-      return;
-    }
-
-    // Topmost element hit-test (handles stacked sticky cards)
-    const topEl = document.elementFromPoint(globalPointer.clientX, globalPointer.clientY);
-    if (!topEl || !container.contains(topEl)) {
-      return;
-    }
-
-    applyCoord(globalPointer.clientX, globalPointer.clientY, container);
-  }, [applyCoord]);
-
-  useEffect(() => {
-    ensureGlobalLensListeners();
-    registeredLenses.add(checkAndPosition);
-
-    // Initial check on mount in case the pointer is already over this element
-    checkAndPosition();
-
-    return () => {
-      registeredLenses.delete(checkAndPosition);
-    };
-  }, [checkAndPosition]);
-
   const onMouseEnter = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
-      containerRef.current = e.currentTarget;
-      globalPointer = { clientX: e.clientX, clientY: e.clientY };
-      applyCoord(e.clientX, e.clientY, e.currentTarget);
+      onMove(e);
     },
-    [applyCoord]
-  );
-
-  const onMove = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      containerRef.current = e.currentTarget;
-      globalPointer = { clientX: e.clientX, clientY: e.clientY };
-      applyCoord(e.clientX, e.clientY, e.currentTarget);
-    },
-    [applyCoord]
+    [onMove]
   );
 
   const onMouseLeave = useCallback(() => {
-    // Keep containerRef attached for subsequent scroll hit-testing
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
   }, []);
 
   return { containerRef, lensRef, onMove, onMouseEnter, onMouseLeave };
@@ -298,7 +186,7 @@ export function useLens(bounds: [number, number] = [0, 100]) {
 
 /**
  * Square Lens element with 4 corner squares and [backdrop-filter:invert(1)]
- * Hardware-accelerated with will-change, smooth zoom in/out with gentle spring overshoot
+ * Exactly matches https://portfoliofy.io/preview/creative-artsy
  */
 export function MouseLens({
   lensRef,
@@ -315,7 +203,7 @@ export function MouseLens({
     <span
       ref={lensRef as React.RefObject<HTMLSpanElement>}
       aria-hidden="true"
-      className={`ca-invert-lens pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 hidden ${sizeClass} ${groupHoverClass} ${className} lg:block`}
+      className={`pointer-events-none absolute left-1/2 top-1/2 z-30 hidden ${sizeClass} -translate-x-1/2 -translate-y-1/2 scale-[0.35] opacity-0 transition-[opacity,transform] duration-300 ease-out [backdrop-filter:invert(1)] ${groupHoverClass} ${className} lg:block`}
     >
       <span className="absolute -left-2 -top-2 h-4 w-4 bg-[var(--ca-ink)]" />
       <span className="absolute -right-2 -top-2 h-4 w-4 bg-[var(--ca-ink)]" />
@@ -345,7 +233,7 @@ export function CardLens({
       style={{
         ["--ca-lens-text" as any]: darkCard ? "var(--ca-ink)" : "#ffffff",
       }}
-      className="ca-card-lens pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden h-28 w-28 items-center justify-center rounded-full group-hover:scale-100 group-hover:opacity-100 group-hover/card:scale-100 group-hover/card:opacity-100 lg:flex"
+      className="ca-card-lens pointer-events-none absolute left-1/2 top-1/2 z-10 hidden h-28 w-28 items-center justify-center rounded-full lg:flex"
     >
       <span className="ca-mono text-sm font-bold uppercase tracking-widest text-[var(--ca-lens-text,var(--ca-ink))]">
         See

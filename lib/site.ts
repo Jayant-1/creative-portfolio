@@ -5,7 +5,7 @@ export const author = {
   name: "Jayant Potdar",
   legalName: "Jayant Sunil Potdar",
   role: "Full Stack Developer",
-  secondaryRole: "Creative Full Stack Developer",
+  secondaryRole: "Design Engineer",
   location: "Pune, India",
   fullLocation: "Pune, Maharashtra, India",
   college: "Ratan Tata Maharashtra State Skills University (MSSU), Pune",
@@ -147,7 +147,12 @@ export type Project = {
 };
 
 export function isDarkProjectHero(slug?: string): boolean {
-  return slug === "astropixel" || slug === "krypton" || slug === "3d-portfolio";
+  return (
+    slug === "astropixel" ||
+    slug === "krypton" ||
+    slug === "3d-portfolio" ||
+    slug === "neuralnet"
+  );
 }
 
 export const projects: Project[] = [
@@ -266,7 +271,7 @@ export const projects: Project[] = [
   }
 ],
     source: "https://github.com/Jayant-1/AstroPixel",
-    demo: "https://astropixel.jayantpotdar.in/",
+    demo: "https://astropixel.jayant.codes/",
   },
   {
     slug: "krypton",
@@ -392,7 +397,7 @@ export const projects: Project[] = [
   }
 ],
     source: "https://github.com/Jayant-1/Krypton",
-    demo: "https://krypton.jayantpotdar.in/",
+    demo: "https://krypton.jayant.codes/",
   },
   {
     slug: "3d-portfolio",
@@ -512,7 +517,7 @@ export const projects: Project[] = [
   }
 ],
     source: "https://github.com/Jayant-1/3D-Portfolio",
-    demo: "https://jayant-1.vercel.app/",
+    demo: "https://3dportfolio.jayant.codes/",
   },
   {
     slug: "malaria-detection",
@@ -626,7 +631,7 @@ export const projects: Project[] = [
   }
 ],
     source: "https://github.com/Jayant-1/MalariaDetectionSystem",
-    demo: "https://malariadetectionsystem.jayantpotdar.in/",
+    demo: "https://malariadetection.jayant.codes/",
   },
   {
     slug: "neuralnet",
@@ -741,7 +746,7 @@ export const projects: Project[] = [
   }
 ],
     source: "https://github.com/Jayant-1/NeuralNet",
-    demo: "https://neuralnet.jayantpotdar.in/",
+    demo: "https://neuralnet.jayant.codes/",
   },
 ];
 

@@ -1,7 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:ital,wght@0,100..900;1,100..900&family=Six+Caps&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@100..900&family=Six+Caps&display=swap');
 
 @font-face {
   font-family: "Handjet";
@@ -174,6 +174,7 @@ textarea {
 .ca-grain {
   opacity: 0.09;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='cn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cn)'/%3E%3C/svg%3E");
+  pointer-events: none;
 }
 
 /* Organic hand-drawn wobbly box */
@@ -318,6 +319,20 @@ textarea {
   );
   animation: ca-shimmer 1.8s infinite ease-in-out;
   pointer-events: none;
+}
+.ca-image-shimmer.is-hidden,
+.ca-image-shimmer[data-loaded="true"] {
+  display: none !important;
+}
+.ca-image-shimmer.is-hidden::after,
+.ca-image-shimmer[data-loaded="true"]::after {
+  animation: none !important;
+}
+
+/* Rendering containment for heavy off-screen sections */
+.ca-section-contain {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
 @keyframes ca-blink {
@@ -663,48 +678,23 @@ textarea {
   transform: translate3d(0, 0, 0) scale(0.97);
 }
 
-/* Tactile Inversion Lens with Spring Dynamics:
- * - Start animation (enter hover): smooth fade-in (200ms) and zoom-in (380ms) with subtle spring overshoot (cubic-bezier(0.34, 1.35, 0.64, 1))
- * - End animation (leave hover): smooth fade-out (240ms) and zoom-out (280ms) cleanly decaying to scale 0.35
- */
-.ca-invert-lens {
-  opacity: 0;
-  -webkit-transform: translate3d(-50%, -50%, 0) scale(0.35);
-  transform: translate3d(-50%, -50%, 0) scale(0.35);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transition:
-    opacity 240ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: left, top, transform, opacity;
-  -webkit-backdrop-filter: invert(1);
-  backdrop-filter: invert(1);
-}
-
-.group\/name:hover .ca-invert-lens,
-.group\/talk:hover .ca-invert-lens,
-.group:hover .ca-invert-lens {
-  opacity: 1 !important;
-  -webkit-transform: translate3d(-50%, -50%, 0) scale(1) !important;
-  transform: translate3d(-50%, -50%, 0) scale(1) !important;
-  transition:
-    opacity 200ms ease-out,
-    transform 380ms cubic-bezier(0.34, 1.35, 0.64, 1) !important;
-}
 
 /* Circular Card Lens with Matching Spring Dynamics */
 .ca-card-lens {
   opacity: 0;
-  -webkit-transform: translate3d(-50%, -50%, 0) scale(0.45);
-  transform: translate3d(-50%, -50%, 0) scale(0.45);
+  visibility: hidden;
+  -webkit-backdrop-filter: invert(1);
+  backdrop-filter: invert(1);
+  -webkit-transform: translate3d(-50%, -50%, 0) scale(0.92);
+  transform: translate3d(-50%, -50%, 0) scale(0.92);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition:
-    opacity 240ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: left, top, transform, opacity;
-  -webkit-backdrop-filter: invert(1);
-  backdrop-filter: invert(1);
+    opacity 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 260ms;
+  will-change: transform, opacity;
+  pointer-events: none;
 }
 
 .ca-card-lens span {
@@ -715,11 +705,15 @@ textarea {
 .group\/card:hover .ca-card-lens,
 .group:hover .ca-card-lens {
   opacity: 1 !important;
+  visibility: visible !important;
+  -webkit-backdrop-filter: invert(1) !important;
+  backdrop-filter: invert(1) !important;
   -webkit-transform: translate3d(-50%, -50%, 0) scale(1) !important;
   transform: translate3d(-50%, -50%, 0) scale(1) !important;
   transition:
-    opacity 200ms ease-out,
-    transform 340ms cubic-bezier(0.34, 1.35, 0.64, 1) !important;
+    opacity 180ms ease-out,
+    transform 340ms cubic-bezier(0.34, 1.35, 0.64, 1),
+    visibility 0s linear 0s !important;
 }
 
 /* Infinite Testimonials Marquee Track (Hardware Accelerated) */
@@ -787,4 +781,8 @@ textarea {
 
 .font-raleway {
   font-family: 'Raleway', sans-serif;
+}
+
+.object-bottom {
+  object-position: bottom !important;
 }

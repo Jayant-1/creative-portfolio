@@ -35,20 +35,12 @@ export function TechnicalSkillsetPicker({
   return (
     <div className="mt-10 border-t-2 border-dashed border-[var(--ca-ink)]/20 pt-8 space-y-6">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 border-b border-[var(--ca-ink)]/15 pb-3">
-        <div className="flex items-center gap-3">
-          <span
-            className="ca-mono ca-torn-label px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]"
-            style={{ backgroundColor: "var(--ca-yellow)" }}
-          >
-            Tactile Inventory
-          </span>
-          <h3 className="ca-mono text-sm sm:text-base font-extrabold uppercase tracking-wider text-[var(--ca-ink)]">
-            Catalogued Toolbox &amp; Runtimes
-          </h3>
-        </div>
-        <span className="ca-hand text-xl text-[var(--ca-ink)]/75">
-          // physical desk notes • daily drivers
+      <div className="flex items-center border-b border-[var(--ca-ink)]/15 pb-3">
+        <span
+          className="ca-mono ca-torn-label px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]"
+          style={{ backgroundColor: "var(--ca-yellow)" }}
+        >
+          Technology Stack
         </span>
       </div>
 

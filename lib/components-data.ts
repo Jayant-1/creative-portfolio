@@ -290,7 +290,12 @@ export const OverlappingTextHero = ({
                 ease: "easeInOut",
               }}
             >
-              <img src={imgPath} alt="" className="size-160" />
+              <img
+                src={imgPath}
+                alt=""
+                className="size-160 object-contain object-bottom"
+                style={{ objectPosition: "bottom" }}
+              />
             </motion.div>
 
             {/* Layer 3: Foreground Stroked Text (3D Text Sandwich Effect) */}
@@ -1170,7 +1175,7 @@ export default function Demo() {
     tagline: "Dynamic cursor-revealed matrix stream that exposes an organic radial aperture over encoded binary streams.",
     description:
       "A high-impact atmospheric backdrop component that renders a dense typographic binary grid (0100101...). As the pointer moves across the screen, a spring-driven radial mask opens an illuminated window over the encrypted character stream.",
-    thumbnail: "/components/BinaryGrid-v2.png",
+    thumbnail: "/components/BinaryGrid-v3.png",
     dependencies: ["framer-motion"],
     installCommand: "pnpm add framer-motion",
     interactiveType: "Radial Aperture Masking",
@@ -1201,9 +1206,9 @@ export default function Demo() {
       },
     ],
     defaultCustomizer: {
-      revealRadius: 80,
-      stiffness: 250,
-      damping: 25,
+      circleSize: 60,
+      stiffness: 300,
+      damping: 30,
     },
     variants: [
       {
@@ -1227,69 +1232,68 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import React, { useRef } from "react";
+import React from "react";
+import "./BinaryGrid.css";
 
-export const BinaryGrid = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const circleSize = useMotionValue(0);
+export type BinaryGridProps = {
+  circleSize?: number;
+  stiffness?: number;
+  damping?: number;
+};
 
-  const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
-  const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
+export const BinaryGrid: React.FC<BinaryGridProps> = ({
+  circleSize: defaultCircleSize = 60,
+  stiffness = 300,
+  damping = 30,
+}) => {
+  const mouseX = useMotionValue<number>(0);
+  const mouseY = useMotionValue<number>(0);
+  const circleSize = useMotionValue<number>(0);
+
   const springSize = useSpring(circleSize, {
     mass: 2,
     damping: 20,
     stiffness: 200,
+    bounce: 0,
   });
+  const springX = useSpring(mouseX, { stiffness, damping });
+  const springY = useSpring(mouseY, { stiffness, damping });
 
-  const background = useMotionTemplate\`radial-gradient(circle \${springSize}px at \${springX}px \${springY}px, rgba(255, 255, 255, 0.85) 60%, transparent 100%)\`;
+  const background = useMotionTemplate\`radial-gradient(circle \${springSize}px at \${springX}px \${springY}px, rgba(255, 255, 255, 0.7) 70%, rgba(255, 255, 255, 0.15) 100%)\`;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const { left, top } = containerRef.current.getBoundingClientRect();
-    mouseX.set(e.clientX - left);
-    mouseY.set(e.clientY - top);
+    const { clientX, clientY } = e;
+    const { left, top } = e.currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
   };
 
   return (
-    <div
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => circleSize.set(70)}
-      onMouseLeave={() => circleSize.set(0)}
-      className="relative h-96 w-full overflow-hidden rounded-2xl bg-neutral-950 p-6"
-    >
+    <div className="relative min-h-screen w-full overflow-hidden bg-neutral-950 flex items-center justify-center">
       <motion.div
-        className="pointer-events-none absolute inset-0 z-1 select-none font-mono text-[12px] leading-4 tracking-wider text-neutral-500 break-all"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={() => circleSize.set(0)}
+        onMouseEnter={() => circleSize.set(defaultCircleSize)}
+        id="static-binary-grid"
+        className="absolute top-0 left-1/2 z-1 h-full max-h-screen w-screen -translate-x-1/2 transform overflow-hidden"
         style={{
           WebkitMaskImage: background,
           maskImage: background,
         }}
-      >
-        01001010 01100001 01111001 01100001 01101110 01110100 00100000 01010000 01101111 01110100 01100100 01100001 01110010 00100000 01000011 01010010 01000001 01000110 01010100 00100000 01001110 01000001 01000010 00100000 01000011 01001111 01001101 01010000 01001111 01001110 01000101 01001110 01010100 01010011 00100001
-      </motion.div>
-      <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
-        <p className="font-mono text-xs uppercase tracking-widest text-neutral-400">
-          Move your cursor inside this canvas
-        </p>
-        <h3 className="mt-2 text-2xl font-bold text-white">
-          Encrypted Stream Aperture
-        </h3>
-      </div>
+      />
     </div>
   );
 };`,
-    usage: `import { BinaryGrid } from "@/components/ui/BinaryGrid";
+    usage: `import { BinaryGrid } from "@/components/showcase/BinaryGrid";
 
 export default function Demo() {
   return (
-    <div className="w-full">
-      <BinaryGrid />
+    <div className="relative min-h-screen w-full bg-neutral-950">
+      <BinaryGrid circleSize={60} stiffness={300} damping={30} />
     </div>
   );
 }`,
-  }
+  },
 ];
 
 export function getComponentBySlug(slug: string): CraftComponent | undefined {

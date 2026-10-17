@@ -32,6 +32,18 @@ const config: Config = {
         hand: ["var(--font-artsy-hand)", "'Just Me Again Down Here'", "cursive"],
         mono: ["var(--font-artsy-mono)", "'DM Mono'", "monospace"],
         sans: ["var(--font-artsy-sans)", "Inter", "system-ui", "sans-serif"],
+        sixCap: ["'Six Caps'", "sans-serif"],
+        bebasNeue: ["'Bebas Neue'", "sans-serif"],
+        raleway: ["'Raleway'", "sans-serif"],
+        inter: ["'Inter'", "sans-serif"],
+      },
+      spacing: {
+        "18": "4.5rem",
+        "110": "27.5rem",
+        "160": "40rem",
+      },
+      width: {
+        "2xs": "18rem",
       },
       boxShadow: {
         solid: "8px 12px 0 var(--ca-ink, #191510)",

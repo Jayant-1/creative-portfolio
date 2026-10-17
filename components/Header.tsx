@@ -189,6 +189,10 @@ export function Header() {
     setMobileOpen((prev) => !prev);
   }, []);
 
+  if (pathname?.startsWith("/preview")) {
+    return null;
+  }
+
   return (
     <>
       <a

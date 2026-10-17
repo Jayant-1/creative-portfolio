@@ -42,11 +42,25 @@ export default function ExperiencePage() {
     ],
   };
 
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Experience & Leadership — Jayant Potdar",
+    url: `${siteUrl}/experience`,
+    description:
+      "Engineering leadership at TechSpark, university technical event organization, hackathon achievements, and software development experience by Jayant Potdar in Pune.",
+    author: {
+      "@id": `${siteUrl}/#jayant`,
+    },
+  };
+
   return (
     <div className="ca-grid min-h-screen pt-12 sm:pt-16">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([breadcrumbJsonLd, webPageJsonLd]).replace(/</g, "\\u003c"),
+        }}
       />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">

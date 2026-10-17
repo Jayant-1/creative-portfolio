@@ -6,9 +6,8 @@ import { Footer } from "@/components/Paper";
 import { siteUrl } from "@/lib/site";
 import { CRAFT_COMPONENTS, getComponentBySlug } from "@/lib/components-data";
 import { HookSidebar } from "@/components/showcase/HookSidebar";
-import { ComponentSandbox } from "@/components/showcase/ComponentSandbox";
-import { ComponentVariants } from "@/components/showcase/ComponentVariants";
-import { CodeViewer } from "@/components/showcase/CodeViewer";
+import { ComponentPlayground } from "@/components/showcase/playground/ComponentPlayground";
+import { InstallSection } from "@/components/showcase/InstallSection";
 import { PropsTable } from "@/components/showcase/PropsTable";
 import { ComponentTransition } from "@/components/showcase/ComponentTransition";
 
@@ -19,9 +18,11 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return CRAFT_COMPONENTS.map((comp) => ({
+  const params = CRAFT_COMPONENTS.map((comp) => ({
     slug: comp.slug,
   }));
+  params.push({ slug: "radial-gradient-animate-card" });
+  return params;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -100,7 +101,7 @@ export default function ComponentDetailPage({ params }: PageProps) {
   };
 
   return (
-    <div className="min-h-screen pt-12 sm:pt-16 pb-20">
+    <div className="min-h-screen pt-8 sm:pt-12 pb-12 sm:pb-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -118,7 +119,7 @@ export default function ComponentDetailPage({ params }: PageProps) {
         {/* Breadcrumb Trail */}
         <nav
           aria-label="Breadcrumb"
-          className="mb-6 flex flex-wrap items-center gap-2 text-xs font-mono font-semibold text-[var(--ca-ink)]/60"
+          className="mb-5 flex flex-wrap items-center gap-2 text-xs font-mono font-semibold text-[var(--ca-ink)]/60"
         >
           <Link href="/" className="hover:text-[var(--ca-orange)] transition-colors">
             Home
@@ -128,50 +129,57 @@ export default function ComponentDetailPage({ params }: PageProps) {
             Components
           </Link>
           <ChevronRight size={13} />
-          <span className="text-[var(--ca-ink)]">
-            {component.name}
-          </span>
+          <span className="text-[var(--ca-ink)]">{component.name}</span>
         </nav>
 
-        {/* Mobile Back Link */}
-        <div className="mb-4 lg:hidden">
+        {/* Mobile Compact Contents Switcher */}
+        <div className="mb-5 lg:hidden w-full flex items-center justify-between gap-3 p-2.5 rounded-xl bg-white/90 dark:bg-[#121316]/90 border border-[var(--ca-ink)]/15 dark:border-white/10 shadow-xs">
           <Link
             href="/components"
-            className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-[var(--ca-ink)]/70 hover:text-[var(--ca-orange)] transition-colors"
+            className="inline-flex items-center gap-1 font-mono text-xs font-medium text-[var(--ca-ink)]/70 hover:text-[var(--ca-orange)] transition-colors"
           >
-            <ArrowLeft size={14} />
-            <span>All Components</span>
+            <ArrowLeft size={13} />
+            <span>Catalog</span>
           </Link>
+
+          <div className="flex items-center gap-1.5">
+            <span className="font-mono text-[10px] font-bold text-[#0284c7] uppercase">
+              CONTENTS:
+            </span>
+            <span className="font-mono text-xs font-semibold text-[var(--ca-ink)] dark:text-white truncate max-w-[150px]">
+              {component.name}
+            </span>
+          </div>
         </div>
 
-        {/* Two-Column Layout: RareUI Hook Sidebar (Left) + Main Content (Right) */}
+        {/* Two-Column Layout: Left Sticky Contents Rail + Right Main Content Column */}
         <div className="flex items-start gap-8 lg:gap-10">
-          {/* Hook Sidebar */}
+          {/* Left Rail: Contents Navigation */}
           <HookSidebar currentComponent={component} />
 
-          {/* Main Content Area */}
-          <div className="flex-1 min-w-0">
+          {/* Right Main Content Column */}
+          <div id="component-content" className="flex-1 min-w-0">
             <ComponentTransition slug={component.slug}>
-              {/* Component Header Block */}
-              <header className="flex flex-col gap-3">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--ca-ink)]">
+              {/* Compact Component Heading Block */}
+              <header className="flex flex-col gap-2 mb-0">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[var(--ca-ink)] dark:text-white font-sans">
                   {component.name}
                 </h1>
 
-                <p className="text-sm sm:text-base font-sans text-[var(--ca-ink)]/75 leading-relaxed max-w-3xl">
+                <p className="text-xs sm:text-sm font-sans text-[var(--ca-ink)]/75 dark:text-neutral-400 leading-relaxed max-w-2xl">
                   {component.description}
                 </p>
 
                 {/* Dependencies badge */}
-                <div className="flex items-center gap-2 pt-1">
-                  <span className="text-[11px] font-mono text-[var(--ca-ink)]/50 uppercase tracking-wider">
+                <div className="flex items-center gap-2 pt-0.5">
+                  <span className="text-[10px] font-mono text-[var(--ca-ink)]/50 dark:text-neutral-500 uppercase tracking-wider">
                     Dependencies:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {component.dependencies.map((dep) => (
                       <code
                         key={dep}
-                        className="px-2 py-0.5 rounded-md bg-[var(--ca-ink)]/5 border border-[var(--ca-ink)]/10 font-mono text-xs text-[var(--ca-ink)]/80"
+                        className="px-2 py-0.5 rounded-md bg-[var(--ca-ink)]/5 dark:bg-white/10 border border-[var(--ca-ink)]/10 dark:border-white/10 font-mono text-xs text-[var(--ca-ink)]/80 dark:text-neutral-300"
                       >
                         {dep}
                       </code>
@@ -180,27 +188,24 @@ export default function ComponentDetailPage({ params }: PageProps) {
                 </div>
               </header>
 
-              {/* Section 1 (Preview & Demo Stage) + Section 2 (Customize Sidebar Frame) */}
-              {/* Renders main/div/div[1] containing div[1] (stage) and div[2] (customize) */}
-              <ComponentSandbox component={component} />
+              {/* Exact Page Hierarchy matching Excalidraw:
+                  1. Preview
+                  2. Examples (3 compact thumbnail row)
+                  3. Customize (full-width field grid after Examples)
+              */}
+              <ComponentPlayground component={component} />
 
-              {/* Section 3 (Examples Section) */}
-              {/* Renders main/div/section[1] */}
-              <ComponentVariants component={component} />
+              {/* 4. Installation & Prerequisites */}
+              <InstallSection component={component} />
 
-              {/* Section 4 (Props Specification Table) */}
-              {/* Renders main/div/section[2] */}
+              {/* 5. Props Specification Table */}
               <PropsTable component={component} />
-
-              {/* Section 5 (Installation & CLI Section) */}
-              {/* Renders main/div/div[2] */}
-              <CodeViewer component={component} />
             </ComponentTransition>
           </div>
         </div>
       </div>
 
-      <div className="mt-20 border-t border-[var(--ca-ink)]/10">
+      <div className="mt-12 sm:mt-16 border-t border-[var(--ca-ink)]/10 dark:border-white/10">
         <Footer />
       </div>
     </div>

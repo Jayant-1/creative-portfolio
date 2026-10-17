@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['framer-motion', 'motion-dom', 'motion-utils'],
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000,
@@ -22,6 +21,17 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.jayant.codes',
+          },
+        ],
+        destination: 'https://jayant.codes/:path*',
+        permanent: true,
+      },
       {
         source: '/components/radial-gradient-animate-card',
         destination: '/components/radial-gradient-card',

@@ -245,7 +245,7 @@ export default function AboutPage() {
                 <Tape className="-top-3 right-8" angle={8} color="var(--ca-yellow-soft)" />
 
                 <h2 id="facts-heading" className="text-2xl sm:text-3xl font-extrabold uppercase text-[var(--ca-ink)]">
-                  Jayant Potdar at a glance
+                  At a glance
                 </h2>
                 <p className="mt-2 text-sm text-[var(--ca-ink)]/75">
                   Direct answers to common questions about Jayant Potdar&apos;s background, skills, and availability.
@@ -302,9 +302,6 @@ export default function AboutPage() {
                       />
                     </div>
                     <div className="flex-1 space-y-2 text-center md:text-left">
-                      <span className="ca-mono inline-block rounded bg-[var(--ca-yellow-soft)] px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-                        Tangible Proof
-                      </span>
                       <h3 className="text-lg font-bold text-[var(--ca-ink)] sm:text-xl">
                         Physical Trophies &amp; Official University Certifications
                       </h3>
