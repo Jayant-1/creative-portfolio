@@ -151,9 +151,9 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-type OverlappingTextHeroProps = {
+export type OverlappingTextHeroProps = {
   title?: string;
   titleStyle?: string;
   subTitle1?: string;
@@ -163,9 +163,12 @@ type OverlappingTextHeroProps = {
   imgPath?: string;
   textColor?: string;
   bgColor?: string;
+  compactMode?: boolean;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
+  fontSize?: string;
 };
 
-export const OverlappingTextHero = ({
+export const OverlappingTextHero: React.FC<OverlappingTextHeroProps> = ({
   title = "SPIDER-MAN",
   titleStyle = "",
   subTitle1 = "FRIENDLY NEIGHBORHOOD",
@@ -175,11 +178,15 @@ export const OverlappingTextHero = ({
   imgPath = "/sipderman.png",
   textColor = "#dc2626",
   bgColor = "#e2e4e9",
-}: OverlappingTextHeroProps) => {
+  compactMode = false,
+  containerRef,
+  fontSize,
+}) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
+    ...(containerRef ? { container: containerRef } : {}),
     offset: ["start start", "end end"],
   });
 
@@ -197,7 +204,7 @@ export const OverlappingTextHero = ({
     ["blur(6px)", "blur(0px)"],
     {
       ease: easeOut,
-    },
+    }
   );
 
   const [introDone, setIntroDone] = useState(false);
@@ -207,13 +214,14 @@ export const OverlappingTextHero = ({
   const maskSize = useMotionValue(3);
 
   useEffect(() => {
-    animate(maskSize, 15, {
+    const controls = animate(maskSize, 15, {
       duration: 2.6,
       ease: "easeIn",
       delay: 0.2,
       onComplete: () => setIntroDone(true),
     });
-  }, []);
+    return () => controls.stop();
+  }, [maskSize]);
 
   useEffect(() => {
     if (!introDone) return;
@@ -221,7 +229,16 @@ export const OverlappingTextHero = ({
     return scrollMask.on("change", (v) => {
       maskSize.set(v);
     });
-  }, [introDone]);
+  }, [introDone, scrollMask, maskSize]);
+
+  const maskImageStyle = useMotionTemplate\`radial-gradient(circle at 0% 0%, black, transparent \${maskSize}%),radial-gradient(circle at 100% 0%, black, transparent \${maskSize}%)\`;
+
+  // Dynamic font size: scale down for titles longer than 10 chars so "JAYANT POTDAR" is fully visible
+  const resolvedFontSize =
+    fontSize ||
+    (title.length > 10
+      ? \`\${Math.min(34, Math.max(20, Math.floor(340 / title.length)))}rem\`
+      : undefined);
 
   return (
     <div className="flex h-[151vh] w-full flex-col">
@@ -236,15 +253,15 @@ export const OverlappingTextHero = ({
               style={{
                 backgroundImage: "radial-gradient(#e84e27 2px, transparent 0)",
                 backgroundSize: "20px 20px",
-                // Dual radial mask apertures for top-left (0% 0%) and top-right (100% 0%)
-                WebkitMaskImage: useMotionTemplate\`radial-gradient(circle at 0% 0%, black, transparent \${maskSize}%),radial-gradient(circle at 100% 0%, black, transparent \${maskSize}%)\`,
-                maskImage: useMotionTemplate\`radial-gradient(circle at 0% 0%, black, transparent \${maskSize}%),radial-gradient(circle at 100% 0%, black, transparent \${maskSize}%)\`,
+                WebkitMaskImage: maskImageStyle,
+                maskImage: maskImageStyle,
               }}
             />
-            <div className="flex w-fit flex-col items-stretch">
-              {/* Giant Six Caps Lettering */}
+            <div className="flex w-fit flex-col items-stretch z-10">
+              {/* Title */}
               <motion.div
-                className={\`font-sixCap flex h-110 w-fit items-center justify-center overflow-hidden text-[34rem] \${titleStyle}\`}
+                className={\`font-sixCap flex h-110 w-fit items-center justify-center overflow-hidden text-[34rem] leading-none \${titleStyle}\`}
+                style={resolvedFontSize ? { fontSize: resolvedFontSize } : undefined}
               >
                 {title
                   .toLowerCase()
@@ -290,36 +307,14 @@ export const OverlappingTextHero = ({
                 ease: "easeInOut",
               }}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={imgPath}
-                alt=""
+                alt={title}
                 className="size-160 object-contain object-bottom"
                 style={{ objectPosition: "bottom" }}
               />
             </motion.div>
-
-            {/* Layer 3: Foreground Stroked Text (3D Text Sandwich Effect) */}
-            <div className="pointer-events-none absolute inset-0 z-30 flex flex-col items-center justify-center select-none">
-              <div className="flex w-fit flex-col items-stretch">
-                <div
-                  className={\`font-sixCap flex h-110 w-fit items-center justify-center overflow-hidden text-[34rem] \${titleStyle}\`}
-                  style={{
-                    color: "transparent",
-                    WebkitTextStroke: "1.5px " + textColor,
-                  }}
-                  aria-hidden="true"
-                >
-                  {title
-                    .toLowerCase()
-                    .split("")
-                    .map((val, idx) => (
-                      <div key={idx} className="-mt-18">
-                        {val === " " ? "\\u00A0" : val}
-                      </div>
-                    ))}
-                </div>
-              </div>
-            </div>
           </motion.div>
         </section>
       </div>
@@ -414,28 +409,26 @@ export default function Demo() {
     code: `"use client";
 
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-type PropType = {
-  text: string;
+export type BubbleTextProps = {
+  text?: string;
   className?: string;
   style?: React.CSSProperties;
   charClassName?: string;
   charStyle?: React.CSSProperties;
 };
 
-export const BubbleText = ({
+export const BubbleText: React.FC<BubbleTextProps> = ({
   text = "Bbbbbbble text",
   className,
   style,
   charClassName,
   charStyle,
   ...props
-}: PropType) => {
-  const [currentHoverValue, setCurrentHoverValue] = useState<number | null>(
-    null
-  );
+}) => {
+  const [currentHoverValue, setCurrentHoverValue] = useState<number | null>(null);
 
   const chars = useMemo(() => {
     return text.split("");
@@ -444,7 +437,7 @@ export const BubbleText = ({
   return (
     <h2
       className={twMerge(
-        "font-raleway text-center text-9xl font-thin wrap-anywhere text-indigo-300",
+        "font-raleway text-center text-7xl sm:text-8xl md:text-9xl font-thin wrap-anywhere text-indigo-300 select-none",
         className
       )}
       style={style}
@@ -455,8 +448,9 @@ export const BubbleText = ({
           currentHoverValue === null ? null : Math.abs(idx - currentHoverValue);
         return (
           <motion.span
+            key={idx}
             className={twMerge(
-              "transition-all hover:font-black",
+              "transition-all hover:font-black inline-block",
               charClassName
             )}
             style={charStyle}
@@ -469,7 +463,6 @@ export const BubbleText = ({
                   : distance === 2
                   ? 500
                   : 100,
-
               opacity: currentHoverValue === null ? 0.5 : 1,
             }}
             transition={{ duration: 0 }}
@@ -479,9 +472,8 @@ export const BubbleText = ({
             onMouseLeave={() => {
               setCurrentHoverValue(null);
             }}
-            key={idx}
           >
-            {child}
+            {child === " " ? "\\u00A0" : child}
           </motion.span>
         );
       })}
@@ -551,17 +543,20 @@ export default function Demo() {
 
 import {
   motion,
-  useMotionValueEvent,
   useScroll,
   useTransform,
 } from "framer-motion";
-import { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
-// Mock data for images with different positions and "depth" (speed)
+export interface TelescopeHeroProps {
+  quote?: string;
+  bgImage?: string;
+}
+
 const FLOATING_IMAGES_1 = [
   {
     id: 1,
-    src: "https://picsum.photos/200/300", // 3:4 portrait
+    src: "https://picsum.photos/200/300",
     top: "1%",
     left: "22%",
     rotate: "12deg",
@@ -569,7 +564,7 @@ const FLOATING_IMAGES_1 = [
   },
   {
     id: 2,
-    src: "https://picsum.photos/400/310", // 4:3 landscape
+    src: "https://picsum.photos/400/310",
     top: "12%",
     left: "68%",
     rotate: "8deg",
@@ -577,7 +572,7 @@ const FLOATING_IMAGES_1 = [
   },
   {
     id: 3,
-    src: "https://picsum.photos/350/350", // 1:1 square
+    src: "https://picsum.photos/350/350",
     top: "45%",
     left: "8%",
     rotate: "-6deg",
@@ -585,7 +580,7 @@ const FLOATING_IMAGES_1 = [
   },
   {
     id: 4,
-    src: "https://picsum.photos/400/300", // 4:3 landscape
+    src: "https://picsum.photos/400/300",
     top: "55%",
     left: "72%",
     rotate: "10deg",
@@ -593,7 +588,7 @@ const FLOATING_IMAGES_1 = [
   },
   {
     id: 5,
-    src: "https://picsum.photos/300/400", // 3:4 portrait
+    src: "https://picsum.photos/300/400",
     top: "64%",
     left: "38%",
     rotate: "-4deg",
@@ -601,7 +596,7 @@ const FLOATING_IMAGES_1 = [
   },
   {
     id: 6,
-    src: "https://picsum.photos/600/400", // 3:2 landscape (hero image)
+    src: "https://picsum.photos/600/400",
     top: "18%",
     left: "38%",
     rotate: "3deg",
@@ -609,7 +604,7 @@ const FLOATING_IMAGES_1 = [
   },
   {
     id: 7,
-    src: "https://picsum.photos/300/450", // 2:3 portrait
+    src: "https://picsum.photos/300/450",
     top: "5%",
     left: "85%",
     rotate: "-15deg",
@@ -617,7 +612,7 @@ const FLOATING_IMAGES_1 = [
   },
   {
     id: 8,
-    src: "https://picsum.photos/500/300", // 5:3 landscape
+    src: "https://picsum.photos/500/300",
     top: "25%",
     left: "5%",
     rotate: "5deg",
@@ -628,7 +623,7 @@ const FLOATING_IMAGES_1 = [
 const FLOATING_IMAGES_2 = [
   {
     id: 1,
-    src: "https://picsum.photos/id/1015/400/600", // 2:3 portrait
+    src: "https://picsum.photos/id/1015/400/600",
     top: "8%",
     left: "15%",
     rotate: "-8deg",
@@ -636,7 +631,7 @@ const FLOATING_IMAGES_2 = [
   },
   {
     id: 2,
-    src: "https://picsum.photos/id/1016/600/400", // 3:2 landscape
+    src: "https://picsum.photos/id/1016/600/400",
     top: "13%",
     left: "60%",
     rotate: "15deg",
@@ -644,7 +639,7 @@ const FLOATING_IMAGES_2 = [
   },
   {
     id: 3,
-    src: "https://picsum.photos/id/101/400/400", // 1:1 square
+    src: "https://picsum.photos/id/101/400/400",
     top: "55%",
     left: "12%",
     rotate: "10deg",
@@ -652,7 +647,7 @@ const FLOATING_IMAGES_2 = [
   },
   {
     id: 4,
-    src: "https://picsum.photos/id/1018/500/350", // 10:7 landscape
+    src: "https://picsum.photos/id/1018/500/350",
     top: "65%",
     left: "68%",
     rotate: "-12deg",
@@ -660,7 +655,7 @@ const FLOATING_IMAGES_2 = [
   },
   {
     id: 5,
-    src: "https://picsum.photos/id/1019/350/500", // 7:10 portrait
+    src: "https://picsum.photos/id/1019/350/500",
     top: "82%",
     left: "42%",
     rotate: "6deg",
@@ -668,7 +663,7 @@ const FLOATING_IMAGES_2 = [
   },
   {
     id: 6,
-    src: "https://picsum.photos/id/1020/800/450", // 16:9 landscape (hero image)
+    src: "https://picsum.photos/id/1020/800/450",
     top: "15%",
     left: "35%",
     rotate: "-5deg",
@@ -676,7 +671,7 @@ const FLOATING_IMAGES_2 = [
   },
   {
     id: 7,
-    src: "https://picsum.photos/id/1021/500/600", // 1:2 portrait
+    src: "https://picsum.photos/id/1021/500/600",
     top: "23%",
     left: "76%",
     rotate: "18deg",
@@ -684,8 +679,50 @@ const FLOATING_IMAGES_2 = [
   },
 ];
 
-export const TelescopeHero = () => {
-  const ref = useRef(null);
+interface FloatingImageProps {
+  img: {
+    id: number;
+    src: string;
+    top: string;
+    left: string;
+    rotate: string;
+    speed: number;
+  };
+  zSource: any;
+  opacity: any;
+  onLoad: () => void;
+}
+
+const FloatingImage: React.FC<FloatingImageProps> = ({
+  img,
+  zSource,
+  opacity,
+  onLoad,
+}) => {
+  const z = useTransform(zSource, (latest: number) => latest * img.speed);
+
+  return (
+    <motion.img
+      onLoad={onLoad}
+      src={img.src}
+      alt=""
+      className="absolute z-30 w-2xs object-cover rounded-lg shadow-2xl pointer-events-none"
+      style={{
+        top: img.top,
+        left: img.left,
+        rotate: img.rotate,
+        z,
+        opacity,
+      }}
+    />
+  );
+};
+
+export const TelescopeHero: React.FC<TelescopeHeroProps> = ({
+  quote = "Life is either a daring adventure or nothing at all",
+  bgImage = "/mountains-wallpaper.jpg",
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
@@ -694,6 +731,7 @@ export const TelescopeHero = () => {
   const z1 = useTransform(scrollYProgress, [0, 0.4], [-400, 1800]);
   const z2 = useTransform(scrollYProgress, [0.3, 0.7], [-3000, 800]);
   const z3 = useTransform(scrollYProgress, [0.65, 0.8, 1], [0, 1, 1]);
+
   const textScale = useTransform(
     scrollYProgress,
     [0.5, 0.75, 0.8],
@@ -716,73 +754,79 @@ export const TelescopeHero = () => {
   );
   const textY = useTransform(scrollYProgress, [0.65, 0.8], [0, 400]);
   const textX = useTransform(scrollYProgress, [0.85, 1], [0, -1700]);
-  const opacityZ1 = useTransform(scrollYProgress, [0, 0.2], [0.85, 1]);
-  const opacityZ2 = useTransform(scrollYProgress, [0.2, 0.7], [0, 1]);
 
-  // Pre-compute transformed z values
-  const z1Values = FLOATING_IMAGES_1.map((val) =>
-    useTransform(z1, (latest) => latest * val.speed)
-  );
-  const z2Values = FLOATING_IMAGES_2.map((val) =>
-    useTransform(z2, (latest) => latest * val.speed)
-  );
+  // Clean opacity transitions preventing stuck images on backwards scroll
+  const opacityZ1 = useTransform(scrollYProgress, [0, 0.15, 0.38, 0.45], [0.85, 1, 1, 0]);
+  const opacityZ2 = useTransform(scrollYProgress, [0.2, 0.35, 0.68, 0.75], [0, 1, 1, 0]);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Graceful fallback to dismiss spinner after images load or timeout
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div ref={ref} className="h-[500vh] w-full">
-      <div className="sticky top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden bg-neutral-900 perspective-near">
-        {FLOATING_IMAGES_1.map((val, idx) => (
-          <motion.img
-            key={idx}
-            src={val.src}
-            className="absolute z-30 w-2xs"
-            style={{
-              top: val.top,
-              left: val.left,
-              rotate: val.rotate,
-              z: z1Values[idx],
-              opacity: opacityZ1,
-            }}
-          />
-        ))}
-        {FLOATING_IMAGES_2.map((val, idx) => (
-          <motion.img
-            key={idx}
-            src={val.src}
-            className="absolute z-30 w-2xs"
-            style={{
-              top: val.top,
-              left: val.left,
-              rotate: val.rotate,
-              z: z2Values[idx],
-              opacity: opacityZ2,
-            }}
-          />
-        ))}
+    <>
+      {isLoading ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900 pointer-events-none">
+          <div className="h-14 w-14 animate-spin rounded-full border-4 border-neutral-700 border-t-white" />
+        </div>
+      ) : null}
 
-        <motion.div
-          layout
-          className="font-bebasNeue z-40 text-center font-black mix-blend-difference"
-          style={{
-            scale: textScale,
-            y: textY,
-            x: textX,
-            width: textWidth,
-            color: textColor,
-            fontSize: textFontSize,
-          }}
-        >
-          Life is either a daring adventure or nothing at all
-        </motion.div>
-        <motion.img
-          className="absolute top-0 left-0 h-screen w-full object-cover object-center"
-          src="/mountains-wallpaper.jpg"
-          style={{
-            opacity: z3,
-            scale: z3,
-          }}
-        />
+      <div ref={ref} className="h-[500vh] w-full relative">
+        <div className="sticky top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden bg-neutral-900 perspective-near">
+          {FLOATING_IMAGES_1.map((val) => (
+            <FloatingImage
+              key={\`float-1-\${val.id}\`}
+              img={val}
+              zSource={z1}
+              opacity={opacityZ1}
+              onLoad={() => setIsLoading(false)}
+            />
+          ))}
+
+          {FLOATING_IMAGES_2.map((val) => (
+            <FloatingImage
+              key={\`float-2-\${val.id}\`}
+              img={val}
+              zSource={z2}
+              opacity={opacityZ2}
+              onLoad={() => setIsLoading(false)}
+            />
+          ))}
+
+          <motion.div
+            layout
+            className="font-bebasNeue z-40 text-center font-black mix-blend-difference select-none"
+            style={{
+              scale: textScale,
+              y: textY,
+              x: textX,
+              width: textWidth,
+              color: textColor,
+              fontSize: textFontSize,
+            }}
+          >
+            {quote}
+          </motion.div>
+
+          <motion.img
+            className="absolute top-0 left-0 h-screen w-full object-cover object-center select-none"
+            src={bgImage}
+            alt="Mountains Wallpaper"
+            style={{
+              opacity: z3,
+              scale: z3,
+            }}
+          />
+        </div>
       </div>
-    </div>
+      <div className="h-[50vh] w-full" />
+    </>
   );
 };`,
     usage: `import { TelescopeHero } from "@/components/ui/TelescopeHero";
@@ -885,7 +929,7 @@ import {
 import React, { useRef, useState, type HTMLProps } from "react";
 import { twMerge } from "tailwind-merge";
 
-type MagneticButtonProps = HTMLMotionProps<"button"> & {
+export type MagneticButtonProps = HTMLMotionProps<"button"> & {
   maxDistance?: number;
   bgClassName?: HTMLProps<HTMLElement>["className"];
   bgStyle?: React.CSSProperties;
@@ -894,7 +938,7 @@ type MagneticButtonProps = HTMLMotionProps<"button"> & {
   mass?: number;
 };
 
-export const MagneticButton = ({
+export const MagneticButton: React.FC<MagneticButtonProps> = ({
   style,
   bgStyle,
   className,
@@ -903,9 +947,9 @@ export const MagneticButton = ({
   stiffness = 150,
   damping = 10,
   mass = 0.1,
-  children,
+  children = "Hover Me",
   ...props
-}: MagneticButtonProps) => {
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -1063,7 +1107,7 @@ import {
 import React, { useState, type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-type RadialGradientConfig = {
+export type RadialGradientConfig = {
   color1?: string;
   color2?: string;
   shape?: "ellipse" | "circle";
@@ -1071,20 +1115,20 @@ type RadialGradientConfig = {
   opacity?: number;
 };
 
-type CardPropsType = HTMLMotionProps<"div"> & {
+export type RadialGradientAnimateCardProps = HTMLMotionProps<"div"> & {
   radialGradient?: RadialGradientConfig;
   className?: string;
   style?: React.CSSProperties;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
-export const RadialGradientAnimateCard = ({
+export const RadialGradientAnimateCard: React.FC<RadialGradientAnimateCardProps> = ({
   style,
   radialGradient = {},
   className,
   children,
   ...props
-}: CardPropsType) => {
+}) => {
   // Extract configuration with sensible fallback defaults
   const {
     color1 = "rgba(59, 130, 246)",
@@ -1114,7 +1158,7 @@ export const RadialGradientAnimateCard = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={twMerge(
-        "group relative max-w-md overflow-hidden rounded-xl border border-blue-500/20 bg-[#090d16] px-8 py-16 text-[#94a3b8] shadow-2xl",
+        "group relative max-w-md overflow-hidden rounded-xl border border-blue-500/20 bg-[#090d16] px-8 py-16 text-[#94a3b8] shadow-2xl select-none",
         className
       )}
       style={style}
@@ -1127,7 +1171,19 @@ export const RadialGradientAnimateCard = ({
           opacity: isHovered ? opacity : 0,
         }}
       />
-      {children}
+      {children || (
+        <div className="relative z-10 flex flex-col gap-3">
+          <span className="text-xs font-mono font-semibold tracking-wider text-blue-400 uppercase">
+            Interactive Container
+          </span>
+          <h3 className="text-2xl font-bold tracking-tight text-white font-sans">
+            Hover Reveal Effect
+          </h3>
+          <p className="text-sm font-sans text-neutral-400 leading-relaxed">
+            Move your cursor anywhere across the card surface to project a reactive radial gradient spotlight.
+          </p>
+        </div>
+      )}
     </motion.div>
   );
 };`,

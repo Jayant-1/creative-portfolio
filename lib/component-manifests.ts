@@ -36,6 +36,7 @@ export interface ComponentManifest {
   };
   examples: [ExamplePreset, ExamplePreset, ExamplePreset];
   fields: CustomField[];
+  customFields: CustomField[];
   generateUsageCode: (props: Record<string, any>) => string;
   setupNotes: {
     fonts?: string[];
@@ -45,7 +46,7 @@ export interface ComponentManifest {
   };
 }
 
-export const COMPONENT_MANIFESTS: Record<string, ComponentManifest> = {
+const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
   "overlapping-text-hero": {
     slug: "overlapping-text-hero",
     name: "Overlapping Text Hero",
@@ -467,6 +468,16 @@ export const COMPONENT_MANIFESTS: Record<string, ComponentManifest> = {
     },
   },
 };
+
+export const COMPONENT_MANIFESTS: Record<string, ComponentManifest> = Object.fromEntries(
+  Object.entries(RAW_MANIFESTS).map(([key, manifest]) => [
+    key,
+    {
+      ...manifest,
+      customFields: manifest.fields,
+    },
+  ])
+);
 
 export function getManifest(slug: string): ComponentManifest {
   const normalized = slug === "radial-gradient-animate-card" ? "radial-gradient-card" : slug;

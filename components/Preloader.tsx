@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -35,6 +35,19 @@ export default function Preloader() {
   const [isExiting, setIsExiting] = useState(false);
   const [isDone, setIsDone] = useState(isExcluded);
 
+  const completePreloader = useCallback(() => {
+    setIsExiting(true);
+    preloaderCompleted = true;
+    if (typeof window !== "undefined") {
+      window.__ca_preloader_active = false;
+      window.__ca_preloader_done = true;
+      window.dispatchEvent(new CustomEvent("ca-preloader-done"));
+    }
+    setTimeout(() => {
+      setIsDone(true);
+    }, 420);
+  }, []);
+
   useEffect(() => {
     // If opening a project or non-root route, or already executed, immediately mark done & dispatch
     if (isExcluded) {
@@ -62,18 +75,19 @@ export default function Preloader() {
         return;
       }
       window.__ca_preloader_active = true;
+      window.__ca_preloader_done = false;
     }
 
     // Phase 1 ("Compiling pixels..."):
-    // 19 chars * 48ms = 912ms typewriter duration (starts at 140ms, completes at ~1250ms).
-    // Transition into Phase 2 at 1400ms.
+    // 19 chars * 36ms = 684ms typewriter duration (starts at 100ms, completes at ~784ms).
+    // Transition into Phase 2 at 860ms.
     const t1 = setTimeout(() => {
       setStep(2);
-    }, 1400);
+    }, 860);
 
     // Phase 2 ("Ready to explore!"):
-    // Starts seamlessly at 1400ms. 17 chars * 48ms typewriter completes at ~2400ms.
-    // Held fully completed until 3100ms for comfortable reading.
+    // Starts at 860ms. 17 chars * 36ms typewriter completes at ~1480ms.
+    // Held completed until 1850ms for comfortable reading.
     // Dispatches ca-preloader-done so Hero section begins its cascade as the curtain dissolves.
     const t2 = setTimeout(() => {
       setIsExiting(true);
@@ -82,20 +96,29 @@ export default function Preloader() {
         window.__ca_preloader_done = true;
         window.dispatchEvent(new CustomEvent("ca-preloader-done"));
       }
-    }, 3100);
+    }, 1850);
 
-    // Final curtain unmount after silky smooth fade-out (3100ms + 420ms)
+    // Final curtain unmount after silky smooth fade-out (1850ms + 380ms)
     const t3 = setTimeout(() => {
       preloaderCompleted = true;
       setIsDone(true);
-    }, 3520);
+    }, 2230);
+
+    // Allow user to click anywhere or press Escape / Space / Enter to skip preloader
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" || e.key === " " || e.key === "Enter") {
+        completePreloader();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isExcluded]);
+  }, [isExcluded, completePreloader]);
 
   if (isExcluded || isDone) return null;
 
@@ -104,8 +127,11 @@ export default function Preloader() {
       initial={{ opacity: 1 }}
       animate={{ opacity: isExiting ? 0 : 1 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="ca-grid pointer-events-none fixed inset-0 z-[100] grid place-items-center bg-[var(--ca-surface)]"
+      className={`ca-grid fixed inset-0 z-[100] grid place-items-center bg-[var(--ca-surface)] ${
+        isExiting ? "pointer-events-none" : "pointer-events-auto cursor-pointer"
+      }`}
       aria-hidden="true"
+      onClick={completePreloader}
     >
       <motion.div
         layout
@@ -141,7 +167,7 @@ export default function Preloader() {
                     key={`p1-${i}`}
                     className="ca-char-pop"
                     style={{
-                      animationDelay: `${(0.14 + i * 0.048).toFixed(3)}s`,
+                      animationDelay: `${(0.1 + i * 0.036).toFixed(3)}s`,
                     }}
                   >
                     {char === " " ? "\u00A0" : char}
@@ -161,7 +187,7 @@ export default function Preloader() {
                     key={`p2-${i}`}
                     className="ca-char-pop"
                     style={{
-                      animationDelay: `${(0.05 + i * 0.048).toFixed(3)}s`,
+                      animationDelay: `${(0.04 + i * 0.036).toFixed(3)}s`,
                     }}
                   >
                     {char === " " ? "\u00A0" : char}

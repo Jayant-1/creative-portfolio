@@ -221,7 +221,7 @@ export function MouseLens({
  */
 export function CardLens({
   lensRef,
-  darkCard = false,
+  darkCard = true,
 }: {
   lensRef?: React.RefObject<HTMLSpanElement | null>;
   darkCard?: boolean;
@@ -235,7 +235,7 @@ export function CardLens({
       }}
       className="ca-card-lens pointer-events-none absolute left-1/2 top-1/2 z-10 hidden h-28 w-28 items-center justify-center rounded-full lg:flex"
     >
-      <span className="ca-mono text-sm font-bold uppercase tracking-widest text-[var(--ca-lens-text,var(--ca-ink))]">
+      <span className="ca-mono text-sm font-black uppercase tracking-widest text-[var(--ca-lens-text,var(--ca-ink))] select-none">
         See
       </span>
     </span>
@@ -278,16 +278,16 @@ export function usePageAnimationReady(): boolean {
 }
 
 /**
- * Hook to synchronize Hero section entrance with the Preloader curtain exit.
- * Guarantees the staggering letters, frame pop, and spring stickers run right as the
- * preloader finishes on every page load/reload, and immediately on client navigation.
+ * Hook to trigger Hero section entrance once preloader is complete.
+ * Synchronized with page readiness and ca-preloader-done event.
  */
 export function useHeroEntrance() {
   const pageReady = usePageAnimationReady();
   const [ready, setReady] = useState(() => {
     if (typeof window === "undefined") return false;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
-    return window.__ca_preloader_active === false || window.__ca_preloader_done === true;
+    if (window.location.pathname !== "/") return true;
+    return (window as any).__ca_preloader_active === false || (window as any).__ca_preloader_done === true;
   });
 
   useEffect(() => {
@@ -298,7 +298,12 @@ export function useHeroEntrance() {
       return;
     }
 
-    if (window.__ca_preloader_active === false || window.__ca_preloader_done === true) {
+    if (window.location.pathname !== "/") {
+      setReady(true);
+      return;
+    }
+
+    if ((window as any).__ca_preloader_active === false || (window as any).__ca_preloader_done === true) {
       setReady(true);
       return;
     }
@@ -306,7 +311,7 @@ export function useHeroEntrance() {
     const onDone = () => setReady(true);
     window.addEventListener("ca-preloader-done", onDone, { once: true });
 
-    // Fallback timer: in case event wasn't captured or preloader skipped
+    // Fallback timer: in case event wasn't captured or preloader was skipped
     const fallback = setTimeout(() => {
       setReady(true);
     }, 4200);

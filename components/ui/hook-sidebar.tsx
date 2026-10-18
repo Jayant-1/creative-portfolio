@@ -156,7 +156,7 @@ export function HookSidebar({
       {label && (
         <span
           data-slot="hook-sidebar-label"
-          className="pb-3 pl-0.5 pr-2 font-mono text-xs font-bold uppercase tracking-wider text-[#0284c7]"
+          className="pb-3 pl-0.5 pr-2 font-mono text-xs font-bold uppercase tracking-wider text-[#0369a1]"
         >
           {label}
         </span>
@@ -165,7 +165,7 @@ export function HookSidebar({
       <div
         ref={listRef}
         onMouseLeave={() => setPointerInside(false)}
-        className="relative flex flex-col gap-1"
+        className="relative flex flex-col gap-0.5"
       >
         <Rail
           from={hoverFrom}
@@ -202,7 +202,7 @@ export function HookSidebar({
             onBlur: () => setFocusInside(false),
             onClick: () => select(index),
             className: cn(
-              "group relative flex items-center rounded-lg py-1.5 pl-5 pr-2.5 text-left font-mono text-xs transition-colors duration-150 motion-reduce:transition-none",
+              "group relative flex min-h-[32px] items-center rounded-md py-1 pl-4 pr-2 text-left font-mono text-xs transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]",
               isActive
                 ? "font-semibold text-[#191510]"
                 : "text-[#78716c] hover:text-[#191510] hover:translate-x-0.5",

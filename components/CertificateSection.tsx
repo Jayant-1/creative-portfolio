@@ -72,8 +72,8 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
           >
             <div>
               {/* Header: Logo, Name & Date */}
-              <div className="flex items-center justify-between gap-3 border-b border-[var(--ca-ink)]/15 pb-3.5">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 sm:gap-3 border-b border-[var(--ca-ink)]/15 pb-3.5">
+                <div className="flex items-center gap-3 min-w-0">
                   <div className="relative h-9 w-9 shrink-0 rounded-md border border-[var(--ca-ink)]/20 bg-white p-1 flex items-center justify-center overflow-hidden">
                     <ImageWithLoader
                       src={group.logo}
@@ -106,7 +106,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                     <button
                       type="button"
                       onClick={() => openDrawer(group, item)}
-                      className="group w-full text-left rounded-lg border border-[var(--ca-ink)]/15 bg-white p-3 transition-all duration-150 hover:border-[var(--ca-ink)] hover:bg-[var(--ca-chrome)]/40 hover:shadow-[2px_2px_0_var(--ca-ink)] flex items-center justify-between gap-3"
+                      className="group w-full min-h-[44px] text-left rounded-lg border border-[var(--ca-ink)]/15 bg-white p-3 transition-all duration-150 hover:border-[var(--ca-ink)] hover:bg-[var(--ca-chrome)]/40 hover:shadow-[2px_2px_0_var(--ca-ink)] flex items-center justify-between gap-3 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
                         <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--ca-ink)] group-hover:scale-125 transition-transform" />
@@ -194,7 +194,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                   type="button"
                   onClick={closeDrawer}
                   aria-label="Close certificate drawer"
-                  className="shrink-0 flex h-11 w-11 items-center justify-center rounded-full border-2 border-[var(--ca-ink)] bg-[var(--ca-chrome)] text-[var(--ca-ink)] hover:bg-[var(--ca-yellow)] active:scale-95 transition-colors shadow-2xs"
+                  className="shrink-0 flex h-11 w-11 items-center justify-center rounded-full border-2 border-[var(--ca-ink)] bg-[var(--ca-chrome)] text-[var(--ca-ink)] hover:bg-[var(--ca-yellow)] active:scale-95 transition-colors shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                 >
                   <X size={18} />
                 </button>
@@ -213,7 +213,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                           setSelectedItem(item);
                           setCopiedLink(false);
                         }}
-                        className={`ca-mono text-xs font-bold min-h-[44px] inline-flex items-center px-3.5 py-2 rounded-md border transition-all ${
+                        className={`ca-mono text-xs font-bold min-h-[44px] inline-flex items-center px-3.5 py-2 rounded-md border transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                           isActive
                             ? "border-[var(--ca-ink)] bg-[var(--ca-ink)] text-white shadow-2xs"
                             : "border-[var(--ca-ink)]/20 bg-[var(--ca-chrome)]/60 text-[var(--ca-ink)]/80 hover:border-[var(--ca-ink)] hover:bg-white hover:text-[var(--ca-ink)]"
@@ -257,7 +257,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                   <button
                     type="button"
                     onClick={() => copyToClipboard(selectedItem.credentialUrl)}
-                    className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-1.5 rounded-lg border border-[var(--ca-ink)]/30 bg-white px-4 py-2.5 text-xs font-bold text-[var(--ca-ink)] hover:bg-[var(--ca-chrome)] transition-colors shadow-2xs active:scale-98"
+                    className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-1.5 rounded-lg border border-[var(--ca-ink)]/30 bg-white px-4 py-2.5 text-xs font-bold text-[var(--ca-ink)] hover:bg-[var(--ca-chrome)] transition-colors shadow-2xs active:scale-98 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                   >
                     {copiedLink ? (
                       <>
@@ -277,7 +277,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                       href={selectedItem.pdfUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-1.5 rounded-lg border border-[var(--ca-ink)]/30 bg-white px-4 py-2.5 text-xs font-bold text-[var(--ca-ink)] hover:bg-[var(--ca-chrome)] transition-colors shadow-2xs active:scale-98"
+                      className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-1.5 rounded-lg border border-[var(--ca-ink)]/30 bg-white px-4 py-2.5 text-xs font-bold text-[var(--ca-ink)] hover:bg-[var(--ca-chrome)] transition-colors shadow-2xs active:scale-98 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                     >
                       <FileText size={15} />
                       Open Original PDF
@@ -290,7 +290,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                   href={selectedItem.credentialUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] bg-[var(--ca-yellow)] px-5 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] hover:bg-[var(--ca-yellow-soft)] hover:-translate-y-0.5 active:translate-y-0 transition-all"
+                  className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] bg-[var(--ca-yellow)] px-5 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] hover:bg-[var(--ca-yellow-soft)] hover:-translate-y-0.5 active:translate-y-0 transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                 >
                   Verify on Official Site
                   <ArrowUpRight size={16} />

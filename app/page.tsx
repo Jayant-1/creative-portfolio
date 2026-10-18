@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ImageWithLoader } from "@/components/ImageWithLoader";
 import { motion } from "framer-motion";
 import {
@@ -165,9 +166,16 @@ function ProjectCardImage({
   href: string;
   darkCard?: boolean;
 }) {
+  const router = useRouter();
   const { containerRef, lensRef, onMove, onMouseEnter, onMouseLeave } = useLens(
     [0, 100],
   );
+
+  const handlePrefetch = React.useCallback(() => {
+    try {
+      router.prefetch(href);
+    } catch {}
+  }, [href, router]);
 
   return (
     <Link
@@ -177,8 +185,13 @@ function ProjectCardImage({
       className="group/card relative block overflow-hidden border-4 bg-[var(--ca-surface)] aspect-[16/9] w-full cursor-pointer shadow-[0_10px_28px_rgba(17,18,18,0.22)] transition-transform duration-300 hover:-translate-y-1"
       style={{ borderColor: "#ffffff" }}
       onMouseMove={onMove}
-      onMouseEnter={onMouseEnter}
+      onMouseEnter={(e) => {
+        onMouseEnter(e);
+        handlePrefetch();
+      }}
       onMouseLeave={onMouseLeave}
+      onFocus={handlePrefetch}
+      onTouchStart={handlePrefetch}
     >
       <div className="relative overflow-hidden h-full w-full transition-transform duration-500 ease-out group-hover/card:scale-[1.03]">
         <ImageWithLoader
@@ -732,6 +745,7 @@ export default function HomePage() {
                   alt="3× Trophy Winner"
                   caption="3× Trophies 🏆"
                   aspectClassName="aspect-[3/4]"
+                  sizes="(max-width: 640px) 176px, 240px"
                 />
               </DropIn>
               <DropIn y={-24} rotate={3} delay={0.2} className="w-48 sm:w-60">
@@ -740,6 +754,7 @@ export default function HomePage() {
                   alt="AstroPixel Ideation 3.0 award"
                   caption="Ideation 3.0 🎉"
                   aspectClassName="aspect-[4/3]"
+                  sizes="(max-width: 640px) 240px, 320px"
                 />
               </DropIn>
             </div>

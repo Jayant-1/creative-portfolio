@@ -35,7 +35,7 @@ The palette draws inspiration from stationery, highlighters, colored masking tap
 | `--ca-yellow-soft` | `#f3e2ad` | Soft post-it note yellow / tape accent |
 | `--ca-blue` | `#2b57d6` | Ballpoint blueprint blue (focus rings, status pulse, AstroPixel badge) |
 | `--ca-cyan` | `#b7c6ef` | Soft blueprint cyan (tape strip, secondary tags) |
-| `--ca-magenta` | `#ff4d8d` | Neon magenta marker (Smiley badge, GitHub pill, Nova-Learn accent) |
+| `--ca-magenta` | `#ff4d8d` | Neon magenta marker (Smiley badge, GitHub pill, Honors label accent) |
 | `--ca-pink-soft` | `#ffc6da` | Pastel blush wash |
 | `--ca-green` | `#16b06a` | Felt-tip green (email CTA, verified checkmarks) |
 | `--ca-mint` | `#a9dfc6` | Soft mint wash (location badge, tag backgrounds) |
@@ -119,14 +119,15 @@ Four distinct typefaces harmonize the technical rigor with the hand-crafted aest
 
 ### Identity & Author Profile
 * **Author:** Jayant Potdar (Jayant Sunil Potdar)
-* **Title:** Full Stack Developer & Intern
+* **Title:** Full Stack Developer
 * **Location:** Pune, Maharashtra, India
 * **Education:** B.Tech in Computer Science & Engineering (2024–2028), Ratan Tata Maharashtra State Skills University (MSSU), Pune (CGPA: 8.0)
-* **Status:** Open to full-stack engineering roles, internships, and high-impact software challenges.
+* **Status:** Seeking internships and full-time roles; open to hybrid/remote work and relevant projects.
+* **Contact:** Public contact is email (jayantpotdar2006@gmail.com); calls arranged through email; phone number remains in résumé PDF only.
 
 ### Core Projects
 1. **AstroPixel (Spatial Imagery & Deep Zoom Platform)**
-   * *Role:* Solo Full Stack Developer (Architecture, Pipeline & Frontend)
+   * *Role:* Solo Full Stack Developer (Solo build)
    * *Stack:* React, FastAPI, Python, GDAL, OpenSeadragon, PostgreSQL, PostGIS, Docker, Tailwind CSS
    * *Challenge & Solution:* Gigabyte-scale GeoTIFFs crashed browsers (2.4GB+ RAM). Engineered an automated GDAL multi-resolution DZI tile pyramid server with sub-50ms streaming and bounded viewport rendering (<45MB RAM, 60fps pan/zoom).
    * *Outcome:* 3rd Place, University Ideation Competition 3.0.
@@ -134,25 +135,34 @@ Four distinct typefaces harmonize the technical rigor with the hand-crafted aest
 2. **Krypton (AI Research Assistant & Multi-Signal Literature Engine)**
    * *Role:* Team Leader & Core Backend/ML Developer (Team of 3)
    * *Stack:* React, TypeScript, FastAPI, Python, Google Gemini API, arXiv API, OpenAlex API, scikit-learn
-   * *Challenge & Solution:* Built a transparent literature discovery engine combining deterministic ranking (50% TF-IDF + 30% Citation Velocity + 20% Exponential Recency Decay) with citation-grounded Gemini summaries.
+   * *Challenge & Solution:* Built a transparent literature discovery engine combining deterministic ranking with a 40/30/30 formula (40% TF-IDF text relevance + 30% Citation count + 30% Publication recency) alongside citation-grounded Gemini summaries.
    * *Outcome:* 1st Place Winner, University Project Expo.
 
-3. **NeuralNet (Visual Deep Learning Studio & DAG Compiler)**
-   * *Role:* Team Leader & Full-Stack System Architect (Team of 3)
-   * *Stack:* React, XYFlow (React Flow), TypeScript, FastAPI, Python, TensorFlow/Keras, WebSockets
-   * *Challenge & Solution:* Drag-and-drop neural network canvas that performs topological sorting, real-time tensor shape validation, compiles graphs to PEP-8 Keras code, and streams live epoch metrics over WebSockets.
-   * *Outcome:* Working DAG-to-API engine with one-click model deployment.
+3. **3D Portfolio (Interactive Space-Themed Creative Experience)**
+   * *Role:* Solo Developer (Solo build)
+   * *Stack:* React, Three.js, React Three Fiber, @react-three/drei, Spline, GSAP, Framer Motion, Tailwind CSS, Vite
+   * *Challenge & Solution:* Combined React Three Fiber scenes with a Spline keyboard and selective motion while tuning canvas pixel ratios and loading behavior for smaller devices to prevent touch gesture traps and frame drops.
+   * *Outcome:* Working creative portfolio with interactive 3D scenes, motion-led navigation, achievements, and an adaptive mobile experience.
 
-4. **Nova-Learn (Adaptive Educational Syllabus Platform)**
-   * *Role:* Frontend Engineer & Interface Designer
-   * *Stack:* React, JavaScript, Tailwind CSS, Node.js, Express, MongoDB
-   * *Challenge & Solution:* Dynamic branching curriculum trees with diagnostic quizzes and instant mastery feedback.
+4. **Malaria Detection System (AI-Assisted Blood-Smear Screening Prototype)**
+   * *Role:* Team Leader & Full Stack Developer (Student engineering team)
+   * *Stack:* React, FastAPI, Python, Keras, TensorFlow, Supabase, PostgreSQL, jsPDF, Tailwind CSS
+   * *Challenge & Solution:* Connected a blood-smear cell image inference model with role-based doctor/patient/admin dashboards and PDF report generation.
+   * *Limitation & Truth:* Engineering prototype built for academic demonstration; not clinically validated and not approved for medical diagnosis.
+   * *Outcome:* Working end-to-end prototype with role-specific views and downloadable reports.
+
+5. **NeuralNet (Visual Deep Learning Studio & DAG Compiler)**
+   * *Role:* Team Leader & Full Stack Developer (Team of 3)
+   * *Stack:* React, XYFlow (React Flow), TypeScript, FastAPI, Python, Keras Code Generation, Tailwind CSS
+   * *Challenge & Solution:* Drag-and-drop neural network canvas that performs topological sorting, real-time graph validation, and compiles DAG structures to PEP-8 compliant Keras Python code via an AST-based compiler.
+   * *Limitation & Truth:* Hosted training metrics are simulated in demonstration mode to avoid expensive cloud GPU execution on the web hosting tier.
+   * *Outcome:* Live prototype supporting visual architecture design and exportable Keras code generation.
 
 ### Experience & Leadership
-* **Head of Web Development** — TechSpark Technical Club, MSSU Pune (2024–Present)
+* **Head of Web Development** — TechSpark Technical Club, MSSU Pune (2025 to Present)
+* **Web Development Co-Head** — TechSpark Technical Club, MSSU Pune (2024 to 2025)
 * **Event Head** — Pixel Perfection Hackathon, MSSU Pune (2024)
-* **Web Development Co-Head** — TechSpark Technical Club, MSSU Pune (2023–2024)
-* **Project Team Lead** — Krypton & NeuralNet, MSSU Pune (2025–2026)
+* **Project Team Lead** — Krypton, Malaria Detection System & NeuralNet, MSSU Pune (2025–2026)
 
 ### Engineering Notes & Articles
 * *Handling Gigabyte-Scale Images in the Browser: Tile Pyramids, GDAL, and OpenSeadragon* (7 min read)
@@ -175,6 +185,9 @@ Four distinct typefaces harmonize the technical rigor with the hand-crafted aest
 
 * **NO Generic AI Gradients:** Strictly no purple-to-blue neon glowing meshes or dark cyber templates.
 * **NO Fabricated Numbers:** All metrics reflect verified architectural benchmarks (45MB RAM footprint, 60fps pan/zoom, 3 ranking signals).
+* **NO Fabricated Social Proof:** Zero fabricated testimonials, awards, stars, views, or false clinical claims. All testimonials are authentic first-person build reflections.
+* **Transparent Limitations:** Hosted NeuralNet metrics are explicitly noted as simulated; Malaria Detection System is explicitly documented as an engineering prototype not clinically validated.
+* **Deterministic Formulas:** Krypton ranking weights are strictly 40/30/30 (TF-IDF, Citations, Recency).
 * **NO Text Clashes:** Absolute positional elements and stickers are locked to dedicated boundary regions with safe spacing.
 * **NO Broken Links:** Fallback paths and external repository links point directly to active verified locations.
 

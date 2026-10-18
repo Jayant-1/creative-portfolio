@@ -69,6 +69,7 @@ export function Polaroid({
   priority = false,
   fetchPriority,
   aspectClassName = "aspect-[4/5]",
+  sizes = "(max-width: 640px) 240px, (max-width: 1024px) 320px, 400px",
 }: {
   src: string;
   alt: string;
@@ -77,6 +78,7 @@ export function Polaroid({
   priority?: boolean;
   fetchPriority?: "high" | "low" | "auto";
   aspectClassName?: string;
+  sizes?: string;
 }) {
   return (
     <figure
@@ -95,7 +97,7 @@ export function Polaroid({
           src={src}
           alt={alt}
           fill
-          sizes="(max-width: 720px) 70vw, 400px"
+          sizes={sizes}
           priority={priority}
           fetchPriority={fetchPriority}
           loaderVariant="photo"

@@ -15,12 +15,24 @@ export async function GET() {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#fdfdfb",
-          backgroundImage:
-            "repeating-linear-gradient(to bottom, transparent 0, transparent 33px, rgba(25, 21, 16, 0.15) 33px, rgba(25, 21, 16, 0.15) 34px)",
           padding: "60px",
           fontFamily: "sans-serif",
+          position: "relative",
         }}
       >
+        <svg
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <line x1="80" y1="0" x2="80" y2="630" stroke="#f05a5b" strokeWidth="2" strokeOpacity="0.35" />
+          <line x1="84" y1="0" x2="84" y2="630" stroke="#f05a5b" strokeWidth="1" strokeOpacity="0.2" />
+          <line x1="0" y1="70" x2="1200" y2="70" stroke="#2b57d6" strokeWidth="2" strokeOpacity="0.25" />
+        </svg>
         <div
           style={{
             display: "flex",

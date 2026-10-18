@@ -5,6 +5,7 @@ import { CraftComponent } from "@/lib/components-data";
 import { getManifest, ExamplePreset } from "@/lib/component-manifests";
 import { PreviewFrame } from "./PreviewFrame";
 import { ExamplePicker } from "./ExamplePicker";
+import { CustomizeControls } from "./CustomizeControls";
 import { CodeView } from "./CodeView";
 
 interface ComponentPlaygroundProps {
@@ -27,6 +28,7 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
     () => ({ ...manifest.examples[0].props })
   );
   const [scrollProgress, setScrollProgress] = useState<number>(0);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -66,6 +68,10 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
       } else if (data.type === "SCROLL_CHANGED") {
         if (typeof data.progress === "number") {
           setScrollProgress(Math.min(1, Math.max(0, data.progress)));
+        }
+      } else if (data.type === "KEY_DOWN") {
+        if (data.key === "Escape") {
+          setIsFullscreen(false);
         }
       }
     };
@@ -136,8 +142,48 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
     return manifest.generateUsageCode(customizerValues);
   }, [manifest, customizerValues]);
 
+  // Check if current customized props differ from the active example preset defaults
+  const isModified = useMemo(() => {
+    const defaultProps = selectedExample.props || {};
+    const allKeys = new Set([
+      ...Object.keys(customizerValues),
+      ...Object.keys(defaultProps),
+    ]);
+    for (const k of allKeys) {
+      if (customizerValues[k] !== defaultProps[k]) {
+        return true;
+      }
+    }
+    return false;
+  }, [customizerValues, selectedExample]);
+
+  // Handle live customizer field change
+  const handleCustomizerChange = useCallback(
+    (key: string, value: any) => {
+      setCustomizerValues((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+      postToIframe({
+        type: "UPDATE_PROPS",
+        props: { [key]: value },
+      });
+    },
+    [postToIframe]
+  );
+
+  // Handle reset to preset defaults
+  const handleResetToPreset = useCallback(() => {
+    const presetProps = { ...selectedExample.props };
+    setCustomizerValues(presetProps);
+    postToIframe({
+      type: "SET_PROPS",
+      props: presetProps,
+    });
+  }, [selectedExample, postToIframe]);
+
   return (
-    <div className="w-full flex flex-col my-0 gap-3 sm:gap-4">
+    <div className="w-full flex flex-col my-0 gap-3">
       {/* 1. Preview Stage or Code View */}
       <PreviewFrame
         slug={normalizedSlug}
@@ -149,6 +195,8 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
         onScrollChange={handleScrollChange}
         iframeRef={iframeRef}
         isScrollLinked={isScrollLinked}
+        isFullscreen={isFullscreen}
+        onFullscreenToggle={setIsFullscreen}
       >
         <CodeView usageCode={usageCode} sourceCode={component.code} />
       </PreviewFrame>
@@ -158,6 +206,16 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
         examples={manifest.examples}
         selectedId={selectedExampleId}
         onSelect={handleSelectExample}
+      />
+
+      {/* 3. Simple Customize Panel */}
+      <CustomizeControls
+        fields={manifest.customFields}
+        values={customizerValues}
+        onChange={handleCustomizerChange}
+        isModified={isModified}
+        onReset={handleResetToPreset}
+        selectedExampleName={selectedExample.name}
       />
     </div>
   );

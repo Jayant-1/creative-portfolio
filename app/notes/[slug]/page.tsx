@@ -5,6 +5,12 @@ export function generateStaticParams() {
   return notes.map(({ slug }) => ({ slug }));
 }
 
-export default function NoteSlugRedirect({ params }: { params: { slug: string } }) {
-  redirect(`/blog/${params.slug}`);
+export default async function NoteSlugRedirect({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  redirect(`/blog/${slug}`);
 }
+

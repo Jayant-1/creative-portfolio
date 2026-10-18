@@ -5,6 +5,7 @@ import { ContactStrip, Footer, Scribble, Tape } from "@/components/Paper";
 import { StaggerText } from "@/components/Motion";
 import Reveal from "@/components/Reveal";
 import { siteUrl } from "@/lib/site";
+import { getBreadcrumbSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Engineering Blog — Coming Soon",
@@ -35,24 +36,10 @@ export default function BlogPage() {
     },
   };
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Blog",
-        item: `${siteUrl}/blog`,
-      },
-    ],
-  };
+  const breadcrumbJsonLd = getBreadcrumbSchema([
+    { name: "Home", url: siteUrl },
+    { name: "Blog", url: `${siteUrl}/blog` },
+  ]);
 
   return (
     <div className="ca-grid min-h-screen pt-12 sm:pt-16">

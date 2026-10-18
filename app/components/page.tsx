@@ -4,55 +4,83 @@ import { ChevronRight, ArrowRight } from "lucide-react";
 import { ContactStrip, Footer } from "@/components/Paper";
 import { siteUrl } from "@/lib/site";
 import { CRAFT_COMPONENTS } from "@/lib/components-data";
+import { getBreadcrumbSchema } from "@/lib/schema";
 import { ComponentsCatalogClient } from "@/components/showcase/ComponentsCatalogClient";
 
 export const metadata: Metadata = {
   title: "React Components",
   description:
     "Explore animated React components built by Jayant Potdar with Framer Motion and Tailwind CSS. Try the interactive demos and inspect the code.",
+  keywords: [
+    "React Components",
+    "Framer Motion UI",
+    "Interactive UI Components",
+    "Tailwind CSS Components",
+    "Micro-Interactions",
+    "UI Sandbox",
+    "Jayant Potdar Components",
+    "Web Crafts",
+  ],
   alternates: {
-    canonical: "/components",
+    canonical: `${siteUrl}/components`,
   },
   openGraph: {
-    title: "Components | Jayant Potdar",
+    title: "React Components | Jayant Potdar",
     description:
       "Animated React components with interactive demos and code by Jayant Potdar.",
     url: `${siteUrl}/components`,
+    images: [
+      {
+        url: "/og",
+        width: 1200,
+        height: 630,
+        alt: "React Components by Jayant Potdar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "React Components | Jayant Potdar",
+    description:
+      "Animated React components with interactive demos and copy-paste code by Jayant Potdar.",
+    images: ["/og"],
   },
 };
 
 export default function ComponentsPage() {
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Components",
-        item: `${siteUrl}/components`,
-      },
-    ],
-  };
+  const breadcrumbJsonLd = getBreadcrumbSchema([
+    { name: "Home", url: siteUrl },
+    { name: "Components", url: `${siteUrl}/components` },
+  ]);
 
   const collectionJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Animated React Components",
+    "@id": `${siteUrl}/components#collection`,
+    name: "Interactive React Components & UI Crafts",
     url: `${siteUrl}/components`,
     description:
-      "Curated React and Framer Motion micro-interactions and UI components.",
+      "Curated collection of 6 production-grade animated React components, interactive hero sections, and micro-interactions built by Jayant Potdar with Framer Motion and Tailwind CSS.",
+    author: {
+      "@id": `${siteUrl}/#jayant`,
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: CRAFT_COMPONENTS.map((c, idx) => ({
+        "@type": "ListItem",
+        position: idx + 1,
+        url: `${siteUrl}/components/${c.slug}`,
+        name: c.name,
+        description: c.tagline,
+      })),
+    },
     hasPart: CRAFT_COMPONENTS.map((c) => ({
-      "@type": "CreativeWork",
+      "@type": "SoftwareApplication",
       name: c.name,
       url: `${siteUrl}/components/${c.slug}`,
       description: c.tagline,
+      applicationCategory: "DesignApplication",
+      operatingSystem: "Web Browser",
     })),
   };
 

@@ -52,9 +52,9 @@ export function TestimonialCard({
         </div>
 
         <div className="min-w-0 flex-1">
-          <h4 className="truncate text-sm font-bold text-[var(--ca-ink)] sm:text-base">
+          <h3 className="truncate text-sm font-bold text-[var(--ca-ink)] sm:text-base">
             {testimonial.name}
-          </h4>
+          </h3>
           <p className="truncate text-xs font-medium text-[var(--ca-ink)]/70">
             {testimonial.role} • <span className="font-semibold text-[var(--ca-ink)]">{testimonial.company}</span>
           </p>

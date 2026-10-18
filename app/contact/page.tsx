@@ -11,9 +11,24 @@ export const metadata: Metadata = {
     canonical: "/contact",
   },
   openGraph: {
+    type: "website",
     title: "Contact Jayant Potdar | Full Stack Developer",
     description: "Email Jayant Potdar about hiring, a project, or arranging a call.",
     url: `${siteUrl}/contact`,
+    images: [
+      {
+        url: "/og",
+        width: 1200,
+        height: 630,
+        alt: "Contact Jayant Potdar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Jayant Potdar | Full Stack Developer",
+    description: "Email Jayant Potdar about hiring, a project, or arranging a call.",
+    images: ["/og"],
   },
 };
 
@@ -47,10 +62,10 @@ export default function ContactPage() {
       />
 
       {/* Desktop Flanking Polaroids */}
-      <div className="pointer-events-none absolute inset-0 hidden lg:block overflow-hidden" aria-hidden="true">
+      <div className="pointer-events-none absolute inset-0 hidden xl:block overflow-hidden" aria-hidden="true">
         {/* Left Polaroid */}
         <div
-          className="group absolute left-[8%] 2xl:left-[10%] top-[14%] w-60 xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
+          className="group absolute left-[2%] 2xl:left-[5%] top-[14%] w-52 2xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
           style={{ transform: "rotate(-14.4deg)" }}
         >
           <div className="pointer-events-auto block w-full">
@@ -62,7 +77,7 @@ export default function ContactPage() {
                   src="/images/img-1.png"
                   alt="Jayant Potdar"
                   fill
-                  sizes="(max-width: 1280px) 480px, 600px"
+                  sizes="(max-width: 1536px) 300px, 450px"
                   quality={95}
                   loaderVariant="photo"
                   loaderText="Developing..."
@@ -79,7 +94,7 @@ export default function ContactPage() {
 
         {/* Right Polaroid */}
         <div
-          className="group absolute right-[8%] 2xl:right-[10%] top-[17%] w-60 xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
+          className="group absolute right-[2%] 2xl:right-[5%] top-[17%] w-52 2xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
           style={{ transform: "rotate(15.5deg)" }}
         >
           <div className="pointer-events-auto block w-full">
@@ -103,7 +118,7 @@ export default function ContactPage() {
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               <figcaption className="ca-hand mt-1.5 text-center text-lg leading-tight text-[var(--ca-ink)]/80">
-                Sahyadri Forts ⛰️
+                Sahyadri Forts
               </figcaption>
             </figure>
           </div>
@@ -148,7 +163,7 @@ export default function ContactPage() {
         </div>
 
         {/* Two-step Yellow Note Card */}
-        <div className="mt-5 w-full max-w-md">
+        <div className="mt-6 w-full max-w-xl">
           <ContactForm />
         </div>
 

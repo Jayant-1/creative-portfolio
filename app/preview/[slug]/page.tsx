@@ -1,11 +1,19 @@
 import React from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PreviewClient } from "./PreviewClient";
 
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 const VALID_SLUGS = [
@@ -22,10 +30,12 @@ export function generateStaticParams() {
   return VALID_SLUGS.map((slug) => ({ slug }));
 }
 
-export default function PreviewPage({ params }: PageProps) {
-  if (!VALID_SLUGS.includes(params.slug)) {
+export default async function PreviewPage({ params }: PageProps) {
+  const { slug } = await params;
+  if (!VALID_SLUGS.includes(slug)) {
     notFound();
   }
 
-  return <PreviewClient slug={params.slug} />;
+  return <PreviewClient slug={slug} />;
 }
+

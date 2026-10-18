@@ -2,7 +2,7 @@
 
 A production-ready recreation of the [Portfoliofy Creative Artsy preview](https://portfoliofy.io/preview/creative-artsy) for **Jayant Potdar**, built using **Next.js 14 App Router, TypeScript, Tailwind CSS, and pnpm**.
 
-The design embodies a playful, tactile scrapbook aesthetic: lined notebook paper with subtle grain, hand-drawn wobbly boxes, translucent corner tape, polaroid frames, protruding folder tabs with sticky stacking scroll, and animated sticker doodles. All content reflects Jayant's verified projects (AstroPixel, Krypton, NeuralNet, Nova-Learn) and authentic academic/leadership experience at MSSU Pune.
+The design embodies a playful, tactile scrapbook aesthetic: lined notebook paper with subtle grain, hand-drawn wobbly boxes, translucent corner tape, polaroid frames, protruding folder tabs with sticky stacking scroll, and animated sticker doodles. All content reflects Jayant's verified projects (AstroPixel, Krypton, 3D Portfolio, Malaria Detection System, NeuralNet) and authentic academic/leadership experience at MSSU Pune.
 
 ---
 
@@ -41,11 +41,12 @@ pnpm typecheck
 ## Routes
 
 - `/` — Homepage with tactile hero, about preview, sticky stacking featured works folders, tools strip, animated "Let's talk" character, and contact note.
-- `/about` — Detailed biographical background, 3 core engineering principles, and verified leadership roles with desktop sticky anchor navigation tabs.
-- `/case-studies` — 2-column index of project folders with hover tilt and screenshot zoom.
-- `/case-studies/[slug]` — Deep-dive case study routes for `astropixel`, `krypton`, `neuralnet`, and `nova-learn` with 2×2 torn fact cards, problem/approach/result sections, factual metrics, and live demo / source links.
-- `/playground` — Interactive notebook canvas with 8 scattered experiment cards, touch/mouse pan, and bounded zoom controls (+ / - / reset).
-- `/contact` — Scrapbook contact view with 2-step note form, field validation, and pre-filled email draft via `mailto:` fallback.
+- `/about` — Detailed biographical background, 3 core engineering principles, physical trophy verification, and verified leadership roles.
+- `/projects` — Index of verified project case studies.
+- `/projects/[slug]` — Deep-dive case study routes for `astropixel`, `krypton`, `3d-portfolio`, `malaria-detection`, and `neuralnet` with technical highlights, architecture tradeoffs, and live demo / source links.
+- `/experience` — Community leadership at TechSpark, hackathon honors, and industry certifications.
+- `/contact` — Scrapbook contact view with 2-step note form, field validation, and direct email link.
+- `/blog` — Technical engineering articles and architecture deep dives.
 - `/og` — Dynamic Open Graph preview image endpoint.
 - `/robots.txt` & `/sitemap.xml` — Search engine crawler directives and index.
 

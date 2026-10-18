@@ -14,9 +14,9 @@ export const author = {
   cgpa: "8.0",
   headline: "Creative full stack developer building expressive, production-ready web products in Pune.",
   summary:
-    "Jayant Potdar is a full stack developer in Pune who designs expressive interfaces and builds the systems behind them. He built AstroPixel independently and led teams on Krypton, Malaria Detection System, and NeuralNet. He is open to internships, full-time roles, and selected projects.",
+    "Jayant Potdar is a full stack developer in Pune who designs expressive interfaces and builds the systems behind them. He built AstroPixel independently and led teams on Krypton, Malaria Detection System, and NeuralNet. He is seeking internships and full-time roles, and is open to hybrid/remote work and relevant projects.",
   openToWork:
-    "Open to internships, full-time roles, and selected projects. Email me to arrange a call.",
+    "Seeking internships and full-time roles; open to hybrid/remote work and relevant projects. Email me to arrange a call.",
 };
 
 export const social = {
@@ -143,16 +143,20 @@ export type Project = {
   outcomes: { value: string; label: string }[];
   source: string;
   demo?: string;
+  demoLabel?: string;
+  demoQualifier?: string;
+  limitations?: string;
   relatedNoteSlug?: string;
 };
 
 export function isDarkProjectHero(slug?: string): boolean {
-  return (
-    slug === "astropixel" ||
-    slug === "krypton" ||
-    slug === "3d-portfolio" ||
-    slug === "neuralnet"
-  );
+  if (!slug) return true;
+  // Malaria Detection System has a bright white/cream UI hero card
+  if (slug === "malaria-detection" || slug === "light") {
+    return false;
+  }
+  // All other engineering projects (AstroPixel, Krypton, 3D Portfolio, NeuralNet) have dark backgrounds
+  return true;
 }
 
 export const projects: Project[] = [
@@ -177,7 +181,7 @@ export const projects: Project[] = [
     problem:
       "A full-resolution astronomical image is too large to load and explore comfortably in a normal browser tab.",
     personalContribution:
-      "I built the GDAL ingestion and tile-generation pipeline, FastAPI APIs, OpenSeadragon viewer, persistent annotations, and role-based access controls. The project taught me to test each stage of a complex system until tiles loaded quickly and reliably.",
+      "I designed and built the entire system independently: the GDAL tiling and multi-resolution pyramid pipeline, FastAPI tile streaming endpoints, responsive OpenSeadragon viewport, persistent image-space coordinate annotations, and Cloudflare R2 object storage integration.",
     features: [
   "Upload GeoTIFF and PSB imagery for processing.",
   "Explore large images through a tile-based deep-zoom viewer.",
@@ -272,6 +276,10 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/AstroPixel",
     demo: "https://astropixel.jayant.codes/",
+    demoLabel: "Launch Deep-Zoom Viewer",
+    demoQualifier: "Live Interactive Tile Viewer",
+    limitations:
+      "Gigapixel source imagery requires asynchronous GDAL tiling passes before multi-resolution pyramids are fully cached; cloud egress is optimized via Cloudflare R2.",
   },
   {
     slug: "krypton",
@@ -283,7 +291,7 @@ export const projects: Project[] = [
     ownership: "Team Leader",
     summary:
       "Krypton brings arXiv and OpenAlex results into one search flow, ranks papers with visible criteria, and uses Gemini to help readers summarize and explore the literature.",
-    role: "Team Leader & Backend Developer",
+    role: "Team Leader & Backend Architect",
     timeline: "3 months",
     team: "Lead of 3-student engineering team",
     year: "2025",
@@ -294,7 +302,7 @@ export const projects: Project[] = [
     problem:
       "A literature search can scatter useful papers across sources and leave readers without a clear reason for the order of results.",
     personalContribution:
-      "I led a three-student team and worked on the FastAPI search pipeline, the weighted ranking service, result caching, and Gemini-assisted paper insights. The default rank combines 40% text relevance, 30% recency, and 30% citation score.",
+      "I led a three-student team and architected the search backend: built the concurrent aggregation service for arXiv and OpenAlex APIs, implemented the transparent 40/30/30 scoring formula (40% TF-IDF relevance, 30% recency decay, 30% citation count), added TTL result caching, and integrated Google Gemini API for grounded abstract summaries.",
     features: [
   "Search arXiv and OpenAlex from one interface.",
   "Rank results using relevance, recency, and citation signals.",
@@ -398,6 +406,10 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/Krypton",
     demo: "https://krypton.jayant.codes/",
+    demoLabel: "Launch Research Search",
+    demoQualifier: "Live Multi-Source Search & AI Summaries",
+    limitations:
+      "Query throughput is bound by arXiv and OpenAlex external API rate limits, mitigated by backend TTL caching; citation enrichment coverage depends on preprint metadata availability.",
   },
   {
     slug: "3d-portfolio",
@@ -420,7 +432,7 @@ export const projects: Project[] = [
     problem:
       "I wanted a portfolio that let people experience my interest in creative engineering, rather than only read a list of skills.",
     personalContribution:
-      "I built the site independently: Three.js scenes, particle effects, the Spline skills keyboard, animated project sections, contact flow, and mobile adaptations. I tuned canvas pixel ratios and loading behavior for smaller devices.",
+      "I designed and developed the entire interactive portfolio from scratch: Three.js and React Three Fiber spatial scenes, custom particle starfield, interactive Spline 3D skills keyboard, section transitions with GSAP and Framer Motion, and mobile performance tiering with dynamic DPR clamping.",
     features: [
   "Explore interactive Three.js scenes and a particle starfield.",
   "Use the Spline-powered skills keyboard on desktop.",
@@ -518,6 +530,10 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/3D-Portfolio",
     demo: "https://3dportfolio.jayant.codes/",
+    demoLabel: "Launch 3D Portfolio",
+    demoQualifier: "Interactive 3D WebGL Space Experience",
+    limitations:
+      "Heavy WebGL shaders and the 3D Spline interactive keyboard are automatically tiered down on mobile devices to lightweight DOM keycaps to guarantee smooth 60 FPS scrolling.",
   },
   {
     slug: "malaria-detection",
@@ -531,16 +547,16 @@ export const projects: Project[] = [
       "A team-built prototype that connects image-based malaria screening with patient records, role-based dashboards, and downloadable reports. It has not been clinically validated.",
     role: "Team Leader & Full Stack Developer",
     timeline: "2 months",
-    team: "Student engineering team",
+    team: "Lead of 3-student engineering team",
     year: "2026",
-    color: "#0284c7",
+    color: "#0369a1",
     ink: "#ffffff",
     hero: "/projects/malariadetectionsystem-home.png",
     homeHero: "/projects/malariadetectionsystem-home.png",
     problem:
       "Reviewing blood-smear images and managing test records are separate steps in many workflows. Our team explored how software could bring them into one interface.",
     personalContribution:
-      "I led the team building the prototype and contributed to its React dashboard, FastAPI inference flow, patient and report workflows, and integration with Supabase. The model result is presented as a research demonstration, not a clinical diagnosis.",
+      "I led a three-student engineering team and built the full-stack architecture: integrated the Keras convolutional neural network into a FastAPI inference endpoint, developed the multi-role React dashboard (doctor, patient, admin), configured Supabase PostgreSQL schemas with row-level security, and implemented automated PDF clinical summary export with jsPDF. Explicitly scoped as an academic research prototype, not clinically validated.",
     features: [
   "Upload a cell image for prototype model inference.",
   "Manage patient records and test results in role-specific views.",
@@ -632,6 +648,10 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/MalariaDetectionSystem",
     demo: "https://malariadetection.jayant.codes/",
+    demoLabel: "Launch Prototype Demo",
+    demoQualifier: "Software Prototype (Non-Clinical)",
+    limitations:
+      "This system is an academic software prototype developed to demonstrate clinical workflows and automated reporting; model inference has NOT been clinically validated and must not be used for diagnostic purposes.",
   },
   {
     slug: "neuralnet",
@@ -654,7 +674,7 @@ export const projects: Project[] = [
     problem:
       "A model architecture written only in code can be hard to understand before its layers and connections are visible.",
     personalContribution:
-      "I led a three-student team building the graph editor and backend compiler. The React Flow canvas captures layer connections, and a FastAPI service topologically sorts the graph before generating Keras Python code.",
+      "I led a three-student team and engineered the core compiler: built the node-and-edge visual canvas using React Flow, designed the topological sort algorithm (Kahn's algorithm) to validate acyclic feedforward graphs, built the Python AST compiler translating graph JSON into clean Keras models, and created the training dashboard preview with simulated telemetry.",
     features: [
   "Create model architectures with drag-and-drop layer nodes.",
   "Connect layers and inspect the graph visually.",
@@ -747,6 +767,10 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/NeuralNet",
     demo: "https://neuralnet.jayant.codes/",
+    demoLabel: "Launch Visual Builder",
+    demoQualifier: "Interactive Graph Editor (Simulated Training)",
+    limitations:
+      "The graph builder and AST Python compiler produce real, executable Keras code; however, the hosted cloud training screen runs in demonstration mode using simulated telemetry to avoid cloud GPU hosting overhead.",
   },
 ];
 

@@ -165,6 +165,7 @@ export const OverlappingTextHero: React.FC<OverlappingTextHeroProps> = ({
                 ease: "easeInOut",
               }}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={imgPath}
                 alt={title}

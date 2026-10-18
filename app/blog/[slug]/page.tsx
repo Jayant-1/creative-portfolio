@@ -4,13 +4,19 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight, Clock, ChevronRight } from "lucide-react";
 import { ContactStrip, Footer, Tape } from "@/components/Paper";
 import { author, noteBySlug, notes, projectBySlug, siteUrl } from "@/lib/site";
+import { getBreadcrumbSchema } from "@/lib/schema";
 
 export function generateStaticParams() {
   return notes.map(({ slug }) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const note = noteBySlug(params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const note = noteBySlug(slug);
   if (!note) return {};
 
   const title = `${note.title} — Engineering Blog`;
@@ -32,8 +38,13 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function BlogDetailPage({ params }: { params: { slug: string } }) {
-  const note = noteBySlug(params.slug);
+export default async function BlogDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const note = noteBySlug(slug);
   if (!note) notFound();
 
   const relatedProject = note.projectSlug ? projectBySlug(note.projectSlug) : undefined;
@@ -61,30 +72,11 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
     articleSection: note.category,
   };
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Blog",
-        item: `${siteUrl}/blog`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: note.title,
-        item: `${siteUrl}/blog/${note.slug}`,
-      },
-    ],
-  };
+  const breadcrumbJsonLd = getBreadcrumbSchema([
+    { name: "Home", url: siteUrl },
+    { name: "Blog", url: `${siteUrl}/blog` },
+    { name: note.title, url: `${siteUrl}/blog/${note.slug}` },
+  ]);
 
   return (
     <article className="ca-grid min-h-screen pt-12 sm:pt-16">

@@ -33,6 +33,28 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'jayantpotdar.in',
+          },
+        ],
+        destination: 'https://jayant.codes/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.jayantpotdar.in',
+          },
+        ],
+        destination: 'https://jayant.codes/:path*',
+        permanent: true,
+      },
+      {
         source: '/components/radial-gradient-animate-card',
         destination: '/components/radial-gradient-card',
         permanent: true,
@@ -61,6 +83,20 @@ const nextConfig = {
         source: '/case-studies/:slug',
         destination: '/projects/:slug',
         permanent: true,
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/:all*(svg|jpg|jpeg|png|webp|avif|woff2|woff)',
+        locale: false,
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
       },
     ];
   },

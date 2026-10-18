@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { social } from "@/lib/site";
+import { trackGitHubClick } from "@/lib/analytics";
+import { prefetchRouteEntry } from "@/lib/prefetch";
 
 export function SmileyLogo({ className = "h-7 w-7" }: { className?: string }) {
   return (
@@ -30,7 +32,7 @@ export function SocialButtons({ className = "" }: { className?: string }) {
         aria-label="LinkedIn"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white text-white shadow-[1.5px_1.5px_0_rgba(25,21,16,0.25)] transition-transform duration-200 hover:-translate-y-0.5"
+        className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white text-white shadow-[1.5px_1.5px_0_rgba(25,21,16,0.25)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
         style={{ backgroundColor: "#376c96" }}
       >
         <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
@@ -48,7 +50,8 @@ export function SocialButtons({ className = "" }: { className?: string }) {
         aria-label="GitHub"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white text-white shadow-[1.5px_1.5px_0_rgba(25,21,16,0.25)] transition-transform duration-200 hover:-translate-y-0.5"
+        onClick={() => trackGitHubClick("profile", social.github, "header")}
+        className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white text-white shadow-[1.5px_1.5px_0_rgba(25,21,16,0.25)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
         style={{ backgroundColor: "#000000" }}
       >
         <svg viewBox="0 0 24 24" fill="white" className="h-4 w-4" aria-hidden="true">
@@ -127,8 +130,65 @@ const navItems = [
   },
 ];
 
+interface IntentNavLinkProps {
+  href: string;
+  ariaLabel?: string;
+  ariaCurrent?: "page";
+  className?: string;
+  onClick?: () => void;
+  children: React.ReactNode;
+}
+
+function IntentNavLink({
+  href,
+  ariaLabel,
+  ariaCurrent,
+  className,
+  onClick,
+  children,
+}: IntentNavLinkProps) {
+  const router = useRouter();
+  const dwellTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startDwell = useCallback(() => {
+    dwellTimerRef.current = setTimeout(() => {
+      prefetchRouteEntry(href, router);
+    }, 100);
+  }, [href, router]);
+
+  const cancelDwell = useCallback(() => {
+    if (dwellTimerRef.current) {
+      clearTimeout(dwellTimerRef.current);
+      dwellTimerRef.current = null;
+    }
+  }, []);
+
+  const handleTouch = useCallback(() => {
+    prefetchRouteEntry(href, router);
+  }, [href, router]);
+
+  return (
+    <Link
+      href={href}
+      aria-label={ariaLabel}
+      aria-current={ariaCurrent}
+      className={className}
+      onClick={onClick}
+      onPointerEnter={startDwell}
+      onPointerLeave={cancelDwell}
+      onFocus={startDwell}
+      onBlur={cancelDwell}
+      onTouchStart={handleTouch}
+      onPointerDown={handleTouch}
+    >
+      {children}
+    </Link>
+  );
+}
+
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuBtnRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLElement>(null);
@@ -138,6 +198,25 @@ export function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
+  // Idle enrichment: warm up primary routes & entry visuals during browser idle
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const idleCallback =
+      (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
+        .requestIdleCallback || ((cb: () => void) => setTimeout(cb, 1800));
+
+    const handle = idleCallback(() => {
+      prefetchRouteEntry("/projects", router);
+      prefetchRouteEntry("/about", router);
+    });
+
+    return () => {
+      if (typeof window !== "undefined" && "cancelIdleCallback" in window) {
+        (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(handle as number);
+      }
+    };
+  }, [router]);
+
   // Trap focus and handle Escape key dismiss
   useEffect(() => {
     if (!mobileOpen) return;
@@ -145,6 +224,12 @@ export function Header() {
     // Lock body scroll on mobile while drawer is active
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
+    // Move initial focus to the first nav link inside drawer
+    const timer = setTimeout(() => {
+      const firstNav = drawerRef.current?.querySelector<HTMLElement>("a[href]");
+      firstNav?.focus();
+    }, 50);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -163,14 +248,29 @@ export function Header() {
 
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
+        const closeBtn = menuBtnRef.current;
 
         if (e.shiftKey) {
-          if (document.activeElement === firstElement || document.activeElement === menuBtnRef.current) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            if (closeBtn) {
+              closeBtn.focus();
+            } else {
+              lastElement.focus();
+            }
+          } else if (document.activeElement === closeBtn) {
             e.preventDefault();
             lastElement.focus();
           }
         } else {
           if (document.activeElement === lastElement) {
+            e.preventDefault();
+            if (closeBtn) {
+              closeBtn.focus();
+            } else {
+              firstElement.focus();
+            }
+          } else if (document.activeElement === closeBtn) {
             e.preventDefault();
             firstElement.focus();
           }
@@ -180,6 +280,7 @@ export function Header() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => {
+      clearTimeout(timer);
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalOverflow;
     };
@@ -197,7 +298,7 @@ export function Header() {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-[var(--ca-yellow)] focus:px-4 focus:py-2 focus:font-bold focus:border-2 focus:border-[var(--ca-ink)]"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-[var(--ca-yellow)] focus:px-4 focus:py-2 focus:font-bold focus:border-2 focus:border-[var(--ca-ink)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
       >
         Skip to content
       </a>
@@ -211,13 +312,13 @@ export function Header() {
       >
         <div className="relative flex items-stretch justify-between pl-3 pr-3 sm:pl-5 min-h-[56px]">
           <div className="flex items-stretch gap-1 sm:gap-2">
-            <Link
+            <IntentNavLink
               href="/"
-              aria-label="Jayant Potdar - Home"
-              className="flex items-center lg:hidden py-2 pl-1 pr-2 transition-transform duration-200 hover:scale-105 active:scale-95"
+              ariaLabel="Jayant Potdar - Home"
+              className="flex items-center lg:hidden py-2 pl-1 pr-2 transition-transform duration-200 hover:scale-105 active:scale-95 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-full"
             >
               <SmileyLogo className="h-8 w-8" />
-            </Link>
+            </IntentNavLink>
             <nav className="hidden items-stretch lg:flex" aria-label="Main navigation">
               {navItems.map((item) => {
                 const isActive =
@@ -228,17 +329,17 @@ export function Header() {
                       (item.href === "/blog" && pathname.startsWith("/notes"));
 
                 return (
-                  <Link
+                  <IntentNavLink
                     key={item.href}
                     href={item.href}
-                    aria-current={isActive ? "page" : undefined}
-                    className={`ca-mono group flex items-center justify-center gap-2 px-3.5 py-4 text-xs xl:text-sm font-bold uppercase leading-none tracking-wider text-[var(--ca-ink)] transition-colors ${
+                    ariaCurrent={isActive ? "page" : undefined}
+                    className={`ca-mono group flex items-center justify-center gap-2 px-3.5 py-4 text-xs xl:text-sm font-bold uppercase leading-none tracking-wider text-[var(--ca-ink)] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--ca-orange)] ${
                       isActive ? "bg-[var(--ca-yellow)]" : "hover:bg-[var(--ca-chrome)]"
                     }`}
                   >
                     {item.icon}
                     {item.label}
-                  </Link>
+                  </IntentNavLink>
                 );
               })}
             </nav>
@@ -247,16 +348,16 @@ export function Header() {
           <div className="flex items-center gap-2 py-2">
             <SocialButtons />
 
-            <Link
+            <IntentNavLink
               href="/contact"
-              className="ca-mono hidden min-h-[44px] items-center gap-2.5 border-2 border-[var(--ca-ink)] px-5 py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] transition-colors hover:bg-[var(--ca-ink)] hover:text-white sm:inline-flex"
+              className="ca-mono hidden min-h-[44px] items-center gap-2.5 border-2 border-[var(--ca-ink)] px-5 py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] transition-colors hover:bg-[var(--ca-ink)] hover:text-white sm:inline-flex focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                 <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
                 <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
               </svg>
               Contact
-            </Link>
+            </IntentNavLink>
 
             {/* Accessible Hamburger Toggle Button with 44x44px Touch Target */}
             <button
@@ -265,7 +366,7 @@ export function Header() {
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               aria-controls="mobile-navigation"
-              className="flex h-11 w-11 items-center justify-center border-2 border-[var(--ca-ink)] bg-[var(--ca-surface)] lg:hidden transition-colors hover:bg-[var(--ca-yellow)] active:scale-95"
+              className="flex h-11 w-11 items-center justify-center border-2 border-[var(--ca-ink)] bg-[var(--ca-surface)] lg:hidden transition-colors hover:bg-[var(--ca-yellow)] active:scale-95 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
               onClick={toggleMobileMenu}
             >
               {mobileOpen ? (
@@ -324,11 +425,11 @@ export function Header() {
                         (item.href === "/blog" && pathname.startsWith("/notes"));
 
                   return (
-                    <Link
+                    <IntentNavLink
                       key={item.href}
                       href={item.href}
-                      aria-current={isActive ? "page" : undefined}
-                      className={`ca-mono group flex min-h-[48px] items-center gap-3 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-colors ${
+                      ariaCurrent={isActive ? "page" : undefined}
+                      className={`ca-mono group flex min-h-[48px] items-center gap-3 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--ca-orange)] ${
                         isActive
                           ? "bg-[var(--ca-yellow)] text-[var(--ca-ink)]"
                           : "text-[var(--ca-ink)] hover:bg-[var(--ca-chrome)] active:bg-[var(--ca-chrome)]"
@@ -337,12 +438,12 @@ export function Header() {
                     >
                       {item.icon}
                       {item.label}
-                    </Link>
+                    </IntentNavLink>
                   );
                 })}
-                <Link
+                <IntentNavLink
                   href="/contact"
-                  className="ca-mono mt-3 flex min-h-[48px] items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] py-3 text-sm font-bold uppercase tracking-widest text-white shadow-[2px_2px_0_var(--ca-ink)] transition-colors active:translate-y-0.5"
+                  className="ca-mono mt-3 flex min-h-[48px] items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] py-3 text-sm font-bold uppercase tracking-widest text-white shadow-[2px_2px_0_var(--ca-ink)] transition-colors active:translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                   onClick={() => setMobileOpen(false)}
                 >
                   <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
@@ -350,7 +451,7 @@ export function Header() {
                     <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
                   </svg>
                   Contact Me
-                </Link>
+                </IntentNavLink>
               </motion.nav>
             </>
           )}

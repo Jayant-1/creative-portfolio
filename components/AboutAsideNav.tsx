@@ -17,29 +17,29 @@ const SECTIONS: SectionDef[] = [
     id: "bio",
     label: "Main Bio",
     color: "var(--ca-yellow)",
-    ink: "var(--ca-surface)",
-    dotBg: "var(--ca-surface)",
+    ink: "var(--ca-ink)",
+    dotBg: "var(--ca-ink)",
   },
   {
     id: "facts",
     label: "Quick Facts",
     color: "var(--ca-cyan)",
-    ink: "var(--ca-surface)",
-    dotBg: "var(--ca-surface)",
+    ink: "var(--ca-ink)",
+    dotBg: "var(--ca-ink)",
   },
   {
     id: "story",
     label: "Story",
     color: "var(--ca-magenta)",
-    ink: "var(--ca-surface)",
-    dotBg: "var(--ca-surface)",
+    ink: "var(--ca-ink)",
+    dotBg: "var(--ca-ink)",
   },
   {
     id: "leadership",
     label: "Leadership",
     color: "var(--ca-blue)",
-    ink: "var(--ca-surface)",
-    dotBg: "var(--ca-surface)",
+    ink: "#ffffff",
+    dotBg: "#ffffff",
   },
 ];
 
@@ -239,7 +239,7 @@ export function AboutAsideNav() {
                 backgroundColor: sec.color,
                 color: sec.ink,
               }}
-              className="ca-mono inline-flex items-center gap-2 rounded-r-xl border-2 border-[var(--ca-ink)] px-4 py-2.5 text-xs font-bold uppercase tracking-wider shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:translate-x-1.5 focus:translate-x-1.5"
+              className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-r-xl border-2 border-[var(--ca-ink)] px-4 py-2.5 text-xs font-bold uppercase tracking-wider shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:translate-x-1.5 focus:translate-x-1.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
             >
               <span
                 className="h-2.5 w-2.5 rounded-full"

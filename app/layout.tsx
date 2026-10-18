@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Header } from "@/components/Header";
 import Preloader from "@/components/Preloader";
 import { InkTransitionProvider } from "@/components/transitions/InkTransitionProvider";
-import { author, email, siteUrl, social } from "@/lib/site";
+import { author, siteUrl } from "@/lib/site";
+import { getPersonSchema, getProfilePageSchema, getWebSiteSchema } from "@/lib/schema";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -28,6 +29,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  keywords: [
+    "Jayant Potdar",
+    "Jayant Sunil Potdar",
+    "Full Stack Developer Pune",
+    "Software Engineer Pune",
+    "React Developer",
+    "Next.js Developer",
+    "TypeScript",
+    "FastAPI",
+    "Python Developer",
+    "UI UX Engineer",
+    "Creative Developer",
+    "Interactive Portfolio",
+  ],
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -65,67 +80,15 @@ export const metadata: Metadata = {
     icon: "/favicon.svg",
     apple: "/favicon.svg",
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+  },
 };
 
 const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": `${siteUrl}/#jayant`,
-    name: author.name,
-    legalName: author.legalName,
-    alternateName: ["Jayant Sunil Potdar", "Jayant Potdar"],
-    url: siteUrl,
-    image: `${siteUrl}/images/img-1.png`,
-    jobTitle: author.role,
-    email,
-    description: author.summary,
-    homeLocation: {
-      "@type": "Place",
-      name: author.location,
-    },
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Pune",
-      addressRegion: "Maharashtra",
-      addressCountry: "IN",
-    },
-    affiliation: {
-      "@type": "EducationalOrganization",
-      name: author.college,
-    },
-    sameAs: [social.github, social.linkedin],
-    knowsAbout: [
-      "Full Stack Development",
-      "React",
-      "Next.js",
-      "TypeScript",
-      "Python",
-      "FastAPI",
-      "Spring Boot",
-      "PostgreSQL",
-      "PostGIS",
-      "Docker",
-      "REST APIs",
-      "Machine Learning Engineering",
-      "TensorFlow",
-      "Geospatial Data & GDAL",
-      "Deep Zoom Imagery",
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${siteUrl}/#website`,
-    name: "Jayant Potdar",
-    alternateName: "Jayant Potdar Portfolio",
-    url: siteUrl,
-    description: metaDescription,
-    inLanguage: "en-IN",
-    publisher: {
-      "@id": `${siteUrl}/#jayant`,
-    },
-  },
+  getPersonSchema(),
+  getWebSiteSchema(),
+  getProfilePageSchema(),
 ];
 
 export default function RootLayout({

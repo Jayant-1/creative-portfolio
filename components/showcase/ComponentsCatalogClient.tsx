@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Copy, Check } from "lucide-react";
 import { CRAFT_COMPONENTS, CraftComponent } from "@/lib/components-data";
+import { trackComponentCopy } from "@/lib/analytics";
 
 export const ComponentsCatalogClient: React.FC = () => {
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
@@ -15,6 +16,7 @@ export const ComponentsCatalogClient: React.FC = () => {
     navigator.clipboard.writeText(comp.installCommand);
     setCopiedSlug(comp.slug);
     setTimeout(() => setCopiedSlug(null), 2000);
+    trackComponentCopy(comp.slug, "install_command");
   };
 
   return (
@@ -56,22 +58,25 @@ export const ComponentsCatalogClient: React.FC = () => {
 
               <div className="flex items-center gap-1.5 shrink-0">
                 <button
+                  type="button"
                   onClick={(e) => handleCopyInstall(e, comp)}
-                  className="p-1.5 rounded-lg text-[var(--ca-ink)]/40 hover:text-[var(--ca-ink)] dark:hover:text-white hover:bg-[var(--ca-ink)]/5 dark:hover:bg-white/5 transition-colors"
-                  title="Copy install command"
+                  aria-label={`Copy install command for ${comp.name}`}
+                  className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg text-[var(--ca-ink)]/70 hover:text-[var(--ca-ink)] dark:text-neutral-300 dark:hover:text-white hover:bg-[var(--ca-ink)]/5 dark:hover:bg-white/5 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                  title={`Copy install command for ${comp.name}`}
                 >
                   {copiedSlug === comp.slug ? (
-                    <Check size={14} className="text-emerald-600" />
+                    <Check size={15} className="text-emerald-600" />
                   ) : (
-                    <Copy size={14} />
+                    <Copy size={15} />
                   )}
                 </button>
                 <Link
                   href={`/components/${comp.slug}`}
-                  className="p-1 rounded-md text-[var(--ca-orange)] hover:translate-x-0.5 hover:-translate-y-0.5 transition-transform"
+                  aria-label={`Open ${comp.name} craft documentation`}
+                  className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-md text-[var(--ca-orange)] hover:translate-x-0.5 hover:-translate-y-0.5 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                   title="Open component"
                 >
-                  <ArrowUpRight size={17} />
+                  <ArrowUpRight size={18} />
                 </Link>
               </div>
             </div>

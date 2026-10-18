@@ -698,7 +698,9 @@ textarea {
 }
 
 .ca-card-lens span {
-  color: var(--ca-lens-text, inherit);
+  color: var(--ca-lens-text, var(--ca-ink));
+  font-weight: 800;
+  letter-spacing: 0.15em;
   transition: color 140ms ease-out;
 }
 

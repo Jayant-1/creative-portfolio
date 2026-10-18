@@ -6,41 +6,53 @@ import { StaggerText } from "@/components/Motion";
 import Reveal from "@/components/Reveal";
 import { CertificateSection } from "@/components/CertificateSection";
 import { achievements, experienceItems, siteUrl } from "@/lib/site";
+import { getBreadcrumbSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Experience & Leadership",
   description:
     "Jayant Potdar leads web development at TechSpark, mentors student developers, and has organized technical events at Ratan Tata Maharashtra State Skills University in Pune.",
+  keywords: [
+    "Jayant Potdar Experience",
+    "TechSpark MSSU",
+    "Head of Web Development",
+    "Engineering Leadership",
+    "Hackathon Winner Pune",
+    "Developer Mentorship",
+    "MSSU Technical Club",
+    "Technical Event Organizer",
+  ],
   alternates: {
-    canonical: "/experience",
+    canonical: `${siteUrl}/experience`,
   },
   openGraph: {
-    title: "Experience & Leadership | Jayant Potdar — Full Stack Developer",
+    title: "Experience & Leadership | Jayant Potdar",
     description:
       "Engineering leadership at TechSpark, hackathon event organization, and competition awards by Jayant Potdar in Pune.",
     url: `${siteUrl}/experience`,
+    images: [
+      {
+        url: "/og",
+        width: 1200,
+        height: 630,
+        alt: "Experience & Leadership — Jayant Potdar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Experience & Leadership | Jayant Potdar",
+    description:
+      "Engineering leadership at TechSpark, hackathon event organization, and competition awards by Jayant Potdar in Pune.",
+    images: ["/og"],
   },
 };
 
 export default function ExperiencePage() {
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Experience",
-        item: `${siteUrl}/experience`,
-      },
-    ],
-  };
+  const breadcrumbJsonLd = getBreadcrumbSchema([
+    { name: "Home", url: siteUrl },
+    { name: "Experience", url: `${siteUrl}/experience` },
+  ]);
 
   const webPageJsonLd = {
     "@context": "https://schema.org",
@@ -156,7 +168,7 @@ export default function ExperiencePage() {
         <section className="mb-20 sm:mb-28" aria-labelledby="awards-heading">
           <Reveal delay={60}>
             <div className="flex items-center gap-3 mb-8">
-              <h2 id="awards-heading" className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "var(--ca-magenta)" }}>
+              <h2 id="awards-heading" className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)]" style={{ backgroundColor: "var(--ca-magenta)" }}>
                 Honors &amp; Competitions
               </h2>
               <div className="h-0.5 flex-1 bg-[var(--ca-ink)]/15" />

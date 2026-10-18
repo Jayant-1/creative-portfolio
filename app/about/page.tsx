@@ -7,90 +7,63 @@ import { AboutAsideNav } from "@/components/AboutAsideNav";
 import Reveal from "@/components/Reveal";
 import { TechnicalSkillsetPicker } from "@/components/TechnicalSkillsetPicker";
 import { author, siteUrl, skillsByCategory } from "@/lib/site";
+import { getBreadcrumbSchema, getPersonSchema, getProfilePageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "About · Full Stack Developer in Pune",
   description:
     "Meet Jayant Potdar, a full stack developer in Pune studying Computer Science at Ratan Tata Maharashtra State Skills University. Learn how he builds expressive interfaces and complete web products.",
+  keywords: [
+    "Jayant Potdar",
+    "About Jayant Potdar",
+    "Full Stack Developer Pune",
+    "MSSU Pune",
+    "Software Engineer India",
+    "Computer Science Engineering",
+    "Web Developer Portfolio",
+    "TechSpark Head",
+  ],
   alternates: {
-    canonical: "/about",
+    canonical: `${siteUrl}/about`,
   },
   openGraph: {
-    title: "About Jayant Potdar | Full Stack Developer in Pune",
+    type: "profile",
+    title: "About Jayant Potdar | Full Stack Developer",
     description:
-      "Background, education, engineering approach, and project experience of Jayant Potdar.",
+      "Background, education at MSSU Pune, engineering philosophy, and project experience of Jayant Potdar.",
     url: `${siteUrl}/about`,
+    images: [
+      {
+        url: "/og",
+        width: 1200,
+        height: 630,
+        alt: "About Jayant Potdar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Jayant Potdar | Full Stack Developer",
+    description:
+      "Background, education at MSSU Pune, engineering philosophy, and project experience of Jayant Potdar.",
+    images: ["/og"],
   },
 };
 
 export default function AboutPage() {
   const profileJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    name: "About Jayant Potdar",
-    url: `${siteUrl}/about`,
-    mainEntity: {
-      "@type": "Person",
-      "@id": `${siteUrl}/#jayant`,
-      name: author.name,
-      legalName: author.legalName,
-      alternateName: ["Jayant Sunil Potdar", "Jayant Potdar developer", "Jayant Potdar Pune"],
-      jobTitle: author.role,
-      url: siteUrl,
-      sameAs: [
-        "https://github.com/Jayant-1",
-        "https://www.linkedin.com/in/jayant-potdar-161614275/",
-      ],
-      affiliation: {
-        "@type": "EducationalOrganization",
-        name: author.college,
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Pune",
-          addressRegion: "Maharashtra",
-          addressCountry: "India",
-        },
-      },
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Pune",
-        addressRegion: "Maharashtra",
-        addressCountry: "India",
-      },
-      knowsAbout: [
-        "Full Stack Development",
-        "React",
-        "Next.js",
-        "TypeScript",
-        "FastAPI",
-        "Python",
-        "PostgreSQL",
-        "PostGIS",
-        "Docker",
-        "Google Gemini API",
-        "Deep Zoom Tiling",
-      ],
-    },
+    ...getProfilePageSchema({
+      url: `${siteUrl}/about`,
+      name: "About Jayant Potdar",
+      description: author.summary,
+    }),
+    mainEntity: getPersonSchema(),
   };
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "About",
-        item: `${siteUrl}/about`,
-      },
-    ],
-  };
+  const breadcrumbJsonLd = getBreadcrumbSchema([
+    { name: "Home", url: siteUrl },
+    { name: "About", url: `${siteUrl}/about` },
+  ]);
 
   return (
     <div className="ca-grid min-h-screen pt-12 sm:pt-16">
@@ -123,7 +96,7 @@ export default function AboutPage() {
             <nav className="flex flex-wrap gap-2.5 lg:hidden pt-2" aria-label="About section quick links">
               <a
                 href="#bio"
-                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform"
+                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-yellow)" }}
               >
                 <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
@@ -131,7 +104,7 @@ export default function AboutPage() {
               </a>
               <a
                 href="#facts"
-                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform"
+                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-cyan)" }}
               >
                 <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
@@ -139,15 +112,15 @@ export default function AboutPage() {
               </a>
               <a
                 href="#story"
-                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform"
+                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-magenta)" }}
               >
-                <span className="h-2 w-2 rounded-full bg-white" />
+                <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
                 Story
               </a>
               <a
                 href="#leadership"
-                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform"
+                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-blue)" }}
               >
                 <span className="h-2 w-2 rounded-full bg-white" />
@@ -323,7 +296,7 @@ export default function AboutPage() {
             <Reveal delay={100}>
               <h2
                 id="story-heading"
-                className="ca-mono ca-torn-label inline-block px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-white"
+                className="ca-mono ca-torn-label inline-block px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)]"
                 style={{ backgroundColor: "var(--ca-magenta)" }}
               >
                 Engineering Philosophy

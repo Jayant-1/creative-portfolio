@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  ExternalLink,
   ChevronRight,
   Star,
   Eye,
@@ -11,37 +10,59 @@ import {
   Layers,
   Wrench,
   ArrowUpRight,
+  Scale,
+  CheckCircle2,
+  AlertTriangle,
 } from "lucide-react";
 import { Footer, Scribble, Tape } from "@/components/Paper";
 import { RelatedProjectCard } from "@/components/FolderCard";
 import { ProjectShowcaseStage } from "@/components/ProjectShowcaseStage";
+import { ProjectActionButtons } from "@/components/ProjectActionButtons";
+import { NextProjectPrefetch } from "@/components/NextProjectPrefetch";
 import { noteBySlug, projectBySlug, projects, siteUrl } from "@/lib/site";
+import { getBreadcrumbSchema, getProjectCaseStudySchema } from "@/lib/schema";
 
 export function generateStaticParams() {
   return projects.map(({ slug }) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const project = projectBySlug(params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projectBySlug(slug);
   if (!project) return {};
 
   const title = `${project.title} — Project Case Study`;
   const description = `${project.title}: ${project.tagline}. Read Jayant Potdar's case study, see the source code, and explore the live demo.`;
+  const canonicalUrl = `${siteUrl}/projects/${project.slug}`;
+  const heroImageUrl = `${siteUrl}${project.hero}`;
 
   return {
     title,
     description,
+    keywords: [
+      project.title,
+      `${project.title} case study`,
+      ...project.technologies,
+      ...project.category,
+      "Jayant Potdar",
+      "Full Stack Project",
+      "Software Engineering Case Study",
+    ],
     alternates: {
-      canonical: `/projects/${project.slug}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
       type: "article",
-      title,
+      title: `${project.title} — Case Study | Jayant Potdar`,
       description,
-      url: `${siteUrl}/projects/${project.slug}`,
+      url: canonicalUrl,
       images: [
         {
-          url: `${siteUrl}${project.hero}`,
+          url: heroImageUrl,
           width: 1200,
           height: 630,
           alt: `${project.title} system interface screenshot`,
@@ -52,21 +73,18 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       card: "summary_large_image",
       title: `${project.title} — Jayant Potdar`,
       description,
-      images: [`${siteUrl}${project.hero}`],
+      images: [heroImageUrl],
     },
   };
 }
 
-function GithubIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-    </svg>
-  );
-}
-
-export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
-  const project = projectBySlug(params.slug);
+export default async function ProjectDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const project = projectBySlug(slug);
   if (!project) notFound();
 
   const currentIdx = projects.findIndex((p) => p.slug === project.slug);
@@ -74,48 +92,12 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
   const relatedNote = project.relatedNoteSlug ? noteBySlug(project.relatedNoteSlug) : undefined;
   const relatedProjects = projects.filter((p) => p.slug !== project.slug).slice(0, 2);
 
-  const softwareJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: project.title,
-    applicationCategory: "Web Application",
-    applicationSubCategory: project.category.join(", "),
-    operatingSystem: "Web Browser",
-    description: project.summary,
-    url: project.demo || project.source,
-    mainEntityOfPage: `${siteUrl}/projects/${project.slug}`,
-    sameAs: project.source,
-    image: `${siteUrl}${project.hero}`,
-    author: {
-      "@id": `${siteUrl}/#jayant`,
-    },
-    inLanguage: "en-IN",
-  };
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Projects",
-        item: `${siteUrl}/projects`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: project.title,
-        item: `${siteUrl}/projects/${project.slug}`,
-      },
-    ],
-  };
+  const caseStudyJsonLd = getProjectCaseStudySchema(project);
+  const breadcrumbJsonLd = getBreadcrumbSchema([
+    { name: "Home", url: siteUrl },
+    { name: "Projects", url: `${siteUrl}/projects` },
+    { name: project.title, url: `${siteUrl}/projects/${project.slug}` },
+  ]);
 
   const ownershipBg = project.ownership.includes("Solo")
     ? "var(--ca-cyan)"
@@ -127,7 +109,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
     <div className="ca-grid min-h-screen pt-10 sm:pt-16">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudyJsonLd).replace(/</g, "\\u003c") }}
       />
       <script
         type="application/ld+json"
@@ -206,32 +188,18 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
 
           {/* Recruiter Quick Actions: Immediate proof access (0-3s scan right under title & tagline) */}
           <div className="mt-5 flex flex-wrap items-center gap-3.5">
-            {project.demo && (
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-ink)]"
-              >
-                <ExternalLink size={15} />
-                Launch Live App
-              </a>
-            )}
-
-            <a
-              href={project.source}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-yellow)]"
-            >
-              <GithubIcon className="h-4 w-4" />
-              View Source
-            </a>
+            <ProjectActionButtons
+              title={project.title}
+              demo={project.demo}
+              demoLabel={project.demoLabel}
+              demoQualifier={project.demoQualifier}
+              source={project.source}
+            />
 
             {relatedNote && (
               <Link
                 href={`/notes/${relatedNote.slug}`}
-                className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border border-[var(--ca-ink)]/30 bg-[var(--ca-surface)] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs transition-colors hover:bg-white"
+                className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border border-[var(--ca-ink)]/30 bg-[var(--ca-surface)] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs transition-colors hover:bg-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
               >
                 <FileText size={14} className="text-[var(--ca-blue)]" />
                 Engineering Deep Dive
@@ -243,6 +211,29 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
           <p className="mt-5 max-w-3xl text-base leading-relaxed text-[var(--ca-ink)]/85 sm:text-xl font-medium">
             {project.summary}
           </p>
+
+          {/* Recruiter Executive Metadata Strip */}
+          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 rounded-lg border border-[var(--ca-ink)]/15 bg-white/85 px-4 py-3 text-xs ca-mono text-[var(--ca-ink)]/80 shadow-2xs">
+            <div className="flex items-center gap-1.5">
+              <span className="font-bold text-[var(--ca-ink)] uppercase">Role:</span>
+              <span className="font-semibold text-[var(--ca-ink)]">{project.role}</span>
+            </div>
+            <div className="hidden sm:inline text-[var(--ca-ink)]/25">•</div>
+            <div className="flex items-center gap-1.5">
+              <span className="font-bold text-[var(--ca-ink)] uppercase">Timeline:</span>
+              <span className="font-semibold text-[var(--ca-ink)]">{project.timeline}</span>
+            </div>
+            <div className="hidden sm:inline text-[var(--ca-ink)]/25">•</div>
+            <div className="flex items-center gap-1.5">
+              <span className="font-bold text-[var(--ca-ink)] uppercase">Team:</span>
+              <span className="font-semibold text-[var(--ca-ink)]">{project.team}</span>
+            </div>
+            <div className="hidden sm:inline text-[var(--ca-ink)]/25">•</div>
+            <div className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-bold text-emerald-800 uppercase">Live Proof Verified</span>
+            </div>
+          </div>
         </header>
 
         {/* Layer 2: Visual Proof Showcase Stage (5–15 Seconds Law) */}
@@ -256,12 +247,12 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
           color={project.color}
         />
 
-        {/* Editorial Story Section: Challenge, Architectural Approach, Results & Metrics */}
+        {/* Editorial Story Section: Challenge, Architectural Approach, What Jayant Built, Results & Metrics */}
         <section className="mb-20 sm:mb-28 text-center" aria-labelledby="story-challenge-heading">
           {/* 1. The Challenge */}
           <div className="text-center">
             <Scribble withDoodle>
-              <span id="story-challenge-heading">the challenge</span>
+              <h2 id="story-challenge-heading" className="inline text-inherit font-inherit">the challenge</h2>
             </Scribble>
           </div>
           <p className="mx-auto mt-4 max-w-3xl text-center text-base sm:text-lg text-[var(--ca-ink)]/90 leading-relaxed font-medium">
@@ -271,17 +262,36 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
           {/* 2. Architectural Approach */}
           <div className="mt-16 sm:mt-20 text-center">
             <Scribble withDoodle>
-              <span>architectural approach</span>
+              <h2 className="inline text-inherit font-inherit">architectural approach</h2>
             </Scribble>
           </div>
           <p className="mx-auto mt-4 max-w-3xl text-center text-base sm:text-lg text-[var(--ca-ink)]/90 leading-relaxed font-medium">
-            {project.approach || project.personalContribution}
+            {project.approach}
           </p>
 
-          {/* 3. The Results & Metrics */}
+          {/* 3. What Jayant Built (Personal Ownership Highlight) */}
           <div className="mt-16 sm:mt-20 text-center">
             <Scribble withDoodle>
-              <span>what shipped</span>
+              <h2 className="inline text-inherit font-inherit">what jayant built</h2>
+            </Scribble>
+          </div>
+          <div className="relative mx-auto mt-6 max-w-3xl text-left rounded-xl border-2 border-[var(--ca-ink)] bg-[var(--ca-yellow-soft)] p-6 sm:p-8 shadow-[4px_6px_0_var(--ca-ink)]">
+            <Tape className="-top-3 left-8 z-10" angle={-3} color="var(--ca-cyan)" />
+            <div className="flex items-center gap-2 mb-3">
+              <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
+              <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
+                Direct Engineering Ownership &amp; Contributions
+              </span>
+            </div>
+            <p className="text-base sm:text-lg text-[var(--ca-ink)] leading-relaxed font-medium">
+              {project.personalContribution}
+            </p>
+          </div>
+
+          {/* 4. The Results & What Shipped */}
+          <div className="mt-16 sm:mt-20 text-center">
+            <Scribble withDoodle>
+              <h2 className="inline text-inherit font-inherit">what shipped</h2>
             </Scribble>
           </div>
           <p className="mx-auto mt-4 max-w-3xl text-center text-base sm:text-lg text-[var(--ca-ink)]/90 leading-relaxed font-medium">
@@ -320,7 +330,68 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
               );
             })}
           </div>
+
+          {/* Honest Engineering Boundaries & Realistic Scope */}
+          {project.limitations && (
+            <div className="mx-auto mt-12 max-w-3xl rounded-xl border-2 border-dashed border-[var(--ca-ink)]/30 bg-amber-50/90 p-5 sm:p-6 text-left shadow-2xs">
+              <div className="flex items-center gap-2 text-amber-950 font-bold ca-mono text-xs uppercase tracking-wider">
+                <AlertTriangle size={15} className="text-amber-700 shrink-0" />
+                <span>Verified Engineering Boundaries &amp; Scope Note</span>
+              </div>
+              <p className="mt-2 text-xs sm:text-sm text-stone-850 leading-relaxed font-medium">
+                {project.limitations}
+              </p>
+            </div>
+          )}
         </section>
+
+        {/* Layer 3: Engineering Tradeoffs & Architectural Decisions */}
+        {project.tradeoffs && project.tradeoffs.length > 0 && (
+          <section className="mb-20 sm:mb-28" aria-labelledby="tradeoffs-heading">
+            <div className="flex flex-col items-center text-center">
+              <Scribble withDoodle>
+                <h2 id="tradeoffs-heading" className="inline text-inherit font-inherit">engineering tradeoffs</h2>
+              </Scribble>
+              <p className="mx-auto mt-3 max-w-xl text-sm sm:text-base font-semibold text-[var(--ca-ink)]/75">
+                Every architectural choice involves tradeoffs. Here are the core technical decisions and rationales behind {project.title}.
+              </p>
+            </div>
+
+            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+              {project.tradeoffs.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="relative flex flex-col justify-between rounded-xl border-2 border-[var(--ca-ink)] bg-white p-6 shadow-[4px_6px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-1"
+                >
+                  <Tape
+                    className="-top-2.5 right-6 z-10"
+                    angle={idx % 2 === 0 ? 3 : -3}
+                    color={["var(--ca-yellow-soft)", "var(--ca-cyan)", "var(--ca-mint)"][idx % 3]}
+                  />
+                  <div>
+                    <div className="flex items-center justify-between border-b border-[var(--ca-ink)]/10 pb-3 mb-3">
+                      <span className="ca-mono text-xs font-bold text-[var(--ca-blue)]">
+                        DECISION #{String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <Scale size={15} className="text-[var(--ca-ink)]/40" />
+                    </div>
+                    <h3 className="ca-mono text-sm font-bold text-[var(--ca-ink)] leading-snug">
+                      {item.decision}
+                    </h3>
+                  </div>
+                  <div className="mt-4 border-t border-[var(--ca-ink)]/10 pt-3">
+                    <span className="ca-mono block text-[10px] font-bold uppercase tracking-wider text-[var(--ca-ink)]/50 mb-1">
+                      Engineering Rationale
+                    </span>
+                    <p className="text-xs sm:text-sm text-[var(--ca-ink)]/80 leading-relaxed font-medium">
+                      {item.rationale}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Layer 4: System Blueprint & Technical Specs (Clean, Minimalist Tech Folio) */}
         <div
@@ -434,10 +505,35 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
               ))}
             </div>
           </div>
+
+          {/* Block 3: Shipped Features & Capabilities */}
+          {project.features && project.features.length > 0 && (
+            <>
+              <div className="my-6 sm:my-7 border-t border-[var(--ca-ink)]/10" />
+              <div>
+                <div className="mb-3.5 flex items-center gap-1.5">
+                  <CheckCircle2 size={14} className="text-emerald-600" />
+                  <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/70">
+                    Shipped Features &amp; Capabilities
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                  {project.features.map((feature, fIdx) => (
+                    <div
+                      key={fIdx}
+                      className="flex items-start gap-2.5 rounded-md border border-[var(--ca-ink)]/10 bg-[var(--ca-surface)]/60 p-2.5 text-xs sm:text-sm font-medium text-[var(--ca-ink)]/90"
+                    >
+                      <span className="mt-0.5 text-emerald-600 font-bold shrink-0">✓</span>
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
-
-        {/* Layer 6: Recruiter High-Conversion Action Banner */}
+        {/* Layer 5: Recruiter High-Conversion Action Banner */}
         <section className="mb-20 sm:mb-28 overflow-hidden rounded-xl border-3 border-[var(--ca-ink)] bg-[var(--ca-yellow)] p-8 sm:p-12 shadow-[6px_8px_0_var(--ca-ink)] text-center">
           <h2 className="ca-display text-4xl sm:text-6xl uppercase tracking-tight text-[var(--ca-ink)]">
             Looking for this skill set?
@@ -453,21 +549,20 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
               Get In Touch With Jayant
               <ArrowRight size={14} />
             </Link>
-            <Link
-              href={`/projects/${nextProject.slug}`}
+            <NextProjectPrefetch
+              slug={nextProject.slug}
+              title={nextProject.title}
+              imageSrc={nextProject.homeHero || nextProject.hero}
               className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-yellow-soft)]"
-            >
-              Next Project: {nextProject.title}
-              <ChevronRight size={14} />
-            </Link>
+            />
           </div>
         </section>
 
-        {/* Layer 7: More Projects Discovery */}
+        {/* Layer 6: More Projects Discovery */}
         <section className="mb-20 sm:mb-28 border-t-2 border-[var(--ca-ink)]/15 pt-16" aria-labelledby="related-heading">
           <div className="flex flex-col items-center text-center">
             <Scribble withDoodle>
-              <span id="related-heading">more projects</span>
+              <h2 id="related-heading" className="inline text-inherit font-inherit">more projects</h2>
             </Scribble>
           </div>
 

@@ -21,16 +21,20 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
   onReset,
   selectedExampleName,
 }) => {
+  if (!fields || fields.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="w-full flex flex-col gap-3 my-3 sm:my-4">
+    <section className="w-full flex flex-col gap-2.5 my-0">
       {/* Quiet Section Heading */}
-      <div className="flex items-center justify-between border-b border-[var(--ca-ink)]/10 dark:border-white/10 pb-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-[var(--ca-ink)]/10 dark:border-white/10 pb-2">
         <div className="flex items-center gap-2">
           <h2 className="font-mono text-sm sm:text-base font-bold text-[var(--ca-ink)] dark:text-white uppercase tracking-wider">
             Customize
           </h2>
           {isModified && (
-            <span className="font-mono text-[10px] uppercase font-bold text-[var(--ca-orange)] bg-[var(--ca-orange)]/10 border border-[var(--ca-orange)]/25 px-2 py-0.5 rounded">
+            <span className="font-mono text-[10px] uppercase font-bold text-[#c2410c] dark:text-orange-400 bg-orange-500/10 border border-orange-500/25 px-2 py-0.5 rounded">
               Modified ({selectedExampleName})
             </span>
           )}
@@ -40,7 +44,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
           <button
             type="button"
             onClick={onReset}
-            className="flex items-center gap-1 text-xs font-mono text-[var(--ca-ink)]/70 dark:text-neutral-400 hover:text-[var(--ca-orange)] transition-colors"
+            className="h-7 px-2 flex items-center gap-1 text-xs font-mono text-[var(--ca-ink)]/80 dark:text-neutral-300 hover:text-[#c2410c] dark:hover:text-orange-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] transition-colors rounded-sm"
           >
             <RotateCcw size={11} />
             <span>Reset to preset defaults</span>
@@ -49,7 +53,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
       </div>
 
       {/* Clean Full-Width Field Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 p-4 rounded-xl border border-[var(--ca-ink)]/15 dark:border-white/10 bg-[#faf8f4]/90 dark:bg-[#121316]/90 shadow-xs">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 p-3 sm:p-3.5 rounded-xl border border-[var(--ca-ink)]/15 dark:border-white/10 bg-[#faf8f4] dark:bg-[#121316] shadow-xs">
         {fields.map((field) => {
           const rawValue = values[field.key];
           const val = rawValue ?? "";
@@ -57,7 +61,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
           return (
             <div
               key={field.key}
-              className="flex flex-col gap-1.5 p-2.5 rounded-lg bg-white/80 dark:bg-[#16181d]/80 border border-[var(--ca-ink)]/10 dark:border-white/5"
+              className="flex flex-col gap-1 p-2 rounded-lg bg-white dark:bg-[#16181d] border border-[var(--ca-ink)]/10 dark:border-white/5"
             >
               <div className="flex items-center justify-between">
                 <label
@@ -67,7 +71,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
                   {field.label}
                 </label>
                 {field.type === "number" && (
-                  <span className="font-mono text-[11px] text-[var(--ca-orange)] font-bold">
+                  <span className="font-mono text-[11px] text-[#c2410c] dark:text-orange-400 font-bold">
                     {val}
                   </span>
                 )}
@@ -96,7 +100,9 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
                     className="h-7 w-9 cursor-pointer rounded border border-[var(--ca-ink)]/20 dark:border-white/10 p-0.5 bg-white dark:bg-neutral-900"
                   />
                   <input
+                    id={`field-${field.key}-hex`}
                     type="text"
+                    aria-label={`${field.label} hex code`}
                     value={val}
                     onChange={(e) => onChange(field.key, e.target.value)}
                     className="flex-1 px-2.5 py-1 rounded-md border border-[var(--ca-ink)]/15 dark:border-white/10 bg-white dark:bg-neutral-900 font-mono text-xs text-[var(--ca-ink)] dark:text-white outline-hidden focus:border-[var(--ca-orange)] transition-all"

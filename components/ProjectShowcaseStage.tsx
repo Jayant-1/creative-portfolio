@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { ImageWithLoader } from "@/components/ImageWithLoader";
 import { Tape } from "@/components/Paper";
-import { ExternalLink, ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 
 interface ProjectShowcaseStageProps {
   title: string;
@@ -16,45 +16,10 @@ interface ProjectShowcaseStageProps {
   color?: string;
 }
 
-const PROJECT_IMAGE_ASPECT_RATIOS: Record<string, number> = {
-  "/projects/3d-portfolio-about.png": 1.7778,
-  "/projects/3d-portfolio-achievements.png": 1.7778,
-  "/projects/3d-portfolio-contact.png": 1.7778,
-  "/projects/3d-portfolio-home.png": 1.7556,
-  "/projects/3d-portfolio-projects.png": 1.7778,
-  "/projects/3d-portfolio-skills.png": 1.7778,
-  "/projects/Krypton-home.png": 1.9144,
-  "/projects/krypton1.png": 1.8822,
-  "/projects/krypton2.png": 1.708,
-  "/projects/krypton3.png": 1.9144,
-  "/projects/krypton4.png": 1.9144,
-  "/projects/krypton5.png": 1.9144,
-  "/projects/krypton6.png": 1.9144,
-  "/projects/astroPixel-home.png": 2.1701,
-  "/projects/astroPixel1.jpg": 1.826,
-  "/projects/astroPixel2.jpg": 1.7486,
-  "/projects/astroPixel3.jpg": 2.1622,
-  "/projects/malariadetectionsystem-home.png": 1.7785,
-  "/projects/malariadetectionsystem1.png": 1.7816,
-  "/projects/malariadetectionsystem2.jpg": 1.4566,
-  "/projects/neuralnet-home.png": 1.9144,
-  "/projects/neuralnet1.png": 1.9144,
-  "/projects/neuralnet2.png": 1.9144,
-  "/projects/neuralnet3.png": 1.9144,
-  "/projects/neuralnet4.png": 1.9144,
-  "/projects/novalearn-home.png": 1.843,
-  "/projects/novalearn1.png": 1.9144,
-  "/projects/novalearn2.png": 1.9144,
-};
-
 export function ProjectShowcaseStage({
   title,
-  slug = "showcase",
   hero,
   images,
-  demo,
-  source,
-  color = "var(--ca-blue)",
 }: ProjectShowcaseStageProps) {
   // Combine hero and gallery images into a unique ordered list
   const allScreens = Array.from(new Set([hero, ...images])).filter(Boolean);
@@ -67,7 +32,6 @@ export function ProjectShowcaseStage({
   }, []);
 
   const activeScreen = allScreens[activeIdx] || hero;
-  const activeAspectRatio = PROJECT_IMAGE_ASPECT_RATIOS[activeScreen] || 16 / 9;
 
   const nextScreen = useCallback(() => {
     setActiveIdx((prev) => (prev < allScreens.length - 1 ? prev + 1 : 0));
@@ -131,22 +95,18 @@ export function ProjectShowcaseStage({
 
         {/* Main Showcase Stage Box */}
         <div className="overflow-hidden rounded-xl border-3 border-[var(--ca-ink)] bg-white shadow-[6px_8px_0_var(--ca-ink)]">
-          {/* Primary Interactive Screen Viewport - dynamically matches image aspect ratio so upper & lower empty spaces are eliminated */}
-          <div
-            className="group relative w-full cursor-zoom-in overflow-hidden bg-black/95 flex items-center justify-center transition-[aspect-ratio] duration-300 ease-out"
-            style={{ aspectRatio: `${activeAspectRatio}` }}
-            onClick={() => setIsLightboxOpen(true)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                setIsLightboxOpen(true);
-              }
-            }}
-            aria-label={`Click to inspect ${title} screen ${activeIdx + 1} in full resolution`}
+          {/* Primary Screen Viewport - locked 16:10 aspect ratio to eliminate layout shift */}
+          <figure
+            className="group relative w-full overflow-hidden bg-black/95 flex items-center justify-center aspect-[16/10]"
+            style={{ aspectRatio: "16 / 10" }}
           >
-            <div className="relative h-full w-full">
+            {/* Clickable Image Viewport button to trigger Lightbox (non-nested sibling to rails) */}
+            <button
+              type="button"
+              onClick={() => setIsLightboxOpen(true)}
+              aria-label={`Inspect ${title} screenshot ${activeIdx + 1} in full resolution`}
+              className="relative h-full w-full cursor-zoom-in text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--ca-orange)]"
+            >
               <ImageWithLoader
                 key={activeScreen}
                 src={activeScreen}
@@ -155,24 +115,32 @@ export function ProjectShowcaseStage({
                 priority
                 fetchPriority="high"
                 sizes="(max-width: 1024px) 96vw, 1000px"
-                quality={80}
+                quality={85}
                 loaderVariant="project"
                 loaderText={`Loading Screen ${String(activeIdx + 1).padStart(2, "0")}...`}
                 className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.01]"
               />
-            </div>
+            </button>
 
-            {/* Tactile Capsule Navigation on Full-Height Edge Rails */}
+            {/* Direct Inspect Button in bottom-right corner (sibling, not nested) */}
+            <button
+              type="button"
+              onClick={() => setIsLightboxOpen(true)}
+              aria-label={`Inspect screen ${activeIdx + 1} in full resolution`}
+              className="absolute bottom-3 right-3 z-20 inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-white/25 bg-black/75 px-3 py-1.5 text-xs font-bold text-white shadow-lg backdrop-blur-xs transition hover:bg-black hover:scale-105 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] cursor-pointer"
+            >
+              <Maximize2 size={13} className="text-[var(--ca-yellow)]" />
+              <span className="ca-mono text-[10px] tracking-wider uppercase">Inspect</span>
+            </button>
+
+            {/* Tactile Capsule Navigation on Full-Height Edge Rails (siblings to image button, NOT nested) */}
             {allScreens.length > 1 && (
               <>
                 {/* Left full-height rail */}
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    prevScreen();
-                  }}
-                  className="group/prev absolute left-0 inset-y-0 z-20 flex w-12 sm:w-16 md:w-20 items-center justify-center bg-black/0 hover:bg-black/15 transition-colors duration-200 cursor-pointer focus:outline-hidden"
+                  onClick={prevScreen}
+                  className="group/prev absolute left-0 inset-y-0 z-20 flex min-h-[44px] min-w-[44px] w-12 sm:w-16 md:w-20 items-center justify-center bg-black/0 hover:bg-black/15 transition-colors duration-200 cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--ca-orange)]"
                   aria-label="Previous screenshot (Left Arrow)"
                   title="Previous screenshot (←)"
                 >
@@ -184,11 +152,8 @@ export function ProjectShowcaseStage({
                 {/* Right full-height rail */}
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    nextScreen();
-                  }}
-                  className="group/next absolute right-0 inset-y-0 z-20 flex w-12 sm:w-16 md:w-20 items-center justify-center bg-black/0 hover:bg-black/15 transition-colors duration-200 cursor-pointer focus:outline-hidden"
+                  onClick={nextScreen}
+                  className="group/next absolute right-0 inset-y-0 z-20 flex min-h-[44px] min-w-[44px] w-12 sm:w-16 md:w-20 items-center justify-center bg-black/0 hover:bg-black/15 transition-colors duration-200 cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--ca-orange)]"
                   aria-label="Next screenshot (Right Arrow)"
                   title="Next screenshot (→)"
                 >
@@ -198,7 +163,7 @@ export function ProjectShowcaseStage({
                 </button>
               </>
             )}
-          </div>
+          </figure>
 
           {/* Numbered Filmstrip Thumbnail Switcher */}
           {allScreens.length > 1 && (
@@ -214,7 +179,7 @@ export function ProjectShowcaseStage({
                       key={screen}
                       type="button"
                       onClick={() => setActiveIdx(sIdx)}
-                      className={`group relative shrink-0 overflow-hidden rounded-md border-2 transition-all duration-200 ${
+                      className={`group relative shrink-0 overflow-hidden rounded-md border-2 min-h-[44px] transition-all duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                         isSelected
                           ? "border-[var(--ca-ink)] shadow-[2px_3px_0_var(--ca-ink)] scale-102 ring-2 ring-[var(--ca-yellow)]"
                           : "border-[var(--ca-ink)]/20 opacity-70 hover:opacity-100 hover:border-[var(--ca-ink)]/60"
@@ -250,19 +215,17 @@ export function ProjectShowcaseStage({
         typeof document !== "undefined" &&
         createPortal(
           <div
-            className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-black/90 p-3 sm:p-6 backdrop-blur-md"
+            className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-black/90 p-3 sm:p-6 backdrop-blur-md cursor-zoom-out"
             role="dialog"
             aria-modal="true"
             aria-label={`${title} screenshot lightbox`}
-            onClick={(e) => {
-              if (e.target === e.currentTarget) setIsLightboxOpen(false);
-            }}
+            onClick={() => setIsLightboxOpen(false)}
           >
             {/* Floating Top-Right Close Button */}
             <button
               type="button"
               onClick={() => setIsLightboxOpen(false)}
-              className="absolute right-4 top-4 z-40 inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/30 bg-black/70 text-white shadow-xl transition-all hover:bg-white hover:text-black hover:scale-105 focus:outline-hidden focus:ring-2 focus:ring-white cursor-pointer"
+              className="absolute right-4 top-4 z-40 inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/30 bg-black/70 text-white shadow-xl transition-all hover:bg-white hover:text-black hover:scale-105 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] cursor-pointer"
               aria-label="Close full-screen preview (Esc)"
               title="Close (Esc)"
             >
@@ -270,24 +233,25 @@ export function ProjectShowcaseStage({
             </button>
 
             {/* Large Screen Container - displays complete uncropped image naturally without aspect clipping */}
-            <div
-              className="relative flex h-[88vh] sm:h-[92vh] w-full max-w-7xl items-center justify-center p-2"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="relative h-full w-full flex items-center justify-center">
+            <div className="relative flex h-[88vh] sm:h-[92vh] w-full max-w-7xl items-center justify-center p-2">
+              <div
+                className="relative h-full w-full flex items-center justify-center cursor-default"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <ImageWithLoader
                   src={activeScreen}
                   alt={`${title} full-resolution screen ${activeIdx + 1}`}
                   fill
                   priority
-                  quality={100}
+                  quality={90}
+                  sizes="(max-width: 1024px) 100vw, 1440px"
                   loaderVariant="project"
                   loaderText="Loading high-res capture..."
                   className="object-contain drop-shadow-2xl"
                 />
               </div>
 
-              {/* Left/Right overlay arrows */}
+              {/* Left/Right overlay arrows (stop propagation so clicking them navigates without closing) */}
               {allScreens.length > 1 && (
                 <>
                   <button
@@ -296,7 +260,7 @@ export function ProjectShowcaseStage({
                       e.stopPropagation();
                       prevScreen();
                     }}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-full border border-white/25 bg-black/60 p-2 text-white shadow-lg transition-transform hover:scale-110 hover:bg-black/85"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-full border border-white/25 bg-black/60 p-2 text-white shadow-lg transition-transform hover:scale-110 hover:bg-black/85 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] cursor-pointer"
                     aria-label="Previous screenshot (Left arrow)"
                   >
                     <ChevronLeft size={26} />
@@ -307,7 +271,7 @@ export function ProjectShowcaseStage({
                       e.stopPropagation();
                       nextScreen();
                     }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-full border border-white/25 bg-black/60 p-2 text-white shadow-lg transition-transform hover:scale-110 hover:bg-black/85"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-full border border-white/25 bg-black/60 p-2 text-white shadow-lg transition-transform hover:scale-110 hover:bg-black/85 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] cursor-pointer"
                     aria-label="Next screenshot (Right arrow)"
                   >
                     <ChevronRight size={26} />

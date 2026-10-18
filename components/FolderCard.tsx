@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { useLens, CardLens } from "@/components/Motion";
 import { ImageWithLoader } from "@/components/ImageWithLoader";
@@ -18,13 +19,23 @@ export function FolderProjectCard({
   project: Project;
   href?: string;
 }) {
+  const router = useRouter();
   const { containerRef, lensRef, onMove, onMouseEnter, onMouseLeave } = useLens([0, 100]);
   const targetHref = href || `/projects/${project.slug}`;
+
+  const handlePrefetch = React.useCallback(() => {
+    try {
+      router.prefetch(targetHref);
+    } catch {}
+  }, [targetHref, router]);
 
   return (
     <Link
       href={targetHref}
-      className="group block text-left"
+      onPointerEnter={handlePrefetch}
+      onFocus={handlePrefetch}
+      onTouchStart={handlePrefetch}
+      className="group block text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-lg"
     >
       {/* Manila Tab */}
       <div className="flex">
@@ -48,7 +59,7 @@ export function FolderProjectCard({
               src={project.homeHero || project.hero}
               alt={project.title}
               fill
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1024px) 50vw, 600px"
               loaderVariant="project"
               loaderText="Loading Preview..."
             />
@@ -81,12 +92,23 @@ export function RelatedProjectCard({
 }: {
   project: Project;
 }) {
+  const router = useRouter();
   const { containerRef, lensRef, onMove, onMouseEnter, onMouseLeave } = useLens([0, 100]);
+  const targetHref = `/projects/${project.slug}`;
+
+  const handlePrefetch = React.useCallback(() => {
+    try {
+      router.prefetch(targetHref);
+    } catch {}
+  }, [targetHref, router]);
 
   return (
     <Link
-      href={`/projects/${project.slug}`}
-      className="group block text-left"
+      href={targetHref}
+      onPointerEnter={handlePrefetch}
+      onFocus={handlePrefetch}
+      onTouchStart={handlePrefetch}
+      className="group block text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-lg"
     >
       <div
         className="relative flex aspect-[1.4] flex-col p-5 transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-[6px_8px_0_rgba(25,21,16,0.18)]"
@@ -111,7 +133,7 @@ export function RelatedProjectCard({
               src={project.homeHero || project.hero}
               alt={project.title}
               fill
-              sizes="(max-width: 768px) 90vw, 45vw"
+              sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 45vw, 480px"
               loaderVariant="project"
               loaderText="Loading Preview..."
             />

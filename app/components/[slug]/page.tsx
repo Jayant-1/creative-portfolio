@@ -5,6 +5,7 @@ import { ChevronRight, ArrowLeft } from "lucide-react";
 import { Footer } from "@/components/Paper";
 import { siteUrl } from "@/lib/site";
 import { CRAFT_COMPONENTS, getComponentBySlug } from "@/lib/components-data";
+import { getBreadcrumbSchema, getSoftwareApplicationSchema } from "@/lib/schema";
 import { HookSidebar } from "@/components/showcase/HookSidebar";
 import { ComponentPlayground } from "@/components/showcase/playground/ComponentPlayground";
 import { InstallSection } from "@/components/showcase/InstallSection";
@@ -12,9 +13,9 @@ import { PropsTable } from "@/components/showcase/PropsTable";
 import { ComponentTransition } from "@/components/showcase/ComponentTransition";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -26,82 +27,77 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const component = getComponentBySlug(params.slug);
+  const { slug } = await params;
+  const component = getComponentBySlug(slug);
   if (!component) {
     return {
       title: "Component Not Found",
     };
   }
 
+  const title = `${component.name} React Component`;
+  const description = `${component.tagline} Live interactive sandbox, reactive controls, props schema, and copy-paste code.`;
+  const canonicalUrl = `${siteUrl}/components/${slug}`;
+  const ogImageUrl = `${siteUrl}${component.thumbnail}`;
+
   return {
-    title: `${component.name} React Component`,
-    description: `${component.tagline} Live interactive sandbox, reactive controls, props schema, and copy-paste code.`,
+    title,
+    description,
+    keywords: [
+      component.name,
+      component.categoryLabel,
+      "React Component",
+      "Framer Motion",
+      "Tailwind CSS",
+      ...component.dependencies,
+      "Interactive Demo",
+      "UI Component",
+      "Jayant Potdar",
+    ],
     alternates: {
-      canonical: `/components/${params.slug}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
-      title: `${component.name} | Jayant Potdar`,
+      title: `${component.name} React Component | Jayant Potdar`,
       description: component.tagline,
-      url: `${siteUrl}/components/${params.slug}`,
+      url: canonicalUrl,
+      type: "website",
       images: [
         {
-          url: `${siteUrl}${component.thumbnail}`,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: component.name,
+          alt: `${component.name} component preview`,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${component.name} React Component | Jayant Potdar`,
+      description: component.tagline,
+      images: [ogImageUrl],
     },
   };
 }
 
-export default function ComponentDetailPage({ params }: PageProps) {
-  const component = getComponentBySlug(params.slug);
+export default async function ComponentDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const component = getComponentBySlug(slug);
 
   if (!component) {
     notFound();
   }
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Components",
-        item: `${siteUrl}/components`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: component.name,
-        item: `${siteUrl}/components/${params.slug}`,
-      },
-    ],
-  };
+  const breadcrumbJsonLd = getBreadcrumbSchema([
+    { name: "Home", url: siteUrl },
+    { name: "Components", url: `${siteUrl}/components` },
+    { name: component.name, url: `${siteUrl}/components/${slug}` },
+  ]);
 
-  const techArticleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    headline: component.name,
-    description: component.description,
-    dependencies: component.dependencies.join(", "),
-    author: {
-      "@type": "Person",
-      name: "Jayant Potdar",
-      url: siteUrl,
-    },
-  };
+  const softwareJsonLd = getSoftwareApplicationSchema(component);
 
   return (
-    <div className="min-h-screen pt-8 sm:pt-12 pb-12 sm:pb-16">
+    <div className="min-h-screen pt-4 sm:pt-6 pb-8 sm:pb-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -111,15 +107,15 @@ export default function ComponentDetailPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(techArticleJsonLd).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(softwareJsonLd).replace(/</g, "\\u003c"),
         }}
       />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-3 sm:px-5 lg:px-6">
         {/* Breadcrumb Trail */}
         <nav
           aria-label="Breadcrumb"
-          className="mb-5 flex flex-wrap items-center gap-2 text-xs font-mono font-semibold text-[var(--ca-ink)]/60"
+          className="mb-3 sm:mb-3.5 flex flex-wrap items-center gap-2 text-xs font-mono font-semibold text-[var(--ca-ink)]/60"
         >
           <Link href="/" className="hover:text-[var(--ca-orange)] transition-colors">
             Home
@@ -129,31 +125,31 @@ export default function ComponentDetailPage({ params }: PageProps) {
             Components
           </Link>
           <ChevronRight size={13} />
-          <span className="text-[var(--ca-ink)]">{component.name}</span>
+          <span className="text-[var(--ca-ink)] break-words">{component.name}</span>
         </nav>
 
         {/* Mobile Compact Contents Switcher */}
-        <div className="mb-5 lg:hidden w-full flex items-center justify-between gap-3 p-2.5 rounded-xl bg-white/90 dark:bg-[#121316]/90 border border-[var(--ca-ink)]/15 dark:border-white/10 shadow-xs">
+        <div className="mb-3 lg:hidden w-full flex items-center justify-between gap-3 p-2 rounded-xl bg-white/90 dark:bg-[#121316]/90 border border-[var(--ca-ink)]/15 dark:border-white/10 shadow-xs">
           <Link
             href="/components"
-            className="inline-flex items-center gap-1 font-mono text-xs font-medium text-[var(--ca-ink)]/70 hover:text-[var(--ca-orange)] transition-colors"
+            className="inline-flex items-center gap-1 font-mono text-xs font-medium text-[var(--ca-ink)]/70 hover:text-[var(--ca-orange)] transition-colors shrink-0"
           >
             <ArrowLeft size={13} />
             <span>Catalog</span>
           </Link>
 
-          <div className="flex items-center gap-1.5">
-            <span className="font-mono text-[10px] font-bold text-[#0284c7] uppercase">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <span className="font-mono text-[10px] font-bold text-[#0369a1] uppercase shrink-0">
               CONTENTS:
             </span>
-            <span className="font-mono text-xs font-semibold text-[var(--ca-ink)] dark:text-white truncate max-w-[150px]">
+            <span className="font-mono text-xs font-semibold text-[var(--ca-ink)] dark:text-white truncate max-w-[110px] min-[360px]:max-w-[150px]">
               {component.name}
             </span>
           </div>
         </div>
 
         {/* Two-Column Layout: Left Sticky Contents Rail + Right Main Content Column */}
-        <div className="flex items-start gap-8 lg:gap-10">
+        <div className="flex items-start gap-5 lg:gap-6">
           {/* Left Rail: Contents Navigation */}
           <HookSidebar currentComponent={component} />
 
@@ -161,8 +157,8 @@ export default function ComponentDetailPage({ params }: PageProps) {
           <div id="component-content" className="flex-1 min-w-0">
             <ComponentTransition slug={component.slug}>
               {/* Compact Component Heading Block */}
-              <header className="flex flex-col gap-2 mb-0">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[var(--ca-ink)] dark:text-white font-sans">
+              <header className="flex flex-col gap-1.5 mb-0">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ca-ink)] dark:text-white font-sans">
                   {component.name}
                 </h1>
 

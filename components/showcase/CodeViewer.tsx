@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Copy, Check, Terminal, CheckCircle2 } from "lucide-react";
 import { CraftComponent } from "@/lib/components-data";
+import { trackComponentCopy } from "@/lib/analytics";
 
 interface CodeViewerProps {
   component: CraftComponent;
@@ -77,6 +78,7 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({ component }) => {
       await navigator.clipboard.writeText(getInstallCmd());
       setCopiedInstall(true);
       setTimeout(() => setCopiedInstall(false), 2000);
+      trackComponentCopy(component.slug, "install_command", pkgManager);
     } catch (err) {
       console.warn("Failed to copy install command", err);
     }
