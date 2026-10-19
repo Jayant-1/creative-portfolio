@@ -7,6 +7,7 @@ import { getLqipData, shouldConserveData } from "@/lib/prefetch";
 
 export interface ImageWithLoaderProps extends Omit<ImageProps, "onLoad" | "onError"> {
   wrapperClassName?: string;
+  wrapperStyle?: React.CSSProperties;
   loaderVariant?: "photo" | "project" | "avatar" | "minimal";
   loaderText?: string;
   showLoaderText?: boolean;
@@ -33,6 +34,7 @@ export function ImageWithLoader({
   alt,
   className = "",
   wrapperClassName = "",
+  wrapperStyle,
   loaderVariant = "photo",
   loaderText,
   showLoaderText = false,
@@ -146,7 +148,7 @@ export function ImageWithLoader({
     <div
       ref={containerRef}
       className={`relative h-full w-full overflow-hidden ${wrapperClassName}`}
-      style={{ backgroundColor }}
+      style={{ backgroundColor, ...wrapperStyle }}
     >
       {/* Instant Low-Quality Blurred Preview (Phase 0) */}
       {lqipData?.blurDataURL && !isLoaded && (() => {

@@ -19,7 +19,7 @@ const KEYWORDS = new Set([
 
 function highlightToken(token: string, idx: number): React.ReactNode {
   if (token.startsWith("//") || token.startsWith("/*")) {
-    return <span key={idx} className="text-neutral-500 italic">{token}</span>;
+    return <span key={idx} className="text-neutral-400 italic">{token}</span>;
   }
   if (
     (token.startsWith('"') && token.endsWith('"')) ||
@@ -47,7 +47,7 @@ export function highlightLine(line: string): React.ReactNode {
   if (!line) return " ";
   const trimmed = line.trimStart();
   if (trimmed.startsWith("//")) {
-    return <span className="text-neutral-500 italic">{line}</span>;
+    return <span className="text-neutral-400 italic">{line}</span>;
   }
   const parts = line
     .split(/([a-zA-Z0-9_]+|"[^"]*"|'[^']*'|`[^`]*`|\/\/.*|[{}()[\].,;:?!=<>+\-*/&|^~]+|\s+)/g)

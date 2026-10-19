@@ -58,7 +58,7 @@ export const InstallSection: React.FC<InstallSectionProps> = ({
       {/* Install Command Box */}
       <div className="flex flex-col gap-2.5 rounded-xl border border-[var(--ca-ink)]/15 dark:border-white/10 bg-[#faf8f4] dark:bg-[#121316] p-3 sm:p-3.5 shadow-xs">
         <div className="flex items-center justify-between gap-2">
-          {/* Package Manager Selector: Single sleek pill, no redundant borders */}
+          {/* Package Manager Selector: Single sleek pill */}
           <div className="inline-flex items-center p-0.5 rounded-lg bg-[var(--ca-ink)]/6 dark:bg-white/8 text-xs font-mono">
             {(["pnpm", "npm", "yarn", "bun"] as PackageManager[]).map((mgr) => (
               <button

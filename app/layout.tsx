@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Header } from "@/components/Header";
-import Preloader from "@/components/Preloader";
+import AppShell from "@/components/AppShell";
 import { InkTransitionProvider } from "@/components/transitions/InkTransitionProvider";
 import { author, siteUrl } from "@/lib/site";
 import { getPersonSchema, getProfilePageSchema, getWebSiteSchema } from "@/lib/schema";
@@ -14,7 +13,7 @@ export const viewport: Viewport = {
 };
 
 const metaDescription =
-  "Jayant Potdar is a full stack developer in Pune building expressive React interfaces and production-ready web apps. Explore his projects and get in touch.";
+  "I'm Jayant Potdar, a full stack developer in Pune. I build expressive React interfaces and production-ready web apps. Explore my projects and get in touch.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -132,12 +131,21 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
 
+        <noscript>
+          <style>{`
+            .reveal-entry,
+            [data-framer-motion],
+            [style*="opacity: 0"],
+            [style*="opacity:0"] {
+              opacity: 1 !important;
+              transform: none !important;
+              visibility: visible !important;
+            }
+          `}</style>
+        </noscript>
+
         <InkTransitionProvider>
-          <Preloader />
-          <Header />
-          <main id="main" className="relative z-10">
-            {children}
-          </main>
+          <AppShell>{children}</AppShell>
         </InkTransitionProvider>
       </body>
     </html>

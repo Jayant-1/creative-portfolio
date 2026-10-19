@@ -20,7 +20,7 @@ export async function generateMetadata({
   if (!note) return {};
 
   const title = `${note.title} — Engineering Blog`;
-  const description = `${note.summary} A technical deep dive by Jayant Potdar, Full Stack Developer in Pune.`;
+  const description = `${note.summary} My technical deep dive as a full stack developer in Pune.`;
 
   return {
     title,

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback, useState, ReactNode } from "react";
-import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, useInView, useMotionValue, useTransform, animate, useReducedMotion } from "framer-motion";
 
 /**
  * ============================================================================
@@ -278,51 +278,10 @@ export function usePageAnimationReady(): boolean {
 }
 
 /**
- * Hook to trigger Hero section entrance once preloader is complete.
- * Synchronized with page readiness and ca-preloader-done event.
+ * Hook to trigger Hero section entrance immediately without preloader gate.
  */
 export function useHeroEntrance() {
-  const pageReady = usePageAnimationReady();
-  const [ready, setReady] = useState(() => {
-    if (typeof window === "undefined") return false;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
-    if (window.location.pathname !== "/") return true;
-    return (window as any).__ca_preloader_active === false || (window as any).__ca_preloader_done === true;
-  });
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setReady(true);
-      return;
-    }
-
-    if (window.location.pathname !== "/") {
-      setReady(true);
-      return;
-    }
-
-    if ((window as any).__ca_preloader_active === false || (window as any).__ca_preloader_done === true) {
-      setReady(true);
-      return;
-    }
-
-    const onDone = () => setReady(true);
-    window.addEventListener("ca-preloader-done", onDone, { once: true });
-
-    // Fallback timer: in case event wasn't captured or preloader was skipped
-    const fallback = setTimeout(() => {
-      setReady(true);
-    }, 4200);
-
-    return () => {
-      window.removeEventListener("ca-preloader-done", onDone);
-      clearTimeout(fallback);
-    };
-  }, []);
-
-  return ready && pageReady;
+  return true;
 }
 
 /**
@@ -352,10 +311,15 @@ export function StaggerText({
   inView?: boolean;
   trigger?: boolean;
 }) {
+  const prefersReduced = useReducedMotion();
   const pageReady = usePageAnimationReady();
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once, amount: "some" });
   const shouldAnimate = pageReady && (inView ? isInView : trigger);
+
+  if (prefersReduced) {
+    return <span className={className}>{text}</span>;
+  }
 
   const words = text.split(" ");
   return (
@@ -425,11 +389,23 @@ export function DropIn({
   inView?: boolean;
   trigger?: boolean;
 }) {
+  const prefersReduced = useReducedMotion();
   const pageReady = usePageAnimationReady();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const shouldAnimate = pageReady && (inView ? isInView : trigger);
   const initRotate = rotateFrom !== undefined ? rotateFrom : 1.25 * rotate;
+
+  if (prefersReduced) {
+    return (
+      <div
+        className={className}
+        style={{ transform: `rotate(${rotate}deg)` }}
+      >
+        {children}
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -472,6 +448,12 @@ export function Float({
   rotate?: number;
   delay?: number;
 }) {
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}
@@ -522,10 +504,15 @@ export function Pop({
   spring?: boolean;
   trigger?: boolean;
 }) {
+  const prefersReduced = useReducedMotion();
   const pageReady = usePageAnimationReady();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
   const shouldAnimate = pageReady && (inView ? isInView : trigger);
+
+  if (prefersReduced) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div
@@ -566,6 +553,12 @@ export function Reveal({
   duration?: number;
   ease?: readonly [number, number, number, number] | string;
 }) {
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}
@@ -595,6 +588,16 @@ export function Marquee({
   fade?: boolean;
   reverse?: boolean;
 }) {
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return (
+      <div className={`flex overflow-x-auto whitespace-nowrap ${className}`}>
+        {children}
+      </div>
+    );
+  }
+
   const content = (
     <motion.div
       className={`flex whitespace-nowrap ${className}`}
@@ -626,6 +629,7 @@ export function CountUp({
   value: string;
   className?: string;
 }) {
+  const prefersReduced = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   const motionVal = useMotionValue(0);
@@ -648,15 +652,15 @@ export function CountUp({
   });
 
   useEffect(() => {
-    if (!isInView || target === null) return;
+    if (!isInView || target === null || prefersReduced) return;
     const controls = animate(motionVal, target, {
       duration: 1.5,
       ease: EASE,
     });
     return () => controls.stop();
-  }, [isInView, target, motionVal]);
+  }, [isInView, target, motionVal, prefersReduced]);
 
-  if (target === null) {
+  if (target === null || prefersReduced) {
     return <span ref={ref} className={className}>{value}</span>;
   }
 

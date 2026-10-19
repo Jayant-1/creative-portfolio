@@ -77,7 +77,7 @@ const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
         id: "developer",
         name: "Developer Portfolio",
         thumbnail: "/components/thumbnails/overlapping-developer.png",
-        description: "Warm craft aesthetic with Jayant Potdar portrait and terracotta accents.",
+        description: "Warm craft aesthetic with my portrait and terracotta accents.",
         props: {
           title: "JAYANT POTDAR",
           titleStyle: "",
@@ -123,8 +123,8 @@ const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
         group: "Stage",
         options: [
           { label: "Spider-Man Cutout (/sipderman.png)", value: "/sipderman.png" },
-          { label: "Jayant Profile Cutout (/Profile-removebg.png)", value: "/Profile-removebg.png" },
-          { label: "Jayant High-Res Cutout (/images/jayant-cutout.png)", value: "/images/jayant-cutout.png" },
+          { label: "My Profile Cutout (/Profile-removebg.png)", value: "/Profile-removebg.png" },
+          { label: "My High-Res Cutout (/images/jayant-cutout.png)", value: "/images/jayant-cutout.png" },
         ],
       },
     ],
@@ -364,7 +364,7 @@ const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
         thumbnail: "/components/thumbnails/magnetic-heavy.png",
         description: "Weighted tactile pull with higher mass.",
         props: {
-          children: "Contact Jayant",
+          children: "Contact Me",
           maxDistance: 20,
           stiffness: 100,
           damping: 18,

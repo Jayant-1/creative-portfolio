@@ -82,11 +82,6 @@ export function getPersonSchema() {
           addressCountry: "IN",
         },
       },
-      {
-        "@type": "EducationalOrganization",
-        name: "Harvard University (CS50)",
-        url: "https://cs50.harvard.edu",
-      },
     ],
     affiliation: {
       "@type": "EducationalOrganization",
@@ -126,7 +121,7 @@ export function getWebSiteSchema() {
     alternateName: ["Jayant Potdar Portfolio", "Jayant Potdar Codes"],
     url: siteUrl,
     description:
-      "Jayant Potdar is a full stack developer in Pune building expressive React interfaces and production-ready web apps.",
+      "I'm Jayant Potdar, a full stack developer in Pune. I build expressive React interfaces and production-ready web apps.",
     inLanguage: "en-IN",
     publisher: {
       "@id": `${siteUrl}/#jayant`,
@@ -214,7 +209,7 @@ export function getProjectCaseStudySchema(project: Project) {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "@id": `${siteUrl}/projects/${project.slug}#case-study`,
-    headline: `${project.title}: ${project.tagline}`,
+    headline: `${project.title}: ${project.headline}`,
     name: `${project.title} Case Study`,
     description: project.summary,
     url: `${siteUrl}/projects/${project.slug}`,

@@ -10,7 +10,7 @@ import { getBreadcrumbSchema } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Engineering Blog — Coming Soon",
   description:
-    "Engineering write-ups and technical breakdowns by Jayant Potdar are coming soon: deep-zoom geospatial pipelines, visual DAG neural network compilers, and multi-signal search algorithms.",
+    "My engineering write-ups and technical breakdowns are coming soon: deep-zoom geospatial pipelines, visual DAG neural network compilers, and multi-signal search algorithms.",
   alternates: {
     canonical: "/blog",
   },
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Engineering Blog — Coming Soon | Jayant Potdar",
     description:
-      "Technical deep dives on GDAL tile pyramids, Keras code compilers, and academic search ranking by Jayant Potdar in Pune.",
+      "My technical deep dives on GDAL tile pyramids, Keras code compilers, and academic search ranking.",
     url: `${siteUrl}/blog`,
   },
 };
@@ -27,10 +27,10 @@ export default function BlogPage() {
   const collectionJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Engineering Blog by Jayant Potdar — Coming Soon",
+    name: "My Engineering Blog — Coming Soon",
     url: `${siteUrl}/blog`,
     description:
-      "Technical deep dives and software engineering architecture write-ups by Jayant Potdar are coming soon.",
+      "My technical deep dives and software engineering architecture write-ups are coming soon.",
     author: {
       "@id": `${siteUrl}/#jayant`,
     },

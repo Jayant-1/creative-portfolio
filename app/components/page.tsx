@@ -10,7 +10,7 @@ import { ComponentsCatalogClient } from "@/components/showcase/ComponentsCatalog
 export const metadata: Metadata = {
   title: "React Components",
   description:
-    "Explore animated React components built by Jayant Potdar with Framer Motion and Tailwind CSS. Try the interactive demos and inspect the code.",
+    "Explore the animated React components I've built with Framer Motion and Tailwind CSS. Try my interactive demos and inspect the code.",
   keywords: [
     "React Components",
     "Framer Motion UI",
@@ -27,14 +27,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "React Components | Jayant Potdar",
     description:
-      "Animated React components with interactive demos and code by Jayant Potdar.",
+      "My animated React components with interactive demos and code.",
     url: `${siteUrl}/components`,
     images: [
       {
         url: "/og",
         width: 1200,
         height: 630,
-        alt: "React Components by Jayant Potdar",
+        alt: "My React components",
       },
     ],
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "React Components | Jayant Potdar",
     description:
-      "Animated React components with interactive demos and copy-paste code by Jayant Potdar.",
+      "My animated React components with interactive demos and copy-paste code.",
     images: ["/og"],
   },
 };
@@ -60,7 +60,7 @@ export default function ComponentsPage() {
     name: "Interactive React Components & UI Crafts",
     url: `${siteUrl}/components`,
     description:
-      "Curated collection of 6 production-grade animated React components, interactive hero sections, and micro-interactions built by Jayant Potdar with Framer Motion and Tailwind CSS.",
+      "My collection of 6 production-grade animated React components, interactive hero sections, and micro-interactions, built with Framer Motion and Tailwind CSS.",
     author: {
       "@id": `${siteUrl}/#jayant`,
     },

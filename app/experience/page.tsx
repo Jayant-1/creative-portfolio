@@ -11,7 +11,7 @@ import { getBreadcrumbSchema } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Experience & Leadership",
   description:
-    "Jayant Potdar leads web development at TechSpark, mentors student developers, and has organized technical events at Ratan Tata Maharashtra State Skills University in Pune.",
+    "I lead web development at TechSpark, mentor student developers, and have organized technical events at Ratan Tata Maharashtra State Skills University in Pune.",
   keywords: [
     "Jayant Potdar Experience",
     "TechSpark MSSU",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Experience & Leadership | Jayant Potdar",
     description:
-      "Engineering leadership at TechSpark, hackathon event organization, and competition awards by Jayant Potdar in Pune.",
+      "My engineering leadership at TechSpark, hackathon event organization, and competition awards in Pune.",
     url: `${siteUrl}/experience`,
     images: [
       {
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Experience & Leadership | Jayant Potdar",
     description:
-      "Engineering leadership at TechSpark, hackathon event organization, and competition awards by Jayant Potdar in Pune.",
+      "My engineering leadership at TechSpark, hackathon event organization, and competition awards in Pune.",
     images: ["/og"],
   },
 };
@@ -60,7 +60,7 @@ export default function ExperiencePage() {
     name: "Experience & Leadership — Jayant Potdar",
     url: `${siteUrl}/experience`,
     description:
-      "Engineering leadership at TechSpark, university technical event organization, hackathon achievements, and software development experience by Jayant Potdar in Pune.",
+      "My engineering leadership at TechSpark, university technical event organization, hackathon achievements, and software development experience in Pune.",
     author: {
       "@id": `${siteUrl}/#jayant`,
     },
@@ -212,7 +212,7 @@ export default function ExperiencePage() {
                 <div className="w-full md:w-80 lg:w-96 shrink-0">
                   <Polaroid
                     src="/images/img-5.jpeg"
-                    alt="Physical trophies and signed certificates awarded to Jayant Potdar at MSSU"
+                    alt="My physical trophies and signed certificates from MSSU"
                     caption="Foundation Day Week Trophies & Certificates 📜"
                     aspectClassName="aspect-[4/3]"
                     className="w-full shadow-md"
@@ -252,7 +252,7 @@ export default function ExperiencePage() {
         <Reveal delay={120}>
           <div className="mb-20 rounded-lg border-2 border-[var(--ca-ink)] bg-white p-8 text-center shadow-[4px_4px_0_var(--ca-ink)]">
             <h2 className="text-2xl font-bold uppercase text-[var(--ca-ink)]">
-              Explore Jayant&apos;s Engineering Work
+              Explore My Engineering Work
             </h2>
             <p className="mt-2 text-sm text-[var(--ca-ink)]/80">
               Review code repositories, architecture projects, or reach out directly.

@@ -27,6 +27,7 @@ import {
   useHeroEntrance,
 } from "@/components/Motion";
 import { TestimonialsSection } from "@/components/testimonials/TestimonialsSection";
+import { trackResumeView } from "@/lib/analytics";
 
 const TORN_CLIPS = [
   "polygon(2% 6%, 12% 0%, 25% 4%, 40% 1%, 55% 5%, 70% 0%, 85% 4%, 98% 1%, 96% 15%, 100% 30%, 97% 45%, 100% 60%, 96% 75%, 99% 90%, 97% 98%, 85% 96%, 70% 100%, 55% 96%, 40% 100%, 25% 95%, 12% 100%, 3% 97%, 1% 85%, 4% 70%, 0% 55%, 3% 40%, 0% 25%, 2% 12%)",
@@ -233,7 +234,7 @@ export default function HomePage() {
                   <div className="relative h-full w-full overflow-hidden rounded-full">
                     <ImageWithLoader
                       src="/images/img-10.jpeg"
-                      alt={`${author.name} on scenic mountain outlook`}
+                      alt="Me at a scenic mountain outlook"
                       fill
                       sizes="(max-width: 1536px) 112px, 128px"
                       className="object-cover scale-[1.75] object-[50%_25%]"
@@ -257,7 +258,7 @@ export default function HomePage() {
                   <div className="relative h-full w-full overflow-hidden rounded-full">
                     <ImageWithLoader
                       src="/images/hero-flank-right.jpg"
-                      alt={`${author.name} overlooking Bandra-Worli Sea Link`}
+                      alt="Me overlooking the Bandra-Worli Sea Link"
                       fill
                       sizes="(max-width: 1536px) 112px, 128px"
                       className="object-cover"
@@ -597,14 +598,12 @@ export default function HomePage() {
           </div>
 
           {/* Primary Crawlable H1 Headline with Spinning SVGs */}
-          <Pop delay={0.22} inView={false} trigger={heroReady}>
-            <h1 className="mt-10 max-w-3xl text-4xl font-semibold leading-[1.15] tracking-tight text-[var(--ca-ink)] sm:mt-14 sm:text-6xl">
-              <span>
-                I design expressive interfaces <SpinningGear /> and build the systems behind them.{" "}
-                <SpinningFlower />
-              </span>
-            </h1>
-          </Pop>
+          <h1 className="mt-10 max-w-3xl text-4xl font-semibold leading-[1.15] tracking-tight text-[var(--ca-ink)] sm:mt-14 sm:text-6xl">
+            <span>
+              I design expressive interfaces <SpinningGear /> and build the systems behind them.{" "}
+              <SpinningFlower />
+            </span>
+          </h1>
 
           {/* Primary CTA Links */}
           <Pop delay={0.28} inView={false} trigger={heroReady}>
@@ -632,7 +631,8 @@ export default function HomePage() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="View Jayant's Resume PDF (opens in new tab)"
+                onClick={() => trackResumeView("hero_cta")}
+                aria-label="View my Resume PDF (opens in new tab)"
                 className="group/resume ca-mono ca-btn-spring relative inline-flex min-h-[44px] items-center gap-3 border-2 border-[var(--ca-ink)] bg-white py-2.5 pl-2.5 pr-6 text-sm font-bold uppercase tracking-[0.2em] text-[var(--ca-ink)] transition-colors duration-200 hover:bg-[#16b06a] hover:text-white"
               >
                 <span className="flex h-9 w-9 items-center justify-center bg-[var(--ca-yellow)] text-[var(--ca-ink)] transition-colors duration-200 group-hover/resume:bg-[var(--ca-yellow)] group-hover/resume:text-[var(--ca-ink)]">
@@ -817,7 +817,7 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-4xl flex-col items-center px-4 pb-16 text-center sm:pb-24">
           <div className="flex flex-col items-center">
             <p className="ca-hand text-2xl text-[var(--ca-ink)] sm:text-3xl">
-              explore my work!
+              real problems. things I built to solve them.
             </p>
             <UnderlineDoodle className="mt-1 h-3 w-24" />
           </div>
@@ -837,18 +837,18 @@ export default function HomePage() {
           {projects.map((project, idx) => {
             const tabMargins = [
               "0",
-              "min(calc(15.5% - 25px), calc(100% - 340px))",
-              "min(calc(31% - 25px), calc(100% - 340px))",
-              "min(calc(46.5% - 25px), calc(100% - 340px))",
-              "min(calc(62% - 25px), calc(100% - 340px))",
-              "min(calc(77.5% - 25px), calc(100% - 340px))",
+              "clamp(20px, calc(15.5% - 25px), calc(100% - 340px))",
+              "clamp(40px, calc(31% - 25px), calc(100% - 340px))",
+              "clamp(60px, calc(46.5% - 25px), calc(100% - 340px))",
+              "clamp(80px, calc(62% - 25px), calc(100% - 340px))",
+              "clamp(100px, calc(77.5% - 25px), calc(100% - 340px))",
             ];
             const isFirst = idx === 0;
 
             return (
               <article
                 key={project.slug}
-                className="lg:sticky lg:top-28"
+                className="sticky top-16 sm:top-24 lg:top-28"
                 style={{ zIndex: idx + 10 }}
               >
                 {/* Protruding Folder Tab */}
@@ -897,7 +897,7 @@ export default function HomePage() {
                         className="h-3 w-3 rounded-full"
                         style={{ backgroundColor: project.ink }}
                       />
-                      {project.date}
+                      {`${project.title} · ${project.date}`}
                     </span>
 
                     <h3
@@ -908,7 +908,7 @@ export default function HomePage() {
                         href={`/projects/${project.slug}`}
                         className="transition-opacity hover:opacity-85"
                       >
-                        {project.title}
+                        {project.headline}
                       </Link>
                     </h3>
 
@@ -927,7 +927,7 @@ export default function HomePage() {
                         color: project.ink,
                       }}
                     >
-                      View project
+                      Read my case study
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"

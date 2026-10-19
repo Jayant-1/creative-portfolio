@@ -7,6 +7,7 @@ import { PreviewFrame } from "./PreviewFrame";
 import { ExamplePicker } from "./ExamplePicker";
 import { CustomizeControls } from "./CustomizeControls";
 import { CodeView } from "./CodeView";
+import { BINARY_GRID_CSS } from "../binary-grid-css";
 
 interface ComponentPlaygroundProps {
   component: CraftComponent;
@@ -198,7 +199,12 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
         isFullscreen={isFullscreen}
         onFullscreenToggle={setIsFullscreen}
       >
-        <CodeView usageCode={usageCode} sourceCode={component.code} />
+        <CodeView
+          usageCode={usageCode}
+          sourceCode={component.code}
+          cssCode={normalizedSlug === "binary-grid" ? BINARY_GRID_CSS : undefined}
+          cssFileName="BinaryGrid.css"
+        />
       </PreviewFrame>
 
       {/* 2. Examples Section: One Compact Thumbnail Row */}

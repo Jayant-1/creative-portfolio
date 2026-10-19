@@ -8,16 +8,21 @@ import { trackComponentCopy } from "@/lib/analytics";
 interface CodeViewProps {
   usageCode: string;
   sourceCode: string;
+  cssCode?: string;
+  cssFileName?: string;
 }
 
 export const CodeView: React.FC<CodeViewProps> = ({
   usageCode,
   sourceCode,
+  cssCode,
+  cssFileName = "styles.css",
 }) => {
-  const [subTab, setSubTab] = useState<"usage" | "source">("usage");
+  const [subTab, setSubTab] = useState<"usage" | "source" | "css">("usage");
   const [copied, setCopied] = useState(false);
 
-  const activeCode = subTab === "usage" ? usageCode : sourceCode;
+  const activeCode =
+    subTab === "usage" ? usageCode : subTab === "source" ? sourceCode : (cssCode ?? "");
   const lines = activeCode.trim().split("\n");
 
   const handleCopy = async () => {
@@ -25,7 +30,8 @@ export const CodeView: React.FC<CodeViewProps> = ({
       await navigator.clipboard.writeText(activeCode);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-      trackComponentCopy("playground", subTab === "usage" ? "snippet" : "code");
+      const copyType = subTab === "usage" ? "snippet" : "code";
+      trackComponentCopy("playground", copyType);
     } catch (err) {
       console.warn("Copy failed", err);
     }
@@ -39,7 +45,7 @@ export const CodeView: React.FC<CodeViewProps> = ({
           <button
             type="button"
             onClick={() => setSubTab("usage")}
-            className={`px-3 py-1 rounded-md text-xs font-mono transition-all inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+            className={`min-h-[32px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-all inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
               subTab === "usage"
                 ? "bg-white/20 border border-white/25 text-white font-bold shadow-xs"
                 : "border border-transparent text-neutral-400 hover:text-white"
@@ -50,7 +56,7 @@ export const CodeView: React.FC<CodeViewProps> = ({
           <button
             type="button"
             onClick={() => setSubTab("source")}
-            className={`px-3 py-1 rounded-md text-xs font-mono transition-all inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+            className={`min-h-[32px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-all inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
               subTab === "source"
                 ? "bg-white/20 border border-white/25 text-white font-bold shadow-xs"
                 : "border border-transparent text-neutral-400 hover:text-white"
@@ -58,13 +64,26 @@ export const CodeView: React.FC<CodeViewProps> = ({
           >
             Component Source
           </button>
+          {cssCode && (
+            <button
+              type="button"
+              onClick={() => setSubTab("css")}
+              className={`min-h-[32px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-all inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                subTab === "css"
+                  ? "bg-white/20 border border-white/25 text-white font-bold shadow-xs"
+                  : "border border-transparent text-neutral-400 hover:text-white"
+              }`}
+            >
+              {cssFileName}
+            </button>
+          )}
         </div>
 
         <button
           type="button"
           onClick={handleCopy}
           aria-label="Copy code to clipboard"
-          className="h-7 inline-flex items-center gap-1.5 px-2.5 rounded-md text-xs font-mono bg-white/10 hover:bg-white/15 text-white transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+          className="min-h-[32px] sm:min-h-[28px] inline-flex items-center gap-1.5 px-2.5 rounded-md text-xs font-mono bg-white/10 hover:bg-white/15 text-white transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
         >
           {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
           <span>{copied ? "Copied" : "Copy Code"}</span>
@@ -81,7 +100,7 @@ export const CodeView: React.FC<CodeViewProps> = ({
         <pre className="grid">
           {lines.map((line, idx) => (
             <div key={idx} className="table-row hover:bg-white/5">
-              <span className="table-cell pr-4 text-right select-none text-neutral-600 w-8">
+              <span className="table-cell pr-4 text-right select-none text-neutral-400 w-8">
                 {idx + 1}
               </span>
               <span className="table-cell whitespace-pre">{highlightLine(line)}</span>

@@ -74,13 +74,14 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
               {/* Header: Logo, Name & Date */}
               <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 sm:gap-3 border-b border-[var(--ca-ink)]/15 pb-3.5">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="relative h-9 w-9 shrink-0 rounded-md border border-[var(--ca-ink)]/20 bg-white p-1 flex items-center justify-center overflow-hidden">
+                  <div className="relative h-10 w-10 shrink-0 rounded-md border border-[var(--ca-ink)]/20 bg-white p-1 flex items-center justify-center overflow-hidden">
                     <ImageWithLoader
                       src={group.logo}
                       alt={`${group.organization} logo`}
-                      width={30}
-                      height={30}
+                      width={32}
+                      height={32}
                       className="object-contain max-h-full max-w-full"
+                      wrapperStyle={{ backgroundColor: "transparent" }}
                       loaderVariant="minimal"
                     />
                   </div>
@@ -174,6 +175,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                       width={32}
                       height={32}
                       className="object-contain max-h-full max-w-full"
+                      wrapperStyle={{ backgroundColor: "transparent" }}
                       loaderVariant="minimal"
                     />
                   </div>
@@ -226,16 +228,18 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                 </div>
               )}
 
-              {/* REAL CERTIFICATE DOCUMENT IMAGE DISPLAY (Properly Scaled & Constrained) */}
+              {/* REAL CERTIFICATE DOCUMENT IMAGE DISPLAY (Fully Scaled & Completely Visible) */}
               <div className="mt-3.5 rounded-xl border border-[var(--ca-ink)]/15 bg-[#FBFBFA] p-3 sm:p-4 flex flex-col items-center justify-center">
                 {selectedItem.image ? (
-                  <div className="relative aspect-[4/3] max-w-md sm:max-w-lg w-full flex items-center justify-center overflow-hidden rounded-lg border border-[var(--ca-ink)]/15 bg-white shadow-sm p-1.5 min-h-[220px]">
+                  <div className="relative w-full max-w-2xl h-[280px] xs:h-[320px] sm:h-[380px] md:h-[430px] flex items-center justify-center rounded-lg border border-[var(--ca-ink)]/15 bg-white shadow-sm p-2 sm:p-3 overflow-hidden">
                     <ImageWithLoader
                       src={selectedItem.image}
                       alt={`${selectedItem.name} certificate`}
-                      width={800}
-                      height={600}
-                      className="max-h-[36vh] sm:max-h-[42vh] w-auto max-w-full object-contain block mx-auto rounded"
+                      fill
+                      sizes="(max-width: 640px) 92vw, (max-width: 1024px) 680px, 768px"
+                      className="object-contain p-2"
+                      wrapperClassName="w-full h-full"
+                      wrapperStyle={{ backgroundColor: "#ffffff" }}
                       loaderVariant="project"
                       loaderText="Loading Certificate..."
                       priority
@@ -247,6 +251,54 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                     <p className="ca-mono mt-2 text-sm text-[var(--ca-ink)]/70">
                       Certificate document on official record
                     </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Official Credential Metadata Card (Ensures complete certificate context: Recipient, Credential ID, Date, Skills) */}
+              <div className="mt-3.5 w-full rounded-xl border border-[var(--ca-ink)]/15 bg-white p-3.5 sm:p-4 text-left shadow-2xs">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--ca-ink)]/10 pb-2.5">
+                  {selectedItem.date && (
+                    <div className="flex items-center gap-2">
+                      <span className="ca-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/60">
+                        Issued:
+                      </span>
+                      <span className="ca-mono text-xs sm:text-sm font-bold text-[var(--ca-ink)]">
+                        {selectedItem.date}
+                      </span>
+                    </div>
+                  )}
+                  {selectedItem.credentialId && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="ca-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/60">
+                        ID:
+                      </span>
+                      <code className="ca-mono text-[11px] sm:text-xs font-semibold text-[var(--ca-ink)]/85 bg-[var(--ca-chrome)] px-2 py-0.5 rounded border border-[var(--ca-ink)]/15 select-all">
+                        {selectedItem.credentialId}
+                      </code>
+                    </div>
+                  )}
+                </div>
+
+                {selectedItem.description && (
+                  <p className="mt-2.5 text-xs sm:text-sm text-[var(--ca-ink)]/80 leading-relaxed">
+                    {selectedItem.description}
+                  </p>
+                )}
+
+                {selectedItem.skills && selectedItem.skills.length > 0 && (
+                  <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                    <span className="ca-mono text-[10px] font-bold uppercase tracking-wider text-[var(--ca-ink)]/50 mr-1">
+                      Skills:
+                    </span>
+                    {selectedItem.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="ca-mono rounded-md border border-[var(--ca-ink)]/15 bg-[var(--ca-chrome)]/60 px-2 py-0.5 text-[11px] font-semibold text-[var(--ca-ink)]/80"
+                      >
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 )}
               </div>
@@ -272,7 +324,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                     )}
                   </button>
 
-                  {selectedItem.pdfUrl && (
+                  {selectedItem.pdfUrl ? (
                     <a
                       href={selectedItem.pdfUrl}
                       target="_blank"
@@ -283,7 +335,18 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                       Open Original PDF
                       <ExternalLink size={13} />
                     </a>
-                  )}
+                  ) : selectedItem.image ? (
+                    <a
+                      href={selectedItem.image}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-1.5 rounded-lg border border-[var(--ca-ink)]/30 bg-white px-4 py-2.5 text-xs font-bold text-[var(--ca-ink)] hover:bg-[var(--ca-chrome)] transition-colors shadow-2xs active:scale-98 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                    >
+                      <FileText size={15} />
+                      View Full Image
+                      <ExternalLink size={13} />
+                    </a>
+                  ) : null}
                 </div>
 
                 <a

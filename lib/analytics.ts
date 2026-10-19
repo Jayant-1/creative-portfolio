@@ -238,7 +238,7 @@ export function trackContactFormAttempt(step: 1 | 2): void {
  */
 export function trackContactFormDelivery(
   method: "emailjs" | "mailto_fallback",
-  status: "success" | "fallback"
+  status: "success" | "fallback" | "error"
 ): void {
   trackEvent("contact_form_delivery", {
     method,

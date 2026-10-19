@@ -9,7 +9,7 @@ import { getBreadcrumbSchema } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    `Explore five projects by ${author.name}: AstroPixel, Krypton, 3D Portfolio, Malaria Detection System, and NeuralNet. Read the build decisions, code, and live demos.`,
+    "Explore my five projects: AstroPixel, Krypton, 3D Portfolio, Malaria Detection System, and NeuralNet. Read my build decisions, see the code, and try the live demos.",
   keywords: [
     "Jayant Potdar Projects",
     "AstroPixel",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         url: "/og",
         width: 1200,
         height: 630,
-        alt: "Projects by Jayant Potdar",
+        alt: "My selected projects",
       },
     ],
   },
@@ -51,10 +51,10 @@ export default function ProjectsPage() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "@id": `${siteUrl}/projects#collection`,
-    name: "Selected Engineering Projects by Jayant Potdar",
+    name: "My Selected Engineering Projects",
     url: `${siteUrl}/projects`,
     description:
-      "A curated catalog of full-stack web products, deep-zoom spatial viewers, and AI platforms engineered by Jayant Potdar.",
+      "Explore the full-stack web products, deep-zoom spatial viewers, and AI platforms I've built.",
     author: {
       "@id": `${siteUrl}/#jayant`,
     },

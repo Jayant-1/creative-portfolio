@@ -329,7 +329,7 @@ export function Footer() {
               ))}
             </nav>
 
-            <div className="flex gap-3" aria-label="Social links">
+            <div role="group" aria-label="Social links" className="flex gap-3">
               {/* LinkedIn: #376c96 circle with white square and #376c96 'in' */}
               <a
                 href={social.linkedin}
@@ -365,7 +365,7 @@ export function Footer() {
               {/* Mail: Green circle with solid white envelope and green V-fold */}
               <a
                 href={social.email}
-                aria-label="Email Jayant"
+                aria-label="Email me"
                 className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white text-white shadow-[1.5px_1.5px_0_rgba(25,21,16,0.25)] transition-transform duration-200 hover:-translate-y-0.5"
                 style={{ backgroundColor: "var(--ca-green)" }}
               >

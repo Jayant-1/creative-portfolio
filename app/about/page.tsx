@@ -12,7 +12,7 @@ import { getBreadcrumbSchema, getPersonSchema, getProfilePageSchema } from "@/li
 export const metadata: Metadata = {
   title: "About · Full Stack Developer in Pune",
   description:
-    "Meet Jayant Potdar, a full stack developer in Pune studying Computer Science at Ratan Tata Maharashtra State Skills University. Learn how he builds expressive interfaces and complete web products.",
+    "I'm Jayant Potdar, a full stack developer in Pune studying Computer Science at Ratan Tata Maharashtra State Skills University. Learn how I build expressive interfaces and complete web products.",
   keywords: [
     "Jayant Potdar",
     "About Jayant Potdar",
@@ -28,24 +28,24 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "profile",
-    title: "About Jayant Potdar | Full Stack Developer",
+    title: "About Me | Jayant Potdar",
     description:
-      "Background, education at MSSU Pune, engineering philosophy, and project experience of Jayant Potdar.",
+      "My background, education at MSSU Pune, engineering philosophy, and project experience.",
     url: `${siteUrl}/about`,
     images: [
       {
         url: "/og",
         width: 1200,
         height: 630,
-        alt: "About Jayant Potdar",
+        alt: "About me — Jayant Potdar",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Jayant Potdar | Full Stack Developer",
+    title: "About Me | Jayant Potdar",
     description:
-      "Background, education at MSSU Pune, engineering philosophy, and project experience of Jayant Potdar.",
+      "My background, education at MSSU Pune, engineering philosophy, and project experience.",
     images: ["/og"],
   },
 };
@@ -54,7 +54,7 @@ export default function AboutPage() {
   const profileJsonLd = {
     ...getProfilePageSchema({
       url: `${siteUrl}/about`,
-      name: "About Jayant Potdar",
+      name: "About Me | Jayant Potdar",
       description: author.summary,
     }),
     mainEntity: getPersonSchema(),
@@ -156,7 +156,7 @@ export default function AboutPage() {
                     <Polaroid
                       src="/images/img-3.jpeg"
                       alt="Jayant Potdar - Full Stack Developer in Pune"
-                      caption="Jayant Potdar • Western Ghats 🌿"
+                      caption="Me in the Western Ghats 🌿"
                       aspectClassName="aspect-[3/4]"
                       className="w-56 sm:w-64"
                       priority
@@ -221,7 +221,7 @@ export default function AboutPage() {
                   At a glance
                 </h2>
                 <p className="mt-2 text-sm text-[var(--ca-ink)]/75">
-                  Direct answers to common questions about Jayant Potdar&apos;s background, skills, and availability.
+                  Direct answers to common questions about my background, skills, and availability.
                 </p>
 
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -245,7 +245,7 @@ export default function AboutPage() {
 
                   <div className="border border-[var(--ca-ink)]/15 bg-[var(--ca-chrome)]/60 p-5 rounded">
                     <div className="flex items-center gap-2 text-[var(--ca-blue)] font-bold text-sm ca-mono uppercase">
-                      <Briefcase size={16} /> What Does Jayant Build?
+                      <Briefcase size={16} /> What Do I Build?
                     </div>
                     <p className="mt-2 text-sm sm:text-base text-[var(--ca-ink)] font-medium">
                       Expressive web interfaces and complete applications using <strong>React, Next.js, and TypeScript</strong> alongside <strong>Python, FastAPI, databases, and AI tools</strong>.
@@ -268,7 +268,7 @@ export default function AboutPage() {
                     <div className="w-full md:w-72 lg:w-80 shrink-0">
                       <Polaroid
                         src="/images/img-5.jpeg"
-                        alt="Physical trophies and signed certificates awarded to Jayant Potdar at MSSU"
+                        alt="My physical trophies and signed certificates from MSSU"
                         caption="Physical Honors & Signed Certificates 📜"
                         aspectClassName="aspect-[4/3]"
                         className="w-full shadow-md"

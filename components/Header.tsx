@@ -8,24 +8,32 @@ import { social } from "@/lib/site";
 import { trackGitHubClick } from "@/lib/analytics";
 import { prefetchRouteEntry } from "@/lib/prefetch";
 
-export function SmileyLogo({ className = "h-7 w-7" }: { className?: string }) {
+export function JLogo({ className = "h-8 w-8" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 24 24"
-      className={`${className} overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))] transition-transform duration-200 hover:rotate-12 hover:scale-110`}
+      viewBox="0 0 64 64"
+      className={`${className} overflow-visible [filter:drop-shadow(1.5px_2px_0_rgba(25,21,16,0.25))] transition-transform duration-200 hover:rotate-6 hover:scale-105 active:scale-95`}
       aria-hidden="true"
     >
-      <circle cx="12" cy="12" r="10" fill="var(--ca-magenta)" stroke="#ffffff" strokeWidth="2.5" paintOrder="stroke" />
-      <circle cx="8.5" cy="10.5" r="1.35" fill="#ffffff" />
-      <circle cx="15.5" cy="10.5" r="1.35" fill="#ffffff" />
-      <path d="M8 14Q12 18 16 14" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+      <rect
+        width="64"
+        height="64"
+        rx="14"
+        fill="var(--ca-yellow)"
+        stroke="var(--ca-ink)"
+        strokeWidth="3.5"
+      />
+      <path
+        d="M14 12h34v29c0 12-8 18-19 18-8 0-13-3-17-8l8-8c2 3 5 5 8 5 5 0 7-3 7-9V23H14z"
+        fill="var(--ca-ink)"
+      />
     </svg>
   );
 }
 
 export function SocialButtons({ className = "" }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-2 ${className}`} aria-label="Social profiles">
+    <div role="group" aria-label="Social profiles" className={`flex items-center gap-2 ${className}`}>
       {/* LinkedIn: #376c96 circle with white square and #376c96 'in' */}
       <a
         href={social.linkedin}
@@ -221,21 +229,17 @@ export function Header() {
   useEffect(() => {
     if (!mobileOpen) return;
 
-    // Lock body scroll on mobile while drawer is active
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    // Move initial focus to the first nav link inside drawer
+    // Move initial focus to the first nav link inside drawer safely without scrolling the page
     const timer = setTimeout(() => {
       const firstNav = drawerRef.current?.querySelector<HTMLElement>("a[href]");
-      firstNav?.focus();
+      firstNav?.focus({ preventScroll: true });
     }, 50);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
         setMobileOpen(false);
-        menuBtnRef.current?.focus();
+        menuBtnRef.current?.focus({ preventScroll: true });
         return;
       }
 
@@ -254,25 +258,25 @@ export function Header() {
           if (document.activeElement === firstElement) {
             e.preventDefault();
             if (closeBtn) {
-              closeBtn.focus();
+              closeBtn.focus({ preventScroll: true });
             } else {
-              lastElement.focus();
+              lastElement.focus({ preventScroll: true });
             }
           } else if (document.activeElement === closeBtn) {
             e.preventDefault();
-            lastElement.focus();
+            lastElement.focus({ preventScroll: true });
           }
         } else {
           if (document.activeElement === lastElement) {
             e.preventDefault();
             if (closeBtn) {
-              closeBtn.focus();
+              closeBtn.focus({ preventScroll: true });
             } else {
-              firstElement.focus();
+              firstElement.focus({ preventScroll: true });
             }
           } else if (document.activeElement === closeBtn) {
             e.preventDefault();
-            firstElement.focus();
+            firstElement.focus({ preventScroll: true });
           }
         }
       }
@@ -282,11 +286,11 @@ export function Header() {
     return () => {
       clearTimeout(timer);
       window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = originalOverflow;
     };
   }, [mobileOpen]);
 
-  const toggleMobileMenu = useCallback(() => {
+  const toggleMobileMenu = useCallback((e?: React.MouseEvent) => {
+    e?.preventDefault();
     setMobileOpen((prev) => !prev);
   }, []);
 
@@ -315,9 +319,9 @@ export function Header() {
             <IntentNavLink
               href="/"
               ariaLabel="Jayant Potdar - Home"
-              className="flex items-center lg:hidden py-2 pl-1 pr-2 transition-transform duration-200 hover:scale-105 active:scale-95 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-full"
+              className="flex items-center lg:hidden py-1.5 pl-1 pr-2 transition-transform duration-200 hover:scale-105 active:scale-95 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-lg"
             >
-              <SmileyLogo className="h-8 w-8" />
+              <JLogo className="h-8 w-8" />
             </IntentNavLink>
             <nav className="hidden items-stretch lg:flex" aria-label="Main navigation">
               {navItems.map((item) => {
@@ -394,9 +398,9 @@ export function Header() {
                 transition={{ duration: 0.2 }}
                 onClick={() => {
                   setMobileOpen(false);
-                  menuBtnRef.current?.focus();
+                  menuBtnRef.current?.focus({ preventScroll: true });
                 }}
-                className="fixed inset-0 top-[57px] z-40 bg-black/45 backdrop-blur-[2px] lg:hidden"
+                className="fixed inset-0 top-[57px] z-40 bg-black/45 backdrop-blur-[2px] touch-none lg:hidden"
                 aria-hidden="true"
               />
 
@@ -411,7 +415,7 @@ export function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="relative z-50 flex flex-col border-b-2 border-[var(--ca-ink)] bg-[var(--ca-surface)]/95 backdrop-blur-md p-4 shadow-2xl lg:hidden"
+                className="absolute top-full left-0 right-0 z-50 flex flex-col border-b-3 border-[var(--ca-ink)] bg-[var(--ca-surface)] p-4 shadow-2xl overscroll-contain lg:hidden"
                 style={{
                   paddingBottom: "max(1.5rem, env(safe-area-inset-bottom, 0px))",
                 }}
@@ -460,3 +464,5 @@ export function Header() {
     </>
   );
 }
+
+export default Header;

@@ -17,6 +17,8 @@ export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const [error, setError] = useState("");
+  const [deliveryFailed, setDeliveryFailed] = useState(false);
+  const [copiedNote, setCopiedNote] = useState(false);
 
   const handleNext = () => {
     if (!message.trim()) {
@@ -48,6 +50,7 @@ export default function ContactForm() {
     trackContactFormAttempt(2);
     setLoading(true);
     setError("");
+    setDeliveryFailed(false);
 
     try {
       const emailjs = (await import("@emailjs/browser")).default;
@@ -71,15 +74,9 @@ export default function ContactForm() {
     } catch (err) {
       console.error("EmailJS Error:", err);
       setLoading(false);
-      // Graceful fallback to mailto so the user's message is never lost
-      window.location.href = `mailto:${email}?subject=${encodeURIComponent(
-        `Portfolio Inquiry from ${name.trim()}`
-      )}&body=${encodeURIComponent(
-        `Hi Jayant,\n\n${message.trim()}\n\nFrom: ${name.trim()} (${senderEmail.trim()})`
-      )}`;
-      setSubmitted(true);
-      setStatusMessage("Email client opened with your prepared message.");
-      trackContactFormDelivery("mailto_fallback", "fallback");
+      setDeliveryFailed(true);
+      setError("Automated delivery encountered an issue. Your message is preserved below.");
+      trackContactFormDelivery("emailjs", "error");
     }
   };
 
@@ -103,6 +100,7 @@ export default function ContactForm() {
               setSenderEmail("");
               setError("");
               setStatusMessage("");
+              setDeliveryFailed(false);
             }}
             className="ca-mono mt-5 inline-flex min-h-[48px] items-center justify-center bg-[var(--ca-ink)] px-6 py-3 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-[var(--ca-blue)] active:scale-98 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
           >
@@ -209,10 +207,78 @@ export default function ContactForm() {
                 </div>
               </div>
 
-              {error && step === 2 && (
+              {error && step === 2 && !deliveryFailed && (
                 <p className="mt-2 text-xs font-bold text-red-600 ca-mono" role="alert">
                   {error}
                 </p>
+              )}
+
+              {/* Truthful delivery failure recovery options */}
+              {deliveryFailed && (
+                <div
+                  role="alert"
+                  className="mt-4 p-4 rounded-md border-2 border-red-500/30 bg-white/90 text-left space-y-2.5"
+                >
+                  <p className="text-red-700 font-bold ca-mono text-xs uppercase tracking-wider">
+                    Automated delivery issue
+                  </p>
+                  <p className="ca-mono text-xs text-[var(--ca-ink)]/85 leading-relaxed">
+                    Your note is preserved. You can retry sending, copy your note, or email me directly at{" "}
+                    <a
+                      href={`mailto:${email}?subject=${encodeURIComponent(
+                        `Portfolio Inquiry from ${name.trim()}`
+                      )}&body=${encodeURIComponent(
+                        `Hi Jayant,\n\n${message.trim()}\n\nFrom: ${name.trim()} (${senderEmail.trim()})`
+                      )}`}
+                      className="font-bold underline text-[var(--ca-blue)]"
+                    >
+                      {email}
+                    </a>.
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        setDeliveryFailed(false);
+                        handleSubmit(e as any);
+                      }}
+                      className="ca-mono min-h-[36px] px-3 py-1.5 bg-[var(--ca-ink)] text-white text-xs font-bold uppercase tracking-wider rounded-sm hover:bg-[var(--ca-blue)] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                    >
+                      Retry sending
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        try {
+                          await navigator.clipboard.writeText(
+                            `Hi Jayant,\n\n${message.trim()}\n\nFrom: ${name.trim()} (${senderEmail.trim()})`
+                          );
+                          setCopiedNote(true);
+                          setTimeout(() => setCopiedNote(false), 2500);
+                        } catch (e) {
+                          console.warn("Clipboard write failed", e);
+                        }
+                      }}
+                      className="ca-mono min-h-[36px] px-3 py-1.5 border border-[var(--ca-ink)] bg-white text-[var(--ca-ink)] text-xs font-bold uppercase tracking-wider rounded-sm hover:bg-neutral-100 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                    >
+                      {copiedNote ? "Note copied!" : "Copy note"}
+                    </button>
+
+                    <a
+                      href={`mailto:${email}?subject=${encodeURIComponent(
+                        `Portfolio Inquiry from ${name.trim()}`
+                      )}&body=${encodeURIComponent(
+                        `Hi Jayant,\n\n${message.trim()}\n\nFrom: ${name.trim()} (${senderEmail.trim()})`
+                      )}`}
+                      onClick={() => trackContactFormDelivery("mailto_fallback", "fallback")}
+                      className="ca-mono min-h-[36px] px-3 py-1.5 border border-[var(--ca-ink)] bg-white text-[var(--ca-ink)] text-xs font-bold uppercase tracking-wider rounded-sm hover:bg-neutral-100 transition-colors inline-flex items-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                    >
+                      Open mail client
+                    </a>
+                  </div>
+                </div>
               )}
 
               <div className="mt-4 flex items-center gap-3">
@@ -222,6 +288,7 @@ export default function ContactForm() {
                   disabled={loading}
                   onClick={() => {
                     setError("");
+                    setDeliveryFailed(false);
                     setStep(1);
                   }}
                   className="ca-mono flex h-12 w-12 items-center justify-center text-lg font-bold text-[var(--ca-ink)]/70 transition-colors hover:text-[var(--ca-ink)] disabled:opacity-50 active:scale-95 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-sm"

@@ -14,7 +14,7 @@ export const author = {
   cgpa: "8.0",
   headline: "Creative full stack developer building expressive, production-ready web products in Pune.",
   summary:
-    "Jayant Potdar is a full stack developer in Pune who designs expressive interfaces and builds the systems behind them. He built AstroPixel independently and led teams on Krypton, Malaria Detection System, and NeuralNet. He is seeking internships and full-time roles, and is open to hybrid/remote work and relevant projects.",
+    "I'm Jayant Potdar, a full stack developer in Pune. I design expressive interfaces and build the systems behind them. I built AstroPixel independently and led teams on Krypton, Malaria Detection System, and NeuralNet. I'm seeking internships and full-time roles, and I'm open to hybrid/remote work and relevant projects.",
   openToWork:
     "Seeking internships and full-time roles; open to hybrid/remote work and relevant projects. Email me to arrange a call.",
 };
@@ -107,6 +107,8 @@ export type Project = {
   slug: string;
   number: string;
   title: string;
+  headline: string;
+  seoDescription: string;
   tagline: string;
   date: string;
   category: string[];
@@ -164,12 +166,14 @@ export const projects: Project[] = [
     slug: "astropixel",
     number: "01",
     title: "AstroPixel",
-    tagline: "Explore enormous space images without overwhelming the browser",
+    headline: "Space, Pixel by Pixel",
+    seoDescription: "I built AstroPixel to turn large astronomical images into browser-ready tiles, with deep zoom, annotations, and dataset management. Explore my case study.",
+    tagline: "I turned large space images into an explorable web experience.",
     date: "Mar 2026",
     category: ["SPATIAL IMAGERY", "FULL STACK", "PERFORMANCE"],
     ownership: "Solo Full Stack Project",
     summary:
-      "AstroPixel turns large astronomical images into browser-friendly tiles. I built the upload pipeline, deep-zoom viewer, annotations, and access controls from end to end.",
+      "Large astronomical images are difficult to share at their original detail. I built AstroPixel so an educator or space enthusiast can open a dataset, zoom into a small feature, and mark what they find. The application connects image processing, tiled viewing, and annotations in one browser workflow.",
     role: "Solo Full Stack Developer",
     timeline: "4 months",
     team: "Solo build",
@@ -179,82 +183,82 @@ export const projects: Project[] = [
     hero: "/projects/astroPixel-home.png",
     homeHero: "/projects/astroPixel-home.png",
     problem:
-      "A full-resolution astronomical image is too large to load and explore comfortably in a normal browser tab.",
+      "How do you explore a huge space image without downloading the whole file? I built AstroPixel to turn it into zoomable tiles, with annotations that keep discoveries connected to their place in the image.",
     personalContribution:
-      "I designed and built the entire system independently: the GDAL tiling and multi-resolution pyramid pipeline, FastAPI tile streaming endpoints, responsive OpenSeadragon viewport, persistent image-space coordinate annotations, and Cloudflare R2 object storage integration.",
+      "I built the application independently: the React explorer, background image processing, FastAPI endpoints, annotation workflow, access controls, and optional Cloudflare R2 integration. My most demanding work was coordinating processing and delivery so the viewer received correctly positioned tiles at each zoom level.",
     features: [
-  "Upload GeoTIFF and PSB imagery for processing.",
-  "Explore large images through a tile-based deep-zoom viewer.",
-  "Add and manage persistent image annotations.",
-  "Use authenticated user and administrator workflows.",
-  "Store tiles locally or with the supported Cloudflare R2 integration.",
-  "Inspect datasets and metadata without downloading an entire source image."
-],
+      "Upload supported TIFF, GeoTIFF, PSD, and PSB imagery for processing.",
+      "Pan and zoom through processed image tiles in the browser.",
+      "Keep annotations attached to positions within an image.",
+      "Browse datasets and inspect their metadata.",
+      "Manage uploads and datasets through user and administrator flows.",
+      "Use local tile storage or configure Cloudflare R2."
+    ],
     technicalHighlights: [
-  "Built a GDAL pipeline that generates multi-resolution image tiles.",
-  "Connected an OpenSeadragon viewport to FastAPI tile endpoints.",
-  "Implemented annotation tools and access-controlled upload workflows.",
-  "Added optional R2 storage and deployment-ready Docker configuration."
-],
+      "I connected background tile generation to dataset status and processing progress.",
+      "I used windowed raster reads and fallback processing paths for large source files.",
+      "I joined OpenSeadragon viewing with persistent image-space annotations.",
+      "I added tile delivery through local storage and optional Cloudflare R2 integration."
+    ],
     tradeoffs: [
-  {
-    "decision": "Tile pyramids instead of full-image loading",
-    "rationale": "Processing images into zoom-level tiles lets the viewer request only the detail needed for the current viewport."
-  },
-  {
-    "decision": "Cloud storage support with a local fallback",
-    "rationale": "The storage layer can serve tiles locally or use Cloudflare R2 when configured, without changing the viewer flow."
-  },
-  {
-    "decision": "Image-space annotation coordinates",
-    "rationale": "Annotations stay attached to their place in the image as a visitor pans and zooms."
-  }
-],
+      {
+        "decision": "Alternatives: a file download or a viewer library",
+        "rationale": "A download gives someone the source image but leaves exploration to their own tools. OpenSeadragon provides a strong deep-zoom foundation. I built the workflow around that foundation so uploading, organizing, viewing, and annotating imagery can happen within the same application."
+      },
+      {
+        "decision": "My USP: detail with context",
+        "rationale": "I connected multiresolution viewing with persistent image-space annotations. A visitor can move from the whole scene to a small feature while keeping notes attached to the right location. That combination makes AstroPixel useful for presenting and discussing detailed imagery."
+      },
+      {
+        "decision": "What I learned: fast must also be correct",
+        "rationale": "Repeated attempts taught me to follow the entire path from source image to visible tile. Missing tiles, mismatched zoom levels, or incorrect positioning can spoil an otherwise quick viewer. I learned to balance memory, processing time, and complete tile delivery together."
+      }
+    ],
     challenge:
-      "Large image files need to be processed, stored, and delivered at several zoom levels without making the viewer wait for the entire original file.",
+      "Sharing a reduced image makes the detail harder to inspect; sharing the original makes the reader handle a large file. I wanted educators and space enthusiasts to explore both the overall scene and its smaller features through a web link. Annotations make that exploration useful for explaining an observation or returning to it later.",
     approach:
-      "GDAL creates a multi-resolution tile pyramid. OpenSeadragon requests the tiles visible at the current zoom level, while FastAPI handles ingestion, metadata, authentication, and tile delivery. Cloudflare R2 is supported for cloud tile storage.",
+      "I prepare each image as a pyramid of tiles at different resolutions. The browser requests the pieces needed for its current view, while FastAPI manages processing progress, dataset records, and delivery. I use OpenSeadragon for navigation, Rasterio and Pillow in the processing pipeline, and image-space coordinates to keep annotations aligned while zooming.",
     results:
-      "AstroPixel placed third at Ideation Competition 3.0. It is a working, independently built deep-zoom product with image upload, tiled viewing, annotations, and administrative workflows.",
+      "I brought image upload, background processing, deep zoom, annotations, and dataset administration into one application. AstroPixel earned third place at Ideation Competition 3.0. Images need to finish processing before they can be explored; supported file sizes depend on the available processing resources.",
     categorizedTech: [
-  {
-    "category": "Frontend & Viewer",
-    "items": [
+      {
+        "category": "Frontend & Viewer",
+        "items": [
+          "React",
+          "OpenSeadragon",
+          "Tailwind CSS",
+          "Vite"
+        ]
+      },
+      {
+        "category": "Backend & Images",
+        "items": [
+          "FastAPI",
+          "Python",
+          "Rasterio / GDAL",
+          "Pillow",
+          "SQLAlchemy"
+        ]
+      },
+      {
+        "category": "Storage & Delivery",
+        "items": [
+          "SQLite / PostgreSQL",
+          "Cloudflare R2 support",
+          "Docker"
+        ]
+      }
+    ],
+    technologies: [
       "React",
-      "OpenSeadragon",
-      "Tailwind CSS",
-      "Vite"
-    ]
-  },
-  {
-    "category": "Backend & Processing",
-    "items": [
       "FastAPI",
       "Python",
-      "GDAL",
-      "SQLAlchemy"
-    ]
-  },
-  {
-    "category": "Storage & Deployment",
-    "items": [
-      "SQLite / PostgreSQL",
-      "Cloudflare R2 support",
-      "Docker",
-      "Vercel"
-    ]
-  }
-],
-    technologies: [
-  "React",
-  "FastAPI",
-  "Python",
-  "GDAL",
-  "OpenSeadragon",
-  "SQLAlchemy",
-  "Cloudflare R2",
-  "Docker"
-],
+      "Rasterio / GDAL",
+      "Pillow",
+      "OpenSeadragon",
+      "SQLAlchemy",
+      "Cloudflare R2"
+    ],
     images: [
       "/projects/astroPixel1.jpg",
       "/projects/astroPixel2.jpg",
@@ -276,21 +280,23 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/AstroPixel",
     demo: "https://astropixel.jayant.codes/",
-    demoLabel: "Launch Deep-Zoom Viewer",
-    demoQualifier: "Live Interactive Tile Viewer",
+    demoLabel: "Explore AstroPixel",
+    demoQualifier: "Public explorer; deep zoom requires an available processed dataset",
     limitations:
-      "Gigapixel source imagery requires asynchronous GDAL tiling passes before multi-resolution pyramids are fully cached; cloud egress is optimized via Cloudflare R2.",
+      "Source images need processing before they can be explored. The public explorer showed no available datasets during this review; R2 delivery depends on deployment configuration.",
   },
   {
     slug: "krypton",
     number: "02",
     title: "Krypton",
-    tagline: "Find, rank, and understand academic papers in one place",
+    headline: "Find Your Next Paper",
+    seoDescription: "I led Krypton, combining arXiv and OpenAlex search with weighted ranking and abstract summaries. See the problem, my contribution, and the tradeoffs.",
+    tagline: "I built a clearer route from a research topic to a reading list.",
     date: "Nov 2025",
     category: ["RESEARCH TOOLS", "AI / ML", "FULL STACK"],
     ownership: "Team Leader",
     summary:
-      "Krypton brings arXiv and OpenAlex results into one search flow, ranks papers with visible criteria, and uses Gemini to help readers summarize and explore the literature.",
+      "Starting a literature review means deciding which papers deserve your attention. I led Krypton to help students make that first selection: search arXiv and OpenAlex together, rank results using explicit criteria, and read an abstract-based summary before opening the source paper.",
     role: "Team Leader & Backend Architect",
     timeline: "3 months",
     team: "Lead of 3-student engineering team",
@@ -300,43 +306,43 @@ export const projects: Project[] = [
     hero: "/projects/Krypton-home.png",
     homeHero: "/projects/Krypton-home.png",
     problem:
-      "A literature search can scatter useful papers across sources and leave readers without a clear reason for the order of results.",
+      "A new research topic can leave you with dozens of tabs and no clear starting point. I led Krypton to bring paper discovery, ranking, and abstract summaries into one place, helping readers choose what to investigate next.",
     personalContribution:
-      "I led a three-student team and architected the search backend: built the concurrent aggregation service for arXiv and OpenAlex APIs, implemented the transparent 40/30/30 scoring formula (40% TF-IDF relevance, 30% recency decay, 30% citation count), added TTL result caching, and integrated Google Gemini API for grounded abstract summaries.",
+      "I led the team and built the search backend: concurrent source requests, TF-IDF ranking, citation normalization, preference-aware scoring, and cached search results. I integrated Gemini summaries and connected these services to the paper-discovery flow. My focus was making the pipeline understandable and its ranking choices inspectable.",
     features: [
-  "Search arXiv and OpenAlex from one interface.",
-  "Rank results using relevance, recency, and citation signals.",
-  "Show paper summaries and structured research insights.",
-  "Save user profiles, interests, and search history.",
-  "Suggest topics and reading paths based on a research goal.",
-  "Cache repeated external requests to reduce unnecessary API calls."
-],
+      "Search arXiv and OpenAlex through one backend pipeline.",
+      "Order papers using relevance, recency, and citation signals.",
+      "Adjust ranking around reader interests and recency preferences.",
+      "Request abstract-based summaries and research insights.",
+      "Explore search history, reader profiles, and a reading-plan interface.",
+      "Reuse cached search results when they are available."
+    ],
     technicalHighlights: [
-  "Implemented a weighted ranking service with a 40/30/30 default formula.",
-  "Combined arXiv and OpenAlex search results in a FastAPI pipeline.",
-  "Added citation enrichment, caching, and user-aware score adjustments.",
-  "Connected Gemini-assisted summaries to the paper exploration flow."
-],
+      "I combined concurrent arXiv and OpenAlex requests with failure-tolerant result handling.",
+      "I implemented TF-IDF relevance, recency, and logarithmic citation scoring.",
+      "I added preference-aware weights and memory/database search caching.",
+      "I integrated Gemini summaries using paper abstracts as context."
+    ],
     tradeoffs: [
-  {
-    "decision": "Readable ranking signals over an opaque score",
-    "rationale": "Relevance, recency, and citations give readers a clearer reason for where a paper appears."
-  },
-  {
-    "decision": "Combine sources before ranking",
-    "rationale": "Searching multiple academic indexes in one flow broadens discovery while keeping one results list."
-  },
-  {
-    "decision": "Grounded AI assistance with source links",
-    "rationale": "Generated summaries are presented alongside source papers so readers can check the underlying research."
-  }
-],
+      {
+        "decision": "Alternatives: Semantic Scholar and Elicit",
+        "rationale": "Semantic Scholar offers research discovery and several sorting options; Elicit adds AI-assisted research workflows. I focused Krypton on an inspectable implementation that combines two sources and a readable ranking formula. Its distinction is the specific workflow and scoring choices I built, rather than a claim of broader coverage or better search accuracy."
+      },
+      {
+        "decision": "My USP: a reading order with a rationale",
+        "rationale": "I combine topic relevance, recency, and citation influence into one score while retaining the individual signals. The code makes those choices visible and supports preference-based weighting. That gives the reading list an explicit rationale that can be examined and adjusted."
+      },
+      {
+        "decision": "What I learned: a score expresses a priority",
+        "rationale": "Older papers have had longer to accumulate citations, while newer work may be more relevant to an emerging topic. I learned why these signals need normalization and why the weights matter. I treat the ranking as a reading aid, with source checking as part of the workflow."
+      }
+    ],
     challenge:
-      "A useful paper search has to merge results from different APIs, handle missing citation data, and make ranking understandable to the person reading it.",
+      "Students entering an unfamiliar subject need a manageable starting list and enough context to judge each paper. I wanted to bring discovery and initial reading decisions into the same workflow. The value is a clearer path from a broad question to individual sources that deserve closer attention.",
     approach:
-      "The backend searches arXiv and OpenAlex, enriches citation data, and scores results with TF-IDF relevance, publication recency, and citation counts. Personalization can adjust the weights for a reader’s interests and goals.",
+      "I query arXiv and OpenAlex concurrently, enrich the results with citation data, and score the combined list. The default formula uses 40% text relevance, 30% recency, and 30% normalized citation influence; reader interests can change those weights. Gemini summarizes the available abstract, and paper links lead back to the original research.",
     results:
-      "Krypton won first place at the university Project Expo. The live product offers multi-source search, transparent ranking, paper summaries, and a reading-plan interface.",
+      "Our team won first place at the university Project Expo. I built a backend that brings retrieval, enrichment, ranking, caching, and summaries together, alongside the research interface. Summaries are based on available abstracts, so readers still need the original papers to assess methods, evidence, and limitations.",
     categorizedTech: [
   {
     "category": "Frontend",
@@ -406,21 +412,23 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/Krypton",
     demo: "https://krypton.jayant.codes/",
-    demoLabel: "Launch Research Search",
-    demoQualifier: "Live Multi-Source Search & AI Summaries",
+    demoLabel: "Explore Krypton",
+    demoQualifier: "Public research interface; search and summaries require the backend",
     limitations:
-      "Query throughput is bound by arXiv and OpenAlex external API rate limits, mitigated by backend TTL caching; citation enrichment coverage depends on preprint metadata availability.",
+      "Search depends on the external paper sources and an available backend. The public demo reported its backend offline during this review. Generated summaries use abstracts and need checking against the original paper.",
   },
   {
     slug: "3d-portfolio",
     number: "03",
     title: "3D Portfolio",
-    tagline: "A space-themed portfolio built as an interactive experience",
+    headline: "My Skills in Motion",
+    seoDescription: "I built a 3D portfolio with React Three Fiber, a Spline skills keyboard, and a separate mobile experience. Explore my interaction and rendering decisions.",
+    tagline: "I made my portfolio an example of the interaction work I can build.",
     date: "Jul 2025",
     category: ["3D GRAPHICS", "CREATIVE TECH", "PERFORMANCE"],
     ownership: "Solo Developer",
     summary:
-      "My first 3D portfolio brings together React, Three.js, React Three Fiber, and a Spline skills keyboard in a responsive space-themed website.",
+      "I wanted recruiters and creative clients to experience my frontend skills directly. I built a space-themed portfolio where visitors rotate a workstation, explore a skills keyboard, and browse my projects. On mobile, a tappable skills grid carries the same information in a form suited to touch.",
     role: "Solo Creative Frontend Developer",
     timeline: "3 weeks",
     team: "Solo build",
@@ -430,43 +438,43 @@ export const projects: Project[] = [
     hero: "/projects/3d-portfolio-home.png",
     homeHero: "/projects/3d-portfolio-home.png",
     problem:
-      "I wanted a portfolio that let people experience my interest in creative engineering, rather than only read a list of skills.",
+      "How do I show the interaction skills behind a résumé? I built a portfolio visitors can explore: a rotatable workstation, a 3D skills keyboard, and a dedicated mobile skills view, all connected to my work.",
     personalContribution:
-      "I designed and developed the entire interactive portfolio from scratch: Three.js and React Three Fiber spatial scenes, custom particle starfield, interactive Spline 3D skills keyboard, section transitions with GSAP and Framer Motion, and mobile performance tiering with dynamic DPR clamping.",
+      "I built the portfolio independently, connecting the 3D scenes, Spline keyboard events, project cards, motion, and contact flow. I also created the mobile skills grid, its category filters, and the screen-specific rendering settings. The work brought visual design and frontend engineering into one deliverable.",
     features: [
-  "Explore interactive Three.js scenes and a particle starfield.",
-  "Use the Spline-powered skills keyboard on desktop.",
-  "Browse projects, skills, achievements, and contact information.",
-  "See a lighter skills experience on mobile.",
-  "Move through animated sections built with GSAP and Framer Motion.",
-  "Use responsive layouts and touch-friendly navigation."
-],
+      "Rotate the workstation scene and explore the space-themed page.",
+      "Reveal skill information through the desktop Spline keyboard.",
+      "Browse skills with tappable keycaps and categories on mobile.",
+      "Open project details and follow source-code links.",
+      "Browse achievements and access my résumé.",
+      "Reach my contact form and public profiles."
+    ],
     technicalHighlights: [
-  "Built desktop and Earth scenes with React Three Fiber.",
-  "Integrated a Spline keyboard with hover-driven skill content.",
-  "Tuned canvas pixel ratios for desktop and mobile devices.",
-  "Combined animations, project cards, and contact into one responsive experience."
-],
+      "I integrated workstation, Earth, and particle scenes with React Three Fiber.",
+      "I connected Spline keyboard events to contextual skill information.",
+      "I built a mobile skills grid with category filters and tap selection.",
+      "I adjusted canvas pixel ratios, shadows, and touch handling by screen size."
+    ],
     tradeoffs: [
-  {
-    "decision": "3D scenes with a mobile fallback",
-    "rationale": "Desktop visitors can explore the full spatial experience while mobile visitors retain a usable, lighter path through the content."
-  },
-  {
-    "decision": "Device-aware canvas rendering",
-    "rationale": "Lower pixel ratios on mobile reduce the graphics work required for each frame."
-  },
-  {
-    "decision": "Motion in service of navigation",
-    "rationale": "Section transitions and hover responses reinforce the portfolio story without hiding the underlying content."
-  }
-],
+      {
+        "decision": "Alternative: a conventional portfolio",
+        "rationale": "A conventional portfolio makes work easy to browse. I wanted mine to also demonstrate the kind of interactive experience a creative client might commission. The workstation and skills keyboard let a visitor try that work directly, while project links and contact details remain part of the page."
+      },
+      {
+        "decision": "My USP: skills you can interact with",
+        "rationale": "I connected a 3D keyboard to contextual skill information, turning the skills section into an interaction. On mobile, the same idea becomes a filterable, tappable keycap grid. That connection between visual identity and useful content is the defining part of this build."
+      },
+      {
+        "decision": "What I learned: adapt the interaction",
+        "rationale": "A desktop hover interaction does not translate directly to a touch screen. I learned to make separate decisions for pointer input, touch gestures, canvas resolution, and shadows. The goal is to preserve the visitor’s task while choosing an interaction the device can support."
+      }
+    ],
     challenge:
-      "3D scenes can be visually engaging while still slowing a page or trapping touch gestures on mobile.",
+      "A recruiter needs to find my work and understand my contribution. A client considering an interactive website also needs to see what I can create. I wanted one portfolio to serve both: clear project content alongside working examples of 3D integration, motion, and responsive interaction design.",
     approach:
-      "I combined React Three Fiber scenes with a Spline keyboard, used motion selectively throughout the page, and set lower canvas pixel ratios on mobile. A simpler keycap experience supports smaller screens.",
+      "I built the page in React and integrated workstation, Earth, and starfield scenes through React Three Fiber. A Spline keyboard reveals skill information on desktop, with GSAP and Framer Motion supporting the interactions. On mobile, I use tappable DOM keycaps and lighter canvas settings to adapt the experience to touch and smaller screens.",
     results:
-      "The deployed site is a working creative portfolio with interactive 3D scenes, motion-led navigation, projects, achievements, skills, and a contact flow.",
+      "I published a portfolio that demonstrates interactive frontend work alongside the projects themselves. Visitors can browse my skills, open project details, access my résumé, and contact me. The mobile skills interface preserves access to the content while using a different interaction model from the desktop keyboard.",
     categorizedTech: [
   {
     "category": "3D & Graphics",
@@ -530,21 +538,23 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/3D-Portfolio",
     demo: "https://3dportfolio.jayant.codes/",
-    demoLabel: "Launch 3D Portfolio",
-    demoQualifier: "Interactive 3D WebGL Space Experience",
+    demoLabel: "Explore My 3D Portfolio",
+    demoQualifier: "Interactive portfolio with desktop 3D scenes and a mobile skills layout",
     limitations:
-      "Heavy WebGL shaders and the 3D Spline interactive keyboard are automatically tiered down on mobile devices to lightweight DOM keycaps to guarantee smooth 60 FPS scrolling.",
+      "WebGL and Spline rendering depend on device capability. I use a DOM skills layout on mobile and lower canvas settings; these choices do not guarantee a particular frame rate.",
   },
   {
     slug: "malaria-detection",
     number: "04",
     title: "Malaria Detection System",
-    tagline: "An AI-assisted blood-smear screening prototype",
+    headline: "From Cell Image to Report",
+    seoDescription: "I led an academic malaria-screening prototype connecting image inference, patient records, role-based dashboards, and PDF reports. Not clinically validated.",
+    tagline: "I connected a classification model to the workflow around its results.",
     date: "Apr 2026",
     category: ["HEALTHCARE AI", "COMPUTER VISION", "FULL STACK"],
     ownership: "Team Leader",
     summary:
-      "A team-built prototype that connects image-based malaria screening with patient records, role-based dashboards, and downloadable reports. It has not been clinically validated.",
+      "An image classifier returns a prediction; an application also needs to keep track of the sample, its record, and its report. I led this academic prototype to connect those steps, combining cell-image inference with role-specific dashboards and PDF reporting. It has not been clinically validated.",
     role: "Team Leader & Full Stack Developer",
     timeline: "2 months",
     team: "Lead of 3-student engineering team",
@@ -554,80 +564,81 @@ export const projects: Project[] = [
     hero: "/projects/malariadetectionsystem-home.png",
     homeHero: "/projects/malariadetectionsystem-home.png",
     problem:
-      "Reviewing blood-smear images and managing test records are separate steps in many workflows. Our team explored how software could bring them into one interface.",
+      "What happens after a model classifies a cell image? I led an academic prototype that connects the result to patient records, role-specific dashboards, and a downloadable report, exploring the software around the model.",
     personalContribution:
-      "I led a three-student engineering team and built the full-stack architecture: integrated the Keras convolutional neural network into a FastAPI inference endpoint, developed the multi-role React dashboard (doctor, patient, admin), configured Supabase PostgreSQL schemas with row-level security, and implemented automated PDF clinical summary export with jsPDF. Explicitly scoped as an academic research prototype, not clinically validated.",
+      "I led the team and worked across the React dashboards, FastAPI inference integration, Supabase account and data flows, and PDF reporting. My contribution focused on connecting the stages of the application so an uploaded sample, model output, stored record, and report could be handled as one workflow.",
     features: [
-  "Upload a cell image for prototype model inference.",
-  "Manage patient records and test results in role-specific views.",
-  "Generate and download PDF reports.",
-  "Review analytics and activity in the dashboard.",
-  "Use doctor, patient, and administrator flows.",
-  "Store application data through Supabase and PostgreSQL."
-],
+      "Upload a supported cell image through the detection interface.",
+      "Run model inference through the configured backend.",
+      "Associate samples and predictions with patient records.",
+      "Use doctor, patient, and administrator dashboard views.",
+      "Generate PDF reports with result and record details.",
+      "Review stored results and reporting workflows."
+    ],
     technicalHighlights: [
-  "Connected a Keras inference model to FastAPI endpoints.",
-  "Built patient and report flows in a React dashboard.",
-  "Used Supabase authentication and database services.",
-  "Designed the result view to show the model output within a broader record workflow."
-],
+      "I connected the image-upload flow to FastAPI and Keras inference.",
+      "I integrated sample, prediction, and patient-record steps in one workflow.",
+      "I built role-specific React views around account and record tasks.",
+      "I added PDF reports that combine result details with patient and sample context."
+    ],
     tradeoffs: [
-  {
-    "decision": "Prototype screening rather than clinical diagnosis",
-    "rationale": "The model and interface demonstrate a workflow; they have not been clinically validated and cannot replace a qualified medical assessment."
-  },
-  {
-    "decision": "Separate inference API from the dashboard",
-    "rationale": "FastAPI handles model loading and prediction while the React application manages user tasks and records."
-  },
-  {
-    "decision": "Role-specific views for the same workflow",
-    "rationale": "Doctor, patient, and administrator screens expose the information each role needs."
-  }
-],
+      {
+        "decision": "Alternative: a classifier-only demo",
+        "rationale": "A classifier demo is useful for exploring image prediction. I extended the scope to include sample association, stored results, user roles, and reporting. This gives someone reviewing the project a fuller application workflow to inspect. Clinical diagnostic systems are a different comparison and require evidence this prototype does not have."
+      },
+      {
+        "decision": "My USP: connected records and results",
+        "rationale": "I focused on keeping the prediction connected to the sample and patient record, then carrying that context into a report. The combination of inference integration, role-specific screens, and document output is the software contribution that distinguishes this project from an isolated model demonstration."
+      },
+      {
+        "decision": "What I learned: confidence needs context",
+        "rationale": "Integrating the model taught me to separate the output of one prediction from evidence about overall model quality. I also learned to treat preprocessing, record association, error handling, and reporting as part of the same system. Those details determine whether a result is understandable and traceable."
+      }
+    ],
     challenge:
-      "The product needed a clear way to move from an uploaded cell image to a model output and an associated patient record, while making the limits of the prototype visible.",
+      "A model output on its own does not explain which sample it belongs to or how someone will retrieve it later. I wanted to explore those application requirements around malaria cell-image classification. For a student team building healthcare software, the useful challenge is connecting analysis, records, and reporting into a traceable workflow.",
     approach:
-      "The React interface handles doctor, patient, and administrator views. FastAPI loads a Keras model for image inference, while Supabase supports account and data workflows. The application can generate and share PDF reports.",
+      "I connected the React interface to a FastAPI workflow that accepts an image, associates it with a patient record, runs Keras inference, and stores the prediction. The preprocessing combines RGB, contrast-enhanced RGB, and edge information. Doctor, patient, and administrator views organize the tasks, while jsPDF produces a report from the result and its record context.",
     results:
-      "The live prototype demonstrates an end-to-end image analysis and report workflow. It is a student software project and has not been tested or approved for clinical use.",
+      "Our team built the upload interface, inference integration, role-specific record views, and PDF report generation. The project demonstrates how a model can sit inside a larger software workflow. I present it as an academic prototype for review and learning; it is not intended for diagnosis or treatment decisions.",
     categorizedTech: [
-  {
-    "category": "Frontend & UI",
-    "items": [
+      {
+        "category": "Frontend & UI",
+        "items": [
+          "React",
+          "Tailwind CSS",
+          "Vite",
+          "Recharts"
+        ]
+      },
+      {
+        "category": "Backend & Images",
+        "items": [
+          "FastAPI",
+          "Python",
+          "Keras / TensorFlow",
+          "OpenCV"
+        ]
+      },
+      {
+        "category": "Data & Reports",
+        "items": [
+          "Supabase",
+          "PostgreSQL",
+          "jsPDF"
+        ]
+      }
+    ],
+    technologies: [
       "React",
-      "Tailwind CSS",
-      "Vite",
-      "Recharts"
-    ]
-  },
-  {
-    "category": "Backend & Model",
-    "items": [
       "FastAPI",
-      "Python",
-      "Keras",
-      "TensorFlow"
-    ]
-  },
-  {
-    "category": "Data & Reports",
-    "items": [
       "Supabase",
       "PostgreSQL",
+      "Keras / TensorFlow",
+      "OpenCV",
+      "Python",
       "jsPDF"
-    ]
-  }
-],
-    technologies: [
-  "React",
-  "FastAPI",
-  "Supabase",
-  "Keras",
-  "Python",
-  "Tailwind CSS",
-  "jsPDF"
-],
+    ],
     images: [
       "/projects/malariadetectionsystem1.png",
       "/projects/malariadetectionsystem2.jpg",
@@ -648,21 +659,23 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/MalariaDetectionSystem",
     demo: "https://malariadetection.jayant.codes/",
-    demoLabel: "Launch Prototype Demo",
-    demoQualifier: "Software Prototype (Non-Clinical)",
+    demoLabel: "Explore the Prototype",
+    demoQualifier: "Academic software prototype; not clinically validated",
     limitations:
-      "This system is an academic software prototype developed to demonstrate clinical workflows and automated reporting; model inference has NOT been clinically validated and must not be used for diagnostic purposes.",
+      "This is an academic prototype with no clinical validation. I do not claim diagnostic accuracy, healthcare compliance, or suitability for patient-care decisions.",
   },
   {
     slug: "neuralnet",
     number: "05",
     title: "NeuralNet",
-    tagline: "Design neural networks visually and generate Keras code",
+    headline: "Draw a Network. Get the Code.",
+    seoDescription: "I led NeuralNet, a visual neural-network editor with Keras code generation and export. Explore the compiler and its scope; training output is simulated.",
+    tagline: "I built a visual bridge between model architecture and Python.",
     date: "Oct 2025",
     category: ["VISUAL TOOLING", "ML", "SYSTEMS"],
     ownership: "Team Leader",
     summary:
-      "NeuralNet is a visual model-building prototype. Users connect layers in a React canvas and turn the graph into inspectable Keras code. The current hosted training view uses simulated metrics.",
+      "Understanding a network diagram and implementing it in code are separate hurdles for an ML learner. I led NeuralNet to connect them: arrange layers, edit their settings, and inspect the generated Python. The core is a visual editor and Keras code generator, with simulated training and prediction flows.",
     role: "Team Leader & Full Stack Developer",
     timeline: "3 months",
     team: "Lead of 3-student engineering team",
@@ -672,43 +685,43 @@ export const projects: Project[] = [
     hero: "/projects/neuralnet-home.png",
     homeHero: "/projects/neuralnet-home.png",
     problem:
-      "A model architecture written only in code can be hard to understand before its layers and connections are visible.",
+      "A neural-network diagram is easier to discuss when you can see the code behind it. I led NeuralNet to connect draggable layers with inspectable Python, giving learners a starting point they can read, export, and develop further.",
     personalContribution:
-      "I led a three-student team and engineered the core compiler: built the node-and-edge visual canvas using React Flow, designed the topological sort algorithm (Kahn's algorithm) to validate acyclic feedforward graphs, built the Python AST compiler translating graph JSON into clean Keras models, and created the training dashboard preview with simulated telemetry.",
+      "I led the team and worked on the React Flow editor, graph-to-JSON conversion, topological ordering, and Python AST compiler. I connected layer settings to code generation and helped build the dataset, training, and deployment interfaces around that core. The compiler targets supported sequential architectures.",
     features: [
-  "Create model architectures with drag-and-drop layer nodes.",
-  "Connect layers and inspect the graph visually.",
-  "Generate Keras Python code from graph data.",
-  "Explore built-in dataset and upload interfaces.",
-  "Preview a training workflow with simulated metrics in the hosted demo.",
-  "Explore deployment and prediction interfaces as prototype flows."
-],
+      "Compose model diagrams with draggable layer nodes and connections.",
+      "Edit layer settings through the properties panel.",
+      "Preview Keras and PyTorch code in the editor.",
+      "Generate Keras source through the backend AST compiler.",
+      "Copy or download generated model code.",
+      "Explore dataset, training, and deployment screens as prototype flows."
+    ],
     technicalHighlights: [
-  "Built a React Flow editor for visual layer composition.",
-  "Implemented topological sorting and AST-based Keras code generation.",
-  "Created dataset, training, and deployment interface flows.",
-  "Made the current demo state clear: hosted training metrics are simulated."
-],
+      "I connected React Flow nodes and layer parameters to graph JSON.",
+      "I used topological ordering to prepare supported layers for generation.",
+      "I built an AST-based generator for Keras Sequential source code.",
+      "I integrated code previews and export into the model-building workflow."
+    ],
     tradeoffs: [
-  {
-    "decision": "Generated source code over runtime evaluation",
-    "rationale": "An AST-based compiler creates code visitors can inspect and export instead of executing arbitrary graph text."
-  },
-  {
-    "decision": "Graph validation before training",
-    "rationale": "Topological sorting catches cycles and gives layers a reliable generation order."
-  },
-  {
-    "decision": "Demonstration mode for hosted training",
-    "rationale": "The current deployed route simulates training metrics to avoid the cost of running TensorFlow on its hosting tier."
-  }
-],
+      {
+        "decision": "Alternatives: Playground or handwritten Keras",
+        "rationale": "TensorFlow Playground helps learners experiment with a small network. Writing Keras directly gives control over the implementation. I placed NeuralNet between those experiences: arrange the architecture visually, inspect the generated source, and take the code into a separate development environment."
+      },
+      {
+        "decision": "My USP: the diagram has a code counterpart",
+        "rationale": "I made the relationship between layer settings and generated Python part of the interface. The backend creates Keras source through an AST, and export gives the learner something they can keep working on. The visual builder serves as an entry point into implementation."
+      },
+      {
+        "decision": "What I learned: valid code is one step",
+        "rationale": "I learned to distinguish graph structure, layer order, generated syntax, and a model that can actually execute. Topological sorting helps establish order, but does not validate every tensor shape or branching pattern. That distinction shaped how I describe the compiler and the prototype training workflow."
+      }
+    ],
     challenge:
-      "A visual graph must reject invalid connections and produce code in a consistent order without relying on unsafe runtime evaluation.",
+      "A learner may understand the idea of inputs, hidden layers, and outputs while still struggling to express an architecture in Python. I wanted to make that translation visible. Seeing layer settings alongside generated code gives the visual editor a practical purpose: helping someone understand what they are building and continue working with the source.",
     approach:
-      "The editor stores layers and connections as graph data. The backend checks their order and generates Python source through an AST-based compiler. The current deployed training screen demonstrates the intended workflow with simulated metrics.",
+      "I represent the architecture as nodes, connections, and layer parameters. The frontend checks basic graph structure, and the backend orders supported layers before constructing a Python abstract syntax tree for a Keras Sequential model. Code previews and export controls let the learner inspect the result and move their work outside the editor.",
     results:
-      "The live prototype supports visual architecture design and Keras code generation. Training and deployment are represented in the interface, but the hosted training route currently runs in mock mode.",
+      "Our team built the visual architecture editor, code previews, export controls, and backend Keras source generator. The implementation demonstrates the path from layer configuration to Python. Training and prediction currently return simulated output; TensorFlow model validation and saved trained models are not part of the active route.",
     categorizedTech: [
   {
     "category": "Graph Editor",
@@ -767,10 +780,10 @@ export const projects: Project[] = [
 ],
     source: "https://github.com/Jayant-1/NeuralNet",
     demo: "https://neuralnet.jayant.codes/",
-    demoLabel: "Launch Visual Builder",
-    demoQualifier: "Interactive Graph Editor (Simulated Training)",
+    demoLabel: "Explore NeuralNet",
+    demoQualifier: "Workspace requires sign-in; training and prediction are simulated in the current implementation",
     limitations:
-      "The graph builder and AST Python compiler produce real, executable Keras code; however, the hosted cloud training screen runs in demonstration mode using simulated telemetry to avoid cloud GPU hosting overhead.",
+      "The backend compiler targets supported Sequential architectures. TensorFlow model validation is disabled in the compile route; training metrics and prediction outputs are simulated, and the training route does not save a trained model.",
   },
 ];
 

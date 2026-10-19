@@ -12,7 +12,6 @@ import {
   ArrowUpRight,
   Scale,
   CheckCircle2,
-  AlertTriangle,
 } from "lucide-react";
 import { Footer, Scribble, Tape } from "@/components/Paper";
 import { RelatedProjectCard } from "@/components/FolderCard";
@@ -35,8 +34,8 @@ export async function generateMetadata({
   const project = projectBySlug(slug);
   if (!project) return {};
 
-  const title = `${project.title} — Project Case Study`;
-  const description = `${project.title}: ${project.tagline}. Read Jayant Potdar's case study, see the source code, and explore the live demo.`;
+  const title = `${project.title} — ${project.headline}`;
+  const description = project.seoDescription;
   const canonicalUrl = `${siteUrl}/projects/${project.slug}`;
   const heroImageUrl = `${siteUrl}${project.hero}`;
 
@@ -57,7 +56,7 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "article",
-      title: `${project.title} — Case Study | Jayant Potdar`,
+      title,
       description,
       url: canonicalUrl,
       images: [
@@ -71,7 +70,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} — Jayant Potdar`,
+      title,
       description,
       images: [heroImageUrl],
     },
@@ -178,7 +177,7 @@ export default async function ProjectDetailPage({
 
           {/* Massive Display Title */}
           <h1 className="ca-display mt-4 text-5xl min-[390px]:text-6xl sm:text-7xl md:text-8xl lg:text-9xl uppercase leading-[0.92] tracking-tight text-[var(--ca-ink)]">
-            {project.title}
+            {project.headline}
           </h1>
 
           {/* High-Signal Tagline */}
@@ -228,11 +227,6 @@ export default async function ProjectDetailPage({
               <span className="font-bold text-[var(--ca-ink)] uppercase">Team:</span>
               <span className="font-semibold text-[var(--ca-ink)]">{project.team}</span>
             </div>
-            <div className="hidden sm:inline text-[var(--ca-ink)]/25">•</div>
-            <div className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="font-bold text-emerald-800 uppercase">Live Proof Verified</span>
-            </div>
           </div>
         </header>
 
@@ -252,7 +246,7 @@ export default async function ProjectDetailPage({
           {/* 1. The Challenge */}
           <div className="text-center">
             <Scribble withDoodle>
-              <h2 id="story-challenge-heading" className="inline text-inherit font-inherit">the challenge</h2>
+              <h2 id="story-challenge-heading" className="inline text-inherit font-inherit">why I built it</h2>
             </Scribble>
           </div>
           <p className="mx-auto mt-4 max-w-3xl text-center text-base sm:text-lg text-[var(--ca-ink)]/90 leading-relaxed font-medium">
@@ -262,17 +256,17 @@ export default async function ProjectDetailPage({
           {/* 2. Architectural Approach */}
           <div className="mt-16 sm:mt-20 text-center">
             <Scribble withDoodle>
-              <h2 className="inline text-inherit font-inherit">architectural approach</h2>
+              <h2 className="inline text-inherit font-inherit">how I approached it</h2>
             </Scribble>
           </div>
           <p className="mx-auto mt-4 max-w-3xl text-center text-base sm:text-lg text-[var(--ca-ink)]/90 leading-relaxed font-medium">
             {project.approach}
           </p>
 
-          {/* 3. What Jayant Built (Personal Ownership Highlight) */}
+          {/* 3. Personal contribution */}
           <div className="mt-16 sm:mt-20 text-center">
             <Scribble withDoodle>
-              <h2 className="inline text-inherit font-inherit">what jayant built</h2>
+              <h2 className="inline text-inherit font-inherit">what I built</h2>
             </Scribble>
           </div>
           <div className="relative mx-auto mt-6 max-w-3xl text-left rounded-xl border-2 border-[var(--ca-ink)] bg-[var(--ca-yellow-soft)] p-6 sm:p-8 shadow-[4px_6px_0_var(--ca-ink)]">
@@ -280,7 +274,7 @@ export default async function ProjectDetailPage({
             <div className="flex items-center gap-2 mb-3">
               <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
               <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-                Direct Engineering Ownership &amp; Contributions
+                My role &amp; contribution
               </span>
             </div>
             <p className="text-base sm:text-lg text-[var(--ca-ink)] leading-relaxed font-medium">
@@ -291,7 +285,7 @@ export default async function ProjectDetailPage({
           {/* 4. The Results & What Shipped */}
           <div className="mt-16 sm:mt-20 text-center">
             <Scribble withDoodle>
-              <h2 className="inline text-inherit font-inherit">what shipped</h2>
+              <h2 className="inline text-inherit font-inherit">what I delivered</h2>
             </Scribble>
           </div>
           <p className="mx-auto mt-4 max-w-3xl text-center text-base sm:text-lg text-[var(--ca-ink)]/90 leading-relaxed font-medium">
@@ -330,19 +324,6 @@ export default async function ProjectDetailPage({
               );
             })}
           </div>
-
-          {/* Honest Engineering Boundaries & Realistic Scope */}
-          {project.limitations && (
-            <div className="mx-auto mt-12 max-w-3xl rounded-xl border-2 border-dashed border-[var(--ca-ink)]/30 bg-amber-50/90 p-5 sm:p-6 text-left shadow-2xs">
-              <div className="flex items-center gap-2 text-amber-950 font-bold ca-mono text-xs uppercase tracking-wider">
-                <AlertTriangle size={15} className="text-amber-700 shrink-0" />
-                <span>Verified Engineering Boundaries &amp; Scope Note</span>
-              </div>
-              <p className="mt-2 text-xs sm:text-sm text-stone-850 leading-relaxed font-medium">
-                {project.limitations}
-              </p>
-            </div>
-          )}
         </section>
 
         {/* Layer 3: Engineering Tradeoffs & Architectural Decisions */}
@@ -350,38 +331,38 @@ export default async function ProjectDetailPage({
           <section className="mb-20 sm:mb-28" aria-labelledby="tradeoffs-heading">
             <div className="flex flex-col items-center text-center">
               <Scribble withDoodle>
-                <h2 id="tradeoffs-heading" className="inline text-inherit font-inherit">engineering tradeoffs</h2>
+                <h2 id="tradeoffs-heading" className="inline text-inherit font-inherit">decisions &amp; lessons</h2>
               </Scribble>
               <p className="mx-auto mt-3 max-w-xl text-sm sm:text-base font-semibold text-[var(--ca-ink)]/75">
-                Every architectural choice involves tradeoffs. Here are the core technical decisions and rationales behind {project.title}.
+                How I positioned {project.title}, what makes it useful, and what I learned along the way.
               </p>
             </div>
 
-            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-              {project.tradeoffs.map((item, idx) => (
+            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+              {project.tradeoffs.slice(0, 2).map((item, idx) => (
                 <div
                   key={idx}
-                  className="relative flex flex-col justify-between rounded-xl border-2 border-[var(--ca-ink)] bg-white p-6 shadow-[4px_6px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-1"
+                  className="relative flex flex-col justify-between rounded-xl border-2 border-[var(--ca-ink)] bg-white p-6 sm:p-7 shadow-[4px_6px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-1"
                 >
                   <Tape
                     className="-top-2.5 right-6 z-10"
                     angle={idx % 2 === 0 ? 3 : -3}
-                    color={["var(--ca-yellow-soft)", "var(--ca-cyan)", "var(--ca-mint)"][idx % 3]}
+                    color={["var(--ca-yellow-soft)", "var(--ca-cyan)"][idx % 2]}
                   />
                   <div>
                     <div className="flex items-center justify-between border-b border-[var(--ca-ink)]/10 pb-3 mb-3">
                       <span className="ca-mono text-xs font-bold text-[var(--ca-blue)]">
-                        DECISION #{String(idx + 1).padStart(2, "0")}
+                        BUILD NOTE #{String(idx + 1).padStart(2, "0")}
                       </span>
                       <Scale size={15} className="text-[var(--ca-ink)]/40" />
                     </div>
-                    <h3 className="ca-mono text-sm font-bold text-[var(--ca-ink)] leading-snug">
+                    <h3 className="ca-mono text-sm sm:text-base font-bold text-[var(--ca-ink)] leading-snug">
                       {item.decision}
                     </h3>
                   </div>
                   <div className="mt-4 border-t border-[var(--ca-ink)]/10 pt-3">
                     <span className="ca-mono block text-[10px] font-bold uppercase tracking-wider text-[var(--ca-ink)]/50 mb-1">
-                      Engineering Rationale
+                      My reasoning
                     </span>
                     <p className="text-xs sm:text-sm text-[var(--ca-ink)]/80 leading-relaxed font-medium">
                       {item.rationale}
@@ -408,14 +389,14 @@ export default async function ProjectDetailPage({
               <div className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-blue)] animate-pulse" />
                 <span className="ca-mono text-[11px] font-bold uppercase tracking-widest text-[var(--ca-blue)]">
-                  System Blueprint
+                  Behind the build
                 </span>
               </div>
               <h2
                 id="blueprint-heading"
                 className="mt-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--ca-ink)]"
               >
-                Technical Specs &amp; Highlights
+                Tools &amp; implementation
               </h2>
             </div>
 
@@ -485,7 +466,7 @@ export default async function ProjectDetailPage({
             <div className="mb-3.5 flex items-center gap-1.5">
               <Wrench size={14} className="text-[var(--ca-blue)]" />
               <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/70">
-                Core Engineering Highlights
+                My implementation highlights
               </span>
             </div>
 
@@ -514,7 +495,7 @@ export default async function ProjectDetailPage({
                 <div className="mb-3.5 flex items-center gap-1.5">
                   <CheckCircle2 size={14} className="text-emerald-600" />
                   <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/70">
-                    Shipped Features &amp; Capabilities
+                    Features &amp; prototype scope
                   </span>
                 </div>
                 <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
@@ -536,17 +517,17 @@ export default async function ProjectDetailPage({
         {/* Layer 5: Recruiter High-Conversion Action Banner */}
         <section className="mb-20 sm:mb-28 overflow-hidden rounded-xl border-3 border-[var(--ca-ink)] bg-[var(--ca-yellow)] p-8 sm:p-12 shadow-[6px_8px_0_var(--ca-ink)] text-center">
           <h2 className="ca-display text-4xl sm:text-6xl uppercase tracking-tight text-[var(--ca-ink)]">
-            Looking for this skill set?
+            Have something in mind?
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-base font-semibold text-[var(--ca-ink)]/85 sm:text-lg">
-            Jayant is open to full-stack engineering roles, internships, and high-impact software challenges.
+            I&apos;m looking for internships, full-time roles, and projects where I can bring design and engineering together. Email me to arrange a call.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/contact"
               className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-[var(--ca-ink)] px-6 py-3 text-xs font-bold uppercase tracking-widest text-white shadow-[3px_3px_0_white] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-blue)]"
             >
-              Get In Touch With Jayant
+              Get In Touch With Me
               <ArrowRight size={14} />
             </Link>
             <NextProjectPrefetch

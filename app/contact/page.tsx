@@ -6,28 +6,28 @@ import { author, email, siteUrl, social } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Jayant Potdar about a full stack internship, full-time role, or web project. Email him to arrange a call. Based in Pune and open to hybrid or remote work.",
+    "Contact me about a full stack internship, full-time role, or web project. Email me to arrange a call. I'm based in Pune and open to hybrid or remote work.",
   alternates: {
     canonical: "/contact",
   },
   openGraph: {
     type: "website",
-    title: "Contact Jayant Potdar | Full Stack Developer",
-    description: "Email Jayant Potdar about hiring, a project, or arranging a call.",
+    title: "Contact Me | Jayant Potdar",
+    description: "Email me about hiring, a project, or arranging a call.",
     url: `${siteUrl}/contact`,
     images: [
       {
         url: "/og",
         width: 1200,
         height: 630,
-        alt: "Contact Jayant Potdar",
+        alt: "Contact me — Jayant Potdar",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Jayant Potdar | Full Stack Developer",
-    description: "Email Jayant Potdar about hiring, a project, or arranging a call.",
+    title: "Contact Me | Jayant Potdar",
+    description: "Email me about hiring, a project, or arranging a call.",
     images: ["/og"],
   },
 };
@@ -36,7 +36,7 @@ export default function ContactPage() {
   const contactJsonLd = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    name: "Contact Jayant Potdar",
+    name: "Contact Me | Jayant Potdar",
     url: `${siteUrl}/contact`,
     mainEntity: {
       "@type": "Person",
@@ -107,7 +107,7 @@ export default function ContactPage() {
               >
                 <ImageWithLoader
                   src="/images/img-9.jpeg"
-                  alt="Jayant Potdar overlooking Sahyadri mountain valley from historic fort bastion"
+                  alt="Me overlooking the Sahyadri mountain valley from a historic fort bastion"
                   fill
                   sizes="(max-width: 1280px) 600px, 800px"
                   quality={95}
