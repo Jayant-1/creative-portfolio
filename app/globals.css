@@ -407,6 +407,18 @@ textarea {
   animation: 4.4s ease-in-out -2.2s infinite ca-emoji-swap;
 }
 
+/* Sticky Project Cards (Hardware Accelerated & Compositor Isolated) */
+.ca-sticky-card {
+  position: sticky;
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  isolation: isolate;
+  contain: layout style;
+}
+
 /* Sticky folder tab clip paths */
 .folder-tab-shape {
   -webkit-clip-path: polygon(0 0, calc(100% - 44px) 0, 100% 100%, 0 100%);

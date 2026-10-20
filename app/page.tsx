@@ -811,7 +811,7 @@ export default function HomePage() {
       {/* ===================== FEATURED WORKS STACK ===================== */}
       <section
         id="work"
-        className="ca-grid scroll-mt-24 pb-24 pt-10 sm:pt-16"
+        className="ca-grid scroll-mt-24 pb-12 sm:pb-16 pt-10 sm:pt-16"
         aria-labelledby="featured-works-title"
       >
         <div className="mx-auto flex max-w-4xl flex-col items-center px-4 pb-16 text-center sm:pb-24">
@@ -833,7 +833,7 @@ export default function HomePage() {
         </div>
 
         {/* Stacking Sticky Folder Cards */}
-        <div className="flex flex-col gap-6 sm:gap-10 lg:gap-12 px-3 sm:px-8 lg:px-20 pb-36 sm:pb-48 lg:pb-64">
+        <div className="relative px-3 sm:px-8 lg:px-20 pb-10 sm:pb-14 lg:pb-16">
           {projects.map((project, idx) => {
             const tabMargins = [
               "0",
@@ -848,7 +848,7 @@ export default function HomePage() {
             return (
               <article
                 key={project.slug}
-                className="sticky top-16 sm:top-24 lg:top-28"
+                className="ca-sticky-card sticky top-16 sm:top-20 lg:top-24 mb-6 sm:mb-8 lg:mb-10 last:mb-0"
                 style={{ zIndex: idx + 10 }}
               >
                 {/* Protruding Folder Tab */}
@@ -881,7 +881,7 @@ export default function HomePage() {
 
                 {/* Folder Body */}
                 <div
-                  className="grid grid-cols-1 gap-4 p-4 min-[400px]:p-5 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:p-14 lg:min-h-[calc(100vh-14rem)]"
+                  className="grid grid-cols-1 gap-4 p-4 min-[400px]:p-5 sm:p-8 lg:grid-cols-[1fr_1.1fr] lg:gap-10 lg:p-12 min-h-[550px] sm:min-h-[500px] lg:min-h-[580px] xl:min-h-[620px]"
                   style={{
                     backgroundColor: project.color,
                     color: project.ink,

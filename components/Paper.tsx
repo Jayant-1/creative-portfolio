@@ -168,7 +168,7 @@ export function ContactStrip() {
   const { containerRef, lensRef, onMove, onMouseEnter, onMouseLeave } = useLens([3, 97]);
 
   return (
-    <section id="contact" className="ca-grid relative scroll-mt-24 overflow-hidden" aria-labelledby="talk-title">
+    <section id="contact" className="ca-grid relative scroll-mt-24 overflow-hidden isolate" aria-labelledby="talk-title">
       <div
         ref={containerRef as React.RefObject<HTMLDivElement>}
         onMouseMove={onMove}
@@ -286,7 +286,7 @@ export function ContactStrip() {
 
 export function Footer() {
   return (
-    <footer className="ca-grid relative overflow-hidden">
+    <footer className="ca-grid relative overflow-hidden isolate">
       <WavyDivider />
       <div className="px-4 pb-10 pt-6 sm:px-8 lg:px-20">
         <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
