@@ -202,10 +202,10 @@ export function HookSidebar({
             onBlur: () => setFocusInside(false),
             onClick: () => select(index),
             className: cn(
-              "group relative flex min-h-[32px] items-center rounded-md py-1 pl-4 pr-2 text-left font-mono text-xs transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]",
+              "group relative flex min-h-[32px] items-center rounded-md py-1 pr-2 text-left font-mono text-xs transition-all duration-150 motion-reduce:transition-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]",
               isActive
-                ? "font-semibold text-[#191510]"
-                : "text-[#78716c] hover:text-[#191510] hover:translate-x-0.5",
+                ? "pl-[18px] font-semibold text-[#191510]"
+                : "pl-[16.5px] text-[#78716c] hover:text-[#191510] hover:translate-x-0.5",
             ),
           };
 
