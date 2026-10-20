@@ -502,9 +502,8 @@ export default async function ProjectDetailPage({
                   {project.features.map((feature, fIdx) => (
                     <div
                       key={fIdx}
-                      className="flex items-start gap-2.5 rounded-md border border-[var(--ca-ink)]/10 bg-[var(--ca-surface)]/60 p-2.5 text-xs sm:text-sm font-medium text-[var(--ca-ink)]/90"
+                      className="rounded-md border border-[var(--ca-ink)]/10 bg-[var(--ca-surface)]/60 p-2.5 text-xs sm:text-sm font-medium text-[var(--ca-ink)]/90"
                     >
-                      <CheckCircle2 size={16} className="mt-0.5 text-emerald-600 shrink-0" />
                       <span>{feature}</span>
                     </div>
                   ))}
