@@ -431,18 +431,18 @@ export default function AboutPage() {
                 <div className="mt-10 pt-6 pb-3 sm:pb-4 border-t border-[var(--ca-ink)]/10 flex flex-wrap gap-6 items-center">
                   <Link
                     href="/projects"
-                    className="ca-mono min-h-[44px] inline-flex items-center gap-2 border-b-2 border-[var(--ca-ink)] py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] transition-colors hover:text-[var(--ca-blue)]"
+                    className="group ca-mono min-h-[44px] inline-flex items-center gap-2 border-b-2 border-[var(--ca-ink)] py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] transition-colors hover:text-[var(--ca-blue)]"
                   >
                     Explore my projects
-                    <ArrowUpRight size={18} />
+                    <ArrowUpRight size={18} className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
 
                   <Link
                     href="/experience"
-                    className="ca-mono min-h-[44px] inline-flex items-center gap-2 border-b-2 border-[var(--ca-blue)] py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-blue)] transition-colors hover:text-[var(--ca-ink)]"
+                    className="group ca-mono min-h-[44px] inline-flex items-center gap-2 border-b-2 border-[var(--ca-blue)] py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-blue)] transition-colors hover:text-[var(--ca-ink)]"
                   >
                     View detailed experience record
-                    <ArrowUpRight size={18} />
+                    <ArrowUpRight size={18} className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                 </div>
               </div>

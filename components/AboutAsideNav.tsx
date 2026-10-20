@@ -94,11 +94,11 @@ export function AboutAsideNav() {
     const scrollY = window.scrollY;
 
     // Detect active section based on current viewport reading focus
-    const focusY = scrollY + STICKY_TOP + 100;
+    const focusY = scrollY + STICKY_TOP + 80;
     let currentActive = SECTIONS[0].id;
-    for (let i = 0; i < m.sections.length; i++) {
+    for (let i = m.sections.length - 1; i >= 0; i--) {
       const s = m.sections[i];
-      if (s.topDoc <= focusY && s.bottomDoc > focusY) {
+      if (s.topDoc > 0 && focusY >= s.topDoc - 60) {
         currentActive = s.id;
         break;
       }
@@ -276,10 +276,8 @@ export function AboutAsideNav() {
                   }`}
                 >
                   <span
-                    className={`h-2 w-2 rounded-full shrink-0 transition-transform duration-200 ${
-                      isActive ? "scale-125 ring-2 ring-[var(--ca-ink)]/30" : ""
-                    }`}
-                    style={{ backgroundColor: sec.dotBg }}
+                    className="h-2 w-2 rounded-full shrink-0 transition-colors duration-200"
+                    style={{ backgroundColor: isActive ? "#ffffff" : "var(--ca-ink)" }}
                   />
                   <span>{sec.label}</span>
                 </a>
