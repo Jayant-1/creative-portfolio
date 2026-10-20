@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { usePageAnimationReady } from "@/components/Motion";
 
@@ -44,9 +44,9 @@ const SECTIONS: SectionDef[] = [
 ];
 
 const STICKY_TOP = 112; // 7rem (top-28 below header)
-const BADGE_HEIGHT = 40;
-const GAP = 12;
-const BADGE_STEP = BADGE_HEIGHT + GAP; // 52px
+const BADGE_HEIGHT = 34; // Refined sleek height for authentic stationery index tab
+const GAP = 8;
+const BADGE_STEP = BADGE_HEIGHT + GAP; // 42px (previously 52px)
 
 interface CachedMetrics {
   asideTopDoc: number;
@@ -60,6 +60,8 @@ export function AboutAsideNav() {
   const asideRef = useRef<HTMLDivElement>(null);
   const badgeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const metricsRef = useRef<CachedMetrics | null>(null);
+  const [activeId, setActiveId] = useState<string>("bio");
+  const activeIdRef = useRef<string>("bio");
 
   // Measure document coordinates only when layout changes (mount, resize, content load)
   // NEVER during scroll — zero layout thrashing!
@@ -90,6 +92,21 @@ export function AboutAsideNav() {
     if (!m) return;
 
     const scrollY = window.scrollY;
+
+    // Detect active section based on current viewport reading focus
+    const focusY = scrollY + STICKY_TOP + 100;
+    let currentActive = SECTIONS[0].id;
+    for (let i = 0; i < m.sections.length; i++) {
+      const s = m.sections[i];
+      if (s.topDoc <= focusY && s.bottomDoc > focusY) {
+        currentActive = s.id;
+        break;
+      }
+    }
+    if (currentActive !== activeIdRef.current) {
+      activeIdRef.current = currentActive;
+      setActiveId(currentActive);
+    }
 
     for (let i = 0; i < SECTIONS.length; i++) {
       const badgeEl = badgeRefs.current[i];
@@ -233,20 +250,41 @@ export function AboutAsideNav() {
               transformOrigin: "left center",
             }}
           >
-            <a
-              href={`#${sec.id}`}
-              style={{
-                backgroundColor: sec.color,
-                color: sec.ink,
-              }}
-              className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-r-xl border-2 border-[var(--ca-ink)] px-4 py-2.5 text-xs font-bold uppercase tracking-wider shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:translate-x-1.5 focus:translate-x-1.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
-            >
-              <span
-                className="h-2.5 w-2.5 rounded-full"
-                style={{ backgroundColor: sec.dotBg }}
-              />
-              {sec.label}
-            </a>
+            {(() => {
+              const isActive = sec.id === activeId;
+              return (
+                <a
+                  href={`#${sec.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById(sec.id);
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth" });
+                      activeIdRef.current = sec.id;
+                      setActiveId(sec.id);
+                    }
+                  }}
+                  aria-current={isActive ? "location" : undefined}
+                  style={{
+                    backgroundColor: sec.color,
+                    color: sec.ink,
+                  }}
+                  className={`ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-2 rounded-r-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider transition-all duration-200 select-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2 ${
+                    isActive
+                      ? "translate-x-2 shadow-[4px_4px_0_var(--ca-ink)]"
+                      : "shadow-[2.5px_2.5px_0_var(--ca-ink)] hover:translate-x-1.5 focus:translate-x-1.5"
+                  }`}
+                >
+                  <span
+                    className={`h-2 w-2 rounded-full shrink-0 transition-transform duration-200 ${
+                      isActive ? "scale-125 ring-2 ring-[var(--ca-ink)]/30" : ""
+                    }`}
+                    style={{ backgroundColor: sec.dotBg }}
+                  />
+                  <span>{sec.label}</span>
+                </a>
+              );
+            })()}
           </motion.div>
         </div>
       ))}

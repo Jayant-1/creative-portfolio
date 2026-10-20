@@ -833,7 +833,7 @@ export default function HomePage() {
         </div>
 
         {/* Stacking Sticky Folder Cards */}
-        <div className="flex flex-col gap-16 px-4 sm:px-8 lg:px-20 lg:gap-[12vh]">
+        <div className="flex flex-col gap-6 sm:gap-10 lg:gap-12 px-3 sm:px-8 lg:px-20 pb-36 sm:pb-48 lg:pb-64">
           {projects.map((project, idx) => {
             const tabMargins = [
               "0",
@@ -857,10 +857,10 @@ export default function HomePage() {
                   style={{ marginLeft: tabMargins[idx] || "0" }}
                 >
                   <span
-                    className={`ca-mono inline-flex items-center gap-2 whitespace-nowrap py-3.5 pr-14 text-xs font-bold uppercase tracking-[0.2em] sm:gap-3 sm:py-5 sm:pr-20 sm:text-sm lg:text-base ${
+                    className={`ca-mono inline-flex items-center gap-1.5 whitespace-nowrap py-2.5 pr-8 text-[11px] font-bold uppercase tracking-[0.16em] sm:gap-3 sm:py-5 sm:pr-20 sm:text-sm lg:text-base ${
                       isFirst
-                        ? "pl-5 folder-tab-shape sm:pl-8"
-                        : "pl-10 folder-tab-mid-shape sm:pl-18 lg:pl-20"
+                        ? "pl-4 folder-tab-shape sm:pl-8"
+                        : "pl-6 folder-tab-mid-shape sm:pl-18 lg:pl-20"
                     }`}
                     style={{
                       backgroundColor: project.color,
@@ -881,7 +881,7 @@ export default function HomePage() {
 
                 {/* Folder Body */}
                 <div
-                  className="grid grid-cols-1 gap-6 p-6 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:p-14 lg:min-h-[calc(100vh-14rem)]"
+                  className="grid grid-cols-1 gap-4 p-4 min-[400px]:p-5 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:p-14 lg:min-h-[calc(100vh-14rem)]"
                   style={{
                     backgroundColor: project.color,
                     color: project.ink,
@@ -890,18 +890,18 @@ export default function HomePage() {
                   {/* Left Column: Details & Actions */}
                   <div className="flex flex-col">
                     <span
-                      className="ca-mono inline-flex items-center gap-3 text-sm font-bold uppercase tracking-[0.2em]"
+                      className="ca-mono inline-flex items-center gap-2 text-xs sm:gap-3 sm:text-sm font-bold uppercase tracking-[0.18em]"
                       style={{ color: project.ink }}
                     >
                       <span
-                        className="h-3 w-3 rounded-full"
+                        className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full"
                         style={{ backgroundColor: project.ink }}
                       />
                       {`${project.title} · ${project.date}`}
                     </span>
 
                     <h3
-                      className="mt-6 text-5xl font-semibold tracking-tight sm:text-6xl xl:text-7xl"
+                      className="mt-2.5 sm:mt-6 text-2xl min-[380px]:text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight leading-tight"
                       style={{ color: project.ink }}
                     >
                       <Link
@@ -913,7 +913,7 @@ export default function HomePage() {
                     </h3>
 
                     <p
-                      className="mt-5 max-w-lg text-lg leading-relaxed opacity-90"
+                      className="mt-2 sm:mt-5 max-w-lg text-xs min-[380px]:text-sm sm:text-base lg:text-lg leading-relaxed opacity-90 line-clamp-3 sm:line-clamp-none"
                       style={{ color: project.ink }}
                     >
                       {project.problem}
@@ -921,7 +921,7 @@ export default function HomePage() {
 
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="ca-mono mt-8 inline-flex min-h-[44px] items-center gap-2.5 self-start border-b-2 pb-1 text-sm font-bold uppercase tracking-[0.2em] transition-transform duration-150 hover:translate-x-1"
+                      className="ca-mono mt-3 sm:mt-8 inline-flex min-h-[44px] items-center gap-2 self-start border-b-2 pb-1 text-xs sm:text-sm font-bold uppercase tracking-[0.18em] transition-transform duration-150 hover:translate-x-1"
                       style={{
                         borderColor: project.ink,
                         color: project.ink,
@@ -933,7 +933,7 @@ export default function HomePage() {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2.4"
-                        className="h-4 w-4"
+                        className="h-3.5 w-3.5 sm:h-4 sm:w-4"
                         aria-hidden="true"
                       >
                         <path d="M7 17 17 7M9 7h8v8" />
@@ -941,7 +941,7 @@ export default function HomePage() {
                     </Link>
 
                     {/* Category Notched Tags */}
-                    <div className="mt-auto flex flex-wrap gap-2.5 pt-12">
+                    <div className="mt-3 sm:mt-6 lg:mt-auto flex flex-wrap gap-1.5 sm:gap-2.5 pt-2 sm:pt-6 lg:pt-12">
                       {project.category.map((cat, cIdx) => {
                         const palette = [
                           "var(--ca-yellow)",
@@ -959,7 +959,7 @@ export default function HomePage() {
                         return (
                           <span
                             key={cat}
-                            className="ca-mono px-4 pb-2 pt-2.5 text-base font-bold uppercase tracking-wide ca-notched-tag text-[var(--ca-ink)] border border-[var(--ca-ink)]/20 shadow-xs"
+                            className="ca-mono px-2.5 py-1 text-xs sm:px-4 sm:pb-2 sm:pt-2.5 sm:text-base font-bold uppercase tracking-wide ca-notched-tag text-[var(--ca-ink)] border border-[var(--ca-ink)]/20 shadow-xs"
                             style={{ backgroundColor: tagBg }}
                           >
                             {cat}

@@ -168,7 +168,7 @@ export function ContactStrip() {
   const { containerRef, lensRef, onMove, onMouseEnter, onMouseLeave } = useLens([3, 97]);
 
   return (
-    <section id="contact" className="ca-grid ca-section-contain relative scroll-mt-24 overflow-hidden" aria-labelledby="talk-title">
+    <section id="contact" className="ca-grid relative scroll-mt-24 overflow-hidden" aria-labelledby="talk-title">
       <div
         ref={containerRef as React.RefObject<HTMLDivElement>}
         onMouseMove={onMove}
@@ -301,7 +301,7 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col items-start gap-5 md:items-end">
-            <nav className="flex flex-wrap items-center gap-1.5" aria-label="Footer navigation">
+            <nav className="flex flex-wrap items-center gap-1 xl:gap-1.5" aria-label="Footer navigation">
               {[
                 { href: "/about", label: "About", rotate: "-rotate-2" },
                 { href: "/projects", label: "Projects", rotate: "rotate-1" },
@@ -313,7 +313,7 @@ export function Footer() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="group relative min-h-[44px] inline-flex items-center px-3.5 py-2.5 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 select-none"
+                  className="group relative min-h-[44px] inline-flex items-center px-2.5 xl:px-3.5 py-2.5 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 select-none"
                 >
                   <span
                     aria-hidden="true"

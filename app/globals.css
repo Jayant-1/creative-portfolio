@@ -71,7 +71,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   background-color: var(--ca-surface);
   color: var(--ca-ink);
 }
@@ -87,6 +87,19 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
 }
+
+/* ==========================================================================
+   125% Display Scale Compensation (Windows 125% DPI scale: 1.25dppx / 120dpi)
+   Restores exact 100% optical size and proportions on 125% scaled laptop screens.
+   Guaranteed to NEVER match 100% displays (1.0dppx) or Retina displays (2.0dppx).
+   ========================================================================== */
+@media screen and (min-width: 1200px) and (min-resolution: 1.15dppx) and (max-resolution: 1.35dppx),
+       screen and (min-width: 1200px) and (-webkit-min-device-pixel-ratio: 1.15) and (-webkit-max-device-pixel-ratio: 1.35) {
+  html {
+    font-size: 80%;
+  }
+}
+
 
 /* Cross-browser scrollbar hiding utility */
 .no-scrollbar {
@@ -329,10 +342,9 @@ textarea {
   animation: none !important;
 }
 
-/* Rendering containment for heavy off-screen sections */
+/* Rendering containment for off-screen sections without content-visibility height jumps */
 .ca-section-contain {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
+  contain: paint;
 }
 
 @keyframes ca-blink {
@@ -733,6 +745,7 @@ textarea {
 .ca-infinite-testimonial-track {
   display: flex;
   width: max-content;
+  contain: layout paint;
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;

@@ -65,7 +65,7 @@ export default function ContactPage() {
       <div className="pointer-events-none absolute inset-0 hidden xl:block overflow-hidden" aria-hidden="true">
         {/* Left Polaroid */}
         <div
-          className="group absolute left-[2%] 2xl:left-[5%] top-[14%] w-52 2xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
+          className="group absolute left-8 xl:left-10 2xl:left-[5%] top-[14%] w-52 2xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
           style={{ transform: "rotate(-14.4deg)" }}
         >
           <div className="pointer-events-auto block w-full">
@@ -94,7 +94,7 @@ export default function ContactPage() {
 
         {/* Right Polaroid */}
         <div
-          className="group absolute right-[2%] 2xl:right-[5%] top-[17%] w-52 2xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
+          className="group absolute right-8 xl:right-10 2xl:right-[5%] top-[17%] w-52 2xl:w-72 transition-all duration-500 ease-out hover:rotate-0 hover:-translate-y-2 hover:scale-[1.03]"
           style={{ transform: "rotate(15.5deg)" }}
         >
           <div className="pointer-events-auto block w-full">
