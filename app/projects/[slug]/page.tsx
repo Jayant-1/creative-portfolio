@@ -127,7 +127,7 @@ export default async function ProjectDetailPage({
             Projects
           </Link>
           <ChevronRight size={14} className="shrink-0 text-[var(--ca-ink)]/40" />
-          <span className="inline-flex items-center py-1 px-1.5 text-[var(--ca-ink)] font-bold truncate max-w-[200px] min-[400px]:max-w-[280px] sm:max-w-none">
+          <span className="inline-flex items-center py-1 px-1.5 text-[var(--ca-ink)] font-bold truncate max-w-[260px] sm:max-w-none">
             {project.title}
           </span>
         </nav>
@@ -175,15 +175,26 @@ export default async function ProjectDetailPage({
             )}
           </div>
 
-          {/* Massive Display Title */}
-          <h1 className="ca-display mt-4 text-5xl min-[390px]:text-6xl sm:text-7xl md:text-8xl lg:text-9xl uppercase leading-[0.92] tracking-tight text-[var(--ca-ink)]">
-            {project.headline}
-          </h1>
+          {/* Project Title (H1) & Key Line Curiosity Hook */}
+          <div className="mt-4 flex flex-col gap-3 sm:gap-4">
+            <h1 className="ca-display text-6xl min-[390px]:text-7xl sm:text-8xl md:text-9xl lg:text-[8.5rem] uppercase leading-[0.88] tracking-tight text-[var(--ca-ink)]">
+              {project.title}
+            </h1>
 
-          {/* High-Signal Tagline */}
-          <p className="mt-3 text-lg font-bold text-[var(--ca-blue)] sm:text-2xl">
-            {project.tagline}
-          </p>
+            {/* Key Line (The Curiosity Hook) & Value Proposition */}
+            <div className="flex flex-col gap-2">
+              <div>
+                <h2 className="ca-highlighter text-2xl min-[390px]:text-3xl sm:text-4xl md:text-[2.65rem] font-black tracking-tight text-[var(--ca-ink)] leading-snug">
+                  {project.headline}
+                </h2>
+              </div>
+
+              {/* High-Signal Engineering Value Proposition */}
+              <p className="text-base sm:text-xl font-medium text-[var(--ca-ink)]/75 max-w-3xl leading-snug">
+                {project.tagline}
+              </p>
+            </div>
+          </div>
 
           {/* Recruiter Quick Actions: Immediate proof access (0-3s scan right under title & tagline) */}
           <div className="mt-5 flex flex-wrap items-center gap-3.5">
