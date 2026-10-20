@@ -123,7 +123,7 @@ export default function AboutPage() {
                 className="ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider text-white shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-blue)" }}
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                <span className="h-1.5 w-1.5 rounded-full bg-white border border-black" />
                 Leadership
               </a>
             </nav>

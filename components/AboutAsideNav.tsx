@@ -276,8 +276,13 @@ export function AboutAsideNav() {
                   }`}
                 >
                   <span
-                    className="h-2 w-2 rounded-full shrink-0 transition-colors duration-200"
-                    style={{ backgroundColor: isActive ? "#ffffff" : "var(--ca-ink)" }}
+                    className={`h-2 w-2 rounded-full shrink-0 transition-colors duration-200 ${
+                      isActive ? "border border-black" : ""
+                    }`}
+                    style={{
+                      backgroundColor: isActive ? "#ffffff" : "var(--ca-ink)",
+                      border: isActive ? "1px solid black" : undefined,
+                    }}
                   />
                   <span>{sec.label}</span>
                 </a>
