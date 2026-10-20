@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowLeft, ArrowRight, Send } from "lucide-react";
 import { email } from "@/lib/site";
 import { trackContactFormAttempt, trackContactFormDelivery } from "@/lib/analytics";
 
@@ -148,9 +149,10 @@ export default function ContactForm() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="ca-mono mt-4 inline-flex min-h-[48px] items-center justify-center bg-[var(--ca-ink)] px-7 py-3 text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-[var(--ca-blue)] hover:text-white active:scale-98 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                className="group ca-mono mt-4 inline-flex min-h-[48px] items-center justify-center gap-2 bg-[var(--ca-ink)] px-7 py-3 text-sm font-bold uppercase tracking-widest text-white transition-all hover:bg-[var(--ca-blue)] hover:text-white active:scale-98 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] shadow-[2px_2px_0_var(--ca-ink)]"
               >
-                Next (1/2) →
+                <span>Next (1/2)</span>
+                <ArrowRight size={16} className="transition-transform duration-150 group-hover:translate-x-0.5" />
               </button>
             </div>
 
@@ -291,14 +293,14 @@ export default function ContactForm() {
                     setDeliveryFailed(false);
                     setStep(1);
                   }}
-                  className="ca-mono flex h-12 w-12 items-center justify-center text-lg font-bold text-[var(--ca-ink)]/70 transition-colors hover:text-[var(--ca-ink)] disabled:opacity-50 active:scale-95 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-sm"
+                  className="group ca-mono flex h-12 w-12 items-center justify-center font-bold text-[var(--ca-ink)]/70 transition-all hover:text-[var(--ca-ink)] hover:border-[var(--ca-ink)] disabled:opacity-50 active:scale-95 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-sm border border-[var(--ca-ink)]/25"
                 >
-                  ←
+                  <ArrowLeft size={18} className="transition-transform duration-150 group-hover:-translate-x-0.5" />
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="ca-mono inline-flex min-h-[48px] items-center justify-center gap-2 bg-[var(--ca-ink)] px-7 py-3 text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-[var(--ca-blue)] hover:text-white disabled:cursor-not-allowed disabled:opacity-60 active:scale-98 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                  className="group ca-mono inline-flex min-h-[48px] items-center justify-center gap-2 bg-[var(--ca-ink)] px-7 py-3 text-sm font-bold uppercase tracking-widest text-white transition-all hover:bg-[var(--ca-blue)] hover:text-white disabled:cursor-not-allowed disabled:opacity-60 active:scale-98 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] shadow-[2px_2px_0_var(--ca-ink)]"
                 >
                   {loading ? (
                     <>
@@ -306,10 +308,13 @@ export default function ContactForm() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
                       </svg>
-                      Sending...
+                      <span>Sending...</span>
                     </>
                   ) : (
-                    "Send (2/2)"
+                    <>
+                      <span>Send (2/2)</span>
+                      <Send size={15} className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </>
                   )}
                 </button>
               </div>

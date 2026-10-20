@@ -118,8 +118,9 @@ export function RelatedProjectCard({
           clipPath: "polygon(0 0, 42% 0, 54% 18%, 100% 18%, 100% 100%, 0 100%)",
         }}
       >
-        <span className="ca-mono flex h-[20%] items-center px-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-          ● &nbsp;{project.date}
+        <span className="ca-mono flex h-[20%] items-center gap-1.5 px-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-ink)] shrink-0" />
+          {project.date}
         </span>
         <div
           ref={containerRef as React.RefObject<HTMLDivElement>}
@@ -145,10 +146,13 @@ export function RelatedProjectCard({
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <h3 className="text-2xl font-bold text-[var(--ca-ink)] group-hover:text-[var(--ca-blue)]">
+        <h3 className="text-2xl font-bold text-[var(--ca-ink)] group-hover:text-[var(--ca-blue)] transition-colors">
           {project.title}
         </h3>
-        <ArrowUpRight size={20} className="text-[var(--ca-ink)] group-hover:text-[var(--ca-blue)]" />
+        <ArrowUpRight
+          size={20}
+          className="text-[var(--ca-ink)] group-hover:text-[var(--ca-blue)] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
       </div>
       <p className="mt-1 text-sm text-[var(--ca-ink)]/75">{project.summary}</p>
     </Link>

@@ -92,38 +92,38 @@ export default function AboutPage() {
               <StaggerText text="ABOUT" stagger={0.06} />
             </h1>
 
-            {/* Mobile quick-jump navigation (badges in-flow with 44px touch targets) */}
-            <nav className="flex flex-wrap gap-2.5 lg:hidden pt-2" aria-label="About section quick links">
+            {/* Mobile quick-jump navigation (sleek 34px badges matching desktop tabs) */}
+            <nav className="flex flex-wrap gap-2 lg:hidden pt-2" aria-label="About section quick links">
               <a
                 href="#bio"
-                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
+                className="ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-yellow)" }}
               >
-                <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-ink)]" />
                 Main Bio
               </a>
               <a
                 href="#facts"
-                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
+                className="ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-cyan)" }}
               >
-                <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-ink)]" />
                 Quick Facts
               </a>
               <a
                 href="#story"
-                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
+                className="ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-magenta)" }}
               >
-                <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-ink)]" />
                 Story
               </a>
               <a
                 href="#leadership"
-                className="ca-mono min-h-[44px] inline-flex items-center gap-2 rounded-full border-2 border-[var(--ca-ink)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
+                className="ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider text-white shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-blue)" }}
               >
-                <span className="h-2 w-2 rounded-full bg-white" />
+                <span className="h-1.5 w-1.5 rounded-full bg-white" />
                 Leadership
               </a>
             </nav>
@@ -156,7 +156,7 @@ export default function AboutPage() {
                     <Polaroid
                       src="/images/img-3.jpeg"
                       alt="Jayant Potdar - Full Stack Developer in Pune"
-                      caption="Me in the Western Ghats 🌿"
+                      caption="Me in the Western Ghats"
                       aspectClassName="aspect-[3/4]"
                       className="w-56 sm:w-64"
                       priority
@@ -166,7 +166,7 @@ export default function AboutPage() {
                 </div>
 
                 <h2 id="bio-heading" className="ca-hand text-3xl font-medium leading-[1.25] text-[var(--ca-ink)] sm:text-4xl lg:text-5xl">
-                  I&apos;m Jayant Potdar — a creative full stack developer in Pune. ✨ I design interfaces with character and build the systems that make them work.
+                  I&apos;m Jayant Potdar — a creative full stack developer in Pune. I design interfaces with character and build the systems that make them work.
                 </h2>
 
                 <div className="mt-6 space-y-4 text-base leading-relaxed text-[var(--ca-ink)]/85 sm:text-lg">
@@ -187,16 +187,18 @@ export default function AboutPage() {
                     className="ca-tape relative -rotate-1 rounded-sm p-4 text-sm leading-relaxed text-[var(--ca-ink)] shadow-md sm:w-1/2"
                     style={{ backgroundColor: "var(--ca-yellow-soft)" }}
                   >
-                    <p className="font-semibold">
-                      🎓 <strong>Education:</strong> B.Tech in CSE at {author.college} (2024–2028, CGPA 8.0).
+                    <p className="font-semibold flex items-center gap-1.5">
+                      <GraduationCap size={16} className="shrink-0 text-[var(--ca-ink)]" />
+                      <span><strong>Education:</strong> B.Tech in CSE at {author.college} (2024–2028, CGPA 8.0).</span>
                     </p>
                   </div>
                   <div
                     className="ca-tape relative rotate-1 rounded-sm p-4 text-sm leading-relaxed text-[var(--ca-ink)] shadow-md sm:w-1/2"
                     style={{ backgroundColor: "var(--ca-mint)" }}
                   >
-                    <p className="font-semibold">
-                      💼 <strong>Status:</strong> Open to full stack internships and full-time roles in Pune, with hybrid or remote options.
+                    <p className="font-semibold flex items-center gap-1.5">
+                      <Briefcase size={16} className="shrink-0 text-[var(--ca-ink)]" />
+                      <span><strong>Status:</strong> Open to full stack internships and full-time roles in Pune, with hybrid or remote options.</span>
                     </p>
                   </div>
                 </div>
@@ -269,7 +271,7 @@ export default function AboutPage() {
                       <Polaroid
                         src="/images/img-5.jpeg"
                         alt="My physical trophies and signed certificates from MSSU"
-                        caption="Physical Honors & Signed Certificates 📜"
+                        caption="Physical Honors & Signed Certificates"
                         aspectClassName="aspect-[4/3]"
                         className="w-full shadow-md"
                       />

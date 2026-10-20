@@ -354,7 +354,7 @@ export function Header() {
 
             <IntentNavLink
               href="/contact"
-              className="ca-mono hidden min-h-[44px] items-center gap-2.5 border-2 border-[var(--ca-ink)] px-5 py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] transition-colors hover:bg-[var(--ca-ink)] hover:text-white sm:inline-flex focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+              className="ca-mono hidden min-h-[44px] items-center gap-2.5 border-2 border-[var(--ca-ink)] px-5 py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_var(--ca-ink)] hover:bg-[var(--ca-ink)] hover:text-white active:translate-y-0 active:shadow-[1px_1px_0_var(--ca-ink)] sm:inline-flex focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                 <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />

@@ -56,12 +56,12 @@ export const ComponentsCatalogClient: React.FC = () => {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5 shrink-0">
+              <div className="flex items-center gap-1 shrink-0">
                 <button
                   type="button"
                   onClick={(e) => handleCopyInstall(e, comp)}
                   aria-label={`Copy install command for ${comp.name}`}
-                  className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg text-[var(--ca-ink)]/70 hover:text-[var(--ca-ink)] dark:text-neutral-300 dark:hover:text-white hover:bg-[var(--ca-ink)]/5 dark:hover:bg-white/5 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                  className="h-8 w-8 inline-flex items-center justify-center rounded-lg text-[var(--ca-ink)]/70 hover:text-[var(--ca-ink)] dark:text-neutral-300 dark:hover:text-white hover:bg-[var(--ca-ink)]/5 dark:hover:bg-white/5 active:scale-90 transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                   title={`Copy install command for ${comp.name}`}
                 >
                   {copiedSlug === comp.slug ? (
@@ -73,10 +73,10 @@ export const ComponentsCatalogClient: React.FC = () => {
                 <Link
                   href={`/components/${comp.slug}`}
                   aria-label={`Open ${comp.name} craft documentation`}
-                  className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-md text-[var(--ca-orange)] hover:translate-x-0.5 hover:-translate-y-0.5 transition-transform focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                  className="h-8 w-8 inline-flex items-center justify-center rounded-lg text-[var(--ca-orange)] hover:bg-[var(--ca-orange)]/10 hover:translate-x-0.5 hover:-translate-y-0.5 active:scale-90 transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                   title="Open component"
                 >
-                  <ArrowUpRight size={18} />
+                  <ArrowUpRight size={17} />
                 </Link>
               </div>
             </div>

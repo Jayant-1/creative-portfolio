@@ -97,14 +97,17 @@ export default function ExperiencePage() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <span className="ca-mono rounded-full border border-[var(--ca-ink)]/20 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-                ● TechSpark Technical Club
+              <span className="ca-mono inline-flex items-center gap-2 rounded-full border border-[var(--ca-ink)]/20 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-blue)]" />
+                TechSpark Technical Club
               </span>
-              <span className="ca-mono rounded-full border border-[var(--ca-ink)]/20 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-                ● 100+ Hackathon Participants Directed
+              <span className="ca-mono inline-flex items-center gap-2 rounded-full border border-[var(--ca-ink)]/20 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-yellow)]" />
+                100+ Hackathon Participants Directed
               </span>
-              <span className="ca-mono rounded-full border border-[var(--ca-ink)]/20 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]">
-                ● Pune, India
+              <span className="ca-mono inline-flex items-center gap-2 rounded-full border border-[var(--ca-ink)]/20 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-2xs">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-mint)]" />
+                Pune, India
               </span>
             </div>
           </Reveal>
@@ -213,7 +216,7 @@ export default function ExperiencePage() {
                   <Polaroid
                     src="/images/img-5.jpeg"
                     alt="My physical trophies and signed certificates from MSSU"
-                    caption="Foundation Day Week Trophies & Certificates 📜"
+                    caption="Foundation Day Week Trophies & Certificates"
                     aspectClassName="aspect-[4/3]"
                     className="w-full shadow-md"
                   />
@@ -260,24 +263,24 @@ export default function ExperiencePage() {
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/projects"
-                className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-yellow)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform hover:-translate-y-0.5 active:translate-y-0"
+                className="group ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-yellow)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--ca-ink)] active:translate-y-0 active:shadow-[1px_1px_0_var(--ca-ink)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
               >
-                View Projects
-                <ArrowUpRight size={16} />
+                <span>View Projects</span>
+                <ArrowUpRight size={16} className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
               <Link
                 href="/blog"
-                className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform hover:-translate-y-0.5 hover:bg-[var(--ca-chrome)] active:translate-y-0"
+                className="group ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--ca-ink)] hover:bg-[var(--ca-chrome)] active:translate-y-0 active:shadow-[1px_1px_0_var(--ca-ink)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
               >
-                Engineering Blog
-                <ArrowUpRight size={16} />
+                <span>Engineering Blog</span>
+                <ArrowUpRight size={16} className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
               <Link
                 href="/contact"
-                className="ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-[3px_3px_0_var(--ca-ink)] transition-transform hover:-translate-y-0.5 hover:bg-[var(--ca-ink)] active:translate-y-0"
+                className="group ca-mono min-h-[44px] inline-flex items-center justify-center gap-2 border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-[3px_3px_0_var(--ca-ink)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--ca-ink)] hover:bg-[var(--ca-ink)] active:translate-y-0 active:shadow-[1px_1px_0_var(--ca-ink)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
               >
-                Get in Touch
-                <ArrowUpRight size={16} />
+                <span>Get in Touch</span>
+                <ArrowUpRight size={16} className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>
           </div>

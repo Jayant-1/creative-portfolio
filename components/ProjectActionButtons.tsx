@@ -40,9 +40,9 @@ export function ProjectActionButtons({
           rel="noopener noreferrer"
           title={demoQualifier || `Launch ${title}`}
           onClick={() => trackLiveDemoLaunch(title, demo)}
-          className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-ink)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+          className="group ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-[var(--ca-blue)] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-[3px_3px_0_var(--ca-ink)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--ca-ink)] hover:bg-[var(--ca-ink)] active:translate-y-0 active:shadow-[1px_1px_0_var(--ca-ink)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
         >
-          <ExternalLink size={15} />
+          <ExternalLink size={15} className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           <span>{demoLabel}</span>
         </a>
       )}
@@ -53,9 +53,9 @@ export function ProjectActionButtons({
         rel="noopener noreferrer"
         title={`Inspect ${title} source repository on GitHub`}
         onClick={() => trackGitHubClick("repo", source, "project_header")}
-        className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[var(--ca-yellow)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+        className="group ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-sm border-2 border-[var(--ca-ink)] bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[var(--ca-ink)] shadow-[3px_3px_0_var(--ca-ink)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--ca-ink)] hover:bg-[var(--ca-yellow)] active:translate-y-0 active:shadow-[1px_1px_0_var(--ca-ink)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
       >
-        <GithubIcon className="h-4 w-4" />
+        <GithubIcon className="h-4 w-4 transition-transform duration-150 group-hover:scale-110" />
         <span>View Source</span>
       </a>
     </>

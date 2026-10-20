@@ -690,7 +690,7 @@ export default function HomePage() {
               <Polaroid
                 src="/images/img-2.jpeg"
                 alt="3× Trophy Winner"
-                caption="3× Trophy Winner 🏆"
+                caption="3× Trophy Winner"
                 aspectClassName="aspect-[3/4]"
                 className="w-full transition-transform duration-300 hover:rotate-0 hover:scale-105"
               />
@@ -708,7 +708,7 @@ export default function HomePage() {
               <Polaroid
                 src="/images/img-4.jpeg"
                 alt="AstroPixel Ideation 3.0 award"
-                caption="AstroPixel • Ideation 3.0 🏆"
+                caption="AstroPixel • Ideation 3.0"
                 aspectClassName="aspect-[4/3]"
                 className="w-full transition-transform duration-300 hover:rotate-0 hover:scale-105"
               />
@@ -731,9 +731,9 @@ export default function HomePage() {
             <div className="mt-10">
               <p className="ca-hand mx-auto max-w-3xl text-3xl font-medium leading-[1.2] text-[var(--ca-ink)] sm:text-4xl lg:text-5xl">
                 I like taking complex ideas apart, learning how every piece
-                works, and building them back into useful products. ✨ My
+                works, and building them back into useful products. My
                 favorite work combines a distinctive interface with the
-                engineering needed to ship it. 🧑🏻‍💻
+                engineering needed to ship it.
               </p>
             </div>
 
@@ -743,7 +743,7 @@ export default function HomePage() {
                 <Polaroid
                   src="/images/img-2.jpeg"
                   alt="3× Trophy Winner"
-                  caption="3× Trophies 🏆"
+                  caption="3× Trophies"
                   aspectClassName="aspect-[3/4]"
                   sizes="(max-width: 640px) 176px, 240px"
                 />
@@ -752,7 +752,7 @@ export default function HomePage() {
                 <Polaroid
                   src="/images/img-4.jpeg"
                   alt="AstroPixel Ideation 3.0 award"
-                  caption="Ideation 3.0 🎉"
+                  caption="Ideation 3.0"
                   aspectClassName="aspect-[4/3]"
                   sizes="(max-width: 640px) 240px, 320px"
                 />
