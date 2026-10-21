@@ -773,7 +773,6 @@ textarea {
 .ca-infinite-testimonial-track {
   display: flex;
   width: max-content;
-  contain: layout paint;
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;

@@ -13,7 +13,7 @@ export function OptionTapeTrack({ items }: OptionTapeTrackProps) {
 
   const renderCardList = (isAriaHidden = false) => (
     <div
-      className="flex shrink-0 items-stretch gap-6 pr-6 sm:gap-8 sm:pr-8"
+      className="flex shrink-0 items-stretch gap-6 pr-6 sm:gap-8 sm:pr-8 py-8 sm:py-10"
       aria-hidden={isAriaHidden ? true : undefined}
     >
       {items.map((item, idx) => {
@@ -33,7 +33,7 @@ export function OptionTapeTrack({ items }: OptionTapeTrackProps) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full select-none overflow-hidden py-4 touch-pan-y group/track"
+      className="relative w-full select-none overflow-hidden touch-pan-y group/track"
     >
       {/* Edge gradient fade masks on desktop */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-12 sm:w-28 bg-gradient-to-r from-[var(--ca-surface)] to-transparent" />
