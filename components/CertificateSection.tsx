@@ -221,7 +221,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                             : "border-[var(--ca-ink)]/20 bg-[var(--ca-chrome)]/60 text-[var(--ca-ink)]/80 hover:border-[var(--ca-ink)] hover:bg-white hover:text-[var(--ca-ink)]"
                         }`}
                       >
-                        {item.name}
+                        {item.shortName || item.name}
                       </button>
                     );
                   })}

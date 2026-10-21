@@ -861,6 +861,7 @@ export type Certification = {
 export type CertificateItem = {
   id: string;
   name: string;
+  shortName?: string;
   date: string;
   credentialUrl: string;
   credentialId?: string;
@@ -888,21 +889,9 @@ export const certificateGroups: CertificateGroup[] = [
     badgeColor: "var(--ca-chrome)",
     items: [
       {
-        id: "cs50-sql",
-        name: "CS50 SQL: Computer Science for Databases",
-        date: "2026",
-        credentialUrl:
-          "https://cs50.harvard.edu/certificates/35e92ebb-0f2e-4fa2-820e-cb2646ca5d35",
-        credentialId: "35e92ebb-0f2e-4fa2-820e-cb2646ca5d35",
-        skills: ["Relational Databases", "ANSI SQL", "Schema Normalization", "Indexing"],
-        description:
-          "Rigorous study of relational database design, query scaling, normal forms, transaction ACID properties, and database engineering.",
-        image: "/Certificate/CS50-SQL.png",
-        pdfUrl: "/Certificate/CS50 SQL.pdf",
-      },
-      {
         id: "cs50x",
         name: "CS50: Introduction to Computer Science",
+        shortName: "CS50",
         date: "2024",
         credentialUrl:
           "https://cs50.harvard.edu/certificates/e89a5c59-b67d-4b42-8921-30e0f11964e7",
@@ -912,6 +901,20 @@ export const certificateGroups: CertificateGroup[] = [
           "Harvard University's flagship computer science curriculum covering computational thinking, memory allocation in C, Python web architecture, and database design.",
         image: "/Certificate/CS50x.png",
         pdfUrl: "/Certificate/CS50x.pdf",
+      },
+      {
+        id: "cs50-sql",
+        name: "CS50 SQL: Computer Science for Databases",
+        shortName: "CS50 SQL",
+        date: "2026",
+        credentialUrl:
+          "https://cs50.harvard.edu/certificates/35e92ebb-0f2e-4fa2-820e-cb2646ca5d35",
+        credentialId: "35e92ebb-0f2e-4fa2-820e-cb2646ca5d35",
+        skills: ["Relational Databases", "ANSI SQL", "Schema Normalization", "Indexing"],
+        description:
+          "Rigorous study of relational database design, query scaling, normal forms, transaction ACID properties, and database engineering.",
+        image: "/Certificate/CS50-SQL.png",
+        pdfUrl: "/Certificate/CS50 SQL.pdf",
       },
     ],
   },
@@ -946,6 +949,7 @@ export const certificateGroups: CertificateGroup[] = [
       {
         id: "it-specialist-html-css",
         name: "IT Specialist — HTML and CSS",
+        shortName: "HTML & CSS",
         date: "Apr 2025",
         credentialUrl:
           "https://www.credly.com/badges/c59ff7d1-7af2-4dcb-8c57-d2bd6a6d1f44/linked_in_profile",
@@ -958,6 +962,7 @@ export const certificateGroups: CertificateGroup[] = [
       {
         id: "it-specialist-databases",
         name: "IT Specialist — Databases",
+        shortName: "Databases",
         date: "Apr 2025",
         credentialUrl:
           "https://www.credly.com/badges/61128af2-38bc-4299-b862-157ba2ca2edb/linked_in_profile",
