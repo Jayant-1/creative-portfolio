@@ -21,7 +21,7 @@ export const author = {
 
 export const social = {
   github: "https://github.com/Jayant-1",
-  linkedin: "https://www.linkedin.com/in/jayant-potdar-161614275/",
+  linkedin: "https://www.linkedin.com/in/jayant-potdar-880a461b8/",
   email: "mailto:jayantpotdar2006@gmail.com",
   resume: "/resume.pdf",
 };
