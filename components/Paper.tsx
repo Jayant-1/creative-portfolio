@@ -210,8 +210,8 @@ export function ContactStrip() {
       <div className="px-4 pb-20 pt-10 sm:px-8 lg:px-20">
         <div className="relative mx-auto max-w-4xl">
           {/* Pinned Cyan Note */}
-          <div className="relative z-20 mb-6 flex justify-center lg:absolute lg:-left-8 xl:-left-16 2xl:-left-24 lg:-top-14 lg:mb-0 lg:block lg:w-80">
-            <div className="ca-spring-hover relative w-full max-w-sm -rotate-2 bg-[var(--ca-cyan)] p-5 pt-6 shadow-[2px_6px_18px_rgba(17,18,18,0.22)]">
+          <div className="relative z-20 mb-6 flex justify-center -rotate-[8deg] lg:absolute lg:-left-8 xl:-left-16 2xl:-left-24 lg:-top-14 lg:mb-0 lg:block lg:w-80">
+            <div className="ca-spring-hover relative w-full max-w-sm bg-[var(--ca-cyan)] p-5 pt-6 shadow-[2px_6px_18px_rgba(17,18,18,0.22)]">
               <span
                 aria-hidden="true"
                 className="absolute -left-4 -top-2 z-10 h-5 w-16 -rotate-[38deg] bg-[var(--ca-yellow)] opacity-90 shadow-[0_1px_3px_rgba(17,18,18,0.15)]"
@@ -238,12 +238,6 @@ export function ContactStrip() {
                   <p className="mt-1 text-sm leading-relaxed text-[var(--ca-ink)]/75">
                     {author.openToWork}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1.5 rounded-md border border-[var(--ca-blue)] px-2.5 py-1 text-xs font-bold text-[var(--ca-ink)]">
-                    <svg viewBox="0 0 24 24" fill="var(--ca-yellow)" stroke="var(--ca-ink)" strokeWidth="1.5" className="h-3.5 w-3.5" aria-hidden="true">
-                      <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />
-                    </svg>
-                    1
-                  </span>
                 </div>
               </div>
             </div>
