@@ -1,0 +1,523 @@
+{
+  "timestamp": "2026-10-21T15:08:02.879Z",
+  "baseUrl": "http://localhost:3000",
+  "projects": {
+    "astropixel": {
+      "slug": "astropixel",
+      "title": "AstroPixel",
+      "status": 200,
+      "telemetry": {
+        "h1": "",
+        "headline": "",
+        "tagline": "",
+        "summary": "",
+        "stripText": "",
+        "stampCards": [],
+        "badges": []
+      },
+      "visualShowcase": {
+        "initialSrc": null,
+        "thumbnailCount": 0,
+        "hasInspectBtn": false,
+        "hasPrevBtn": false,
+        "hasNextBtn": false,
+        "nextScreenChanged": false,
+        "keyboardArrowWorks": false,
+        "thumbnailClickWorks": false,
+        "lightboxOpened": false,
+        "lightboxUncropped": false,
+        "lightboxClosedEsc": false
+      },
+      "editorialNarrative": {
+        "headings": [
+          "application error: a client-side exception has occurred while loading localhost (see the browser console for more information)."
+        ],
+        "hasChallenge": false,
+        "hasApproach": false,
+        "hasBuilt": false,
+        "hasDelivered": false,
+        "hasDecisions": false,
+        "hasTools": false,
+        "contributionText": "",
+        "hasContribution": false,
+        "featuresCount": 0
+      },
+      "links": {
+        "demoMatches": false,
+        "sourceMatches": false
+      },
+      "errors": [
+        "Telemetry mismatch in role, timeline, team, or stamp cards",
+        "Live Demo or GitHub Source link mismatch",
+        "Visual Showcase lightbox audit failed",
+        "Missing required editorial narrative sections"
+      ]
+    },
+    "krypton": {
+      "slug": "krypton",
+      "title": "Krypton",
+      "status": 200,
+      "telemetry": {
+        "h1": "",
+        "headline": "",
+        "tagline": "",
+        "summary": "",
+        "stripText": "",
+        "stampCards": [],
+        "badges": []
+      },
+      "visualShowcase": {
+        "initialSrc": null,
+        "thumbnailCount": 0,
+        "hasInspectBtn": false,
+        "hasPrevBtn": false,
+        "hasNextBtn": false,
+        "nextScreenChanged": false,
+        "keyboardArrowWorks": false,
+        "thumbnailClickWorks": false,
+        "lightboxOpened": false,
+        "lightboxUncropped": false,
+        "lightboxClosedEsc": false
+      },
+      "editorialNarrative": {
+        "headings": [
+          "application error: a client-side exception has occurred while loading localhost (see the browser console for more information)."
+        ],
+        "hasChallenge": false,
+        "hasApproach": false,
+        "hasBuilt": false,
+        "hasDelivered": false,
+        "hasDecisions": false,
+        "hasTools": false,
+        "contributionText": "",
+        "hasContribution": false,
+        "featuresCount": 0
+      },
+      "links": {
+        "demoMatches": false,
+        "sourceMatches": false
+      },
+      "errors": [
+        "Telemetry mismatch in role, timeline, team, or stamp cards",
+        "Live Demo or GitHub Source link mismatch",
+        "Visual Showcase lightbox audit failed",
+        "Missing required editorial narrative sections"
+      ]
+    },
+    "3d-portfolio": {
+      "slug": "3d-portfolio",
+      "title": "3D Portfolio",
+      "status": 200,
+      "telemetry": {
+        "h1": "3D Portfolio",
+        "headline": "My Skills in Motion",
+        "tagline": "I made my portfolio an example of the interaction work I can build.",
+        "summary": "I wanted recruiters and creative clients to experience my frontend skills directly. I built a space-themed portfolio where visitors rotate a workstation, explore a skills keyboard, and browse my projects. On mobile, a tappable skills grid carries the same information in a form suited to touch.",
+        "stripText": "Role:Solo Creative Frontend Developer•Timeline:3 weeks•Team:Solo build",
+        "stampCards": [
+          {
+            "value": "3D",
+            "label": "INTERACTIVE SCENES"
+          },
+          {
+            "value": "Spline",
+            "label": "SKILLS KEYBOARD"
+          },
+          {
+            "value": "Mobile",
+            "label": "ADAPTIVE EXPERIENCE"
+          }
+        ],
+        "badges": [
+          "Jul 2025",
+          "Solo Developer",
+          "3D GRAPHICS",
+          "CREATIVE TECH",
+          "PERFORMANCE"
+        ]
+      },
+      "visualShowcase": {
+        "initialSrc": "/_next/image?url=%2Fprojects%2F3d-portfolio-home.png&w=3840&q=85",
+        "thumbnailCount": 6,
+        "hasInspectBtn": true,
+        "hasPrevBtn": true,
+        "hasNextBtn": true,
+        "nextScreenChanged": false,
+        "keyboardArrowWorks": true,
+        "thumbnailClickWorks": true,
+        "lightboxOpened": false,
+        "lightboxClosedEsc": true
+      },
+      "editorialNarrative": {
+        "headings": [
+          "my skills in motion",
+          "why i built it",
+          "how i approached it",
+          "what i built",
+          "what i delivered",
+          "decisions & lessons",
+          "tools & implementation",
+          "have something in mind?",
+          "more projects"
+        ],
+        "hasChallenge": true,
+        "hasApproach": true,
+        "hasBuilt": true,
+        "hasDelivered": true,
+        "hasDecisions": true,
+        "hasTools": true,
+        "contributionText": "I built the portfolio independently, connecting the 3D scenes, Spline keyboard events, project cards, motion, and contact flow. I also created the mobile skills grid, its category filters, and the screen-specific rendering settings. The work brought visual design and frontend engineering into one deliverable.",
+        "hasContribution": true,
+        "featuresCount": 6
+      },
+      "links": {
+        "demoLink": {
+          "href": "https://3dportfolio.jayant.codes/",
+          "text": "Explore My 3D Portfolio",
+          "title": "Interactive portfolio with desktop 3D scenes and a mobile skills layout"
+        },
+        "sourceLink": {
+          "href": "https://github.com/Jayant-1/3D-Portfolio",
+          "text": "View Source",
+          "title": "Inspect 3D Portfolio source repository on GitHub"
+        },
+        "demoMatches": true,
+        "sourceMatches": true
+      },
+      "errors": [
+        "Visual Showcase lightbox audit failed"
+      ]
+    },
+    "malaria-detection": {
+      "slug": "malaria-detection",
+      "title": "Malaria Detection System",
+      "status": 200,
+      "telemetry": {
+        "h1": "",
+        "headline": "",
+        "tagline": "",
+        "summary": "",
+        "stripText": "",
+        "stampCards": [],
+        "badges": []
+      },
+      "visualShowcase": {
+        "initialSrc": null,
+        "thumbnailCount": 0,
+        "hasInspectBtn": false,
+        "hasPrevBtn": false,
+        "hasNextBtn": false,
+        "nextScreenChanged": false,
+        "keyboardArrowWorks": false,
+        "thumbnailClickWorks": false,
+        "lightboxOpened": false,
+        "lightboxUncropped": false,
+        "lightboxClosedEsc": false
+      },
+      "editorialNarrative": {
+        "headings": [
+          "application error: a client-side exception has occurred while loading localhost (see the browser console for more information)."
+        ],
+        "hasChallenge": false,
+        "hasApproach": false,
+        "hasBuilt": false,
+        "hasDelivered": false,
+        "hasDecisions": false,
+        "hasTools": false,
+        "contributionText": "",
+        "hasContribution": false,
+        "featuresCount": 0
+      },
+      "links": {
+        "demoMatches": false,
+        "sourceMatches": false
+      },
+      "errors": [
+        "Telemetry mismatch in role, timeline, team, or stamp cards",
+        "Live Demo or GitHub Source link mismatch",
+        "Visual Showcase lightbox audit failed",
+        "Missing required editorial narrative sections"
+      ]
+    },
+    "neuralnet": {
+      "slug": "neuralnet",
+      "title": "NeuralNet",
+      "status": 200,
+      "telemetry": {
+        "h1": "NeuralNet",
+        "headline": "Draw a Network. Get the Code.",
+        "tagline": "I built a visual bridge between model architecture and Python.",
+        "summary": "Understanding a network diagram and implementing it in code are separate hurdles for an ML learner. I led NeuralNet to connect them: arrange layers, edit their settings, and inspect the generated Python. The core is a visual editor and Keras code generator, with simulated training and prediction flows.",
+        "stripText": "Role:Team Leader & Full Stack Developer•Timeline:3 months•Team:Lead of 3-student engineering team",
+        "stampCards": [
+          {
+            "value": "Graph",
+            "label": "VISUAL BUILDER"
+          },
+          {
+            "value": "AST",
+            "label": "CODE GENERATION"
+          },
+          {
+            "value": "Demo",
+            "label": "TRAINING PREVIEW"
+          }
+        ],
+        "badges": [
+          "Oct 2025",
+          "Team Leader",
+          "VISUAL TOOLING",
+          "ML",
+          "SYSTEMS"
+        ]
+      },
+      "visualShowcase": {
+        "initialSrc": "/_next/image?url=%2Fprojects%2Fneuralnet-home.png&w=3840&q=85",
+        "thumbnailCount": 5,
+        "hasInspectBtn": true,
+        "hasPrevBtn": true,
+        "hasNextBtn": true,
+        "nextScreenChanged": false,
+        "keyboardArrowWorks": true,
+        "thumbnailClickWorks": true,
+        "lightboxOpened": false,
+        "lightboxClosedEsc": true
+      },
+      "editorialNarrative": {
+        "headings": [
+          "draw a network. get the code.",
+          "why i built it",
+          "how i approached it",
+          "what i built",
+          "what i delivered",
+          "decisions & lessons",
+          "tools & implementation",
+          "have something in mind?",
+          "more projects"
+        ],
+        "hasChallenge": true,
+        "hasApproach": true,
+        "hasBuilt": true,
+        "hasDelivered": true,
+        "hasDecisions": true,
+        "hasTools": true,
+        "contributionText": "I led the team and worked on the React Flow editor, graph-to-JSON conversion, topological ordering, and Python AST compiler. I connected layer settings to code generation and helped build the dataset, training, and deployment interfaces around that core. The compiler targets supported sequential architectures.",
+        "hasContribution": true,
+        "featuresCount": 6
+      },
+      "links": {
+        "demoLink": {
+          "href": "https://neuralnet.jayant.codes/",
+          "text": "Explore NeuralNet",
+          "title": "Workspace requires sign-in; training and prediction are simulated in the current implementation"
+        },
+        "sourceLink": {
+          "href": "https://github.com/Jayant-1/NeuralNet",
+          "text": "View Source",
+          "title": "Inspect NeuralNet source repository on GitHub"
+        },
+        "demoMatches": true,
+        "sourceMatches": true
+      },
+      "errors": [
+        "Visual Showcase lightbox audit failed"
+      ]
+    }
+  },
+  "homepage": {
+    "cardsCount": 0,
+    "cards": [],
+    "pass": false
+  },
+  "responsiveAudit": {
+    "mobile-375": {
+      "astropixel": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "krypton": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "3d-portfolio": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "malaria-detection": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "neuralnet": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      }
+    },
+    "mobile-390": {
+      "astropixel": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "krypton": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "3d-portfolio": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "h1Visible": true,
+        "buttonsCount": 2,
+        "buttonsSizedOk": true,
+        "pass": true
+      },
+      "malaria-detection": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "neuralnet": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "h1Visible": true,
+        "buttonsCount": 2,
+        "buttonsSizedOk": true,
+        "pass": true
+      }
+    },
+    "desktop-1280": {
+      "astropixel": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "krypton": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "3d-portfolio": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "malaria-detection": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "h1Visible": true,
+        "buttonsCount": 2,
+        "buttonsSizedOk": true,
+        "pass": true
+      },
+      "neuralnet": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      }
+    },
+    "desktop-1440": {
+      "astropixel": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "krypton": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "h1Visible": true,
+        "buttonsCount": 2,
+        "buttonsSizedOk": true,
+        "pass": true
+      },
+      "3d-portfolio": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "malaria-detection": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      },
+      "neuralnet": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "h1Visible": false,
+        "buttonsCount": 0,
+        "buttonsSizedOk": true,
+        "pass": false
+      }
+    }
+  },
+  "passed": false
+}

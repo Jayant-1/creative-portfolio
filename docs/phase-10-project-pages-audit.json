@@ -1,0 +1,879 @@
+{
+  "timestamp": "2026-10-21T15:12:50.923Z",
+  "baseUrl": "http://localhost:3000",
+  "projects": {
+    "astropixel": {
+      "slug": "astropixel",
+      "title": "AstroPixel",
+      "status": 200,
+      "telemetry": {
+        "h1": "AstroPixel",
+        "headline": "Space, Pixel by Pixel",
+        "tagline": "I turned large space images into an explorable web experience.",
+        "summary": "Large astronomical images are difficult to share at their original detail. I built AstroPixel so an educator or space enthusiast can open a dataset, zoom into a small feature, and mark what they find. The application connects image processing, tiled viewing, and annotations in one browser workflow.",
+        "stripText": "Role:Solo Full Stack Developer•Timeline:4 months•Team:Solo build",
+        "stampCards": [
+          {
+            "value": "3rd",
+            "label": "IDEATION 3.0"
+          },
+          {
+            "value": "Tiled",
+            "label": "DEEP-ZOOM VIEWER"
+          },
+          {
+            "value": "Solo",
+            "label": "END-TO-END BUILD"
+          }
+        ],
+        "badges": [
+          "Mar 2026",
+          "Solo Full Stack Project",
+          "SPATIAL IMAGERY",
+          "FULL STACK",
+          "PERFORMANCE"
+        ]
+      },
+      "actionButtons": {
+        "demoLink": {
+          "href": "https://astropixel.jayant.codes/",
+          "text": "Explore AstroPixel",
+          "title": "Public explorer; deep zoom requires an available processed dataset",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "sourceLink": {
+          "href": "https://github.com/Jayant-1/AstroPixel",
+          "text": "View Source",
+          "title": "Inspect AstroPixel source repository on GitHub",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "demoPass": true,
+        "sourcePass": true
+      },
+      "visualShowcase": {
+        "thumbnailCount": 4,
+        "nextBtnPass": true,
+        "prevBtnPass": true,
+        "arrowRightPass": true,
+        "arrowLeftPass": true,
+        "thumbPass": true,
+        "lightboxPass": true
+      },
+      "editorialNarrative": {
+        "hasChallenge": true,
+        "hasApproach": true,
+        "hasBuilt": true,
+        "hasDelivered": true,
+        "hasDecisions": true,
+        "hasTools": true,
+        "hasContribution": true,
+        "tradeoffsCount": 2,
+        "techGroupsCount": 0,
+        "highlightsCount": 4,
+        "featuresCount": 6
+      },
+      "errors": []
+    },
+    "krypton": {
+      "slug": "krypton",
+      "title": "Krypton",
+      "status": 200,
+      "telemetry": {
+        "h1": "Krypton",
+        "headline": "Find Your Next Paper",
+        "tagline": "I built a clearer route from a research topic to a reading list.",
+        "summary": "Starting a literature review means deciding which papers deserve your attention. I led Krypton to help students make that first selection: search arXiv and OpenAlex together, rank results using explicit criteria, and read an abstract-based summary before opening the source paper.",
+        "stripText": "Role:Team Leader & Backend Architect•Timeline:3 months•Team:Lead of 3-student engineering team",
+        "stampCards": [
+          {
+            "value": "1st",
+            "label": "PROJECT EXPO"
+          },
+          {
+            "value": "3",
+            "label": "RANKING SIGNALS"
+          },
+          {
+            "value": "2",
+            "label": "PAPER SOURCES"
+          }
+        ],
+        "badges": [
+          "Nov 2025",
+          "Team Leader",
+          "RESEARCH TOOLS",
+          "AI / ML",
+          "FULL STACK"
+        ]
+      },
+      "actionButtons": {
+        "demoLink": {
+          "href": "https://krypton.jayant.codes/",
+          "text": "Explore Krypton",
+          "title": "Public research interface; search and summaries require the backend",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "sourceLink": {
+          "href": "https://github.com/Jayant-1/Krypton",
+          "text": "View Source",
+          "title": "Inspect Krypton source repository on GitHub",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "demoPass": true,
+        "sourcePass": true
+      },
+      "visualShowcase": {
+        "thumbnailCount": 7,
+        "nextBtnPass": true,
+        "prevBtnPass": true,
+        "arrowRightPass": true,
+        "arrowLeftPass": true,
+        "thumbPass": true,
+        "lightboxPass": true
+      },
+      "editorialNarrative": {
+        "hasChallenge": true,
+        "hasApproach": true,
+        "hasBuilt": true,
+        "hasDelivered": true,
+        "hasDecisions": true,
+        "hasTools": true,
+        "hasContribution": true,
+        "tradeoffsCount": 2,
+        "techGroupsCount": 0,
+        "highlightsCount": 4,
+        "featuresCount": 6
+      },
+      "errors": []
+    },
+    "3d-portfolio": {
+      "slug": "3d-portfolio",
+      "title": "3D Portfolio",
+      "status": 200,
+      "telemetry": {
+        "h1": "3D Portfolio",
+        "headline": "My Skills in Motion",
+        "tagline": "I made my portfolio an example of the interaction work I can build.",
+        "summary": "I wanted recruiters and creative clients to experience my frontend skills directly. I built a space-themed portfolio where visitors rotate a workstation, explore a skills keyboard, and browse my projects. On mobile, a tappable skills grid carries the same information in a form suited to touch.",
+        "stripText": "Role:Solo Creative Frontend Developer•Timeline:3 weeks•Team:Solo build",
+        "stampCards": [
+          {
+            "value": "3D",
+            "label": "INTERACTIVE SCENES"
+          },
+          {
+            "value": "Spline",
+            "label": "SKILLS KEYBOARD"
+          },
+          {
+            "value": "Mobile",
+            "label": "ADAPTIVE EXPERIENCE"
+          }
+        ],
+        "badges": [
+          "Jul 2025",
+          "Solo Developer",
+          "3D GRAPHICS",
+          "CREATIVE TECH",
+          "PERFORMANCE"
+        ]
+      },
+      "actionButtons": {
+        "demoLink": {
+          "href": "https://3dportfolio.jayant.codes/",
+          "text": "Explore My 3D Portfolio",
+          "title": "Interactive portfolio with desktop 3D scenes and a mobile skills layout",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "sourceLink": {
+          "href": "https://github.com/Jayant-1/3D-Portfolio",
+          "text": "View Source",
+          "title": "Inspect 3D Portfolio source repository on GitHub",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "demoPass": true,
+        "sourcePass": true
+      },
+      "visualShowcase": {
+        "thumbnailCount": 6,
+        "nextBtnPass": true,
+        "prevBtnPass": true,
+        "arrowRightPass": true,
+        "arrowLeftPass": true,
+        "thumbPass": true,
+        "lightboxPass": true
+      },
+      "editorialNarrative": {
+        "hasChallenge": true,
+        "hasApproach": true,
+        "hasBuilt": true,
+        "hasDelivered": true,
+        "hasDecisions": true,
+        "hasTools": true,
+        "hasContribution": true,
+        "tradeoffsCount": 2,
+        "techGroupsCount": 0,
+        "highlightsCount": 4,
+        "featuresCount": 6
+      },
+      "errors": []
+    },
+    "malaria-detection": {
+      "slug": "malaria-detection",
+      "title": "Malaria Detection System",
+      "status": 200,
+      "telemetry": {
+        "h1": "Malaria Detection System",
+        "headline": "From Cell Image to Report",
+        "tagline": "I connected a classification model to the workflow around its results.",
+        "summary": "An image classifier returns a prediction; an application also needs to keep track of the sample, its record, and its report. I led this academic prototype to connect those steps, combining cell-image inference with role-specific dashboards and PDF reporting. It has not been clinically validated.",
+        "stripText": "Role:Team Leader & Full Stack Developer•Timeline:2 months•Team:Lead of 3-student engineering team",
+        "stampCards": [
+          {
+            "value": "Team",
+            "label": "LEADERSHIP"
+          },
+          {
+            "value": "3 roles",
+            "label": "WORKFLOW VIEWS"
+          },
+          {
+            "value": "PDF",
+            "label": "REPORT FLOW"
+          }
+        ],
+        "badges": [
+          "Apr 2026",
+          "Team Leader",
+          "HEALTHCARE AI",
+          "COMPUTER VISION",
+          "FULL STACK"
+        ]
+      },
+      "actionButtons": {
+        "demoLink": {
+          "href": "https://malariadetection.jayant.codes/",
+          "text": "Explore the Prototype",
+          "title": "Academic software prototype; not clinically validated",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "sourceLink": {
+          "href": "https://github.com/Jayant-1/MalariaDetectionSystem",
+          "text": "View Source",
+          "title": "Inspect Malaria Detection System source repository on GitHub",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "demoPass": true,
+        "sourcePass": true
+      },
+      "visualShowcase": {
+        "thumbnailCount": 3,
+        "nextBtnPass": true,
+        "prevBtnPass": true,
+        "arrowRightPass": true,
+        "arrowLeftPass": true,
+        "thumbPass": true,
+        "lightboxPass": true
+      },
+      "editorialNarrative": {
+        "hasChallenge": true,
+        "hasApproach": true,
+        "hasBuilt": true,
+        "hasDelivered": true,
+        "hasDecisions": true,
+        "hasTools": true,
+        "hasContribution": true,
+        "tradeoffsCount": 2,
+        "techGroupsCount": 0,
+        "highlightsCount": 4,
+        "featuresCount": 6
+      },
+      "errors": []
+    },
+    "neuralnet": {
+      "slug": "neuralnet",
+      "title": "NeuralNet",
+      "status": 200,
+      "telemetry": {
+        "h1": "NeuralNet",
+        "headline": "Draw a Network. Get the Code.",
+        "tagline": "I built a visual bridge between model architecture and Python.",
+        "summary": "Understanding a network diagram and implementing it in code are separate hurdles for an ML learner. I led NeuralNet to connect them: arrange layers, edit their settings, and inspect the generated Python. The core is a visual editor and Keras code generator, with simulated training and prediction flows.",
+        "stripText": "Role:Team Leader & Full Stack Developer•Timeline:3 months•Team:Lead of 3-student engineering team",
+        "stampCards": [
+          {
+            "value": "Graph",
+            "label": "VISUAL BUILDER"
+          },
+          {
+            "value": "AST",
+            "label": "CODE GENERATION"
+          },
+          {
+            "value": "Demo",
+            "label": "TRAINING PREVIEW"
+          }
+        ],
+        "badges": [
+          "Oct 2025",
+          "Team Leader",
+          "VISUAL TOOLING",
+          "ML",
+          "SYSTEMS"
+        ]
+      },
+      "actionButtons": {
+        "demoLink": {
+          "href": "https://neuralnet.jayant.codes/",
+          "text": "Explore NeuralNet",
+          "title": "Workspace requires sign-in; training and prediction are simulated in the current implementation",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "sourceLink": {
+          "href": "https://github.com/Jayant-1/NeuralNet",
+          "text": "View Source",
+          "title": "Inspect NeuralNet source repository on GitHub",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        },
+        "demoPass": true,
+        "sourcePass": true
+      },
+      "visualShowcase": {
+        "thumbnailCount": 5,
+        "nextBtnPass": true,
+        "prevBtnPass": true,
+        "arrowRightPass": true,
+        "arrowLeftPass": true,
+        "thumbPass": true,
+        "lightboxPass": true
+      },
+      "editorialNarrative": {
+        "hasChallenge": true,
+        "hasApproach": true,
+        "hasBuilt": true,
+        "hasDelivered": true,
+        "hasDecisions": true,
+        "hasTools": true,
+        "hasContribution": true,
+        "tradeoffsCount": 2,
+        "techGroupsCount": 0,
+        "highlightsCount": 4,
+        "featuresCount": 6
+      },
+      "errors": []
+    }
+  },
+  "homepage": {
+    "count": 5,
+    "cards": [
+      {
+        "tab": "Project 01",
+        "headline": "Space, Pixel by Pixel",
+        "href": "/projects/astropixel",
+        "caseStudyLink": "/projects/astropixel",
+        "problem": "How do you explore a huge space image without downloading the whole file? I built AstroPixel to turn it into zoomable tiles, with annotations that keep discoveries connected to their place in the image.",
+        "tags": [
+          "SPATIAL IMAGERY",
+          "FULL STACK",
+          "PERFORMANCE"
+        ],
+        "hasImg": true
+      },
+      {
+        "tab": "Project 02",
+        "headline": "Find Your Next Paper",
+        "href": "/projects/krypton",
+        "caseStudyLink": "/projects/krypton",
+        "problem": "A new research topic can leave you with dozens of tabs and no clear starting point. I led Krypton to bring paper discovery, ranking, and abstract summaries into one place, helping readers choose what to investigate next.",
+        "tags": [
+          "RESEARCH TOOLS",
+          "AI / ML",
+          "FULL STACK"
+        ],
+        "hasImg": true
+      },
+      {
+        "tab": "Project 03",
+        "headline": "My Skills in Motion",
+        "href": "/projects/3d-portfolio",
+        "caseStudyLink": "/projects/3d-portfolio",
+        "problem": "How do I show the interaction skills behind a résumé? I built a portfolio visitors can explore: a rotatable workstation, a 3D skills keyboard, and a dedicated mobile skills view, all connected to my work.",
+        "tags": [
+          "3D GRAPHICS",
+          "CREATIVE TECH",
+          "PERFORMANCE"
+        ],
+        "hasImg": true
+      },
+      {
+        "tab": "Project 04",
+        "headline": "From Cell Image to Report",
+        "href": "/projects/malaria-detection",
+        "caseStudyLink": "/projects/malaria-detection",
+        "problem": "What happens after a model classifies a cell image? I led an academic prototype that connects the result to patient records, role-specific dashboards, and a downloadable report, exploring the software around the model.",
+        "tags": [
+          "HEALTHCARE AI",
+          "COMPUTER VISION",
+          "FULL STACK"
+        ],
+        "hasImg": true
+      },
+      {
+        "tab": "Project 05",
+        "headline": "Draw a Network. Get the Code.",
+        "href": "/projects/neuralnet",
+        "caseStudyLink": "/projects/neuralnet",
+        "problem": "A neural-network diagram is easier to discuss when you can see the code behind it. I led NeuralNet to connect draggable layers with inspectable Python, giving learners a starting point they can read, export, and develop further.",
+        "tags": [
+          "VISUAL TOOLING",
+          "ML",
+          "SYSTEMS"
+        ],
+        "hasImg": true
+      }
+    ],
+    "pass": true
+  },
+  "projectsIndex": {},
+  "responsiveAudit": {
+    "mobile-375": {
+      "astropixel": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 343,
+          "h": 54
+        },
+        "actionBtns": [
+          {
+            "width": 225,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "krypton": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 343,
+          "h": 54
+        },
+        "actionBtns": [
+          {
+            "width": 199,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "3d-portfolio": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 343,
+          "h": 54
+        },
+        "actionBtns": [
+          {
+            "width": 269,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "malaria-detection": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 343,
+          "h": 108
+        },
+        "actionBtns": [
+          {
+            "width": 252,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "neuralnet": {
+        "scrollWidth": 375,
+        "clientWidth": 375,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 343,
+          "h": 54
+        },
+        "actionBtns": [
+          {
+            "width": 217,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      }
+    },
+    "mobile-390": {
+      "astropixel": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 358,
+          "h": 72
+        },
+        "actionBtns": [
+          {
+            "width": 225,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "krypton": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 358,
+          "h": 72
+        },
+        "actionBtns": [
+          {
+            "width": 199,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "3d-portfolio": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 358,
+          "h": 72
+        },
+        "actionBtns": [
+          {
+            "width": 269,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "malaria-detection": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 358,
+          "h": 216
+        },
+        "actionBtns": [
+          {
+            "width": 252,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "neuralnet": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 358,
+          "h": 72
+        },
+        "actionBtns": [
+          {
+            "width": 217,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      }
+    },
+    "desktop-1280": {
+      "astropixel": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 136
+        },
+        "actionBtns": [
+          {
+            "width": 225,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "krypton": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 136
+        },
+        "actionBtns": [
+          {
+            "width": 199,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "3d-portfolio": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 136
+        },
+        "actionBtns": [
+          {
+            "width": 269,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "malaria-detection": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 272
+        },
+        "actionBtns": [
+          {
+            "width": 252,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "neuralnet": {
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 136
+        },
+        "actionBtns": [
+          {
+            "width": 217,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      }
+    },
+    "desktop-1440": {
+      "astropixel": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 136
+        },
+        "actionBtns": [
+          {
+            "width": 225,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "krypton": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 136
+        },
+        "actionBtns": [
+          {
+            "width": 199,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "3d-portfolio": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 136
+        },
+        "actionBtns": [
+          {
+            "width": 269,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "malaria-detection": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 272
+        },
+        "actionBtns": [
+          {
+            "width": 252,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      },
+      "neuralnet": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflow": false,
+        "h1Visible": true,
+        "h1Dimensions": {
+          "w": 960,
+          "h": 136
+        },
+        "actionBtns": [
+          {
+            "width": 217,
+            "height": 44
+          },
+          {
+            "width": 165,
+            "height": 44
+          }
+        ],
+        "pass": true
+      }
+    }
+  },
+  "passed": true
+}

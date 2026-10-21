@@ -1,0 +1,2473 @@
+{
+  "timestamp": "2026-10-21T15:26:43.145Z",
+  "viewportsTested": [
+    "320px",
+    "360px",
+    "390px",
+    "768px",
+    "1024px",
+    "1440px"
+  ],
+  "engines": [
+    "Chromium",
+    "Firefox"
+  ],
+  "summary": {
+    "totalTests": 180,
+    "passedTests": 180,
+    "failedTests": 0
+  },
+  "iframeBoundsAudit": [
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/binary-grid",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/bubble-text",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/binary-grid",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/bubble-text",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/binary-grid",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/bubble-text",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/binary-grid",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/bubble-text",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535937)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/binary-grid",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535937)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/bubble-text",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535937)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535937)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535937)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535937)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/binary-grid",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/bubble-text",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/binary-grid",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/bubble-text",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 288,
+      "iframeWidth": 278,
+      "parentWidth": 278,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.741333)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/binary-grid",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/bubble-text",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 328,
+      "iframeWidth": 318,
+      "parentWidth": 318,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.848)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/binary-grid",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/bubble-text",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 358,
+      "iframeWidth": 348,
+      "parentWidth": 348,
+      "styleWidth": "375px",
+      "styleTransform": "scale(0.928)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/binary-grid",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/bubble-text",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 720,
+      "iframeWidth": 702,
+      "parentWidth": 702,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.548438)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535938)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/binary-grid",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535938)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/bubble-text",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535938)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535938)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535938)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 704,
+      "iframeWidth": 686,
+      "parentWidth": 686,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.535938)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/overlapping-text-hero",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/binary-grid",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/bubble-text",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/telescope-hero",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/magnetic-button",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/radial-gradient-card",
+      "stageWidth": 1112,
+      "iframeWidth": 1094,
+      "parentWidth": 1094,
+      "styleWidth": "1280px",
+      "styleTransform": "scale(0.854688)",
+      "fitsInStage": true,
+      "fitsInParent": true,
+      "noRightClipping": true,
+      "passed": true
+    }
+  ],
+  "overflowAudit": [
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/about",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/experience",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/projects",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/contact",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/blog",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "320px",
+      "route": "/notes",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/about",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/experience",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/projects",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/contact",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/blog",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "360px",
+      "route": "/notes",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/about",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/experience",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/projects",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/contact",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/blog",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "390px",
+      "route": "/notes",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/about",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/experience",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/projects",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/contact",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/blog",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "768px",
+      "route": "/notes",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/about",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/experience",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/projects",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/contact",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/blog",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1024px",
+      "route": "/notes",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/about",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/experience",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/projects",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/contact",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/blog",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Chromium",
+      "viewport": "1440px",
+      "route": "/notes",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/about",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/experience",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/projects",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/contact",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/blog",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "320px",
+      "route": "/notes",
+      "scrollWidth": 320,
+      "viewportWidth": 320,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/about",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/experience",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/projects",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/contact",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/blog",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "360px",
+      "route": "/notes",
+      "scrollWidth": 360,
+      "viewportWidth": 360,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/about",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/experience",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/projects",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/contact",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/blog",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "390px",
+      "route": "/notes",
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/about",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/experience",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/projects",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/contact",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/blog",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "768px",
+      "route": "/notes",
+      "scrollWidth": 768,
+      "viewportWidth": 768,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/about",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/experience",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/projects",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/contact",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/blog",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1024px",
+      "route": "/notes",
+      "scrollWidth": 1024,
+      "viewportWidth": 1024,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/about",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/experience",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/projects",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/projects/astropixel",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/overlapping-text-hero",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/binary-grid",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/bubble-text",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/telescope-hero",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/magnetic-button",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/components/radial-gradient-card",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/contact",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/blog",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    },
+    {
+      "engine": "Firefox",
+      "viewport": "1440px",
+      "route": "/notes",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "passed": true
+    }
+  ],
+  "touchErgonomicsAudit": []
+}
