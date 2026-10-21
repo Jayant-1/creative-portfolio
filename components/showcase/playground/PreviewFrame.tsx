@@ -13,6 +13,7 @@ import {
   Smartphone,
   ExternalLink,
 } from "lucide-react";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { LogicalViewport } from "@/lib/component-manifests";
 
 export type ViewportMode = "desktop" | "tablet" | "mobile";
@@ -221,61 +222,88 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
       {!isFullscreen && (
         <div className="w-full flex flex-wrap items-center justify-between gap-2 px-3 sm:px-4 py-2 border-b border-[var(--ca-ink)]/10 dark:border-white/10 bg-white/70 dark:bg-[#15171c]/70 backdrop-blur-xs">
           {/* Segmented Tab Control: Preview vs Code */}
-          <div className="inline-flex items-center p-0.5 rounded-lg bg-[var(--ca-ink)]/6 dark:bg-white/8 text-xs font-mono">
-            <button
-              type="button"
-              onClick={() => onTabChange("preview")}
-              className={`flex items-center gap-1.5 min-h-[36px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
-                activeTab === "preview"
-                  ? "bg-white dark:bg-neutral-800 text-[var(--ca-ink)] dark:text-white font-semibold shadow-xs border border-[var(--ca-ink)]/20 dark:border-white/20"
-                  : "border border-transparent text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)]"
-              }`}
-            >
-              <Eye size={13} />
-              <span>Preview</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => onTabChange("code")}
-              className={`flex items-center gap-1.5 min-h-[36px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
-                activeTab === "code"
-                  ? "bg-white dark:bg-neutral-800 text-[var(--ca-ink)] dark:text-white font-semibold shadow-xs border border-[var(--ca-ink)]/20 dark:border-white/20"
-                  : "border border-transparent text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)]"
-              }`}
-            >
-              <CodeIcon size={13} />
-              <span>Code</span>
-            </button>
-          </div>
-
-          {/* Action Controls (when preview active) */}
-          {activeTab === "preview" && (
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              {/* Replay */}
+          <LayoutGroup id="preview-frame-tabs">
+            <div className="relative inline-flex items-center p-0.5 rounded-lg bg-[var(--ca-ink)]/6 dark:bg-white/8 text-xs font-mono">
               <button
                 type="button"
-                onClick={onReplay}
-                className="min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
-                title="Replay entrance animations"
-                aria-label="Replay animations"
+                onClick={() => onTabChange("preview")}
+                className={`relative z-10 flex items-center gap-1.5 min-h-[36px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                  activeTab === "preview"
+                    ? "text-[var(--ca-ink)] dark:text-white font-semibold"
+                    : "text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)] dark:hover:text-white"
+                }`}
               >
-                <RotateCcw size={13} />
+                {activeTab === "preview" && (
+                  <motion.span
+                    layoutId="preview-frame-active-tab-indicator"
+                    className="absolute inset-0 rounded-md bg-white dark:bg-neutral-800 shadow-xs border border-[var(--ca-ink)]/20 dark:border-white/20 -z-10"
+                    transition={{ type: "spring", stiffness: 500, damping: 32 }}
+                  />
+                )}
+                <Eye size={13} className="shrink-0" />
+                <span>Preview</span>
               </button>
 
-              {/* Open in new tab */}
-              <a
-                href={`/preview/${slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
-                title="Open preview in new tab"
-                aria-label="Open preview in new tab"
+              <button
+                type="button"
+                onClick={() => onTabChange("code")}
+                className={`relative z-10 flex items-center gap-1.5 min-h-[36px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                  activeTab === "code"
+                    ? "text-[var(--ca-ink)] dark:text-white font-semibold"
+                    : "text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)] dark:hover:text-white"
+                }`}
               >
-                <ExternalLink size={13} />
-              </a>
+                {activeTab === "code" && (
+                  <motion.span
+                    layoutId="preview-frame-active-tab-indicator"
+                    className="absolute inset-0 rounded-md bg-white dark:bg-neutral-800 shadow-xs border border-[var(--ca-ink)]/20 dark:border-white/20 -z-10"
+                    transition={{ type: "spring", stiffness: 500, damping: 32 }}
+                  />
+                )}
+                <CodeIcon size={13} className="shrink-0" />
+                <span>Code</span>
+              </button>
             </div>
-          )}
+          </LayoutGroup>
+
+          {/* Action Controls (when preview active) */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <AnimatePresence>
+              {activeTab === "preview" && (
+                <motion.div
+                  key="preview-header-actions"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-center gap-1.5 sm:gap-2"
+                >
+                  {/* Replay */}
+                  <button
+                    type="button"
+                    onClick={onReplay}
+                    className="min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                    title="Replay entrance animations"
+                    aria-label="Replay animations"
+                  >
+                    <RotateCcw size={13} />
+                  </button>
+
+                  {/* Open in new tab */}
+                  <a
+                    href={`/preview/${slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                    title="Open preview in new tab"
+                    aria-label="Open preview in new tab"
+                  >
+                    <ExternalLink size={13} />
+                  </a>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       )}
 
@@ -415,90 +443,105 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
         </div>
       )}
 
-      {/* Preview View: Standard Iframe Stage (Non-fullscreen) */}
-      {!isFullscreen && activeTab === "preview" && (
-        <div className="w-full flex flex-col items-center justify-center select-none py-2 px-1 sm:px-2 bg-neutral-900/10">
+      {/* Content Panels: Seamless Smooth Transition between Preview and Code */}
+      {!isFullscreen && (
+        <div className="relative w-full overflow-hidden">
+          {/* Preview Tab Panel */}
           <div
-            style={{
-              width: `${displayedWidth}px`,
-              maxWidth: "100%",
-              height: `${displayedHeight}px`,
-            }}
-            className={`relative overflow-hidden bg-[#0c0d10] transition-all ${
-              viewportMode === "desktop"
-                ? "w-full"
-                : "rounded-xl border border-[var(--ca-ink)]/20 dark:border-white/15 shadow-md"
+            className={`w-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              activeTab === "preview"
+                ? "opacity-100 translate-y-0 pointer-events-auto relative"
+                : "opacity-0 translate-y-2 pointer-events-none absolute inset-x-0 top-0 -z-10 h-0 overflow-hidden"
             }`}
           >
-            {!isIframeLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center bg-[#0c0d10] z-10">
-                <div className="flex items-center gap-2 font-mono text-xs text-neutral-400">
-                  <span className="h-2 w-2 rounded-full bg-[var(--ca-orange)] animate-ping" />
-                  <span>Loading preview...</span>
-                </div>
-              </div>
-            )}
-
-            <iframe
-              ref={iframeRef}
-              src={`/preview/${slug}`}
-              title={`${slug} interactive component preview`}
-              onLoad={() => setIsIframeLoaded(true)}
-              style={{
-                width: `${logical.width}px`,
-                height: `${logical.height}px`,
-                transform: `scale(${scale})`,
-                transformOrigin: "top left",
-                border: "none",
-              }}
-              className={`absolute top-0 left-0 bg-transparent transition-opacity ${
-                isTouchInteracting
-                  ? "pointer-events-auto"
-                  : "pointer-events-none sm:pointer-events-auto"
-              }`}
-            />
-
-            {/* Mobile Touch Overlay */}
-            {!isTouchInteracting && isIframeLoaded && (
+            <div className="w-full flex flex-col items-center justify-center select-none py-2 px-1 sm:px-2 bg-neutral-900/10">
               <div
-                role="button"
-                tabIndex={0}
-                aria-label="Activate interactive demo on touch screen"
-                onClick={() => setIsTouchInteracting(true)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setIsTouchInteracting(true);
-                  }
+                style={{
+                  width: `${displayedWidth}px`,
+                  maxWidth: "100%",
+                  height: `${displayedHeight}px`,
                 }}
-                className="absolute inset-0 z-20 flex items-end justify-center pb-3 bg-transparent cursor-pointer sm:hidden focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-inset"
+                className={`relative overflow-hidden bg-[#0c0d10] transition-all ${
+                  viewportMode === "desktop"
+                    ? "w-full"
+                    : "rounded-xl border border-[var(--ca-ink)]/20 dark:border-white/15 shadow-md"
+                }`}
               >
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-mono text-[11px] font-semibold shadow-lg transition-transform active:scale-95">
-                  <Play size={11} className="fill-white" />
-                  <span>Tap to interact</span>
-                </div>
+                {!isIframeLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-[#0c0d10] z-10">
+                    <div className="flex items-center gap-2 font-mono text-xs text-neutral-400">
+                      <span className="h-2 w-2 rounded-full bg-[var(--ca-orange)] animate-ping" />
+                      <span>Loading preview...</span>
+                    </div>
+                  </div>
+                )}
+
+                <iframe
+                  ref={iframeRef}
+                  src={`/preview/${slug}`}
+                  title={`${slug} interactive component preview`}
+                  onLoad={() => setIsIframeLoaded(true)}
+                  style={{
+                    width: `${logical.width}px`,
+                    height: `${logical.height}px`,
+                    transform: `scale(${scale})`,
+                    transformOrigin: "top left",
+                    border: "none",
+                  }}
+                  className={`absolute top-0 left-0 bg-transparent transition-opacity ${
+                    isTouchInteracting
+                      ? "pointer-events-auto"
+                      : "pointer-events-none sm:pointer-events-auto"
+                  }`}
+                />
+
+                {/* Mobile Touch Overlay */}
+                {!isTouchInteracting && isIframeLoaded && (
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Activate interactive demo on touch screen"
+                    onClick={() => setIsTouchInteracting(true)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setIsTouchInteracting(true);
+                      }
+                    }}
+                    className="absolute inset-0 z-20 flex items-end justify-center pb-3 bg-transparent cursor-pointer sm:hidden focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-inset"
+                  >
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-mono text-[11px] font-semibold shadow-lg transition-transform active:scale-95">
+                      <Play size={11} className="fill-white" />
+                      <span>Tap to interact</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Mobile Exit Demo Button */}
+                {isTouchInteracting && (
+                  <button
+                    type="button"
+                    onClick={() => setIsTouchInteracting(false)}
+                    className="absolute top-2 right-2 z-20 flex items-center gap-1 min-h-[44px] px-3 py-1.5 rounded-md bg-black/85 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-bold shadow-md sm:hidden transition-transform active:scale-95"
+                  >
+                    <X size={12} />
+                    <span>Exit demo</span>
+                  </button>
+                )}
               </div>
-            )}
-
-            {/* Mobile Exit Demo Button */}
-            {isTouchInteracting && (
-              <button
-                type="button"
-                onClick={() => setIsTouchInteracting(false)}
-                className="absolute top-2 right-2 z-20 flex items-center gap-1 min-h-[44px] px-3 py-1.5 rounded-md bg-black/85 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-bold shadow-md sm:hidden transition-transform active:scale-95"
-              >
-                <X size={12} />
-                <span>Exit demo</span>
-              </button>
-            )}
+            </div>
           </div>
-        </div>
-      )}
 
-      {/* Code Tab View */}
-      {!isFullscreen && activeTab === "code" && (
-        <div className="w-full">
-          {children}
+          {/* Code Tab View */}
+          <div
+            className={`w-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              activeTab === "code"
+                ? "opacity-100 translate-y-0 pointer-events-auto relative"
+                : "opacity-0 translate-y-2 pointer-events-none absolute inset-x-0 top-0 -z-10 h-0 overflow-hidden"
+            }`}
+          >
+            {children}
+          </div>
         </div>
       )}
     </div>
