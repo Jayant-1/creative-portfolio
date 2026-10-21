@@ -22,6 +22,13 @@ export default function PreviewLayout({
 }) {
   return (
     <div id="isolated-preview-root" className="w-full min-h-screen bg-neutral-950 text-white selection:bg-neutral-800">
+      <link
+        rel="preload"
+        href="/fonts/six-caps.woff2"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      />
       {children}
     </div>
   );
