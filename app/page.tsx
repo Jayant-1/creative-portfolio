@@ -183,7 +183,7 @@ function ProjectCardImage({
       href={href}
       ref={containerRef as React.RefObject<HTMLAnchorElement>}
       aria-label={`View ${alt} project`}
-      className="group/card relative block overflow-hidden border-4 bg-[var(--ca-surface)] aspect-[16/9] w-full cursor-pointer shadow-[0_10px_28px_rgba(17,18,18,0.22)] transition-transform duration-300 hover:-translate-y-1"
+      className="group/card relative block overflow-hidden border-4 bg-[var(--ca-surface)] aspect-square w-full lg:aspect-auto lg:h-[calc(100vh-21rem)] min-h-[380px] sm:min-h-[460px] lg:min-h-[520px] xl:min-h-[580px] cursor-pointer shadow-[0_10px_28px_rgba(17,18,18,0.22)] transition-transform duration-300 hover:-translate-y-1"
       style={{ borderColor: "#ffffff" }}
       onMouseMove={onMove}
       onMouseEnter={(e) => {
@@ -202,6 +202,7 @@ function ProjectCardImage({
           sizes="(max-width: 1024px) 100vw, (max-width: 1536px) 50vw, 800px"
           loaderVariant="project"
           loaderText="Loading Preview..."
+          className="object-cover"
         />
       </div>
       <CardLens lensRef={lensRef} darkCard={darkCard} />
@@ -833,7 +834,7 @@ export default function HomePage() {
         </div>
 
         {/* Stacking Sticky Folder Cards */}
-        <div className="relative px-3 sm:px-8 lg:px-20 pb-10 sm:pb-14 lg:pb-16">
+        <div className="relative px-3 sm:px-8 lg:px-20 pb-10 sm:pb-14 lg:pb-16 flex flex-col gap-16 lg:gap-[12vh]">
           {projects.map((project, idx) => {
             const tabMargins = [
               "0",
@@ -848,7 +849,7 @@ export default function HomePage() {
             return (
               <article
                 key={project.slug}
-                className="ca-sticky-card sticky top-16 sm:top-20 lg:top-24 mb-6 sm:mb-8 lg:mb-10 last:mb-0"
+                className="ca-sticky-card sticky top-20 sm:top-24 lg:top-28"
                 style={{ zIndex: idx + 10 }}
               >
                 {/* Protruding Folder Tab */}
@@ -881,7 +882,7 @@ export default function HomePage() {
 
                 {/* Folder Body */}
                 <div
-                  className="grid grid-cols-1 gap-4 p-4 min-[400px]:p-5 sm:p-8 lg:grid-cols-[1fr_1.1fr] lg:gap-10 lg:p-12 min-h-[550px] sm:min-h-[500px] lg:min-h-[580px] xl:min-h-[620px]"
+                  className="grid grid-cols-1 gap-6 p-6 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:p-14 min-h-[540px] sm:min-h-[620px] lg:min-h-[calc(100vh-14rem)]"
                   style={{
                     backgroundColor: project.color,
                     color: project.ink,
@@ -890,7 +891,7 @@ export default function HomePage() {
                   {/* Left Column: Details & Actions */}
                   <div className="flex flex-col">
                     <span
-                      className="ca-mono inline-flex items-center gap-2 text-xs sm:gap-3 sm:text-sm font-bold uppercase tracking-[0.18em]"
+                      className="ca-mono inline-flex items-center gap-3 text-xs sm:gap-3 sm:text-sm font-bold uppercase tracking-[0.2em]"
                       style={{ color: project.ink }}
                     >
                       <span
@@ -901,7 +902,7 @@ export default function HomePage() {
                     </span>
 
                     <h3
-                      className="mt-2.5 sm:mt-6 text-2xl min-[380px]:text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight leading-tight"
+                      className="mt-3 sm:mt-6 text-3xl min-[380px]:text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight leading-tight"
                       style={{ color: project.ink }}
                     >
                       <Link
@@ -913,7 +914,7 @@ export default function HomePage() {
                     </h3>
 
                     <p
-                      className="mt-2 sm:mt-5 max-w-lg text-xs min-[380px]:text-sm sm:text-base lg:text-lg leading-relaxed opacity-90 line-clamp-3 sm:line-clamp-none"
+                      className="mt-3 sm:mt-5 max-w-lg text-sm sm:text-base lg:text-lg leading-relaxed opacity-90 line-clamp-3 sm:line-clamp-none"
                       style={{ color: project.ink }}
                     >
                       {project.problem}
@@ -921,7 +922,7 @@ export default function HomePage() {
 
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="ca-mono mt-3 sm:mt-8 inline-flex min-h-[44px] items-center gap-2 self-start border-b-2 pb-1 text-xs sm:text-sm font-bold uppercase tracking-[0.18em] transition-transform duration-150 hover:translate-x-1"
+                      className="ca-mono mt-4 sm:mt-8 inline-flex min-h-[44px] items-center gap-2.5 self-start border-b-2 pb-1 text-xs sm:text-sm font-bold uppercase tracking-[0.2em] transition-transform duration-150 hover:translate-x-1"
                       style={{
                         borderColor: project.ink,
                         color: project.ink,
@@ -940,47 +941,30 @@ export default function HomePage() {
                       </svg>
                     </Link>
 
-                    {/* Category Notched Tags */}
-                    <div className="mt-3 sm:mt-6 lg:mt-auto flex flex-wrap gap-1.5 sm:gap-2.5 pt-2 sm:pt-6 lg:pt-12">
-                      {project.category.map((cat, cIdx) => {
-                        const palette = [
-                          "var(--ca-yellow)",
-                          "var(--ca-mint)",
-                          "var(--ca-cyan)",
-                          "var(--ca-pink-soft)",
-                          "var(--ca-yellow-soft)",
-                          "var(--ca-purple)",
-                        ];
-                        const available = palette.filter(
-                          (c) => c !== project.color,
-                        );
-                        const tagBg = available[cIdx % available.length];
-
-                        return (
-                          <span
-                            key={cat}
-                            className="ca-mono px-2.5 py-1 text-xs sm:px-4 sm:pb-2 sm:pt-2.5 sm:text-base font-bold uppercase tracking-wide ca-notched-tag text-[var(--ca-ink)] border border-[var(--ca-ink)]/20 shadow-xs"
-                            style={{ backgroundColor: tagBg }}
-                          >
-                            {cat}
-                          </span>
-                        );
-                      })}
+                    {/* Category Notched Tags (Clean white tabs with ink text matching reference) */}
+                    <div className="mt-6 sm:mt-8 lg:mt-auto flex flex-wrap gap-2 sm:gap-2.5 pt-6 sm:pt-10 lg:pt-12">
+                      {project.category.map((cat) => (
+                        <span
+                          key={cat}
+                          className="ca-mono px-3.5 py-1.5 text-xs sm:px-4 sm:pb-2 sm:pt-2.5 sm:text-base font-bold uppercase tracking-wide ca-notched-tag text-[var(--ca-ink)] bg-white border border-[var(--ca-ink)]/15 shadow-xs"
+                        >
+                          {cat}
+                        </span>
+                      ))}
                     </div>
                   </div>
 
-                  {/* Right Column: Framed Image with Tapes */}
-                  <div className="flex items-center justify-center lg:self-center w-full">
-                    <div className="relative w-full max-w-[820px]">
-                      {(PROJECT_TAPES[project.slug] || PROJECT_TAPES.astropixel).map(
-                        (tape, tIdx) => (
-                          <span
-                            key={tIdx}
-                            aria-hidden="true"
-                            className={`pointer-events-none absolute z-10 ${tape.className}`}
-                          />
-                        ),
-                      )}
+                  {/* Right Column: Framed Image with Dual Translucent Tapes */}
+                  <div className="lg:self-center w-full">
+                    <div className="relative w-full">
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -left-5 -top-3 z-10 h-6 w-24 -rotate-[9deg] bg-white/55 shadow-[0_1px_3px_rgba(17,18,18,0.15)]"
+                      />
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -right-5 -top-3 z-10 h-6 w-24 rotate-[9deg] bg-white/55 shadow-[0_1px_3px_rgba(17,18,18,0.15)]"
+                      />
                       <ProjectCardImage
                         src={project.homeHero || project.hero}
                         alt={project.title}
