@@ -76,7 +76,10 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
     apple: "/favicon.svg",
   },
   verification: {
@@ -99,6 +102,7 @@ export default function RootLayout({
     <html lang="en-IN" className="overflow-x-clip">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link
           rel="preload"
