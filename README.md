@@ -64,8 +64,11 @@ pnpm audit --prod
 
 ## Typography & Attribution
 
-Fonts are locally hosted with `font-display: swap` under their respective SIL Open Font Licenses:
+Fonts are locally hosted in `/public/fonts` with `font-display: swap` under their respective SIL Open Font Licenses:
 - **Handjet**: Pixel-style display titles and numbers
 - **Just Me Again Down Here**: Handwritten notes and labels
 - **DM Mono**: Monospace dates, metadata, and tags
 - **Inter**: Body typography and paragraphs
+- **Six Caps**: Component preview condensed display headings
+- **Bebas Neue**: Component preview stylized display headings
+- **Raleway**: Component preview headline variants

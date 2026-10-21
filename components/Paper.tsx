@@ -210,7 +210,7 @@ export function ContactStrip() {
       <div className="px-4 pb-20 pt-10 sm:px-8 lg:px-20">
         <div className="relative mx-auto max-w-4xl">
           {/* Pinned Cyan Note */}
-          <div className="relative z-20 mb-6 flex justify-center -rotate-[8deg] lg:absolute lg:-left-8 xl:-left-16 2xl:-left-24 lg:-top-14 lg:mb-0 lg:block lg:w-80">
+          <div className="relative z-20 mb-6 hidden justify-center -rotate-[8deg] sm:flex lg:absolute lg:-left-8 xl:-left-16 2xl:-left-24 lg:-top-14 lg:mb-0 lg:block lg:w-80">
             <div className="ca-spring-hover relative w-full max-w-sm bg-[var(--ca-cyan)] p-5 pt-6 shadow-[2px_6px_18px_rgba(17,18,18,0.22)]">
               <span
                 aria-hidden="true"

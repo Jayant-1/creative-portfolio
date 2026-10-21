@@ -46,9 +46,6 @@ export function NextProjectPrefetch({
       } catch {
         // router might be unavailable
       }
-      if (imageSrc) {
-        prefetchQueue.prefetchImage(imageSrc, 4);
-      }
     });
 
     return () => {
