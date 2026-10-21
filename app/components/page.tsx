@@ -105,7 +105,7 @@ export default function ComponentsPage() {
           aria-label="Breadcrumb"
           className="mb-6 flex items-center gap-2 text-xs font-mono font-semibold text-[var(--ca-ink)]/60"
         >
-          <Link href="/" className="hover:text-[var(--ca-orange)] transition-colors">
+          <Link href="/" className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-orange)] transition-colors">
             Home
           </Link>
           <ChevronRight size={13} />
@@ -144,7 +144,7 @@ export default function ComponentsPage() {
               <span>Looking for a specific interaction?</span>
               <Link
                 href="/contact"
-                className="font-semibold text-[var(--ca-orange)] hover:underline inline-flex items-center gap-1 transition-colors"
+                className="min-h-[44px] font-semibold text-[var(--ca-orange)] hover:underline inline-flex items-center gap-1 transition-colors px-1"
               >
                 <span>Suggest a craft</span>
                 <ArrowRight size={13} />

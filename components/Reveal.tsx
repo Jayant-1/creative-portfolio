@@ -7,13 +7,15 @@ export default function Reveal({
   children,
   className = "",
   delay = 0,
+  priority = false,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  priority?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(priority);
   const isIntersectingRef = useRef(false);
   const pageReady = usePageAnimationReady();
 
@@ -55,7 +57,7 @@ export default function Reveal({
   return (
     <div
       ref={ref}
-      className={`reveal-entry ${visible ? "is-visible" : ""} ${className}`}
+      className={`reveal-entry ${visible ? "is-visible" : ""} ${priority ? "is-priority" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}

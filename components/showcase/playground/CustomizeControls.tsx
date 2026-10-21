@@ -44,9 +44,9 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
           <button
             type="button"
             onClick={onReset}
-            className="h-7 px-2 flex items-center gap-1 text-xs font-mono text-[var(--ca-ink)]/80 dark:text-neutral-300 hover:text-[#c2410c] dark:hover:text-orange-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] transition-colors rounded-sm"
+            className="min-h-[44px] sm:min-h-0 h-11 sm:h-7 px-3 sm:px-2 flex items-center gap-1.5 text-xs font-mono text-[var(--ca-ink)]/80 dark:text-neutral-300 hover:text-[#c2410c] dark:hover:text-orange-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] transition-colors rounded-sm"
           >
-            <RotateCcw size={11} />
+            <RotateCcw size={13} />
             <span>Reset to preset defaults</span>
           </button>
         )}
@@ -61,7 +61,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
           return (
             <div
               key={field.key}
-              className="flex flex-col gap-1 p-2 rounded-lg bg-white dark:bg-[#16181d] border border-[var(--ca-ink)]/10 dark:border-white/5"
+              className="flex flex-col gap-1.5 p-2 rounded-lg bg-white dark:bg-[#16181d] border border-[var(--ca-ink)]/10 dark:border-white/5"
             >
               <div className="flex items-center justify-between">
                 <label
@@ -85,7 +85,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
                   value={val}
                   onChange={(e) => onChange(field.key, e.target.value)}
                   placeholder={field.placeholder}
-                  className="w-full px-2.5 py-1.5 rounded-md border border-[var(--ca-ink)]/15 dark:border-white/10 bg-white dark:bg-neutral-900 font-mono text-xs text-[var(--ca-ink)] dark:text-white outline-hidden focus:border-[var(--ca-orange)] focus:ring-1 focus:ring-[var(--ca-orange)] transition-all"
+                  className="w-full min-h-[44px] sm:min-h-0 px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-md border border-[var(--ca-ink)]/15 dark:border-white/10 bg-white dark:bg-neutral-900 font-mono text-xs text-[var(--ca-ink)] dark:text-white outline-hidden focus:border-[var(--ca-orange)] focus:ring-1 focus:ring-[var(--ca-orange)] transition-all"
                 />
               )}
 
@@ -97,7 +97,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
                     type="color"
                     value={typeof val === "string" && val.startsWith("#") ? val : "#db4b29"}
                     onChange={(e) => onChange(field.key, e.target.value)}
-                    className="h-7 w-9 cursor-pointer rounded border border-[var(--ca-ink)]/20 dark:border-white/10 p-0.5 bg-white dark:bg-neutral-900"
+                    className="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:h-7 sm:w-9 cursor-pointer rounded border border-[var(--ca-ink)]/20 dark:border-white/10 p-0.5 bg-white dark:bg-neutral-900"
                   />
                   <input
                     id={`field-${field.key}-hex`}
@@ -105,7 +105,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
                     aria-label={`${field.label} hex code`}
                     value={val}
                     onChange={(e) => onChange(field.key, e.target.value)}
-                    className="flex-1 px-2.5 py-1 rounded-md border border-[var(--ca-ink)]/15 dark:border-white/10 bg-white dark:bg-neutral-900 font-mono text-xs text-[var(--ca-ink)] dark:text-white outline-hidden focus:border-[var(--ca-orange)] transition-all"
+                    className="flex-1 min-h-[44px] sm:min-h-0 px-3 py-2 sm:px-2.5 sm:py-1 rounded-md border border-[var(--ca-ink)]/15 dark:border-white/10 bg-white dark:bg-neutral-900 font-mono text-xs text-[var(--ca-ink)] dark:text-white outline-hidden focus:border-[var(--ca-orange)] transition-all"
                   />
                 </div>
               )}
@@ -120,7 +120,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
                   step={field.step ?? 1}
                   value={typeof val === "number" ? val : (field.min ?? 0)}
                   onChange={(e) => onChange(field.key, parseFloat(e.target.value))}
-                  className="w-full accent-[var(--ca-orange)] cursor-pointer h-1.5 bg-neutral-200 dark:bg-neutral-700 rounded-lg"
+                  className="w-full accent-[var(--ca-orange)] cursor-pointer h-2 bg-neutral-200 dark:bg-neutral-700 rounded-lg min-h-[32px]"
                 />
               )}
 
@@ -130,7 +130,7 @@ export const CustomizeControls: React.FC<CustomizeControlsProps> = ({
                   id={`field-${field.key}`}
                   value={val}
                   onChange={(e) => onChange(field.key, e.target.value)}
-                  className="w-full px-2.5 py-1.5 rounded-md border border-[var(--ca-ink)]/15 dark:border-white/10 bg-white dark:bg-neutral-900 font-mono text-xs text-[var(--ca-ink)] dark:text-white outline-hidden focus:border-[var(--ca-orange)] transition-all"
+                  className="w-full min-h-[44px] sm:min-h-0 px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-md border border-[var(--ca-ink)]/15 dark:border-white/10 bg-white dark:bg-neutral-900 font-mono text-xs text-[var(--ca-ink)] dark:text-white outline-hidden focus:border-[var(--ca-orange)] transition-all"
                 >
                   {field.options.map((opt) => (
                     <option key={opt.value} value={opt.value}>

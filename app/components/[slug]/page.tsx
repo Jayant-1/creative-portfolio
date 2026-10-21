@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = `${component.name} React Component`;
   const description = `${component.tagline} Live interactive sandbox, reactive controls, props schema, and copy-paste code.`;
-  const canonicalUrl = `${siteUrl}/components/${slug}`;
+  const canonicalUrl = `${siteUrl}/components/${component.slug}`;
   const ogImageUrl = `${siteUrl}${component.thumbnail}`;
 
   return {
@@ -91,7 +91,7 @@ export default async function ComponentDetailPage({ params }: PageProps) {
   const breadcrumbJsonLd = getBreadcrumbSchema([
     { name: "Home", url: siteUrl },
     { name: "Components", url: `${siteUrl}/components` },
-    { name: component.name, url: `${siteUrl}/components/${slug}` },
+    { name: component.name, url: `${siteUrl}/components/${component.slug}` },
   ]);
 
   const softwareJsonLd = getSoftwareApplicationSchema(component);
@@ -117,11 +117,11 @@ export default async function ComponentDetailPage({ params }: PageProps) {
           aria-label="Breadcrumb"
           className="mb-3 sm:mb-3.5 flex flex-wrap items-center gap-2 text-xs font-mono font-semibold text-[var(--ca-ink)]/60"
         >
-          <Link href="/" className="hover:text-[var(--ca-orange)] transition-colors">
+          <Link href="/" className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-orange)] transition-colors">
             Home
           </Link>
           <ChevronRight size={13} />
-          <Link href="/components" className="hover:text-[var(--ca-orange)] transition-colors">
+          <Link href="/components" className="min-h-[44px] inline-flex items-center px-1 hover:text-[var(--ca-orange)] transition-colors">
             Components
           </Link>
           <ChevronRight size={13} />
@@ -132,7 +132,7 @@ export default async function ComponentDetailPage({ params }: PageProps) {
         <div className="mb-3 lg:hidden w-full flex items-center justify-between gap-3 p-2 rounded-xl bg-white/90 dark:bg-[#121316]/90 border border-[var(--ca-ink)]/15 dark:border-white/10 shadow-xs">
           <Link
             href="/components"
-            className="inline-flex items-center gap-1 font-mono text-xs font-medium text-[var(--ca-ink)]/70 hover:text-[var(--ca-orange)] transition-colors shrink-0"
+            className="min-h-[44px] inline-flex items-center gap-1.5 font-mono text-xs font-semibold px-2 text-[var(--ca-ink)]/70 hover:text-[var(--ca-orange)] transition-colors shrink-0"
           >
             <ArrowLeft size={13} />
             <span>Catalog</span>

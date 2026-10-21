@@ -48,23 +48,22 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
   isFullscreen: controlledIsFullscreen,
   onFullscreenToggle,
 }) => {
-  const [containerWidth, setContainerWidth] = useState<number>(() => {
-    if (typeof window !== "undefined") {
-      return Math.min(window.innerWidth - 32, 1000);
-    }
-    return 1000;
-  });
-  const [viewportMode, setViewportMode] = useState<ViewportMode>(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 640) {
-      return "mobile";
-    }
-    return "desktop";
+  // Deterministic initial server and client render states to prevent hydration mismatch
+  const [containerWidth, setContainerWidth] = useState<number>(1000);
+  const [viewportMode, setViewportMode] = useState<ViewportMode>("desktop");
+  const [fullscreenDimensions, setFullscreenDimensions] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0,
   });
   const [isTouchInteracting, setIsTouchInteracting] = useState(false);
   const [internalIsFullscreen, setInternalIsFullscreen] = useState(false);
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
+
+  const userSelectedModeRef = useRef(false);
   const stageMeasureRef = useRef<HTMLDivElement>(null);
+  const stageContainerRef = useRef<HTMLDivElement>(null);
   const fullscreenContainerRef = useRef<HTMLDivElement>(null);
+  const fullscreenStageRef = useRef<HTMLDivElement>(null);
   const fullscreenTriggerRef = useRef<HTMLButtonElement>(null);
   const exitButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -82,31 +81,140 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
     [onFullscreenToggle]
   );
 
-  // Measure stage container width with ResizeObserver
+  // Viewport mode selection:
+  // On screens < 640px, default viewportMode should be "mobile" once mounted on client
+  // (synced via matchMedia / layout effect, avoiding SSR mismatch).
   useEffect(() => {
-    const el = stageMeasureRef.current;
+    const mql = window.matchMedia("(max-width: 639px)");
+
+    const syncViewportMode = (e: MediaQueryListEvent | MediaQueryList) => {
+      if (!userSelectedModeRef.current) {
+        setViewportMode(e.matches ? "mobile" : "desktop");
+      }
+    };
+
+    syncViewportMode(mql);
+
+    if (mql.addEventListener) {
+      mql.addEventListener("change", syncViewportMode);
+      return () => mql.removeEventListener("change", syncViewportMode);
+    } else {
+      mql.addListener(syncViewportMode);
+      return () => mql.removeListener(syncViewportMode);
+    }
+  }, []);
+
+  // When exiting fullscreen on mobile screens (< 640px), restore mobile viewport mode
+  useEffect(() => {
+    if (!isFullscreen && typeof window !== "undefined" && window.innerWidth < 640) {
+      userSelectedModeRef.current = false;
+      setViewportMode("mobile");
+    }
+  }, [isFullscreen]);
+
+  const handleSelectViewportMode = useCallback((mode: ViewportMode) => {
+    userSelectedModeRef.current = true;
+    setViewportMode(mode);
+  }, []);
+
+  // Measure exact available content width inside the stage (accounting for stage padding: px-1 = 8px or sm:px-2 = 16px, borders, etc.)
+  const measureAvailableContentWidth = useCallback((el: HTMLElement | null): number => {
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.width > 0) {
+        const computed = window.getComputedStyle(el);
+        const paddingLeft = parseFloat(computed.paddingLeft) || 0;
+        const paddingRight = parseFloat(computed.paddingRight) || 0;
+        const borderLeft = parseFloat(computed.borderLeftWidth) || 0;
+        const borderRight = parseFloat(computed.borderRightWidth) || 0;
+        const contentWidth = rect.width - paddingLeft - paddingRight - borderLeft - borderRight;
+        if (contentWidth > 0) {
+          return Math.floor(contentWidth);
+        }
+      }
+    }
+    // Fallback: measure root stage minus stage padding and border
+    if (stageMeasureRef.current) {
+      const outerRect = stageMeasureRef.current.getBoundingClientRect();
+      if (outerRect.width > 0) {
+        const isMobileScreen = typeof window !== "undefined" && window.innerWidth < 640;
+        const stagePadding = isMobileScreen ? 8 : 16;
+        const stageBorder = 2;
+        const fallback = outerRect.width - stagePadding - stageBorder;
+        if (fallback > 0) return Math.floor(fallback);
+      }
+    }
+    return 0;
+  }, []);
+
+  // Measure stage container dimensions with ResizeObserver, window resize, orientationchange, and tab changes
+  useEffect(() => {
+    const el = isFullscreen ? fullscreenStageRef.current : stageContainerRef.current;
     if (!el) return;
 
     const updateDimensions = () => {
-      const width = el.getBoundingClientRect().width;
-      if (width > 0) {
-        setContainerWidth(width);
+      if (isFullscreen) {
+        const rect = el.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          const computed = window.getComputedStyle(el);
+          const padL = parseFloat(computed.paddingLeft) || 0;
+          const padR = parseFloat(computed.paddingRight) || 0;
+          const padT = parseFloat(computed.paddingTop) || 0;
+          const padB = parseFloat(computed.paddingBottom) || 0;
+          const w = Math.max(0, Math.floor(rect.width - padL - padR));
+          const h = Math.max(0, Math.floor(rect.height - padT - padB));
+          setFullscreenDimensions({ width: w, height: h });
+        }
+      } else {
+        const contentWidth = measureAvailableContentWidth(el);
+        if (contentWidth > 0) {
+          setContainerWidth(contentWidth);
+        }
       }
     };
 
     updateDimensions();
 
+    const rafId = requestAnimationFrame(updateDimensions);
+
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        if (entry.contentRect.width > 0) {
-          setContainerWidth(entry.contentRect.width);
+        if (isFullscreen) {
+          let w = 0;
+          let h = 0;
+          if (entry.contentBoxSize && entry.contentBoxSize.length > 0) {
+            w = entry.contentBoxSize[0].inlineSize;
+            h = entry.contentBoxSize[0].blockSize;
+          } else if (entry.contentRect) {
+            w = entry.contentRect.width;
+            h = entry.contentRect.height;
+          }
+          if (w > 0 && h > 0) {
+            setFullscreenDimensions({ width: Math.floor(w), height: Math.floor(h) });
+          } else {
+            updateDimensions();
+          }
+        } else {
+          const measured = measureAvailableContentWidth(el);
+          if (measured > 0) {
+            setContainerWidth(measured);
+          }
         }
       }
     });
 
     observer.observe(el);
-    return () => observer.disconnect();
-  }, [activeTab]);
+
+    window.addEventListener("resize", updateDimensions);
+    window.addEventListener("orientationchange", updateDimensions);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
+      window.removeEventListener("resize", updateDimensions);
+      window.removeEventListener("orientationchange", updateDimensions);
+    };
+  }, [activeTab, isFullscreen, measureAvailableContentWidth]);
 
   // Fullscreen body scroll lock, focus restoration, and keyboard focus trap
   useEffect(() => {
@@ -177,34 +285,44 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
   // Logical viewport for current mode
   const logical = referenceViewport[viewportMode] || referenceViewport.desktop;
 
-  // Calculate scale and dimensions
+  // Calculate scale and dimensions strictly fitting within available stage
   let scale = 1;
   let displayedWidth = containerWidth;
   let displayedHeight = logical.height;
 
   if (isFullscreen) {
-    const availableW = typeof window !== "undefined" ? window.innerWidth - 48 : 1200;
-    const availableH = typeof window !== "undefined" ? window.innerHeight - 130 : 700;
+    const availableW =
+      fullscreenDimensions.width > 0
+        ? fullscreenDimensions.width
+        : typeof window !== "undefined"
+        ? window.innerWidth - 48
+        : 1200;
+    const availableH =
+      fullscreenDimensions.height > 0
+        ? fullscreenDimensions.height
+        : typeof window !== "undefined"
+        ? window.innerHeight - 130
+        : 700;
     scale = Math.min(availableW / logical.width, availableH / logical.height, 1);
     displayedWidth = Math.round(logical.width * scale);
     displayedHeight = Math.round(logical.height * scale);
   } else {
-    const usableWidth = containerWidth > 0 ? containerWidth : 860;
+    const availableWidth = containerWidth > 0 ? containerWidth : 1000;
     if (viewportMode === "desktop") {
-      scale = usableWidth / logical.width;
-      displayedWidth = usableWidth;
+      scale = availableWidth / logical.width;
+      if (logical.width * scale > availableWidth) {
+        scale = availableWidth / logical.width;
+      }
+      displayedWidth = Math.min(availableWidth, Math.round(logical.width * scale));
       displayedHeight = Math.round(logical.height * scale);
     } else {
-      // For tablet and mobile
-      if (usableWidth >= logical.width) {
-        scale = 1;
-        displayedWidth = logical.width;
-        displayedHeight = logical.height;
-      } else {
-        scale = usableWidth / logical.width;
-        displayedWidth = usableWidth;
-        displayedHeight = Math.round(logical.height * scale);
+      // Mobile and Tablet: strictly cap at 1:1, scale down if availableWidth < logical.width
+      scale = Math.min(1, availableWidth / logical.width);
+      if (logical.width * scale > availableWidth) {
+        scale = availableWidth / logical.width;
       }
+      displayedWidth = Math.min(availableWidth, Math.round(logical.width * scale));
+      displayedHeight = Math.round(logical.height * scale);
     }
   }
 
@@ -223,11 +341,20 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
         <div className="w-full flex flex-wrap items-center justify-between gap-2 px-3 sm:px-4 py-2 border-b border-[var(--ca-ink)]/10 dark:border-white/10 bg-white/70 dark:bg-[#15171c]/70 backdrop-blur-xs">
           {/* Segmented Tab Control: Preview vs Code */}
           <LayoutGroup id="preview-frame-tabs">
-            <div className="relative inline-flex items-center p-0.5 rounded-lg bg-[var(--ca-ink)]/6 dark:bg-white/8 text-xs font-mono">
+            <div
+              role="tablist"
+              aria-label="Component view modes"
+              className="relative inline-flex items-center p-0.5 rounded-lg bg-[var(--ca-ink)]/6 dark:bg-white/8 text-xs font-mono"
+            >
               <button
                 type="button"
+                role="tab"
+                id="preview-tab"
+                aria-selected={activeTab === "preview"}
+                aria-controls="preview-panel"
+                tabIndex={activeTab === "preview" ? 0 : -1}
                 onClick={() => onTabChange("preview")}
-                className={`relative z-10 flex items-center gap-1.5 min-h-[36px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                className={`relative z-10 flex items-center gap-1.5 min-h-[44px] sm:min-h-[28px] px-3.5 py-1.5 sm:py-1 rounded-md text-xs font-mono transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                   activeTab === "preview"
                     ? "text-[var(--ca-ink)] dark:text-white font-semibold"
                     : "text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)] dark:hover:text-white"
@@ -246,8 +373,13 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
 
               <button
                 type="button"
+                role="tab"
+                id="code-tab"
+                aria-selected={activeTab === "code"}
+                aria-controls="code-panel"
+                tabIndex={activeTab === "code" ? 0 : -1}
                 onClick={() => onTabChange("code")}
-                className={`relative z-10 flex items-center gap-1.5 min-h-[36px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                className={`relative z-10 flex items-center gap-1.5 min-h-[44px] sm:min-h-[28px] px-3.5 py-1.5 sm:py-1 rounded-md text-xs font-mono transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                   activeTab === "code"
                     ? "text-[var(--ca-ink)] dark:text-white font-semibold"
                     : "text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)] dark:hover:text-white"
@@ -282,11 +414,11 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                   <button
                     type="button"
                     onClick={onReplay}
-                    className="min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                    className="min-h-[44px] min-w-[44px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                     title="Replay entrance animations"
                     aria-label="Replay animations"
                   >
-                    <RotateCcw size={13} />
+                    <RotateCcw size={14} />
                   </button>
 
                   {/* Open in new tab */}
@@ -294,11 +426,11 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                     href={`/preview/${slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                    className="min-h-[44px] min-w-[44px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                     title="Open preview in new tab"
                     aria-label="Open preview in new tab"
                   >
-                    <ExternalLink size={13} />
+                    <ExternalLink size={14} />
                   </a>
                 </motion.div>
               )}
@@ -332,8 +464,8 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
               >
                 <button
                   type="button"
-                  onClick={() => setViewportMode("desktop")}
-                  className={`min-h-[32px] min-w-[32px] flex items-center justify-center rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                  onClick={() => handleSelectViewportMode("desktop")}
+                  className={`min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] flex items-center justify-center rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                     viewportMode === "desktop"
                       ? "bg-white text-black font-semibold shadow-xs"
                       : "text-neutral-300 hover:text-white"
@@ -345,8 +477,8 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setViewportMode("tablet")}
-                  className={`min-h-[32px] min-w-[32px] flex items-center justify-center rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                  onClick={() => handleSelectViewportMode("tablet")}
+                  className={`min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] flex items-center justify-center rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                     viewportMode === "tablet"
                       ? "bg-white text-black font-semibold shadow-xs"
                       : "text-neutral-300 hover:text-white"
@@ -358,8 +490,8 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setViewportMode("mobile")}
-                  className={`min-h-[32px] min-w-[32px] flex items-center justify-center rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                  onClick={() => handleSelectViewportMode("mobile")}
+                  className={`min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] flex items-center justify-center rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                     viewportMode === "mobile"
                       ? "bg-white text-black font-semibold shadow-xs"
                       : "text-neutral-300 hover:text-white"
@@ -374,7 +506,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
               <button
                 type="button"
                 onClick={onReplay}
-                className="min-h-[36px] sm:min-h-[32px] px-3 flex items-center gap-1.5 rounded-md text-xs font-mono bg-white/10 hover:bg-white/15 text-white transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                className="min-h-[44px] sm:min-h-[32px] px-3.5 flex items-center gap-1.5 rounded-md text-xs font-mono bg-white/10 hover:bg-white/15 text-white transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                 aria-label="Replay animations"
               >
                 <RotateCcw size={13} />
@@ -385,7 +517,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                 href={`/preview/${slug}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[36px] min-w-[36px] sm:min-h-[32px] sm:min-w-[32px] inline-flex items-center justify-center rounded-md text-xs font-mono bg-white/10 hover:bg-white/15 text-white transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] inline-flex items-center justify-center rounded-md text-xs font-mono bg-white/10 hover:bg-white/15 text-white transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                 title="Open in new tab"
                 aria-label="Open in new tab"
               >
@@ -396,7 +528,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                 ref={exitButtonRef}
                 type="button"
                 onClick={() => setIsFullscreen(false)}
-                className="min-h-[36px] sm:min-h-[32px] px-3 flex items-center gap-1.5 rounded-md text-xs font-mono bg-white/20 hover:bg-white/30 text-white font-bold transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                className="min-h-[44px] sm:min-h-[32px] px-3.5 flex items-center gap-1.5 rounded-md text-xs font-mono bg-white/20 hover:bg-white/30 text-white font-bold transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                 aria-label="Exit Fullscreen"
               >
                 <Minimize2 size={13} />
@@ -406,14 +538,17 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
           </div>
 
           {/* Fullscreen Iframe Container */}
-          <div className="flex-1 w-full flex items-center justify-center overflow-hidden">
+          <div
+            ref={fullscreenStageRef}
+            className="flex-1 w-full flex items-center justify-center overflow-hidden"
+          >
             <div
               style={{
                 width: `${displayedWidth}px`,
                 maxWidth: "100%",
                 height: `${displayedHeight}px`,
               }}
-              className="relative overflow-hidden rounded-lg border border-white/15 bg-[#0c0d10] shadow-2xl transition-all"
+              className="relative overflow-hidden rounded-lg border border-white/15 bg-[#0c0d10] shadow-2xl"
             >
               {!isIframeLoaded && (
                 <div className="absolute inset-0 flex items-center justify-center bg-[#0c0d10] z-10">
@@ -428,6 +563,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                 ref={iframeRef}
                 src={`/preview/${slug}`}
                 title={`${slug} interactive component preview`}
+                loading="lazy"
                 onLoad={() => setIsIframeLoaded(true)}
                 style={{
                   width: `${logical.width}px`,
@@ -448,20 +584,28 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
         <div className="relative w-full overflow-hidden">
           {/* Preview Tab Panel */}
           <div
+            id="preview-panel"
+            role="tabpanel"
+            aria-labelledby="preview-tab"
+            aria-hidden={activeTab !== "preview"}
+            inert={activeTab !== "preview"}
             className={`w-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               activeTab === "preview"
                 ? "opacity-100 translate-y-0 pointer-events-auto relative"
                 : "opacity-0 translate-y-2 pointer-events-none absolute inset-x-0 top-0 -z-10 h-0 overflow-hidden"
             }`}
           >
-            <div className="w-full flex flex-col items-center justify-center select-none py-2 px-1 sm:px-2 bg-neutral-900/10">
+            <div
+              ref={stageContainerRef}
+              className="w-full flex flex-col items-center justify-center select-none py-2 px-1 sm:px-2 bg-neutral-900/10"
+            >
               <div
                 style={{
                   width: `${displayedWidth}px`,
                   maxWidth: "100%",
                   height: `${displayedHeight}px`,
                 }}
-                className={`relative overflow-hidden bg-[#0c0d10] transition-all ${
+                className={`relative overflow-hidden bg-[#0c0d10] ${
                   viewportMode === "desktop"
                     ? "w-full"
                     : "rounded-xl border border-[var(--ca-ink)]/20 dark:border-white/15 shadow-md"
@@ -480,6 +624,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                   ref={iframeRef}
                   src={`/preview/${slug}`}
                   title={`${slug} interactive component preview`}
+                  loading="lazy"
                   onLoad={() => setIsIframeLoaded(true)}
                   style={{
                     width: `${logical.width}px`,
@@ -534,6 +679,11 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
 
           {/* Code Tab View */}
           <div
+            id="code-panel"
+            role="tabpanel"
+            aria-labelledby="code-tab"
+            aria-hidden={activeTab !== "code"}
+            inert={activeTab !== "code"}
             className={`w-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               activeTab === "code"
                 ? "opacity-100 translate-y-0 pointer-events-auto relative"

@@ -47,7 +47,7 @@ export const ComponentsCatalogClient: React.FC = () => {
               <div className="min-w-0">
                 <Link
                   href={`/components/${comp.slug}`}
-                  className="block font-sans text-[15px] font-bold tracking-tight text-[var(--ca-ink)] dark:text-white group-hover:text-[var(--ca-orange)] transition-colors truncate"
+                  className="min-h-[44px] flex items-center font-sans text-[15px] font-bold tracking-tight text-[var(--ca-ink)] dark:text-white group-hover:text-[var(--ca-orange)] transition-colors truncate"
                 >
                   {comp.name}
                 </Link>
@@ -56,27 +56,27 @@ export const ComponentsCatalogClient: React.FC = () => {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1 shrink-0">
+              <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   type="button"
                   onClick={(e) => handleCopyInstall(e, comp)}
                   aria-label={`Copy install command for ${comp.name}`}
-                  className="h-8 w-8 inline-flex items-center justify-center rounded-lg text-[var(--ca-ink)]/70 hover:text-[var(--ca-ink)] dark:text-neutral-300 dark:hover:text-white hover:bg-[var(--ca-ink)]/5 dark:hover:bg-white/5 active:scale-90 transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                  className="h-11 w-11 sm:h-8 sm:w-8 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 inline-flex items-center justify-center rounded-lg text-[var(--ca-ink)]/70 hover:text-[var(--ca-ink)] dark:text-neutral-300 dark:hover:text-white hover:bg-[var(--ca-ink)]/5 dark:hover:bg-white/5 active:scale-90 transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                   title={`Copy install command for ${comp.name}`}
                 >
                   {copiedSlug === comp.slug ? (
-                    <Check size={15} className="text-emerald-600" />
+                    <Check size={16} className="text-emerald-600" />
                   ) : (
-                    <Copy size={15} />
+                    <Copy size={16} />
                   )}
                 </button>
                 <Link
                   href={`/components/${comp.slug}`}
                   aria-label={`Open ${comp.name} craft documentation`}
-                  className="h-8 w-8 inline-flex items-center justify-center rounded-lg text-[var(--ca-orange)] hover:bg-[var(--ca-orange)]/10 hover:translate-x-0.5 hover:-translate-y-0.5 active:scale-90 transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                  className="h-11 w-11 sm:h-8 sm:w-8 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 inline-flex items-center justify-center rounded-lg text-[var(--ca-orange)] hover:bg-[var(--ca-orange)]/10 hover:translate-x-0.5 hover:-translate-y-0.5 active:scale-90 transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                   title="Open component"
                 >
-                  <ArrowUpRight size={17} />
+                  <ArrowUpRight size={18} />
                 </Link>
               </div>
             </div>

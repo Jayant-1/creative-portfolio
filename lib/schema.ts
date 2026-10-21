@@ -199,12 +199,9 @@ export function getSoftwareApplicationSchema(component: CraftComponent) {
 /**
  * Returns TechArticle / CreativeWork case study schema for engineering projects.
  * Explicitly connects to the underlying software entity without contradictory capability claims.
+ * Optional dates (datePublished, dateModified) are omitted since exact per-project publication dates are not tracked.
  */
 export function getProjectCaseStudySchema(project: Project) {
-  const datePublished = project.year
-    ? `${project.year}-01-01T00:00:00+05:30`
-    : "2025-01-01T00:00:00+05:30";
-
   return {
     "@context": "https://schema.org",
     "@type": "TechArticle",
@@ -215,7 +212,6 @@ export function getProjectCaseStudySchema(project: Project) {
     url: `${siteUrl}/projects/${project.slug}`,
     mainEntityOfPage: `${siteUrl}/projects/${project.slug}`,
     image: `${siteUrl}${project.hero}`,
-    datePublished,
     inLanguage: "en-IN",
     articleSection: project.category.join(", "),
     keywords: project.technologies.join(", "),

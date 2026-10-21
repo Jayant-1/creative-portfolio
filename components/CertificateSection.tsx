@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
 import { ImageWithLoader } from "@/components/ImageWithLoader";
 import {
   ArrowUpRight,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { certificateGroups, CertificateGroup, CertificateItem } from "@/lib/site";
+import { useFocusTrap } from "@/lib/hooks/use-focus-trap";
 
 interface CertificateSectionProps {
   className?: string;
@@ -22,34 +24,41 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
   const [selectedGroup, setSelectedGroup] = useState<CertificateGroup | null>(null);
   const [selectedItem, setSelectedItem] = useState<CertificateItem | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  const openDrawer = useCallback((group: CertificateGroup, item: CertificateItem) => {
-    setSelectedGroup(group);
-    setSelectedItem(item);
-    setCopiedLink(false);
+  useEffect(() => {
+    setMounted(true);
   }, []);
+
+  const isDrawerOpen = Boolean(selectedGroup && selectedItem);
+
+  const openDrawer = useCallback(
+    (group: CertificateGroup, item: CertificateItem, triggerEl?: HTMLElement) => {
+      triggerRef.current = triggerEl || ((typeof document !== "undefined" ? document.activeElement : null) as HTMLElement | null);
+      setSelectedGroup(group);
+      setSelectedItem(item);
+      setCopiedLink(false);
+    },
+    []
+  );
 
   const closeDrawer = useCallback(() => {
     setSelectedGroup(null);
     setSelectedItem(null);
   }, []);
 
-  // Close on Escape key and lock body scroll while drawer is open
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closeDrawer();
-      }
-    };
-    if (selectedGroup) {
-      window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-    }
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "unset";
-    };
-  }, [selectedGroup, closeDrawer]);
+  useFocusTrap<HTMLDivElement>({
+    isActive: isDrawerOpen,
+    onClose: closeDrawer,
+    initialFocusRef: closeButtonRef,
+    returnFocusRef: triggerRef,
+    containerRef: drawerRef,
+    setInertBackground: true,
+    lockScroll: true,
+  });
 
   const copyToClipboard = async (text: string) => {
     try {
@@ -106,7 +115,7 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
                   <li key={item.id}>
                     <button
                       type="button"
-                      onClick={() => openDrawer(group, item)}
+                      onClick={(e) => openDrawer(group, item, e.currentTarget)}
                       className="group w-full min-h-[44px] text-left rounded-lg border border-[var(--ca-ink)]/15 bg-white p-3 transition-all duration-150 hover:border-[var(--ca-ink)] hover:bg-[var(--ca-chrome)]/40 hover:shadow-[2px_2px_0_var(--ca-ink)] flex items-center justify-between gap-3 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
@@ -130,77 +139,83 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
       </div>
 
       {/* Smooth Slide-up Bottom Drawer with REAL Certificate Document Scans */}
-      <AnimatePresence>
-        {selectedGroup && selectedItem && (
-          <div className="fixed inset-0 z-50 flex items-end justify-center">
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              onClick={closeDrawer}
-              className="fixed inset-0 bg-black/60 backdrop-blur-xs"
-              aria-hidden="true"
-            />
-
-            {/* Bottom Drawer Sheet with Safe Area Bottom */}
-            <motion.div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="drawer-certificate-title"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 320 }}
-              style={{
-                paddingBottom: "max(1.75rem, env(safe-area-inset-bottom, 0px))",
-              }}
-              className="relative z-10 w-full max-w-3xl max-h-[92vh] max-h-[92dvh] overflow-y-auto rounded-t-3xl border-3 border-b-0 border-[var(--ca-ink)] bg-white p-5 sm:p-7 shadow-[0_-12px_40px_rgba(17,18,18,0.35)]"
-            >
-              {/* Drawer Pull Handle */}
-              <div
-                onClick={closeDrawer}
-                className="w-12 h-1.5 rounded-full bg-[var(--ca-ink)]/25 mx-auto mb-3 cursor-pointer hover:bg-[var(--ca-ink)]/40 transition-colors"
-                title="Click to close"
-              />
-
-              {/* Drawer Header (Clean, without green badge) */}
-              <div className="flex items-center justify-between gap-3 border-b border-[var(--ca-ink)]/15 pb-3">
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="relative h-10 w-10 shrink-0 rounded-md border border-[var(--ca-ink)]/20 bg-white p-1 flex items-center justify-center overflow-hidden">
-                    <ImageWithLoader
-                      src={selectedGroup.logo}
-                      alt={`${selectedGroup.organization} logo`}
-                      width={32}
-                      height={32}
-                      className="object-contain max-h-full max-w-full"
-                      wrapperStyle={{ backgroundColor: "transparent" }}
-                      loaderVariant="minimal"
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/70 block">
-                      {selectedGroup.organization}
-                    </span>
-                    <h4
-                      id="drawer-certificate-title"
-                      className="text-sm sm:text-base font-extrabold text-[var(--ca-ink)] leading-snug truncate"
-                    >
-                      {selectedItem.name}
-                    </h4>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
+      {mounted &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {selectedGroup && selectedItem && (
+              <div className="fixed inset-0 z-50 flex items-end justify-center">
+                {/* Backdrop */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
                   onClick={closeDrawer}
-                  aria-label="Close certificate drawer"
-                  className="shrink-0 flex h-11 w-11 items-center justify-center rounded-full border-2 border-[var(--ca-ink)] bg-[var(--ca-chrome)] text-[var(--ca-ink)] hover:bg-[var(--ca-yellow)] active:scale-95 transition-colors shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                  className="fixed inset-0 bg-black/60 backdrop-blur-xs"
+                  aria-hidden="true"
+                />
+
+                {/* Bottom Drawer Sheet with Safe Area Bottom */}
+                <motion.div
+                  ref={drawerRef}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="drawer-certificate-title"
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "100%" }}
+                  transition={{ type: "spring", damping: 28, stiffness: 320 }}
+                  style={{
+                    paddingBottom: "max(1.75rem, env(safe-area-inset-bottom, 0px))",
+                  }}
+                  className="relative z-10 w-full max-w-3xl max-h-[92vh] max-h-[92dvh] overflow-y-auto rounded-t-3xl border-3 border-b-0 border-[var(--ca-ink)] bg-white p-5 sm:p-7 shadow-[0_-12px_40px_rgba(17,18,18,0.35)]"
                 >
-                  <X size={18} />
-                </button>
-              </div>
+                  {/* Drawer Pull Handle */}
+                  <div
+                    onClick={closeDrawer}
+                    className="w-12 h-1.5 rounded-full bg-[var(--ca-ink)]/25 mx-auto mb-3 cursor-pointer hover:bg-[var(--ca-ink)]/40 transition-colors"
+                    title="Click to close"
+                    aria-hidden="true"
+                  />
+
+                  {/* Drawer Header (Clean, without green badge) */}
+                  <div className="flex items-center justify-between gap-3 border-b border-[var(--ca-ink)]/15 pb-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="relative h-10 w-10 shrink-0 rounded-md border border-[var(--ca-ink)]/20 bg-white p-1 flex items-center justify-center overflow-hidden">
+                        <ImageWithLoader
+                          src={selectedGroup.logo}
+                          alt={`${selectedGroup.organization} logo`}
+                          width={32}
+                          height={32}
+                          className="object-contain max-h-full max-w-full"
+                          wrapperStyle={{ backgroundColor: "transparent" }}
+                          loaderVariant="minimal"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="ca-mono text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)]/70 block">
+                          {selectedGroup.organization}
+                        </span>
+                        <h4
+                          id="drawer-certificate-title"
+                          className="text-sm sm:text-base font-extrabold text-[var(--ca-ink)] leading-snug truncate"
+                        >
+                          {selectedItem.name}
+                        </h4>
+                      </div>
+                    </div>
+
+                    <button
+                      ref={closeButtonRef}
+                      type="button"
+                      onClick={closeDrawer}
+                      aria-label="Close certificate drawer"
+                      className="shrink-0 flex h-11 w-11 items-center justify-center rounded-full border-2 border-[var(--ca-ink)] bg-[var(--ca-chrome)] text-[var(--ca-ink)] hover:bg-[var(--ca-yellow)] active:scale-95 transition-colors shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
 
               {/* Multi-Certificate Tab Switcher (e.g. Harvard CS50 / CS50 SQL, Certiport HTML / Databases) */}
               {selectedGroup.items.length > 1 && (
@@ -362,7 +377,9 @@ export function CertificateSection({ className = "" }: CertificateSectionProps) 
             </motion.div>
           </div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+    )}
     </div>
   );
 }

@@ -79,7 +79,7 @@ export default function AboutPage() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Trail */}
         <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
-          <Link href="/" className="hover:text-[var(--ca-blue)]">Home</Link>
+          <Link href="/" className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-blue)]">Home</Link>
           <ChevronRight size={14} />
           <span className="text-[var(--ca-ink)] font-bold">About</span>
         </nav>
@@ -89,41 +89,41 @@ export default function AboutPage() {
           <div className="hidden lg:block" aria-hidden="true" />
           <div>
             <h1 className="ca-display text-6xl sm:text-8xl md:text-9xl uppercase leading-none tracking-tight text-[var(--ca-ink)] mb-4">
-              <StaggerText text="ABOUT" stagger={0.06} />
+              <StaggerText text="ABOUT" stagger={0.06} priority />
             </h1>
 
-            {/* Mobile quick-jump navigation (sleek 34px badges matching desktop tabs) */}
+            {/* Mobile quick-jump navigation (ergonomic 44px touch targets) */}
             <nav className="flex flex-wrap gap-2 lg:hidden pt-2" aria-label="About section quick links">
               <a
                 href="#bio"
-                className="ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
+                className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-lg border-2 border-[var(--ca-ink)] px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-yellow)" }}
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-ink)]" />
+                <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
                 Main Bio
               </a>
               <a
                 href="#facts"
-                className="ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
+                className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-lg border-2 border-[var(--ca-ink)] px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-cyan)" }}
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-ink)]" />
+                <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
                 Quick Facts
               </a>
               <a
                 href="#story"
-                className="ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
+                className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-lg border-2 border-[var(--ca-ink)] px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-[var(--ca-ink)] shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-magenta)" }}
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--ca-ink)]" />
+                <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
                 Story
               </a>
               <a
                 href="#leadership"
-                className="ca-mono inline-flex h-[34px] min-h-[34px] items-center gap-1.5 rounded-lg border-2 border-[var(--ca-ink)] px-3 text-[11px] font-bold uppercase tracking-wider text-white shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
+                className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-lg border-2 border-[var(--ca-ink)] px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-blue)" }}
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-white border border-black" />
+                <span className="h-2 w-2 rounded-full bg-white border border-black" />
                 Leadership
               </a>
             </nav>
@@ -259,7 +259,7 @@ export default function AboutPage() {
                       <Award size={16} /> Awards &amp; Certificates
                     </div>
                     <p className="mt-2 text-sm sm:text-base text-[var(--ca-ink)] font-medium">
-                      1st Place Web Design Competition, 2nd Place Project Expo 2025, 3rd Place University Ideation 3.0 (AstroPixel), and Oracle Cloud Infrastructure Generative AI Certified Professional.
+                      1st Place University Project Expo (Krypton), 3rd Place University Ideation 3.0 (AstroPixel), and Harvard CS50, IBM, and Certiport IT Specialist certifications.
                     </p>
                   </div>
                 </div>

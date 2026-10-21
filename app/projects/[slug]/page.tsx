@@ -119,15 +119,15 @@ export default async function ProjectDetailPage({
         {/* Layer 1: Recruiter-First Header (0–5 Seconds Law) */}
         {/* Breadcrumb Trail */}
         <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
-          <Link href="/" className="inline-flex items-center py-1 px-1.5 rounded hover:text-[var(--ca-blue)] transition-colors">
+          <Link href="/" className="min-h-[44px] inline-flex items-center py-1 px-1.5 rounded hover:text-[var(--ca-blue)] transition-colors">
             Home
           </Link>
           <ChevronRight size={14} className="shrink-0 text-[var(--ca-ink)]/40" />
-          <Link href="/projects" className="inline-flex items-center py-1 px-1.5 rounded hover:text-[var(--ca-blue)] transition-colors">
+          <Link href="/projects" className="min-h-[44px] inline-flex items-center py-1 px-1.5 rounded hover:text-[var(--ca-blue)] transition-colors">
             Projects
           </Link>
           <ChevronRight size={14} className="shrink-0 text-[var(--ca-ink)]/40" />
-          <span className="inline-flex items-center py-1 px-1.5 text-[var(--ca-ink)] font-bold truncate max-w-[260px] sm:max-w-none">
+          <span className="min-h-[44px] inline-flex items-center py-1 px-1.5 text-[var(--ca-ink)] font-bold truncate max-w-[260px] sm:max-w-none">
             {project.title}
           </span>
         </nav>

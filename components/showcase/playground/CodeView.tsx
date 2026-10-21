@@ -47,7 +47,7 @@ export const CodeView: React.FC<CodeViewProps> = ({
             <button
               type="button"
               onClick={() => setSubTab("usage")}
-              className={`relative z-10 min-h-[32px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+              className={`relative z-10 min-h-[44px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                 subTab === "usage"
                   ? "text-white font-bold"
                   : "text-neutral-400 hover:text-white"
@@ -65,7 +65,7 @@ export const CodeView: React.FC<CodeViewProps> = ({
             <button
               type="button"
               onClick={() => setSubTab("source")}
-              className={`relative z-10 min-h-[32px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+              className={`relative z-10 min-h-[44px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                 subTab === "source"
                   ? "text-white font-bold"
                   : "text-neutral-400 hover:text-white"
@@ -84,7 +84,7 @@ export const CodeView: React.FC<CodeViewProps> = ({
               <button
                 type="button"
                 onClick={() => setSubTab("css")}
-                className={`relative z-10 min-h-[32px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                className={`relative z-10 min-h-[44px] sm:min-h-[28px] px-3 py-1 rounded-md text-xs font-mono transition-colors duration-200 inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                   subTab === "css"
                     ? "text-white font-bold"
                     : "text-neutral-400 hover:text-white"
@@ -107,9 +107,9 @@ export const CodeView: React.FC<CodeViewProps> = ({
           type="button"
           onClick={handleCopy}
           aria-label="Copy code to clipboard"
-          className="min-h-[32px] sm:min-h-[28px] inline-flex items-center gap-1.5 px-2.5 rounded-md text-xs font-mono bg-white/10 hover:bg-white/15 text-white transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+          className="min-h-[44px] sm:min-h-[28px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono bg-white/10 hover:bg-white/15 text-white transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
         >
-          {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+          {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
           <span>{copied ? "Copied" : "Copy Code"}</span>
         </button>
       </div>

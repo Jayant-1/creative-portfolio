@@ -26,7 +26,7 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `/blog/${note.slug}`,
+      canonical: `${siteUrl}/blog/${note.slug}`,
     },
     openGraph: {
       type: "article",
@@ -56,7 +56,7 @@ export default async function BlogDetailPage({
     headline: note.title,
     description: note.summary,
     url: `${siteUrl}/blog/${note.slug}`,
-    datePublished: "2026-01-15T00:00:00+05:30",
+    ...(note.date ? { datePublished: note.date } : {}),
     author: {
       "@type": "Person",
       "@id": `${siteUrl}/#jayant`,
@@ -92,11 +92,11 @@ export default async function BlogDetailPage({
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Trail */}
         <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
-          <Link href="/" className="hover:text-[var(--ca-blue)]">Home</Link>
+          <Link href="/" className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-blue)]">Home</Link>
           <ChevronRight size={14} />
-          <Link href="/blog" className="hover:text-[var(--ca-blue)]">Blog</Link>
+          <Link href="/blog" className="min-h-[44px] inline-flex items-center px-1 hover:text-[var(--ca-blue)]">Blog</Link>
           <ChevronRight size={14} />
-          <span className="text-[var(--ca-ink)] font-bold truncate max-w-xs">{note.title}</span>
+          <span className="min-h-[44px] inline-flex items-center text-[var(--ca-ink)] font-bold truncate max-w-xs">{note.title}</span>
         </nav>
 
         {/* Article Header */}

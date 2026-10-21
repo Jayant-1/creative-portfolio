@@ -35,22 +35,32 @@ export type AnalyticsEventName =
 export type AnalyticsPrimitive = string | number | boolean;
 export type AnalyticsProperties = Record<string, AnalyticsPrimitive | undefined>;
 
-/** Forbidden property keys that could contain PII */
+/** Forbidden property keys that could contain PII or credentials */
 const FORBIDDEN_KEYS = new Set([
   "name",
+  "fullname",
+  "firstname",
+  "lastname",
   "username",
   "user_name",
   "sendername",
   "sender_name",
   "email",
+  "emailaddress",
   "useremail",
   "user_email",
   "senderemail",
   "sender_email",
   "my_email",
   "phone",
+  "phonenumber",
   "telephone",
+  "telephonenumber",
   "mobile",
+  "mobilenumber",
+  "cellphone",
+  "cell",
+  "contactnumber",
   "message",
   "usermessage",
   "user_message",
@@ -60,8 +70,19 @@ const FORBIDDEN_KEYS = new Set([
   "subject",
   "password",
   "token",
+  "authtoken",
+  "apikey",
+  "bearer",
+  "credential",
+  "credentials",
   "secret",
   "address",
+  "ip",
+  "ipaddress",
+  "userip",
+  "clientip",
+  "ssn",
+  "creditcard",
 ]);
 
 const EMAIL_REGEX = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g;
@@ -117,6 +138,10 @@ export function sanitizeAnalyticsProperties(
   return clean;
 }
 
+// In-memory deduplication map: prevents rapid double-firing of identical events within 300ms
+const recentEvents = new Map<string, number>();
+const DEDUPE_WINDOW_MS = 300;
+
 /**
  * Core event dispatch function.
  * Safe to call in SSR (no-op when window is undefined).
@@ -130,6 +155,21 @@ export function trackEvent(
   }
 
   const cleanProps = sanitizeAnalyticsProperties(properties);
+  const dedupeKey = `${eventName}:${JSON.stringify(cleanProps)}`;
+  const now = Date.now();
+  const lastTime = recentEvents.get(dedupeKey);
+
+  if (lastTime && now - lastTime < DEDUPE_WINDOW_MS) {
+    return; // Suppress rapid duplicate event
+  }
+  recentEvents.set(dedupeKey, now);
+
+  // Prune map if large
+  if (recentEvents.size > 100) {
+    for (const [k, t] of recentEvents.entries()) {
+      if (now - t > 10000) recentEvents.delete(k);
+    }
+  }
 
   // 1. Dispatch custom browser event for decoupled listeners and testing
   try {

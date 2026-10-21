@@ -1,7 +1,6 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@100..900&family=Six+Caps&display=swap');
 
 @font-face {
   font-family: "Handjet";
@@ -829,4 +828,48 @@ textarea {
 
 .object-bottom {
   object-position: bottom !important;
+}
+
+/* ============================================================================
+ * Progressive Enhancement Styles for No-JS & Image Hydration Recovery
+ * ============================================================================
+ */
+@media (scripting: none) {
+  .ca-image-real {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .ca-image-lqip {
+    display: none !important;
+  }
+}
+
+@keyframes caImageHydrateFallback {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+.ca-image-real:not([data-loaded="true"]) {
+  animation: caImageHydrateFallback 0.4s ease-out 1.5s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ca-image-real:not([data-loaded="true"]) {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+.reveal-entry.is-priority {
+  opacity: 1 !important;
+  transform: none !important;
 }

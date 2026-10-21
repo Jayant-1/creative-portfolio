@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "My engineering write-ups and technical breakdowns are coming soon: deep-zoom geospatial pipelines, visual DAG neural network compilers, and multi-signal search algorithms.",
   alternates: {
-    canonical: "/blog",
+    canonical: `${siteUrl}/blog`,
   },
   robots: { index: false, follow: true },
   openGraph: {
@@ -62,7 +62,7 @@ export default function BlogPage() {
           aria-label="Breadcrumb"
           className="mb-6 flex items-center gap-2 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70"
         >
-          <Link href="/" className="hover:text-[var(--ca-blue)]">
+          <Link href="/" className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-blue)]">
             Home
           </Link>
           <ChevronRight size={14} />
@@ -76,12 +76,12 @@ export default function BlogPage() {
           </Scribble>
 
           <h1 className="ca-display mt-4 text-5xl min-[390px]:text-6xl sm:text-8xl md:text-9xl uppercase leading-none tracking-tight text-[var(--ca-ink)]">
-            <StaggerText text="ENGINEERING BLOG" stagger={0.035} />
+            <StaggerText text="ENGINEERING BLOG" stagger={0.035} priority />
           </h1>
         </header>
 
         {/* Wider, Clean & Elevated Coming Soon Card */}
-        <Reveal delay={150}>
+        <Reveal delay={150} priority>
           <div className="ca-doodle-box relative mx-auto mb-20 max-w-4xl border-[3px] border-[var(--ca-ink)] bg-white px-6 py-12 sm:px-12 sm:py-16 text-center shadow-[8px_12px_0_var(--ca-ink)]">
             <Tape
               className="-left-4 sm:-left-6 -top-3.5"

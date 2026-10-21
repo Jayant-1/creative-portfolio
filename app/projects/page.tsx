@@ -93,7 +93,7 @@ export default function ProjectsPage() {
 
             <div className="mt-6 block text-center">
               <h1 className="ca-display max-w-[9ch] text-center text-6xl leading-[0.92] tracking-tight text-[var(--ca-ink)] sm:text-8xl lg:text-9xl inline-block">
-                <StaggerText text="PROJECTS" stagger={0.05} />
+                <StaggerText text="PROJECTS" stagger={0.05} priority />
               </h1>
             </div>
           </div>

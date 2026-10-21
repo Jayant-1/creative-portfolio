@@ -329,6 +329,7 @@ export default function HomePage() {
                 duration={HERO_TIMINGS.nameBoxDuration}
                 inView={false}
                 trigger={heroReady}
+                priority
               >
                 <div
                   className="ca-doodle-box relative inline-block border-[3px] px-5 py-1 sm:px-10 sm:py-2"
@@ -343,6 +344,7 @@ export default function HomePage() {
                       duration={HERO_TIMINGS.nameLetterDuration}
                       inView={false}
                       trigger={heroReady}
+                      priority
                     />
                   </span>
                 </div>
@@ -857,10 +859,10 @@ export default function HomePage() {
                   style={{ marginLeft: tabMargins[idx] || "0" }}
                 >
                   <span
-                    className={`ca-mono inline-flex items-center gap-1.5 whitespace-nowrap py-2.5 pr-8 text-[11px] font-bold uppercase tracking-[0.16em] sm:gap-3 sm:py-5 sm:pr-20 sm:text-sm lg:text-base ${
+                    className={`ca-mono inline-flex items-center gap-1.5 whitespace-nowrap py-2.5 text-[11px] font-bold uppercase tracking-[0.16em] sm:gap-3 sm:py-5 sm:text-sm lg:text-base ${
                       isFirst
-                        ? "pl-4 folder-tab-shape sm:pl-8"
-                        : "pl-6 folder-tab-mid-shape sm:pl-18 lg:pl-20"
+                        ? "pl-4 pr-11 folder-tab-shape sm:pl-8 sm:pr-20"
+                        : "pl-12 pr-11 folder-tab-mid-shape sm:pl-18 sm:pr-20 lg:pl-20"
                     }`}
                     style={{
                       backgroundColor: project.color,
@@ -870,12 +872,13 @@ export default function HomePage() {
                     <svg
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className="h-3 w-3 sm:h-4 sm:w-4"
+                      className="hidden sm:block h-3 w-3 sm:h-4 sm:w-4"
                       aria-hidden="true"
                     >
                       <path d="M12 2c1 5 4 8 9 9-5 1-8 4-9 9-1-5-4-8-9-9 5-1 8-4 9-9Z" />
                     </svg>
-                    Project {project.number}
+                    <span className="hidden sm:inline">Project </span>
+                    <span>{project.number}</span>
                   </span>
                 </div>
 

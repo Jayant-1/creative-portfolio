@@ -11,7 +11,7 @@ export function ContactDirectEmailLink() {
         data-pf-block="contact.email"
         href={`mailto:${email}`}
         onClick={() => trackContactEmailClick("contact_page_direct")}
-        className="ca-mono text-[var(--ca-blue)] !lowercase underline-offset-2 hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-xs"
+        className="ca-mono min-h-[44px] inline-flex items-center text-[var(--ca-blue)] !lowercase underline-offset-2 hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] rounded-xs py-2"
       >
         {email}
       </a>

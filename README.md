@@ -1,6 +1,6 @@
 # Jayant Potdar — Creative Artsy Portfolio
 
-A production-ready recreation and extension of the creative artsy portfolio for **Jayant Potdar**, built using **Next.js 15 (App Router), TypeScript, Tailwind CSS, and pnpm**.
+Engineering portfolio for **Jayant Potdar**, built using **Next.js 15 (App Router), TypeScript, Tailwind CSS, and pnpm**.
 
 The design embodies a playful, tactile scrapbook aesthetic: lined notebook paper with subtle grain, hand-drawn wobbly boxes, translucent corner tape, polaroid frames, protruding folder tabs with sticky stacking scroll, and animated sticker doodles. All content reflects Jayant's verified projects (AstroPixel, Krypton, 3D Portfolio, Malaria Detection System, NeuralNet) and authentic academic/leadership experience at MSSU Pune.
 
@@ -33,17 +33,14 @@ pnpm start
 ### Verification & Release Gates
 
 ```bash
-# Typecheck
-pnpm typecheck
+# Typecheck, Lint & Component 1:1 Parity
+pnpm verify
 
-# ESLint
-pnpm lint
+# Production Readiness Deep Verification Suite
+pnpm verify:readiness [targetUrl]
 
 # Production dependencies audit
 pnpm audit --prod
-
-# Component showcase 1:1 parity check
-node scripts/verify-component-parity.mjs
 ```
 
 ---

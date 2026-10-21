@@ -71,14 +71,32 @@ export function shouldConserveData(): boolean {
     return true;
   }
 
-  // Check slow connection types
-  if (conn?.effectiveType === "slow-2g" || conn?.effectiveType === "2g") {
+  // Check slow connection types (including 3g to avoid network saturation on mobile Lighthouse runs)
+  if (conn?.effectiveType === "slow-2g" || conn?.effectiveType === "2g" || conn?.effectiveType === "3g") {
     return true;
   }
 
   // Check low device memory (<= 2GB)
   const mem = (navigator as unknown as { deviceMemory?: number }).deviceMemory;
   if (typeof mem === "number" && mem <= 2) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Check if device is mobile or constrained where speculative image transfers should be withheld
+ */
+export function isMobileOrConstrained(): boolean {
+  if (typeof window === "undefined") return false;
+  if (shouldConserveData()) return true;
+
+  // Touch device without fine hover capability (mobile/tablet viewport)
+  if (
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(hover: none) and (pointer: coarse)").matches
+  ) {
     return true;
   }
 
@@ -204,23 +222,54 @@ class PrefetchQueue {
 
 export const prefetchQueue = new PrefetchQueue();
 
+export interface PrefetchRouteOptions {
+  /**
+   * Whether to prefetch the primary entry visual image for the target route.
+   * Default: false (speculative image prefetching is opt-in, only on explicit user intent).
+   */
+  prefetchImage?: boolean;
+  /**
+   * Explicit user intent indicator (e.g. desktop hover or focus on navigation items).
+   */
+  explicitIntent?: boolean;
+}
+
 /**
  * Prefetch entry experience for a target route:
  * 1. Preload Next.js route bundle (via router.prefetch)
- * 2. Preload the primary above-the-fold visual for that route
+ * 2. Conditionally preload the primary above-the-fold visual for that route ONLY on explicit intent
+ *    and when data conservation / mobile constraints permit.
  */
 export function prefetchRouteEntry(
   route: string,
-  router?: { prefetch: (href: string) => void }
+  router?: { prefetch: (href: string) => void },
+  options?: PrefetchRouteOptions
 ) {
   if (typeof window === "undefined") return;
-  if (shouldConserveData()) return;
 
-  // Prefetch Next.js route JavaScript / data
-  try {
-    router?.prefetch(route);
-  } catch {
-    // router might be unavailable
+  // Next.js route bundle prefetch (safe unless conserving data)
+  if (!shouldConserveData()) {
+    try {
+      router?.prefetch(route);
+    } catch {
+      // router might be unavailable
+    }
+  }
+
+  // Speculative image downloads must not trigger automatically during initial load
+  // or on mobile / save-data connections. Only allow if explicitly requested.
+  if (!options?.prefetchImage) {
+    return;
+  }
+
+  // Never prefetch speculative images when data conservation is active
+  if (shouldConserveData()) {
+    return;
+  }
+
+  // If on mobile / constrained touch device, require explicit user intent
+  if (isMobileOrConstrained() && !options.explicitIntent) {
+    return;
   }
 
   // Prefetch route's entry visual

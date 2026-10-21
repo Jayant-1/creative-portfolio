@@ -15,7 +15,7 @@ export const ComponentTransition: React.FC<ComponentTransitionProps> = ({
   return (
     <motion.div
       key={slug}
-      initial={{ opacity: 0 }}
+      initial={false}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
       className="flex-1 min-w-0 flex flex-col gap-3 sm:gap-3.5"

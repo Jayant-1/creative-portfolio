@@ -299,6 +299,8 @@ export function StaggerText({
   once = true,
   inView = true,
   trigger = true,
+  priority = false,
+  initial,
 }: {
   text: string;
   className?: string;
@@ -310,6 +312,8 @@ export function StaggerText({
   once?: boolean;
   inView?: boolean;
   trigger?: boolean;
+  priority?: boolean;
+  initial?: any;
 }) {
   const prefersReduced = useReducedMotion();
   const pageReady = usePageAnimationReady();
@@ -322,13 +326,20 @@ export function StaggerText({
   }
 
   const words = text.split(" ");
+  const initialValue =
+    initial !== undefined
+      ? initial
+      : priority
+      ? "visible"
+      : "hidden";
+
   return (
     <motion.span
       ref={ref}
       className={className}
       style={{ display: "inline-block" }}
-      initial="hidden"
-      animate={shouldAnimate ? "show" : "hidden"}
+      initial={initialValue}
+      animate={shouldAnimate ? "show" : initialValue}
       transition={{ staggerChildren: stagger, delayChildren: delay }}
     >
       <span className="sr-only">{text}</span>
@@ -342,6 +353,7 @@ export function StaggerText({
                 style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
                 variants={{
                   hidden: { opacity: 0, y },
+                  visible: { opacity: 1, y: typeof y === "string" ? "0.2em" : y },
                   show: { opacity: 1, y: 0 },
                 }}
                 transition={{ duration, ease: ease as any }}
@@ -490,6 +502,8 @@ export function Pop({
   inView = true,
   spring = true,
   trigger = true,
+  priority = false,
+  initial,
 }: {
   children: ReactNode;
   className?: string;
@@ -503,6 +517,8 @@ export function Pop({
   inView?: boolean;
   spring?: boolean;
   trigger?: boolean;
+  priority?: boolean;
+  initial?: any;
 }) {
   const prefersReduced = useReducedMotion();
   const pageReady = usePageAnimationReady();
@@ -514,13 +530,20 @@ export function Pop({
     return <div className={className}>{children}</div>;
   }
 
+  const initialProps =
+    initial !== undefined
+      ? initial
+      : priority
+      ? { opacity: 1, scale: from }
+      : { opacity: 0, scale: from };
+
   return (
     <motion.div
       ref={ref}
       className={className}
       style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
-      initial={{ opacity: 0, scale: from }}
-      animate={shouldAnimate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: from }}
+      initial={initialProps}
+      animate={shouldAnimate ? { opacity: 1, scale: 1 } : initialProps}
       transition={
         spring
           ? {
@@ -545,6 +568,8 @@ export function Reveal({
   y = 28,
   duration = 0.65,
   ease = EASINGS.smooth,
+  priority = false,
+  initial,
 }: {
   children: ReactNode;
   className?: string;
@@ -552,6 +577,8 @@ export function Reveal({
   y?: number;
   duration?: number;
   ease?: readonly [number, number, number, number] | string;
+  priority?: boolean;
+  initial?: any;
 }) {
   const prefersReduced = useReducedMotion();
 
@@ -559,10 +586,17 @@ export function Reveal({
     return <div className={className}>{children}</div>;
   }
 
+  const initialProps =
+    initial !== undefined
+      ? initial
+      : priority
+      ? { opacity: 1, y: 0 }
+      : { opacity: 0, y };
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
+      initial={initialProps}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration, delay, ease: ease as any }}

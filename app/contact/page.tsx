@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "Contact me about a full stack internship, full-time role, or web project. Email me to arrange a call. I'm based in Pune and open to hybrid or remote work.",
   alternates: {
-    canonical: "/contact",
+    canonical: `${siteUrl}/contact`,
   },
   openGraph: {
     type: "website",
@@ -191,7 +191,7 @@ export default function ContactPage() {
           <a
             data-pf-block="contact.email"
             href={`mailto:${email}`}
-            className="ca-mono text-[var(--ca-blue)] !lowercase underline-offset-2 hover:underline"
+            className="ca-mono min-h-[44px] inline-flex items-center text-[var(--ca-blue)] !lowercase underline-offset-2 hover:underline py-2"
           >
             {email}
           </a>

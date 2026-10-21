@@ -65,7 +65,7 @@ export const InstallSection: React.FC<InstallSectionProps> = ({
                 key={mgr}
                 type="button"
                 onClick={() => setPkgManager(mgr)}
-                className={`px-2.5 py-1 rounded-md text-xs font-mono transition-all inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+                className={`min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-md text-xs font-mono transition-all inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
                   pkgManager === mgr
                     ? "bg-white dark:bg-neutral-800 text-[var(--ca-ink)] dark:text-white shadow-xs font-semibold border border-[var(--ca-ink)]/20 dark:border-white/20"
                     : "border border-transparent text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)]"
@@ -90,7 +90,7 @@ export const InstallSection: React.FC<InstallSectionProps> = ({
             type="button"
             onClick={handleCopyInstall}
             aria-label="Copy install command"
-            className={`h-7 px-2.5 rounded-md text-xs font-mono transition-all flex items-center gap-1.5 shrink-0 border focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
+            className={`min-h-[44px] sm:min-h-[28px] h-11 sm:h-7 px-3 sm:px-2.5 rounded-md text-xs font-mono transition-all flex items-center gap-1.5 shrink-0 border focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
               copiedInstall
                 ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400 font-bold"
                 : "bg-white/10 border-white/10 text-neutral-300 hover:text-white hover:bg-white/15"

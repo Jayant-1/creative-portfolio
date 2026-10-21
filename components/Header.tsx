@@ -158,9 +158,19 @@ function IntentNavLink({
   const router = useRouter();
   const dwellTimerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Clean up dwell timer on unmount to prevent leaks
+  useEffect(() => {
+    return () => {
+      if (dwellTimerRef.current) {
+        clearTimeout(dwellTimerRef.current);
+      }
+    };
+  }, []);
+
+  // Desktop hover / focus intent: warm up route bundle and entry visual with explicit intent
   const startDwell = useCallback(() => {
     dwellTimerRef.current = setTimeout(() => {
-      prefetchRouteEntry(href, router);
+      prefetchRouteEntry(href, router, { prefetchImage: true, explicitIntent: true });
     }, 100);
   }, [href, router]);
 
@@ -171,8 +181,9 @@ function IntentNavLink({
     }
   }, []);
 
+  // Touch tap intent: warm up Next.js route bundle only (skip heavy image transfers on mobile/touch)
   const handleTouch = useCallback(() => {
-    prefetchRouteEntry(href, router);
+    prefetchRouteEntry(href, router, { prefetchImage: false });
   }, [href, router]);
 
   return (
@@ -206,7 +217,9 @@ export function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Idle enrichment: warm up primary routes & entry visuals during browser idle
+  // Idle enrichment: warm up primary Next.js route JS bundles during browser idle
+  // Speculative image downloads are intentionally omitted here to prevent saturating
+  // mobile connections during Lighthouse runs and initial page loads.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const idleCallback =
@@ -214,8 +227,12 @@ export function Header() {
         .requestIdleCallback || ((cb: () => void) => setTimeout(cb, 1800));
 
     const handle = idleCallback(() => {
-      prefetchRouteEntry("/projects", router);
-      prefetchRouteEntry("/about", router);
+      try {
+        router.prefetch("/projects");
+        router.prefetch("/about");
+      } catch {
+        // router might be unavailable
+      }
     });
 
     return () => {

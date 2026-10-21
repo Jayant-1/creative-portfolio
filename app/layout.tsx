@@ -145,6 +145,14 @@ export default function RootLayout({
               transform: none !important;
               visibility: visible !important;
             }
+            .ca-image-real {
+              opacity: 1 !important;
+              filter: none !important;
+              transform: none !important;
+            }
+            .ca-image-lqip {
+              display: none !important;
+            }
           `}</style>
         </noscript>
 

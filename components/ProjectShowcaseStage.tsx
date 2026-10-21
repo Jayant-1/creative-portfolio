@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import { ImageWithLoader } from "@/components/ImageWithLoader";
 import { Tape } from "@/components/Paper";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
+import { useFocusTrap } from "@/lib/hooks/use-focus-trap";
 
 interface ProjectShowcaseStageProps {
   title: string;
@@ -26,10 +27,30 @@ export function ProjectShowcaseStage({
   const [activeIdx, setActiveIdx] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const openLightbox = useCallback((triggerEl?: HTMLElement) => {
+    triggerRef.current = triggerEl || ((typeof document !== "undefined" ? document.activeElement : null) as HTMLElement | null);
+    setIsLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => {
+    setIsLightboxOpen(false);
+  }, []);
+
+  const lightboxRef = useFocusTrap<HTMLDivElement>({
+    isActive: isLightboxOpen,
+    onClose: closeLightbox,
+    initialFocusRef: closeButtonRef,
+    returnFocusRef: triggerRef,
+    lockScroll: true,
+    setInertBackground: true,
+  });
 
   const activeScreen = allScreens[activeIdx] || hero;
 
@@ -41,13 +62,11 @@ export function ProjectShowcaseStage({
     setActiveIdx((prev) => (prev > 0 ? prev - 1 : allScreens.length - 1));
   }, [allScreens.length]);
 
-  // Keyboard navigation for power-users & recruiters
+  // Keyboard navigation for power-users & recruiters (Arrow navigation)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (["INPUT", "TEXTAREA", "SELECT"].includes((e.target as HTMLElement)?.tagName)) return;
-      if (e.key === "Escape") {
-        setIsLightboxOpen(false);
-      } else if (e.key === "ArrowRight") {
+      if (e.key === "ArrowRight") {
         nextScreen();
       } else if (e.key === "ArrowLeft") {
         prevScreen();
@@ -57,18 +76,6 @@ export function ProjectShowcaseStage({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextScreen, prevScreen]);
-
-  // Lock body scroll when lightbox is active
-  useEffect(() => {
-    if (isLightboxOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isLightboxOpen]);
 
   const tapeColors = [
     "var(--ca-yellow-soft)",
@@ -103,7 +110,7 @@ export function ProjectShowcaseStage({
             {/* Clickable Image Viewport button to trigger Lightbox (non-nested sibling to rails) */}
             <button
               type="button"
-              onClick={() => setIsLightboxOpen(true)}
+              onClick={(e) => openLightbox(e.currentTarget)}
               aria-label={`Inspect ${title} screenshot ${activeIdx + 1} in full resolution`}
               className="relative h-full w-full cursor-zoom-in text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--ca-orange)]"
             >
@@ -125,11 +132,11 @@ export function ProjectShowcaseStage({
             {/* Direct Inspect Button in bottom-right corner (sibling, not nested) */}
             <button
               type="button"
-              onClick={() => setIsLightboxOpen(true)}
+              onClick={(e) => openLightbox(e.currentTarget)}
               aria-label={`Inspect screen ${activeIdx + 1} in full resolution`}
-              className="absolute bottom-3 right-3 z-20 inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-white/25 bg-black/75 px-3 py-1.5 text-xs font-bold text-white shadow-lg backdrop-blur-xs transition hover:bg-black hover:scale-105 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] cursor-pointer"
+              className="absolute bottom-3 right-3 z-20 inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/25 bg-black/75 px-3.5 py-2 text-xs font-bold text-white shadow-lg backdrop-blur-xs transition hover:bg-black hover:scale-105 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] cursor-pointer"
             >
-              <Maximize2 size={13} className="text-[var(--ca-yellow)]" />
+              <Maximize2 size={14} className="text-[var(--ca-yellow)]" />
               <span className="ca-mono text-[10px] tracking-wider uppercase">Inspect</span>
             </button>
 
@@ -215,16 +222,18 @@ export function ProjectShowcaseStage({
         typeof document !== "undefined" &&
         createPortal(
           <div
+            ref={lightboxRef}
             className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-black/90 p-3 sm:p-6 backdrop-blur-md cursor-zoom-out"
             role="dialog"
             aria-modal="true"
             aria-label={`${title} screenshot lightbox`}
-            onClick={() => setIsLightboxOpen(false)}
+            onClick={closeLightbox}
           >
             {/* Floating Top-Right Close Button */}
             <button
+              ref={closeButtonRef}
               type="button"
-              onClick={() => setIsLightboxOpen(false)}
+              onClick={closeLightbox}
               className="absolute right-4 top-4 z-40 inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/30 bg-black/70 text-white shadow-xl transition-all hover:bg-white hover:text-black hover:scale-105 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] cursor-pointer"
               aria-label="Close full-screen preview (Esc)"
               title="Close (Esc)"

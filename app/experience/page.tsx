@@ -78,7 +78,7 @@ export default function ExperiencePage() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Trail */}
         <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
-          <Link href="/" className="hover:text-[var(--ca-blue)]">Home</Link>
+          <Link href="/" className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-blue)]">Home</Link>
           <ChevronRight size={14} />
           <span className="text-[var(--ca-ink)] font-bold">Experience &amp; Leadership</span>
         </nav>
@@ -88,10 +88,10 @@ export default function ExperiencePage() {
           <Scribble withDoodle>community leadership &amp; competitive honors</Scribble>
 
           <h1 className="ca-display mt-4 text-5xl min-[390px]:text-6xl sm:text-8xl md:text-9xl uppercase leading-none tracking-tight text-[var(--ca-ink)]">
-            <StaggerText text="EXPERIENCE" stagger={0.045} />
+            <StaggerText text="EXPERIENCE" stagger={0.045} priority />
           </h1>
 
-          <Reveal delay={120}>
+          <Reveal delay={120} priority>
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-[var(--ca-ink)]/85 sm:text-xl font-normal">
               I lead web development at TechSpark, help students build and ship projects, and organize hands-on technical events alongside my own software work.
             </p>
