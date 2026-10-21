@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   RotateCcw,
-  Maximize2,
   Minimize2,
   Eye,
   Code as CodeIcon,
@@ -250,68 +249,18 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
             </button>
           </div>
 
-          {/* Action & Viewport Controls (when preview active) */}
+          {/* Action Controls (when preview active) */}
           {activeTab === "preview" && (
             <div className="flex items-center gap-1.5 sm:gap-2">
-              {/* Responsive Viewport Mode Switcher */}
-              <div
-                role="group"
-                aria-label="Preview viewport modes"
-                className="inline-flex items-center p-0.5 rounded-lg bg-[var(--ca-ink)]/6 dark:bg-white/8 text-xs font-mono"
-              >
-                <button
-                  type="button"
-                  onClick={() => setViewportMode("desktop")}
-                  className={`min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] flex items-center justify-center rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
-                    viewportMode === "desktop"
-                      ? "bg-white dark:bg-neutral-800 text-[var(--ca-ink)] dark:text-white font-semibold shadow-xs border border-[var(--ca-ink)]/20 dark:border-white/20"
-                      : "text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)]"
-                  }`}
-                  title="Desktop viewport (1280px)"
-                  aria-label="Desktop viewport"
-                >
-                  <Monitor size={14} />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setViewportMode("tablet")}
-                  className={`min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] flex items-center justify-center rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
-                    viewportMode === "tablet"
-                      ? "bg-white dark:bg-neutral-800 text-[var(--ca-ink)] dark:text-white font-semibold shadow-xs border border-[var(--ca-ink)]/20 dark:border-white/20"
-                      : "text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)]"
-                  }`}
-                  title="Tablet viewport (768px)"
-                  aria-label="Tablet viewport"
-                >
-                  <Tablet size={14} />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setViewportMode("mobile")}
-                  className={`min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] flex items-center justify-center rounded-md transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] ${
-                    viewportMode === "mobile"
-                      ? "bg-white dark:bg-neutral-800 text-[var(--ca-ink)] dark:text-white font-semibold shadow-xs border border-[var(--ca-ink)]/20 dark:border-white/20"
-                      : "text-[var(--ca-ink)]/60 dark:text-neutral-400 hover:text-[var(--ca-ink)]"
-                  }`}
-                  title="Mobile viewport (375px)"
-                  aria-label="Mobile viewport"
-                >
-                  <Smartphone size={14} />
-                </button>
-              </div>
-
               {/* Replay */}
               <button
                 type="button"
                 onClick={onReplay}
-                className="min-h-[36px] sm:min-h-[28px] px-2.5 flex items-center gap-1.5 rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
+                className="min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
                 title="Replay entrance animations"
                 aria-label="Replay animations"
               >
                 <RotateCcw size={13} />
-                <span className="hidden md:inline">Replay</span>
               </button>
 
               {/* Open in new tab */}
@@ -325,18 +274,6 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
               >
                 <ExternalLink size={13} />
               </a>
-
-              {/* Fullscreen Trigger */}
-              <button
-                ref={fullscreenTriggerRef}
-                type="button"
-                onClick={() => setIsFullscreen(true)}
-                className="min-h-[36px] min-w-[36px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
-                title="Fullscreen preview (Press Escape to exit)"
-                aria-label="Enter Fullscreen"
-              >
-                <Maximize2 size={14} />
-              </button>
             </div>
           )}
         </div>

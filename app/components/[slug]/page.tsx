@@ -111,7 +111,7 @@ export default async function ComponentDetailPage({ params }: PageProps) {
         }}
       />
 
-      <div className="mx-auto max-w-6xl px-3 sm:px-5 lg:px-6">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Trail */}
         <nav
           aria-label="Breadcrumb"
@@ -149,7 +149,7 @@ export default async function ComponentDetailPage({ params }: PageProps) {
         </div>
 
         {/* Two-Column Layout: Left Sticky Contents Rail + Right Main Content Column */}
-        <div className="flex items-start gap-5 lg:gap-6">
+        <div className="flex items-start gap-6 lg:gap-8 xl:gap-10">
           {/* Left Rail: Contents Navigation */}
           <HookSidebar currentComponent={component} />
 
@@ -157,12 +157,12 @@ export default async function ComponentDetailPage({ params }: PageProps) {
           <div id="component-content" className="flex-1 min-w-0">
             <ComponentTransition slug={component.slug}>
               {/* Compact Component Heading Block */}
-              <header className="flex flex-col gap-1.5 mb-0">
+              <header className="flex flex-col gap-2 mb-3 sm:mb-4">
                 <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ca-ink)] dark:text-white font-sans">
                   {component.name}
                 </h1>
 
-                <p className="text-xs sm:text-sm font-sans text-[var(--ca-ink)]/75 dark:text-neutral-400 leading-relaxed max-w-2xl">
+                <p className="text-xs sm:text-sm font-sans text-[var(--ca-ink)]/75 dark:text-neutral-400 leading-relaxed max-w-3xl">
                   {component.description}
                 </p>
 
