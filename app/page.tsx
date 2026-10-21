@@ -183,7 +183,7 @@ function ProjectCardImage({
       href={href}
       ref={containerRef as React.RefObject<HTMLAnchorElement>}
       aria-label={`View ${alt} project`}
-      className="group/card relative block overflow-hidden border-4 bg-[var(--ca-surface)] aspect-square w-full lg:aspect-auto lg:h-[calc(100vh-21rem)] min-h-[380px] sm:min-h-[460px] lg:min-h-[520px] xl:min-h-[580px] cursor-pointer shadow-[0_10px_28px_rgba(17,18,18,0.22)] transition-transform duration-300 hover:-translate-y-1"
+      className="group/card relative block overflow-hidden border-4 bg-[var(--ca-surface)] aspect-[16/9] w-full cursor-pointer shadow-[0_10px_28px_rgba(17,18,18,0.22)] transition-transform duration-300 hover:-translate-y-1"
       style={{ borderColor: "#ffffff" }}
       onMouseMove={onMove}
       onMouseEnter={(e) => {
@@ -202,7 +202,6 @@ function ProjectCardImage({
           sizes="(max-width: 1024px) 100vw, (max-width: 1536px) 50vw, 800px"
           loaderVariant="project"
           loaderText="Loading Preview..."
-          className="object-cover"
         />
       </div>
       <CardLens lensRef={lensRef} darkCard={darkCard} />
@@ -941,30 +940,47 @@ export default function HomePage() {
                       </svg>
                     </Link>
 
-                    {/* Category Notched Tags (Clean white tabs with ink text matching reference) */}
-                    <div className="mt-6 sm:mt-8 lg:mt-auto flex flex-wrap gap-2 sm:gap-2.5 pt-6 sm:pt-10 lg:pt-12">
-                      {project.category.map((cat) => (
-                        <span
-                          key={cat}
-                          className="ca-mono px-3.5 py-1.5 text-xs sm:px-4 sm:pb-2 sm:pt-2.5 sm:text-base font-bold uppercase tracking-wide ca-notched-tag text-[var(--ca-ink)] bg-white border border-[var(--ca-ink)]/15 shadow-xs"
-                        >
-                          {cat}
-                        </span>
-                      ))}
+                    {/* Category Notched Tags (Colored) */}
+                    <div className="mt-6 sm:mt-8 lg:mt-auto flex flex-wrap gap-2 sm:gap-2.5 pt-4 sm:pt-6 lg:pt-8">
+                      {project.category.map((cat, cIdx) => {
+                        const palette = [
+                          "var(--ca-yellow)",
+                          "var(--ca-mint)",
+                          "var(--ca-cyan)",
+                          "var(--ca-pink-soft)",
+                          "var(--ca-yellow-soft)",
+                          "var(--ca-purple)",
+                        ];
+                        const available = palette.filter(
+                          (c) => c !== project.color,
+                        );
+                        const tagBg = available[cIdx % available.length];
+
+                        return (
+                          <span
+                            key={cat}
+                            className="ca-mono px-3 py-1.5 text-xs sm:px-4 sm:pb-2 sm:pt-2.5 sm:text-base font-bold uppercase tracking-wide ca-notched-tag text-[var(--ca-ink)] border border-[var(--ca-ink)]/20 shadow-xs"
+                            style={{ backgroundColor: tagBg }}
+                          >
+                            {cat}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
 
-                  {/* Right Column: Framed Image with Dual Translucent Tapes */}
-                  <div className="lg:self-center w-full">
-                    <div className="relative w-full">
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute -left-5 -top-3 z-10 h-6 w-24 -rotate-[9deg] bg-white/55 shadow-[0_1px_3px_rgba(17,18,18,0.15)]"
-                      />
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute -right-5 -top-3 z-10 h-6 w-24 rotate-[9deg] bg-white/55 shadow-[0_1px_3px_rgba(17,18,18,0.15)]"
-                      />
+                  {/* Right Column: Framed Image with Tapes */}
+                  <div className="flex items-center justify-center lg:self-center w-full">
+                    <div className="relative w-full max-w-[820px]">
+                      {(PROJECT_TAPES[project.slug] || PROJECT_TAPES.astropixel).map(
+                        (tape, tIdx) => (
+                          <span
+                            key={tIdx}
+                            aria-hidden="true"
+                            className={`pointer-events-none absolute z-10 ${tape.className}`}
+                          />
+                        ),
+                      )}
                       <ProjectCardImage
                         src={project.homeHero || project.hero}
                         alt={project.title}
