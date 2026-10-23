@@ -31,7 +31,8 @@ export function HomeHero() {
                       src="/images/img-10.jpeg"
                       alt="Me at a scenic mountain outlook"
                       fill
-                      sizes="(max-width: 1536px) 112px, 128px"
+                      sizes="(max-width: 1536px) 224px, 256px"
+                      fetchPriority="high"
                       className="object-cover scale-[1.75] object-[50%_25%]"
                       loaderVariant="avatar"
                       loaderText="Loading..."

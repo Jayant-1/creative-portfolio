@@ -312,6 +312,28 @@ textarea {
   will-change: transform, opacity;
 }
 
+@keyframes ca-preloader-failsafe {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+@keyframes ca-preloader-bubble-in {
+  from { opacity: 0.6; transform: translateY(14px) scale(0.82); }
+  to { opacity: 1; transform: none; }
+}
+
+.ca-preloader-bubble {
+  animation: ca-preloader-bubble-in 0.42s cubic-bezier(0.34, 1.35, 0.64, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ca-preloader-bubble { animation: none; }
+}
+
+/* If hydration fails, the server-rendered curtain cannot hold the page forever. */
+.ca-preloader {
+  animation: ca-preloader-failsafe 0s linear 4s forwards;
+}
+
 @keyframes ca-wobble {
   0%,
   100% {
@@ -864,12 +886,12 @@ textarea {
   }
 }
 
-.ca-image-real:not([data-loaded="true"]) {
+.ca-image-real:not([data-loaded="true"]):not([data-has-lqip="true"]) {
   animation: caImageHydrateFallback 0.4s ease-out 1.5s forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ca-image-real:not([data-loaded="true"]) {
+  .ca-image-real:not([data-loaded="true"]):not([data-has-lqip="true"]) {
     animation: none !important;
     opacity: 1 !important;
     filter: none !important;

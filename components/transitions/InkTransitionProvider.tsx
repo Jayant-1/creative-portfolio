@@ -15,11 +15,13 @@ import { InkCanvas, InkCanvasHandle } from "./InkCanvas";
 interface InkTransitionContextType {
   navigate: (href: string, origin?: { x: number; y: number }) => void;
   pageAnimationReady: boolean;
+  prewarmShader: () => boolean;
 }
 
 const InkTransitionContext = createContext<InkTransitionContextType>({
   navigate: () => {},
   pageAnimationReady: true,
+  prewarmShader: () => false,
 });
 
 export const useInkTransition = () => useContext(InkTransitionContext);
@@ -34,6 +36,7 @@ export function InkTransitionProvider({ children }: { children: ReactNode }) {
   const inkCanvasRef = useRef<InkCanvasHandle | null>(null);
 
   const [pageAnimationReady, setPageAnimationReady] = useState(true);
+  const prewarmShader = useCallback(() => inkCanvasRef.current?.prewarm() ?? false, []);
   const isTransitioningRef = useRef(false);
   const targetHrefRef = useRef<string | null>(null);
   const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
@@ -245,7 +248,7 @@ export function InkTransitionProvider({ children }: { children: ReactNode }) {
   }, [startTransition]);
 
   return (
-    <InkTransitionContext.Provider value={{ navigate, pageAnimationReady }}>
+    <InkTransitionContext.Provider value={{ navigate, pageAnimationReady, prewarmShader }}>
       {children}
       <InkCanvas ref={inkCanvasRef} />
     </InkTransitionContext.Provider>

@@ -164,7 +164,7 @@ export default function ExperiencePage() {
         <section className="mb-20 sm:mb-28" aria-labelledby="awards-heading">
           <Reveal delay={60}>
             <div className="flex items-center gap-3 mb-8">
-              <h2 id="awards-heading" className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-[var(--ca-ink)]" style={{ backgroundColor: "var(--ca-magenta)" }}>
+              <h2 id="awards-heading" className="ca-mono ca-torn-label inline-block px-5 py-2 text-sm font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "var(--ca-magenta)", color: "white" }}>
                 Honors &amp; Competitions
               </h2>
               <div className="h-0.5 flex-1 bg-[var(--ca-ink)]/15" />

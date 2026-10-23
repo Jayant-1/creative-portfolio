@@ -125,6 +125,9 @@ export default function RootLayout({
 
         <noscript>
           <style>{`
+            .ca-preloader {
+              display: none !important;
+            }
             .reveal-entry,
             [data-framer-motion],
             [style*="opacity: 0"],

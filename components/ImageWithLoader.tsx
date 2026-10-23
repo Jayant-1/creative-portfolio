@@ -77,6 +77,8 @@ export function ImageWithLoader({
 
   // Check if image is already cached/complete on mount, and handle early load events
   useEffect(() => {
+    setIsLoaded(false);
+    setHasError(false);
     const img = imgRef.current;
     if (!img) return;
 
@@ -212,6 +214,7 @@ export function ImageWithLoader({
           onLoad={handleImageLoad}
           onError={handleImageError}
           data-loaded={isLoaded ? "true" : "false"}
+          data-has-lqip={hasLqip ? "true" : "false"}
           className={`ca-image-real ${objectFitClass} ${
             prefersReducedMotion
               ? `transition-opacity duration-150 ${isLoaded ? "opacity-100" : (hasLqip ? "opacity-0" : "opacity-100")}`
@@ -229,11 +232,15 @@ export function ImageWithLoader({
 
       {/* Graceful Error Fallback: retains blurred preview if available, with subtle status */}
       {hasError && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--ca-chrome)]/60 p-3 text-center backdrop-blur-xs">
-          <ImageOff size={20} className="text-[var(--ca-ink)]/50" />
-          <span className="ca-mono mt-1 text-[10px] font-medium tracking-wide text-[var(--ca-ink)]/70">
-            Preview unavailable
-          </span>
+        <div role="img" aria-label={alt} className="absolute inset-0">
+          {!hasLqip && (
+            <div className="flex h-full w-full flex-col items-center justify-center bg-[var(--ca-chrome)]/60 p-3 text-center backdrop-blur-xs">
+              <ImageOff size={20} className="text-[var(--ca-ink)]/50" />
+              <span className="ca-mono mt-1 text-[10px] font-medium tracking-wide text-[var(--ca-ink)]/70">
+                Preview unavailable
+              </span>
+            </div>
+          )}
         </div>
       )}
     </div>

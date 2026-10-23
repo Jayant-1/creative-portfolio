@@ -278,10 +278,26 @@ export function usePageAnimationReady(): boolean {
 }
 
 /**
- * Hook to trigger Hero section entrance immediately without preloader gate.
+ * Start the homepage entrance when the initial preloader releases the page.
  */
 export function useHeroEntrance() {
-  return true;
+  const [ready, setReady] = useState(() =>
+    typeof window === "undefined"
+      ? false
+      : window.location.pathname !== "/" || window.__ca_preloader_done === true,
+  );
+
+  useEffect(() => {
+    if (window.__ca_preloader_done || window.location.pathname !== "/") {
+      setReady(true);
+      return;
+    }
+    const onDone = () => setReady(true);
+    window.addEventListener("ca-preloader-done", onDone);
+    return () => window.removeEventListener("ca-preloader-done", onDone);
+  }, []);
+
+  return ready;
 }
 
 /**

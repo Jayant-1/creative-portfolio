@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef, useCallback } from "react";
 
 export interface InkCanvasHandle {
+  prewarm: () => boolean;
   playLeave: (
     originX: number,
     originY: number,
@@ -278,6 +279,7 @@ export const InkCanvas = forwardRef<InkCanvasHandle, { className?: string }>(fun
   };
 
   useImperativeHandle(ref, () => ({
+    prewarm: () => initGL(),
     playLeave: (
       originX: number,
       originY: number,
