@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { author, social } from "@/lib/site";
+import { author, social } from "@/lib/profile";
 import { useLens, MouseLens, StaggerText, Pop } from "@/components/Motion";
 import { ImageWithLoader } from "./ImageWithLoader";
 
@@ -246,7 +246,6 @@ export function ContactStrip() {
           {/* Big Yellow Clickable Banner Card */}
           <Link
             href="/contact"
-            aria-label="Go to contact page"
             className="group block"
           >
             <span

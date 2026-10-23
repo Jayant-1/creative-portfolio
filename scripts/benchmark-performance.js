@@ -1,9 +1,9 @@
-const { execSync } = require("child_process");
+const { execFileSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
 const BASE_URL = process.argv[2] || process.env.BASE_URL || "http://localhost:3000";
-const OUTPUT_DIR = path.resolve(__dirname, "../../audit-results/2026-10-21/post-repair");
+const OUTPUT_DIR = path.resolve(process.env.AUDIT_OUTPUT_DIR || path.join(__dirname, "../audit-results", new Date().toISOString().replace(/[:.]/g, "-")));
 
 if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
@@ -26,8 +26,10 @@ const THRESHOLDS = {
 };
 
 function runLighthouse(url, outputPath) {
-  const cmd = `node node_modules/lighthouse/cli/index.js "${url}" --output=json --output-path="${outputPath}" --chrome-flags="--headless --no-sandbox" --quiet`;
-  execSync(cmd, { stdio: "inherit", timeout: 120000 });
+  execFileSync(process.execPath, [
+    require.resolve("lighthouse/cli/index.js"), url, "--output=json",
+    `--output-path=${outputPath}`, "--chrome-flags=--headless=new --no-sandbox --disable-dev-shm-usage", "--quiet",
+  ], { stdio: "inherit", timeout: 120000 });
   const raw = fs.readFileSync(outputPath, "utf8");
   return JSON.parse(raw);
 }
@@ -58,6 +60,12 @@ async function main() {
       console.log(`  Run ${i}/${SAMPLES}...`);
       try {
         const report = runLighthouse(fullUrl, reportFile);
+        if (report.runtimeError || !Number.isFinite(report.categories.performance?.score)) {
+          throw new Error(report.runtimeError?.message || "Missing performance score");
+        }
+        for (const key of ["largest-contentful-paint", "total-blocking-time", "cumulative-layout-shift", "first-contentful-paint", "total-byte-weight"]) {
+          if (!Number.isFinite(report.audits[key]?.numericValue)) throw new Error(`Missing metric: ${key}`);
+        }
         const perfScore = Math.round((report.categories.performance?.score || 0) * 100);
         const lcpMs = report.audits["largest-contentful-paint"]?.numericValue || 0;
         const lcpSec = +(lcpMs / 1000).toFixed(3);
@@ -117,7 +125,7 @@ async function main() {
 
   for (const route of ROUTES) {
     const routeData = summary[route.name];
-    if (!routeData || !routeData.median) {
+    if (!routeData || !routeData.median || routeData.runs.length !== SAMPLES) {
       const err = `[${route.name.toUpperCase()}] No benchmark data collected for route ${route.path}`;
       gateFailures.push(err);
       console.error(`  ❌ ${err}`);

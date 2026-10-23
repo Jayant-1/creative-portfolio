@@ -13,30 +13,6 @@
 }
 
 @font-face {
-  font-family: "Just Me Again Down Here";
-  src: url("/fonts/handwritten.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DM Mono";
-  src: url("/fonts/dm-mono.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Inter";
-  src: url("/fonts/inter.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "Six Caps";
   src: url("/fonts/six-caps.woff2") format("woff2");
   font-style: normal;
@@ -83,10 +59,18 @@
   --ca-brown: #5c3a2e;
   --ca-paper: #fbf8ef;
 
-  --font-artsy-display: "Handjet", monospace;
-  --font-artsy-hand: "Just Me Again Down Here", cursive;
-  --font-artsy-mono: "DM Mono", monospace;
-  --font-artsy-sans: "Inter", system-ui, sans-serif;
+  --font-artsy-display: var(--font-local-display), "Handjet", monospace;
+  --font-artsy-hand: var(--font-local-hand), cursive;
+  --font-artsy-mono: var(--font-local-mono), monospace;
+  --font-artsy-sans: var(--font-local-inter), system-ui, sans-serif;
+}
+
+/* Reserve the eventual mobile preview size before client measurement. */
+@media (max-width: 639px) {
+  .preview-sized-stage[data-auto-viewport="true"] {
+    width: min(100%, var(--preview-mobile-width)) !important;
+    aspect-ratio: var(--preview-mobile-ratio) !important;
+  }
 }
 
 * {

@@ -4,17 +4,23 @@ const fs = require("fs");
 const path = require("path");
 
 const BASE_URL = process.env.BASE_URL || process.argv[2] || "http://localhost:3000";
-const OUTPUT_FILE = path.resolve(__dirname, "../../audit-results/2026-10-21/post-repair/cross-browser-verified.json");
+const OUTPUT_FILE = path.resolve(process.env.AUDIT_OUTPUT_DIR || path.join(__dirname, "../audit-results"), "cross-browser-verified.json");
 
 const VIEWPORTS = [
+  { label: "mobile-320", width: 320, height: 740 },
   { label: "mobile-390", width: 390, height: 844 },
+  { label: "tablet-768", width: 768, height: 1024 },
   { label: "desktop-1440", width: 1440, height: 900 },
 ];
 
 const ROUTES = [
   "/",
+  "/about", "/experience", "/projects", "/components", "/blog",
   "/components/overlapping-text-hero",
+  "/components/telescope-hero", "/components/binary-grid", "/components/bubble-text",
+  "/components/magnetic-button", "/components/radial-gradient-card",
   "/projects/astropixel",
+  "/projects/krypton", "/projects/3d-portfolio", "/projects/malaria-detection", "/projects/neuralnet",
   "/contact",
 ];
 
@@ -111,12 +117,13 @@ async function runCrossBrowser() {
           pageRecord.documentWidth = evalData.docWidth;
           pageRecord.frames = evalData.iframes;
 
-          const fitsBounds = evalData.iframes.length === 0 || evalData.iframes.every(f => f.iframeWidth <= f.parentWidth + 2);
+          const fitsBounds = (!route.includes("/components/") || evalData.iframes.length === 1) && evalData.iframes.every(f => f.parentWidth > 0 && f.iframeWidth > 0 && f.iframeWidth <= f.parentWidth + 2);
           const fitsDoc = evalData.docWidth <= vp.width + 2;
 
           if (pageRecord.status !== 200) {
             gateFailures.push(`[${engine.name}] ${vp.label} ${route} returned HTTP ${pageRecord.status} (expected 200)`);
           }
+          if (!pageRecord.h1) gateFailures.push(`[${engine.name}] ${route} is missing its primary heading`);
           if (pageRecord.errors.length > 0) {
             gateFailures.push(`[${engine.name}] ${vp.label} ${route} had ${pageRecord.errors.length} page error(s): ${pageRecord.errors.join("; ")}`);
           }

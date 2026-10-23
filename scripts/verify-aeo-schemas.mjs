@@ -6,8 +6,8 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
-const OUTPUT_DIR = path.resolve(__dirname, "../audit-results");
+const BASE_URL = process.argv[2] || process.env.BASE_URL || "http://localhost:3000";
+const OUTPUT_DIR = path.resolve(process.env.AUDIT_OUTPUT_DIR || path.join(__dirname, "../audit-results"));
 const REPORT_PATH = path.join(OUTPUT_DIR, "aeo-schema-verification-report.json");
 
 if (!fs.existsSync(OUTPUT_DIR)) {
@@ -154,16 +154,17 @@ async function runVerification() {
     recordAssert(person["@id"] === "https://jayant.codes/#jayant", '@id is "https://jayant.codes/#jayant"', "/");
     recordAssert(person.email === "mailto:jayantpotdar2006@gmail.com", "email is valid mailto", "/");
 
-    // Negative & Positive checks on alumniOf
+    // A current student is affiliated with the university; do not imply graduation.
     const alumniOfList = Array.isArray(person.alumniOf) ? person.alumniOf : [person.alumniOf];
     const alumniNames = alumniOfList.map((a) => a?.name || "");
     const harvardInAlumni = alumniNames.some((n) => n.toLowerCase().includes("harvard"));
     recordAssert(!harvardInAlumni, "CRITICAL: Harvard University is strictly absent from alumniOf", "/");
-    const mssuInAlumni = alumniNames.some((n) => n.includes("Maharashtra State Skills University"));
-    recordAssert(mssuInAlumni, "alumniOf correctly references enrolled institution (MSSU Pune)", "/");
+    recordAssert(!person.alumniOf, "Current enrolment does not imply alumni status", "/");
+    recordAssert(person.affiliation?.name?.includes("Maharashtra State Skills University"), "affiliation references enrolled institution (MSSU Pune)", "/");
 
     // Positive checks on hasCredential
     const credentials = person.hasCredential || [];
+    recordAssert(credentials.every((c) => !c.validFrom), "Credentials do not invent exact validity dates from display labels", "/");
     recordAssert(credentials.length >= 6, `hasCredential contains all earned credentials (found ${credentials.length})`, "/");
 
     const cs50Creds = credentials.filter((c) => c.name?.toLowerCase().includes("cs50"));

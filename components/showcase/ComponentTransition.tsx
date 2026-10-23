@@ -1,7 +1,4 @@
-"use client";
-
 import React from "react";
-import { motion } from "framer-motion";
 
 interface ComponentTransitionProps {
   children: React.ReactNode;
@@ -13,14 +10,11 @@ export const ComponentTransition: React.FC<ComponentTransitionProps> = ({
   slug,
 }) => {
   return (
-    <motion.div
+    <div
       key={slug}
-      initial={false}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
       className="flex-1 min-w-0 flex flex-col gap-3 sm:gap-3.5"
     >
       {children}
-    </motion.div>
+    </div>
   );
 };

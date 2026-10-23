@@ -12,10 +12,18 @@
     "lint": "next lint",
     "verify:parity": "node scripts/verify-component-parity.mjs",
     "verify:readiness": "node scripts/verify-production-readiness.js",
-    "verify": "tsc --noEmit && next lint && node scripts/verify-component-parity.mjs"
+    "verify": "tsc --noEmit && next lint && node scripts/verify-component-parity.mjs",
+    "verify:performance": "node scripts/benchmark-performance.js",
+    "verify:browsers": "node scripts/verify-cross-browser.js",
+    "verify:a11y": "node scripts/verify-phase8-a11y.mjs",
+    "verify:aeo": "node scripts/verify-aeo-schemas.mjs",
+    "verify:analytics": "node scripts/test-analytics-verification.mjs",
+    "verify:release": "node scripts/verify-release.mjs",
+    "verify:http": "node scripts/verify-http.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^5.0.2",
+    "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
     "framer-motion": "^13.4.6",
     "lucide-react": "^1.48.0",
@@ -27,6 +35,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
@@ -39,10 +48,6 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.0"
   },
-  "overrides": {
-    "postcss": ">=8.5.30",
-    "source-map-js": ">=1.2.2"
-  },
   "packageManager": "pnpm@11.25.0",
   "browserslist": [
     "> 0.2%",
@@ -52,5 +57,8 @@
     "Safari >= 14",
     "iOS >= 14",
     "Edge >= 90"
-  ]
+  ],
+  "engines": {
+    "node": ">=22.13.0 <25"
+  }
 }

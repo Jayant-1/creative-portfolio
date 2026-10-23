@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Send } from "lucide-react";
-import { email } from "@/lib/site";
+import { email } from "@/lib/profile";
 import { trackContactFormAttempt, trackContactFormDelivery } from "@/lib/analytics";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_t4ykead";
@@ -112,7 +112,7 @@ export default function ContactForm() {
         <form onSubmit={handleSubmit} noValidate>
           <p
             data-pf-block="contact.description"
-            className="ca-mono text-sm sm:text-base font-bold uppercase tracking-widest text-[var(--ca-ink)] leading-snug"
+            className="ca-mono text-sm sm:text-base font-bold normal-case tracking-normal text-[var(--ca-ink)] leading-snug"
           >
             Hiring for a full stack role or planning a project? Tell me about it, and we can arrange a call.
           </p>

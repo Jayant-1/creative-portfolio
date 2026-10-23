@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PreviewClient } from "./PreviewClient";
@@ -36,6 +36,10 @@ export default async function PreviewPage({ params }: PageProps) {
     notFound();
   }
 
-  return <PreviewClient slug={slug} />;
+  return (
+    <Suspense fallback={null}>
+      <PreviewClient slug={slug} />
+    </Suspense>
+  );
 }
 

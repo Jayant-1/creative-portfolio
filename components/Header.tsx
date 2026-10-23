@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { social } from "@/lib/site";
+import { m as motion, AnimatePresence } from "framer-motion";
+import { social } from "@/lib/profile";
 import { trackGitHubClick } from "@/lib/analytics";
 import { prefetchRouteEntry } from "@/lib/prefetch";
 
@@ -189,6 +189,7 @@ function IntentNavLink({
   return (
     <Link
       href={href}
+      prefetch={false}
       aria-label={ariaLabel}
       aria-current={ariaCurrent}
       className={className}
@@ -207,7 +208,6 @@ function IntentNavLink({
 
 export function Header() {
   const pathname = usePathname();
-  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuBtnRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLElement>(null);
@@ -217,30 +217,7 @@ export function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Idle enrichment: warm up primary Next.js route JS bundles during browser idle
-  // Speculative image downloads are intentionally omitted here to prevent saturating
-  // mobile connections during Lighthouse runs and initial page loads.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const idleCallback =
-      (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
-        .requestIdleCallback || ((cb: () => void) => setTimeout(cb, 1800));
-
-    const handle = idleCallback(() => {
-      try {
-        router.prefetch("/projects");
-        router.prefetch("/about");
-      } catch {
-        // router might be unavailable
-      }
-    });
-
-    return () => {
-      if (typeof window !== "undefined" && "cancelIdleCallback" in window) {
-        (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(handle as number);
-      }
-    };
-  }, [router]);
+  // Nav links warm their route on intent; an idle CPU does not imply an idle network.
 
   // Trap focus and handle Escape key dismiss
   useEffect(() => {

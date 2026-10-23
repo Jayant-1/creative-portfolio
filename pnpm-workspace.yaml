@@ -1,4 +1,6 @@
-packages:
-  - .
 allowBuilds:
   unrs-resolver: true
+overrides:
+  postcss: '8.5.30'
+  source-map-js: '1.2.2'
+  postcss-selector-parser@<7.1.6: '7.1.6'

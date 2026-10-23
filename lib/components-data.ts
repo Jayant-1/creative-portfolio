@@ -1120,6 +1120,21 @@ export type RadialGradientAnimateCardProps = HTMLMotionProps<"div"> & {
   className?: string;
   style?: React.CSSProperties;
   children?: ReactNode;
+
+  // Content props matching preview image
+  imageSrc?: string;
+  badge?: string;
+  badgeColor?: string;
+  title?: string;
+  description?: string;
+  buttonText?: string;
+
+  // Flat props support for direct customizer mapping
+  color1?: string;
+  color2?: string;
+  shape?: "ellipse" | "circle";
+  size?: string;
+  opacity?: number;
 };
 
 export const RadialGradientAnimateCard: React.FC<RadialGradientAnimateCardProps> = ({
@@ -1127,22 +1142,31 @@ export const RadialGradientAnimateCard: React.FC<RadialGradientAnimateCardProps>
   radialGradient = {},
   className,
   children,
+  imageSrc = "/images/classic-sports-shoes.jpg",
+  badge = "TRENDING",
+  badgeColor,
+  title = "Classic Sports Shoes",
+  description = "Experience comfort and style with our latest minimalist sports design, perfect for both athletic performance and everyday casual wear.",
+  buttonText = "Buy Now",
+  color1,
+  color2,
+  shape,
+  size,
+  opacity,
   ...props
 }) => {
-  // Extract configuration with sensible fallback defaults
-  const {
-    color1 = "rgba(59, 130, 246)",
-    color2 = "transparent",
-    shape = "circle",
-    size = "10rem",
-    opacity = 0.5,
-  } = radialGradient;
+  // Extract configuration with fallback to flat props or default values
+  const resolvedColor1 = color1 ?? radialGradient.color1 ?? "rgba(59, 130, 246)";
+  const resolvedColor2 = color2 ?? radialGradient.color2 ?? "transparent";
+  const resolvedShape = shape ?? radialGradient.shape ?? "circle";
+  const resolvedSize = size ?? radialGradient.size ?? "10rem";
+  const resolvedOpacity = opacity ?? radialGradient.opacity ?? 0.5;
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  const background = useMotionTemplate\`radial-gradient(\${shape} \${size} at \${mouseX}px \${mouseY}px, \${color1}, \${color2})\`;
+  const background = useMotionTemplate\`radial-gradient(\${resolvedShape} \${resolvedSize} at \${mouseX}px \${mouseY}px, \${resolvedColor1}, \${resolvedColor2})\`;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { clientX, clientY } = e;
@@ -1158,30 +1182,55 @@ export const RadialGradientAnimateCard: React.FC<RadialGradientAnimateCardProps>
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={twMerge(
-        "group relative max-w-md overflow-hidden rounded-xl border border-blue-500/20 bg-[#090d16] px-8 py-16 text-[#94a3b8] shadow-2xl select-none",
+        "group relative w-full max-w-[360px] overflow-hidden rounded-2xl border border-white/10 bg-[#090d16] p-4 text-[#94a3b8] shadow-2xl select-none transition-colors",
         className
       )}
       style={style}
       {...props}
     >
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-xl transition-opacity duration-300"
+        className="pointer-events-none absolute -inset-px rounded-2xl transition-opacity duration-300"
         style={{
           background,
-          opacity: isHovered ? opacity : 0,
+          opacity: isHovered ? resolvedOpacity : 0,
         }}
       />
       {children || (
-        <div className="relative z-10 flex flex-col gap-3">
-          <span className="text-xs font-mono font-semibold tracking-wider text-blue-400 uppercase">
-            Interactive Container
-          </span>
-          <h3 className="text-2xl font-bold tracking-tight text-white font-sans">
-            Hover Reveal Effect
-          </h3>
-          <p className="text-sm font-sans text-neutral-400 leading-relaxed">
-            Move your cursor anywhere across the card surface to project a reactive radial gradient spotlight.
-          </p>
+        <div className="relative z-10 flex flex-col">
+          {/* Product Image Window */}
+          <div className="relative h-48 w-full overflow-hidden rounded-xl bg-neutral-900 border border-white/5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageSrc}
+              alt={title}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+
+          {/* Product Details matching preview image */}
+          <div className="pt-4 flex flex-col">
+            <span
+              className="font-mono text-xs font-bold uppercase tracking-wider"
+              style={{ color: badgeColor || "#3b82f6" }}
+            >
+              {badge}
+            </span>
+
+            <h2 className="mt-1 font-mono text-xl font-bold tracking-tight text-white">
+              {title}
+            </h2>
+
+            <p className="mt-2 font-mono text-xs leading-relaxed text-neutral-400">
+              {description}
+            </p>
+
+            <button
+              type="button"
+              className="mt-5 w-full rounded-lg bg-blue-600 hover:bg-blue-500 active:scale-[0.98] py-2.5 text-center font-mono text-xs font-semibold uppercase tracking-wider text-white transition-all shadow-md focus:outline-hidden cursor-pointer"
+            >
+              {buttonText}
+            </button>
+          </div>
         </div>
       )}
     </motion.div>

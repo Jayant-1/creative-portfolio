@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m as motion, useReducedMotion } from "framer-motion";
 import { usePageAnimationReady } from "@/components/Motion";
 
 interface SectionDef {
@@ -276,12 +276,9 @@ export function AboutAsideNav() {
                   }`}
                 >
                   <span
-                    className={`h-2 w-2 rounded-full shrink-0 transition-colors duration-200 ${
-                      isActive ? "border border-black" : ""
-                    }`}
+                    className="h-2 w-2 rounded-full shrink-0 transition-colors duration-200"
                     style={{
-                      backgroundColor: isActive ? "#ffffff" : "var(--ca-ink)",
-                      border: isActive ? "1px solid black" : undefined,
+                      backgroundColor: isActive ? "#ffffff" : sec.dotBg,
                     }}
                   />
                   <span>{sec.label}</span>

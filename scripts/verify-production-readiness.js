@@ -687,7 +687,7 @@ async function runAudit() {
   results.status = evaluation.status;
 
   // Ensure output directory exists and save diagnostic report
-  const outputDir = path.resolve(__dirname, "../../audit-results");
+  const outputDir = path.resolve(process.env.AUDIT_OUTPUT_DIR || path.join(__dirname, "../audit-results"));
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }

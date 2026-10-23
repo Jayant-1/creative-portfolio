@@ -1,11 +1,12 @@
 /**
  * lib/analytics.ts
  *
- * Privacy-First Analytics & Conversion Tracking Utility for Jayant Potdar's Portfolio.
+ * Analytics and conversion-event helpers for the portfolio.
  *
- * Strict Privacy Guarantees:
- * - NO personal identifiable information (PII) is ever collected or dispatched.
- * - Names, email addresses, phone numbers, and message content are explicitly filtered and redacted.
+ * Data minimization:
+ * - Callers use fixed event names and non-sensitive properties, never contact form contents.
+ * - Known sensitive keys are dropped; email/phone patterns are redacted as a second safeguard.
+ * - Pattern matching is not a guarantee that arbitrary input contains no personal information.
  * - Multi-provider dispatch: Seamlessly routes events to Plausible, Fathom, Umami, Google Analytics,
  *   Vercel Analytics, or local custom event listeners without hard vendor lock-in.
  * - In non-production or debug mode, prints clean color-coded telemetry to the console.
@@ -17,7 +18,6 @@ declare global {
     fathom?: { trackEvent: (eventName: string, value?: Record<string, string | number | boolean>) => void };
     umami?: { track: (eventName: string, data?: Record<string, string | number | boolean>) => void };
     gtag?: (...args: unknown[]) => void;
-    va?: (action: string, options?: { name: string; data?: Record<string, string | number | boolean> }) => void;
     dataLayer?: unknown[];
   }
 }
@@ -231,10 +231,12 @@ export function trackEvent(
   }
 
   // 7. Development & Debug Telemetry Logger
-  const isDebug =
-    process.env.NODE_ENV !== "production" ||
-    (typeof window !== "undefined" &&
-      window.localStorage?.getItem("ca_debug_analytics") === "true");
+  let isDebug = process.env.NODE_ENV !== "production";
+  try {
+    isDebug ||= window.localStorage?.getItem("ca_debug_analytics") === "true";
+  } catch {
+    // Storage can be unavailable in private browsing or restrictive embedded contexts.
+  }
 
   if (isDebug) {
     console.info(

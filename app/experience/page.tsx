@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { ContactStrip, Footer, Polaroid, Scribble, Tape } from "@/components/Paper";
 import { StaggerText } from "@/components/Motion";
 import Reveal from "@/components/Reveal";
@@ -76,13 +76,6 @@ export default function ExperiencePage() {
       />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb Trail */}
-        <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
-          <Link href="/" className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-blue)]">Home</Link>
-          <ChevronRight size={14} />
-          <span className="text-[var(--ca-ink)] font-bold">Experience &amp; Leadership</span>
-        </nav>
-
         {/* Page Header */}
         <header className="mb-14 sm:mb-20 text-center">
           <Scribble withDoodle>community leadership &amp; competitive honors</Scribble>

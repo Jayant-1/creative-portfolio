@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Copy, Check } from "lucide-react";
-import { motion, LayoutGroup } from "framer-motion";
+import { m as motion, LayoutGroup } from "framer-motion";
 import { highlightLine } from "../CodeViewer";
 import { trackComponentCopy } from "@/lib/analytics";
 

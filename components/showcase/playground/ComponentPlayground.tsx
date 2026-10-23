@@ -1,13 +1,21 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { LazyMotion } from "framer-motion";
 import { CraftComponent } from "@/lib/components-data";
 import { getManifest, ExamplePreset } from "@/lib/component-manifests";
+import {
+  parsePreviewParams,
+  savePreviewConfig,
+  loadPreviewConfig,
+} from "@/lib/preview-params";
 import { PreviewFrame } from "./PreviewFrame";
 import { ExamplePicker } from "./ExamplePicker";
 import { CustomizeControls } from "./CustomizeControls";
 import { CodeView } from "./CodeView";
 import { BINARY_GRID_CSS } from "../binary-grid-css";
+
+const loadLayoutFeatures = () => import("@/lib/layout-motion-features").then((module) => module.default);
 
 interface ComponentPlaygroundProps {
   component: CraftComponent;
@@ -51,6 +59,39 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
     }
   }, []);
 
+  // Initialize preset and props from URL search parameters or localStorage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // 1. Check URL parameters first (e.g. ?preset=developer)
+    const fromUrl = parsePreviewParams(normalizedSlug, window.location.search);
+    if (fromUrl.hasUrlOverrides) {
+      setSelectedExampleId(fromUrl.presetId);
+      setCustomizerValues(fromUrl.props);
+      savePreviewConfig(normalizedSlug, fromUrl.presetId, fromUrl.props);
+      postToIframe({
+        type: "SET_PROPS",
+        presetId: fromUrl.presetId,
+        props: fromUrl.props,
+      });
+      return;
+    }
+
+    // 2. Check localStorage fallback
+    const saved = loadPreviewConfig(normalizedSlug);
+    if (saved && saved.props) {
+      if (saved.presetId) {
+        setSelectedExampleId(saved.presetId);
+      }
+      setCustomizerValues(saved.props);
+      postToIframe({
+        type: "SET_PROPS",
+        presetId: saved.presetId,
+        props: saved.props,
+      });
+    }
+  }, [normalizedSlug, postToIframe]);
+
   // Listen for iframe events with strict origin and sender checks
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -64,6 +105,7 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
         // Send initial props on handshake
         postToIframe({
           type: "SET_PROPS",
+          presetId: selectedExampleId,
           props: customizerValues,
         });
       } else if (data.type === "SCROLL_CHANGED") {
@@ -79,13 +121,23 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [customizerValues, postToIframe]);
+  }, [selectedExampleId, customizerValues, postToIframe]);
 
   // Handle Example Selection
   const handleSelectExample = (example: ExamplePreset) => {
     setSelectedExampleId(example.id);
     const newProps = { ...example.props };
     setCustomizerValues(newProps);
+
+    // Save to localStorage
+    savePreviewConfig(normalizedSlug, example.id, newProps);
+
+    // Update browser URL query param without page reload
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("preset", example.id);
+      window.history.replaceState(null, "", url.toString());
+    }
 
     // Switch to preview if currently in code tab
     if (activeTab === "code") {
@@ -98,6 +150,7 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
     // Completely replace props in iframe and restart intro
     postToIframe({
       type: "SET_PROPS",
+      presetId: example.id,
       props: newProps,
     });
 
@@ -161,34 +214,44 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
   // Handle live customizer field change
   const handleCustomizerChange = useCallback(
     (key: string, value: any) => {
-      setCustomizerValues((prev) => ({
-        ...prev,
-        [key]: value,
-      }));
+      setCustomizerValues((prev) => {
+        const next = {
+          ...prev,
+          [key]: value,
+        };
+        savePreviewConfig(normalizedSlug, selectedExampleId, next);
+        return next;
+      });
       postToIframe({
         type: "UPDATE_PROPS",
         props: { [key]: value },
       });
     },
-    [postToIframe]
+    [normalizedSlug, selectedExampleId, postToIframe]
   );
 
   // Handle reset to preset defaults
   const handleResetToPreset = useCallback(() => {
     const presetProps = { ...selectedExample.props };
     setCustomizerValues(presetProps);
+    savePreviewConfig(normalizedSlug, selectedExample.id, presetProps);
     postToIframe({
       type: "SET_PROPS",
+      presetId: selectedExample.id,
       props: presetProps,
     });
-  }, [selectedExample, postToIframe]);
+  }, [normalizedSlug, selectedExample, postToIframe]);
 
   return (
+    <LazyMotion features={loadLayoutFeatures}>
     <div className="w-full flex flex-col my-0 gap-3">
       {/* 1. Preview Stage or Code View */}
       <PreviewFrame
         slug={normalizedSlug}
+        selectedExampleId={selectedExampleId}
+        customizerValues={customizerValues}
         referenceViewport={manifest.referenceViewport}
+        scaleOriginalOnMobile={manifest.previewSizing === "scale-original"}
         activeTab={activeTab}
         onTabChange={setActiveTab}
         onReplay={handleReplay}
@@ -224,5 +287,6 @@ export const ComponentPlayground: React.FC<ComponentPlaygroundProps> = ({ compon
         selectedExampleName={selectedExample.name}
       />
     </div>
+    </LazyMotion>
   );
 };

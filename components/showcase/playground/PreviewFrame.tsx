@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import {
   RotateCcw,
   Minimize2,
@@ -13,18 +13,22 @@ import {
   Smartphone,
   ExternalLink,
 } from "lucide-react";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { m as motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { LogicalViewport } from "@/lib/component-manifests";
+import { buildPreviewUrl } from "@/lib/preview-params";
 
 export type ViewportMode = "desktop" | "tablet" | "mobile";
 
 interface PreviewFrameProps {
   slug: string;
+  selectedExampleId?: string;
+  customizerValues?: Record<string, any>;
   referenceViewport: {
     desktop: LogicalViewport;
     tablet: LogicalViewport;
     mobile: LogicalViewport;
   };
+  scaleOriginalOnMobile?: boolean;
   activeTab: "preview" | "code";
   onTabChange: (tab: "preview" | "code") => void;
   onReplay: () => void;
@@ -39,7 +43,10 @@ interface PreviewFrameProps {
 
 export const PreviewFrame: React.FC<PreviewFrameProps> = ({
   slug,
+  selectedExampleId,
+  customizerValues,
   referenceViewport,
+  scaleOriginalOnMobile = false,
   activeTab,
   onTabChange,
   onReplay,
@@ -50,6 +57,8 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
 }) => {
   // Deterministic initial server and client render states to prevent hydration mismatch
   const [containerWidth, setContainerWidth] = useState<number>(1000);
+  const [hasMeasuredStage, setHasMeasuredStage] = useState(false);
+  const [automaticViewport, setAutomaticViewport] = useState(true);
   const [viewportMode, setViewportMode] = useState<ViewportMode>("desktop");
   const [fullscreenDimensions, setFullscreenDimensions] = useState<{ width: number; height: number }>({
     width: 0,
@@ -58,6 +67,19 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
   const [isTouchInteracting, setIsTouchInteracting] = useState(false);
   const [internalIsFullscreen, setInternalIsFullscreen] = useState(false);
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
+
+  // Check if iframe is already loaded on mount (handles fast cache hits or hydration timing)
+  useEffect(() => {
+    if (iframeRef?.current) {
+      try {
+        if (iframeRef.current.contentDocument?.readyState === "complete") {
+          setIsIframeLoaded(true);
+        }
+      } catch {
+        // Cross-origin fallback
+      }
+    }
+  }, [iframeRef]);
 
   const userSelectedModeRef = useRef(false);
   const stageMeasureRef = useRef<HTMLDivElement>(null);
@@ -69,6 +91,15 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
 
   const isFullscreen =
     controlledIsFullscreen !== undefined ? controlledIsFullscreen : internalIsFullscreen;
+
+  const previewUrl = useMemo(() => {
+    return buildPreviewUrl(slug, selectedExampleId, customizerValues);
+  }, [slug, selectedExampleId, customizerValues]);
+
+  const initialIframeSrc = useMemo(() => {
+    return buildPreviewUrl(slug, selectedExampleId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
 
   const setIsFullscreen = useCallback(
     (val: boolean) => {
@@ -114,6 +145,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
 
   const handleSelectViewportMode = useCallback((mode: ViewportMode) => {
     userSelectedModeRef.current = true;
+    setAutomaticViewport(false);
     setViewportMode(mode);
   }, []);
 
@@ -169,6 +201,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
         const contentWidth = measureAvailableContentWidth(el);
         if (contentWidth > 0) {
           setContainerWidth(contentWidth);
+          setHasMeasuredStage(true);
         }
       }
     };
@@ -282,8 +315,14 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isTouchInteracting]);
 
-  // Logical viewport for current mode
-  const logical = referenceViewport[viewportMode] || referenceViewport.desktop;
+  // Fixed desktop artwork should scale as one canvas in the embedded mobile preview.
+  // Explicit fullscreen viewport modes still test the component's native responsiveness.
+  const embeddedMobileViewport = scaleOriginalOnMobile
+    ? referenceViewport.desktop
+    : referenceViewport.mobile;
+  const logical = !isFullscreen && viewportMode === "mobile"
+    ? embeddedMobileViewport
+    : referenceViewport[viewportMode] || referenceViewport.desktop;
 
   // Calculate scale and dimensions strictly fitting within available stage
   let scale = 1;
@@ -423,7 +462,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
 
                   {/* Open in new tab */}
                   <a
-                    href={`/preview/${slug}`}
+                    href={previewUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="min-h-[44px] min-w-[44px] sm:min-h-[28px] sm:min-w-[28px] inline-flex items-center justify-center rounded-md text-xs font-mono text-[var(--ca-ink)]/75 dark:text-neutral-300 hover:text-[var(--ca-ink)] hover:bg-[var(--ca-ink)]/6 dark:hover:bg-white/10 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
@@ -514,7 +553,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
               </button>
 
               <a
-                href={`/preview/${slug}`}
+                href={previewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] inline-flex items-center justify-center rounded-md text-xs font-mono bg-white/10 hover:bg-white/15 text-white transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)]"
@@ -561,9 +600,9 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
 
               <iframe
                 ref={iframeRef}
-                src={`/preview/${slug}`}
+                src={initialIframeSrc}
                 title={`${slug} interactive component preview`}
-                loading="lazy"
+                loading="eager"
                 onLoad={() => setIsIframeLoaded(true)}
                 style={{
                   width: `${logical.width}px`,
@@ -601,11 +640,14 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
             >
               <div
                 style={{
-                  width: `${displayedWidth}px`,
+                  width: viewportMode === "desktop" ? "100%" : `min(100%, ${logical.width}px)`,
                   maxWidth: "100%",
-                  height: `${displayedHeight}px`,
-                }}
-                className={`relative overflow-hidden bg-[#0c0d10] ${
+                  aspectRatio: `${logical.width} / ${logical.height}`,
+                  "--preview-mobile-width": `${embeddedMobileViewport.width}px`,
+                  "--preview-mobile-ratio": `${embeddedMobileViewport.width} / ${embeddedMobileViewport.height}`,
+                } as React.CSSProperties}
+                data-auto-viewport={automaticViewport}
+                className={`preview-sized-stage relative overflow-hidden bg-[#0c0d10] ${
                   viewportMode === "desktop"
                     ? "w-full"
                     : "rounded-xl border border-[var(--ca-ink)]/20 dark:border-white/15 shadow-md"
@@ -620,11 +662,11 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                   </div>
                 )}
 
-                <iframe
+                {hasMeasuredStage && <iframe
                   ref={iframeRef}
-                  src={`/preview/${slug}`}
+                  src={initialIframeSrc}
                   title={`${slug} interactive component preview`}
-                  loading="lazy"
+                  loading="eager"
                   onLoad={() => setIsIframeLoaded(true)}
                   style={{
                     width: `${logical.width}px`,
@@ -638,14 +680,14 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                       ? "pointer-events-auto"
                       : "pointer-events-none sm:pointer-events-auto"
                   }`}
-                />
+                />}
 
                 {/* Mobile Touch Overlay */}
                 {!isTouchInteracting && isIframeLoaded && (
                   <div
                     role="button"
                     tabIndex={0}
-                    aria-label="Activate interactive demo on touch screen"
+                    aria-label="Tap to interact with the component demo"
                     onClick={() => setIsTouchInteracting(true)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {

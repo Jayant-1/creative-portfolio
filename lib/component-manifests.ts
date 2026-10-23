@@ -29,6 +29,8 @@ export interface CustomField {
 export interface ComponentManifest {
   slug: string;
   name: string;
+  /** Preserve fixed desktop artwork in the embedded mobile showcase. */
+  previewSizing?: "responsive" | "scale-original";
   referenceViewport: {
     desktop: LogicalViewport;
     tablet: LogicalViewport;
@@ -50,6 +52,7 @@ const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
   "overlapping-text-hero": {
     slug: "overlapping-text-hero",
     name: "Overlapping Text Hero",
+    previewSizing: "scale-original",
     referenceViewport: {
       desktop: { width: 1280, height: 800 },
       tablet: { width: 768, height: 1024 },
@@ -408,8 +411,14 @@ const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
         id: "radial-cobalt",
         name: "Cobalt Core",
         thumbnail: "/components/thumbnails/radial-cobalt.png",
-        description: "Classic blue radial spotlight with dark card backdrop.",
+        description: "Classic blue radial spotlight with dark sports shoe card backdrop.",
         props: {
+          badge: "TRENDING",
+          title: "Classic Sports Shoes",
+          description:
+            "Experience comfort and style with our latest minimalist sports design, perfect for both athletic performance and everyday casual wear.",
+          buttonText: "Buy Now",
+          imageSrc: "/images/classic-sports-shoes.jpg",
           color1: "rgba(59, 130, 246)",
           size: "10rem",
           opacity: 0.5,
@@ -422,6 +431,12 @@ const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
         thumbnail: "/components/thumbnails/radial-amber.png",
         description: "Warm amber glow with expanded illumination radius.",
         props: {
+          badge: "TRENDING",
+          title: "Classic Sports Shoes",
+          description:
+            "Experience comfort and style with our latest minimalist sports design, perfect for both athletic performance and everyday casual wear.",
+          buttonText: "Buy Now",
+          imageSrc: "/images/classic-sports-shoes.jpg",
           color1: "rgba(245, 158, 11)",
           size: "14rem",
           opacity: 0.65,
@@ -434,6 +449,12 @@ const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
         thumbnail: "/components/thumbnails/radial-emerald.png",
         description: "Vivid neon green cursor spotlight.",
         props: {
+          badge: "TRENDING",
+          title: "Classic Sports Shoes",
+          description:
+            "Experience comfort and style with our latest minimalist sports design, perfect for both athletic performance and everyday casual wear.",
+          buttonText: "Buy Now",
+          imageSrc: "/images/classic-sports-shoes.jpg",
           color1: "rgba(16, 185, 129)",
           size: "12rem",
           opacity: 0.55,
@@ -442,6 +463,10 @@ const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
       },
     ],
     fields: [
+      { key: "badge", label: "Badge Label", type: "text", group: "Content" },
+      { key: "title", label: "Product Title", type: "text", group: "Content" },
+      { key: "description", label: "Description Text", type: "text", group: "Content" },
+      { key: "buttonText", label: "Button Label", type: "text", group: "Content" },
       { key: "color1", label: "Spotlight Accent Color", type: "color", group: "Glow" },
       { key: "size", label: "Spotlight Radius", type: "text", group: "Glow" },
       { key: "opacity", label: "Hover Opacity", type: "number", min: 0.1, max: 1.0, step: 0.05, group: "Glow" },
@@ -454,12 +479,12 @@ const RAW_MANIFESTS: Record<string, Omit<ComponentManifest, "customFields">> = {
     size: "${props.size ?? "10rem"}",
     opacity: ${props.opacity ?? 0.5},
   }}
->
-  <div className="p-8">
-    <h3 className="text-xl font-bold text-white">Interactive Card</h3>
-    <p className="text-sm text-neutral-400 mt-2">Smooth hardware-accelerated radial spotlight tracking.</p>
-  </div>
-</RadialGradientAnimateCard>`,
+  badge="${props.badge ?? "TRENDING"}"
+  title="${props.title ?? "Classic Sports Shoes"}"
+  description="${props.description ?? "Experience comfort and style with our latest minimalist sports design..."}"
+  buttonText="${props.buttonText ?? "Buy Now"}"
+  imageSrc="${props.imageSrc ?? "/images/classic-sports-shoes.jpg"}"
+/>`,
     setupNotes: {
       notes: [
         "Card uses motion template radial-gradient positioned on pointer coordinates.",

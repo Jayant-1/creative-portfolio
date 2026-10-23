@@ -1,5 +1,6 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
+import ts from "typescript";
 
 const mapping = [
   { slug: "overlapping-text-hero", file: "components/showcase/OverlappingTextHero.tsx" },
@@ -10,41 +11,36 @@ const mapping = [
   { slug: "radial-gradient-card", file: "components/showcase/RadialGradientAnimateCard.tsx" },
 ];
 
-const dataPath = path.resolve(process.cwd(), "lib/components-data.ts");
-const dataContent = fs.readFileSync(dataPath, "utf8");
-
-let allPassed = true;
+const dataPath = path.resolve("lib/components-data.ts");
+const source = fs.readFileSync(dataPath, "utf8");
+const ast = ts.createSourceFile(dataPath, source, ts.ScriptTarget.Latest, true);
+const entries = new Map();
+function visit(node) {
+  if (ts.isObjectLiteralExpression(node)) {
+    const properties = node.properties.filter(ts.isPropertyAssignment);
+    const slug = properties.find((p) => p.name.getText(ast) === "slug")?.initializer;
+    const code = properties.find((p) => p.name.getText(ast) === "code")?.initializer;
+    if (slug && ts.isStringLiteral(slug) && code && ts.isNoSubstitutionTemplateLiteral(code)) entries.set(slug.text, code);
+  }
+  ts.forEachChild(node, visit);
+}
+visit(ast);
+const edits = [];
+let failed = false;
 for (const { slug, file } of mapping) {
-  const filePath = path.resolve(process.cwd(), file);
-  const actualSource = fs.readFileSync(filePath, "utf8").trim();
-  const slugIdx = dataContent.indexOf(`slug: "${slug}"`);
-  if (slugIdx === -1) {
-    console.error(`✗ ${slug}: not found in lib/components-data.ts`);
-    allPassed = false;
-    continue;
-  }
-  const codeIdx = dataContent.indexOf("code: `", slugIdx);
-  if (codeIdx === -1) {
-    console.error(`✗ ${slug}: code property not found in lib/components-data.ts`);
-    allPassed = false;
-    continue;
-  }
-  const codeStart = codeIdx + 7;
-  const codeEnd = dataContent.indexOf("`,\n    usage:", codeStart);
-  const rawDataCode = dataContent.slice(codeStart, codeEnd);
-  const evaluatedCode = eval("`" + rawDataCode + "`").trim();
-
-  if (evaluatedCode === actualSource) {
-    console.log(`✓ ${slug}: 100% byte-for-byte parity verified`);
-  } else {
-    allPassed = false;
-    console.error(`✗ ${slug}: mismatch between ${file} and lib/components-data.ts!`);
-  }
+  const actual = fs.readFileSync(file, "utf8").trim();
+  const node = entries.get(slug);
+  if (!node) { console.error(`${slug}: missing source template`); failed = true; continue; }
+  if (node.text.trim() === actual) { console.log(`${slug}: source/copy parity PASS`); continue; }
+  if (process.argv.includes("--write")) {
+    const escaped = actual.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/\$\{/g, "\\${");
+    edits.push({ start: node.getStart(ast), end: node.end, text: "`" + escaped + "`" });
+  } else { console.error(`${slug}: runtime and displayed source differ`); failed = true; }
 }
-
-if (!allPassed) {
-  console.error("\nComponent parity verification failed.");
-  process.exit(1);
-} else {
-  console.log("\n[PARITY GATE PASSED] All 6 showcase components have exact 1:1 code parity.");
+if (edits.length) {
+  let updated = source;
+  for (const edit of edits.sort((a,b) => b.start-a.start)) updated = updated.slice(0, edit.start) + edit.text + updated.slice(edit.end);
+  fs.writeFileSync(dataPath, updated);
+  console.log(`Synced ${edits.length} source templates from their runtime files.`);
 }
+process.exitCode = failed ? 1 : 0;

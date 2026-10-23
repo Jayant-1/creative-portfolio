@@ -62,8 +62,6 @@ export async function generateMetadata({
       images: [
         {
           url: heroImageUrl,
-          width: 1200,
-          height: 630,
           alt: `${project.title} system interface screenshot`,
         },
       ],
@@ -119,11 +117,11 @@ export default async function ProjectDetailPage({
         {/* Layer 1: Recruiter-First Header (0–5 Seconds Law) */}
         {/* Breadcrumb Trail */}
         <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70">
-          <Link href="/" className="min-h-[44px] inline-flex items-center py-1 px-1.5 rounded hover:text-[var(--ca-blue)] transition-colors">
+          <Link href="/" prefetch={false} className="min-h-[44px] inline-flex items-center py-1 px-1.5 rounded hover:text-[var(--ca-blue)] transition-colors">
             Home
           </Link>
           <ChevronRight size={14} className="shrink-0 text-[var(--ca-ink)]/40" />
-          <Link href="/projects" className="min-h-[44px] inline-flex items-center py-1 px-1.5 rounded hover:text-[var(--ca-blue)] transition-colors">
+          <Link href="/projects" prefetch={false} className="min-h-[44px] inline-flex items-center py-1 px-1.5 rounded hover:text-[var(--ca-blue)] transition-colors">
             Projects
           </Link>
           <ChevronRight size={14} className="shrink-0 text-[var(--ca-ink)]/40" />

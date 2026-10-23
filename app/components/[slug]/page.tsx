@@ -65,8 +65,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: [
         {
           url: ogImageUrl,
-          width: 1200,
-          height: 630,
           alt: `${component.name} component preview`,
         },
       ],
@@ -117,11 +115,11 @@ export default async function ComponentDetailPage({ params }: PageProps) {
           aria-label="Breadcrumb"
           className="mb-3 sm:mb-3.5 flex flex-wrap items-center gap-2 text-xs font-mono font-semibold text-[var(--ca-ink)]/60"
         >
-          <Link href="/" className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-orange)] transition-colors">
+          <Link href="/" prefetch={false} className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-orange)] transition-colors">
             Home
           </Link>
           <ChevronRight size={13} />
-          <Link href="/components" className="min-h-[44px] inline-flex items-center px-1 hover:text-[var(--ca-orange)] transition-colors">
+          <Link href="/components" prefetch={false} className="min-h-[44px] inline-flex items-center px-1 hover:text-[var(--ca-orange)] transition-colors">
             Components
           </Link>
           <ChevronRight size={13} />
@@ -132,6 +130,7 @@ export default async function ComponentDetailPage({ params }: PageProps) {
         <div className="mb-3 lg:hidden w-full flex items-center justify-between gap-3 p-2 rounded-xl bg-white/90 dark:bg-[#121316]/90 border border-[var(--ca-ink)]/15 dark:border-white/10 shadow-xs">
           <Link
             href="/components"
+            prefetch={false}
             className="min-h-[44px] inline-flex items-center gap-1.5 font-mono text-xs font-semibold px-2 text-[var(--ca-ink)]/70 hover:text-[var(--ca-orange)] transition-colors shrink-0"
           >
             <ArrowLeft size={13} />

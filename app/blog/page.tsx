@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ContactStrip, Footer, Scribble, Tape } from "@/components/Paper";
 import { StaggerText } from "@/components/Motion";
 import Reveal from "@/components/Reveal";
@@ -57,18 +57,6 @@ export default function BlogPage() {
       />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb Trail */}
-        <nav
-          aria-label="Breadcrumb"
-          className="mb-6 flex items-center gap-2 text-xs ca-mono font-semibold text-[var(--ca-ink)]/70"
-        >
-          <Link href="/" className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 hover:text-[var(--ca-blue)]">
-            Home
-          </Link>
-          <ChevronRight size={14} />
-          <span className="text-[var(--ca-ink)] font-bold">Blog</span>
-        </nav>
-
         {/* Page Header */}
         <header className="mb-10 text-center">
           <Scribble withDoodle>

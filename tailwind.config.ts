@@ -35,7 +35,7 @@ const config: Config = {
         sixCap: ["'Six Caps'", "sans-serif"],
         bebasNeue: ["'Bebas Neue'", "sans-serif"],
         raleway: ["'Raleway'", "sans-serif"],
-        inter: ["'Inter'", "sans-serif"],
+        inter: ["var(--font-artsy-sans)", "sans-serif"],
       },
       spacing: {
         "18": "4.5rem",

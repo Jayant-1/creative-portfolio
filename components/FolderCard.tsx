@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { useLens, CardLens } from "@/components/Motion";
 import { ImageWithLoader } from "@/components/ImageWithLoader";
-import { type Project, isDarkProjectHero } from "@/lib/site";
+import type { Project } from "@/lib/site";
+import { isDarkProjectHero } from "@/lib/project-visuals";
 
 /**
  * Manila Folder Card with Mouse Interactive "See" Invert Lens
@@ -72,9 +73,9 @@ export function FolderProjectCard({
 
       {/* Card Title & Problem Description */}
       <div className="pt-6 text-center">
-        <h3 className="text-3xl font-semibold tracking-tight text-[var(--ca-ink)] sm:text-4xl">
+        <h2 className="text-3xl font-semibold tracking-tight text-[var(--ca-ink)] sm:text-4xl">
           {project.title}
-        </h3>
+        </h2>
         <p className="mx-auto mt-2 max-w-md text-base leading-relaxed text-[var(--ca-ink)]/70">
           {project.problem}
         </p>

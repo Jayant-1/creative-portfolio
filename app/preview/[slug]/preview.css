@@ -37,7 +37,7 @@
 }
 
 .font-inter {
-  font-family: 'Inter', sans-serif !important;
+  font-family: var(--font-artsy-sans) !important;
 }
 
 .perspective-near {

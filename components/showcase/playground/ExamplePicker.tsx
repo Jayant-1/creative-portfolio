@@ -55,7 +55,7 @@ export const ExamplePicker: React.FC<ExamplePickerProps> = ({
                   alt=""
                   fill
                   sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover object-top transition-transform duration-300 group-hover:scale-102"
+                  className="object-cover object-center transition-transform duration-300 group-hover:scale-102"
                 />
               </div>
 

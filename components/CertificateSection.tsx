@@ -12,7 +12,7 @@ import {
   ExternalLink,
   ChevronRight,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m as motion, AnimatePresence } from "framer-motion";
 import { certificateGroups, CertificateGroup, CertificateItem } from "@/lib/site";
 import { useFocusTrap } from "@/lib/hooks/use-focus-trap";
 

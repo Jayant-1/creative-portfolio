@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ComponentProps } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useReducedMotion } from "framer-motion";
+import { m as motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const CORNER = 6;

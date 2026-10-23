@@ -1,6 +1,6 @@
 # Google Search Console Verification & Sitemap Submission Guide
 
-> **Current Status: UNVERIFIED (Pending Owner Setup)**  
+> **Current status (22 October 2026): ownership and sitemap success confirmed by the owner; indexing requested (screenshot supplied). Actual index inclusion, selected canonical, rankings and field data remain unverified.**
 > Ownership verification requires Jayant Potdar to generate a property token in Google Search Console. The portfolio is pre-configured to accept either DNS or HTML meta verification without code changes.
 
 ### Verification Status Matrix
@@ -10,7 +10,7 @@
 | **Codebase Verification Hook** | **VERIFIED (Ready)** | `app/layout.tsx` integrates `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` via Next.js metadata |
 | **Dynamic Sitemap Endpoint** | **VERIFIED (Ready)** | `https://jayant.codes/sitemap.xml` generates 17 canonical routes |
 | **Robots Directives** | **VERIFIED (Ready)** | `https://jayant.codes/robots.txt` explicitly permits Googlebot and search indexers |
-| **GSC Ownership Verification** | **Unverified (Requires Owner Action)** | Requires Jayant Potdar to generate token via DNS TXT or HTML tag |
+| **GSC Ownership Verification** | **Owner confirmed** | Confirmed in this chat on 22 October 2026. |
 | **Live Dashboard Metrics** | **Unverified (Requires Owner Dashboard Login)** | Requires authentication into Google Search Console dashboard |
 | **Live Indexing & Crawl Stats** | **Unverified (Requires Owner Dashboard Login)** | Requires authentication into Google Search Console dashboard |
 | **Live Search Rankings** | **Unverified (Requires Owner Dashboard Login)** | Requires authentication into Google Search Console dashboard |

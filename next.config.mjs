@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 31536000,
+    // Public image names can be replaced; do not retain optimized copies for a year.
+    minimumCacheTTL: 3600,
     remotePatterns: [
       {
         protocol: 'https',
@@ -94,7 +96,8 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            // Public filenames are not content hashes; revalidate after a deployment.
+            value: 'public, max-age=0, must-revalidate',
           },
         ],
       },

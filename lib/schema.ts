@@ -39,7 +39,6 @@ export function getPersonSchema() {
         name: group.organization,
       },
       url: item.credentialUrl,
-      validFrom: item.date,
       description: item.description,
     }))
   );
@@ -71,18 +70,6 @@ export function getPersonSchema() {
       addressRegion: "Maharashtra",
       addressCountry: "IN",
     },
-    alumniOf: [
-      {
-        "@type": "EducationalOrganization",
-        name: author.college,
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Pune",
-          addressRegion: "Maharashtra",
-          addressCountry: "IN",
-        },
-      },
-    ],
     affiliation: {
       "@type": "EducationalOrganization",
       name: author.college,

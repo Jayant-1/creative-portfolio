@@ -511,14 +511,14 @@ async function runPhase8Verification() {
   console.log("PHASE 8 ACCESSIBILITY AUDIT SUMMARY");
   console.log(`Total Failures: ${results.failures.length}`);
   if (results.failures.length === 0) {
-    console.log("Status: ALL VERIFICATION CHECKS PASSED PERFECTLY [100%]");
+    console.log("Status: Automated checks passed; manual assistive-technology coverage is reported separately.");
   } else {
     console.error("Status: VERIFICATION FAILED WITH ISSUES");
     results.failures.forEach((f) => console.error(` - [${f.section}]: ${f.message}`));
   }
   console.log("=======================================================\n");
 
-  const reportDir = path.resolve(process.cwd(), "audit-results");
+  const reportDir = path.resolve(process.env.AUDIT_OUTPUT_DIR || "audit-results");
   if (!fs.existsSync(reportDir)) fs.mkdirSync(reportDir, { recursive: true });
   const reportPath = path.join(reportDir, "phase8-accessibility-report.json");
   fs.writeFileSync(reportPath, JSON.stringify(results, null, 2));

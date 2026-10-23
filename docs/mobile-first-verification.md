@@ -1,3 +1,5 @@
+> Historical audit snapshot. Its “100%” wording refers only to the listed automated assertions. It does not certify all devices, browsers or accessibility requirements. See `production-readiness-2026-10-22.md` for the current release verdict.
+
 # Mobile-First Implementation Verification Report (Phase 4)
 
 **Date:** 2026-10-21  

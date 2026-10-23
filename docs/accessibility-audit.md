@@ -1,3 +1,5 @@
+> Historical audit snapshot. These results do not certify the current deployment. See `production-readiness-2026-10-22.md` and the dated test artifacts for the current scope and remaining gates.
+
 # Phase 8: Accessibility & Dialog Focus Trapping Audit Report
 
 **Audit Date:** October 21, 2026  

@@ -1,9 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import AppShell from "@/components/AppShell";
+import { Analytics } from "@/components/Analytics";
+import { MotionProvider } from "@/components/MotionProvider";
 import { InkTransitionProvider } from "@/components/transitions/InkTransitionProvider";
 import { author, siteUrl } from "@/lib/site";
 import { getPersonSchema, getProfilePageSchema, getWebSiteSchema } from "@/lib/schema";
 import "./globals.css";
+
+// Use the existing font files with framework-managed early preloads and hashed URLs.
+const inter = localFont({ src: "../public/fonts/inter.woff2", weight: "100 900", display: "swap", variable: "--font-local-inter" });
+const handjet = localFont({ src: "../public/fonts/handjet-display.woff2", weight: "700", display: "swap", variable: "--font-local-display", adjustFontFallback: false, declarations: [{ prop: "unicode-range", value: "U+0000-00FF, U+2000-2BFF" }] });
+const mono = localFont({ src: "../public/fonts/dm-mono.woff2", weight: "400 500", display: "swap", variable: "--font-local-mono", adjustFontFallback: false });
+const hand = localFont({ src: "../public/fonts/handwritten.woff2", weight: "400", display: "swap", variable: "--font-local-hand", adjustFontFallback: false });
 
 export const viewport: Viewport = {
   themeColor: "#fdfdfb",
@@ -99,32 +108,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-IN" className="overflow-x-clip">
+    <html lang="en-IN" className={`overflow-x-clip ${inter.variable} ${handjet.variable} ${mono.variable} ${hand.variable}`}>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
-        <link
-          rel="preload"
-          href="/fonts/handjet.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/inter.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/dm-mono.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
       </head>
       <body className="ca-grid relative min-h-screen text-[var(--ca-ink)] antialiased overflow-x-clip">
         {/* Tactile noise grain overlay */}
@@ -156,9 +144,12 @@ export default function RootLayout({
           `}</style>
         </noscript>
 
-        <InkTransitionProvider>
-          <AppShell>{children}</AppShell>
-        </InkTransitionProvider>
+        <MotionProvider>
+          <InkTransitionProvider>
+            <AppShell>{children}</AppShell>
+          </InkTransitionProvider>
+        </MotionProvider>
+        <Analytics />
       </body>
     </html>
   );

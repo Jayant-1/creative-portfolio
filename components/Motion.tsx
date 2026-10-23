@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback, useState, ReactNode } from "react";
-import { motion, useInView, useMotionValue, useTransform, animate, useReducedMotion } from "framer-motion";
+import { m as motion, useInView, useMotionValue, useTransform, animate, useReducedMotion } from "framer-motion";
 
 /**
  * ============================================================================

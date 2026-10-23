@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { email, social } from "@/lib/site";
+import { email, social } from "@/lib/profile";
 import { trackContactEmailClick, trackGitHubClick } from "@/lib/analytics";
 
 export function ContactDirectEmailLink() {

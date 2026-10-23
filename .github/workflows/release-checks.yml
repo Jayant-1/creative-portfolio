@@ -1,0 +1,52 @@
+name: Release checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium firefox webkit
+      - run: pnpm audit --prod
+      - name: Record development advisories
+        continue-on-error: true
+        run: |
+          mkdir -p audit-results/ci
+          pnpm audit --json > audit-results/ci/dependency-audit.json
+      - run: pnpm build
+      - name: Verify the production build
+        env:
+          AUDIT_OUTPUT_DIR: audit-results/ci
+        run: |
+          export CHROME_PATH="$(pnpm exec node -e 'process.stdout.write(require("playwright").chromium.executablePath())')"
+          pnpm start > audit-results/ci/server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://localhost:3000/ >/dev/null && break
+            sleep 1
+          done
+          pnpm verify:release http://localhost:3000
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-evidence
+          path: audit-results/ci
+          retention-days: 14
