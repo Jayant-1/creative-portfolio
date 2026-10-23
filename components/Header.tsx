@@ -103,7 +103,7 @@ const navItems = [
     label: "Experience",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" stroke="#ffffff" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke" className="h-5 w-5 shrink-0 overflow-visible [filter:drop-shadow(1px_1.5px_0_rgba(25,21,16,0.28))] transition-transform duration-200 group-hover:-translate-y-0.5">
-        <path d="M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zM10 4h4v2h-4V4zm10 15H4v-7h16v7zm0-9H4V8h16v2z" />
+        <path d="M8 4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1.5h3.5A2.5 2.5 0 0 1 22 8v2.25H2V8a2.5 2.5 0 0 1 2.5-2.5H8V4zm2 1.5h4V4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1.5zM2 12.25h20V18a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18v-5.75z" />
       </svg>
     ),
   },
