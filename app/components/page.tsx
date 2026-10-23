@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { ContactStrip, Footer } from "@/components/Paper";
+import { ContactStrip, Footer, Scribble } from "@/components/Paper";
+import { StaggerText } from "@/components/Motion";
+import Reveal from "@/components/Reveal";
 import { siteUrl } from "@/lib/site";
 import { CRAFT_COMPONENTS } from "@/lib/components-data";
 import { getBreadcrumbSchema } from "@/lib/schema";
@@ -85,7 +87,7 @@ export default function ComponentsPage() {
   };
 
   return (
-    <div className="min-h-screen pt-12 sm:pt-16 pb-20">
+    <div className="ca-grid min-h-screen pt-12 sm:pt-16 pb-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -101,13 +103,20 @@ export default function ComponentsPage() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Page Header */}
-        <header className="mb-14 flex flex-col items-center text-center gap-3">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--ca-ink)]">
-            Animated React Components
+        <header className="mb-14 sm:mb-16 text-center">
+          <Scribble withDoodle>
+            crafts &amp; micro-interactions
+          </Scribble>
+
+          <h1 className="ca-display mt-4 text-6xl min-[390px]:text-7xl sm:text-8xl md:text-9xl uppercase leading-none tracking-tight text-[var(--ca-ink)]">
+            <StaggerText text="COMPONENTS" stagger={0.05} />
           </h1>
-          <p className="max-w-xl text-sm sm:text-base font-sans text-[var(--ca-ink)]/70 leading-relaxed">
-            A collection of interactive components I built to explore motion, feedback, and expressive web interfaces with Framer Motion and Tailwind CSS.
-          </p>
+
+          <Reveal delay={120} priority>
+            <p className="mx-auto mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-[var(--ca-ink)]/75 font-normal">
+              A collection of interactive components I built to explore motion, feedback, and expressive web interfaces with Framer Motion and Tailwind CSS.
+            </p>
+          </Reveal>
         </header>
 
         {/* Interactive Catalog Section */}

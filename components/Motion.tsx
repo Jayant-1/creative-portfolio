@@ -326,12 +326,7 @@ export function StaggerText({
   }
 
   const words = text.split(" ");
-  const initialValue =
-    initial !== undefined
-      ? initial
-      : priority
-      ? "visible"
-      : "hidden";
+  const initialValue = initial !== undefined ? initial : "hidden";
 
   return (
     <motion.span

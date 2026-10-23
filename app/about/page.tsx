@@ -82,7 +82,7 @@ export default function AboutPage() {
           <div className="hidden lg:block" aria-hidden="true" />
           <div>
             <h1 className="ca-display text-6xl sm:text-8xl md:text-9xl uppercase leading-none tracking-tight text-[var(--ca-ink)] mb-4">
-              <StaggerText text="ABOUT" stagger={0.06} priority />
+              <StaggerText text="ABOUT" stagger={0.05} />
             </h1>
 
             {/* Mobile quick-jump navigation (ergonomic 44px touch targets) */}
@@ -116,7 +116,7 @@ export default function AboutPage() {
                 className="ca-mono inline-flex min-h-[44px] items-center gap-2 rounded-lg border-2 border-[var(--ca-ink)] px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-[2px_2px_0_var(--ca-ink)] active:scale-95 transition-all hover:translate-x-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] focus-visible:ring-offset-2"
                 style={{ backgroundColor: "var(--ca-blue)" }}
               >
-                <span className="h-2 w-2 rounded-full bg-white" />
+                <span className="h-2 w-2 rounded-full bg-[var(--ca-ink)]" />
                 Leadership
               </a>
             </nav>

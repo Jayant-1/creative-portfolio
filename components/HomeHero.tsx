@@ -139,7 +139,6 @@ export function HomeHero() {
                       duration={HERO_TIMINGS.nameLetterDuration}
                       inView={false}
                       trigger={heroReady}
-                      priority
                     />
                   </span>
                 </div>

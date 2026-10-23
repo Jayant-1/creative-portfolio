@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ImageWithLoader } from "@/components/ImageWithLoader";
+import { StaggerText } from "@/components/Motion";
 import ContactForm from "@/components/ContactForm";
 import { author, email, siteUrl, social } from "@/lib/site";
 
@@ -157,7 +158,7 @@ export default function ContactPage() {
               className="ca-display text-6xl uppercase leading-none tracking-tight text-[var(--ca-ink)] sm:text-8xl lg:text-9xl"
               style={{ display: "inline-block" }}
             >
-              CONTACT
+              <StaggerText text="CONTACT" stagger={0.05} />
             </h1>
           </div>
         </div>

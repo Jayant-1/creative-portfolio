@@ -64,7 +64,7 @@ export default function BlogPage() {
           </Scribble>
 
           <h1 className="ca-display mt-4 text-5xl min-[390px]:text-6xl sm:text-8xl md:text-9xl uppercase leading-none tracking-tight text-[var(--ca-ink)]">
-            <StaggerText text="ENGINEERING BLOG" stagger={0.035} priority />
+            <StaggerText text="ENGINEERING BLOG" stagger={0.05} />
           </h1>
         </header>
 

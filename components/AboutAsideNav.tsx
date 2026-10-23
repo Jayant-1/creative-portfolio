@@ -39,7 +39,7 @@ const SECTIONS: SectionDef[] = [
     label: "Leadership",
     color: "var(--ca-blue)",
     ink: "#ffffff",
-    dotBg: "#ffffff",
+    dotBg: "var(--ca-ink)",
   },
 ];
 
