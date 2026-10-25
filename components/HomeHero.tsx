@@ -148,7 +148,7 @@ export function HomeHero() {
               {/* Desktop positioned stickers & pinned notes around the name */}
               <div className="pointer-events-none absolute -inset-x-8 xl:-inset-x-14 2xl:-inset-x-20 -inset-y-6 hidden lg:block">
                 {/* Top left sticker */}
-                <div className="pointer-events-auto absolute left-0 top-0 -translate-x-[20%] xl:-translate-x-1/2 -translate-y-1/2 z-40">
+                <div className="pointer-events-auto absolute left-0 top-0 -translate-x-[20%] xl:-translate-x-1/2 -translate-y-1/2 z-10">
                   <DropIn
                     delay={HERO_TIMINGS.stickerMadeThings.delay}
                     rotate={HERO_TIMINGS.stickerMadeThings.rotate}
@@ -190,7 +190,7 @@ export function HomeHero() {
                 </div>
 
                 {/* Top right sticker */}
-                <div className="pointer-events-auto absolute right-0 top-0 -translate-y-1/2 translate-x-[20%] xl:translate-x-1/2 z-40">
+                <div className="pointer-events-auto absolute right-0 top-0 -translate-y-1/2 translate-x-[20%] xl:translate-x-1/2 z-10">
                   <DropIn
                     delay={HERO_TIMINGS.stickerSweatDetails.delay}
                     rotate={HERO_TIMINGS.stickerSweatDetails.rotate}
@@ -236,7 +236,7 @@ export function HomeHero() {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden lg:block">
                 {/* Bottom left pinned role note with arrow */}
                 <div
-                  className="pointer-events-auto absolute bottom-0 left-0 z-40"
+                  className="pointer-events-auto absolute bottom-0 left-0 z-10"
                   style={{
                     transform: "translate(calc(-100% - 27px), 104%)",
                   }}
@@ -284,7 +284,7 @@ export function HomeHero() {
 
                 {/* Bottom right pinned location note with arrow */}
                 <div
-                  className="pointer-events-auto absolute bottom-0 right-0 z-40"
+                  className="pointer-events-auto absolute bottom-0 right-0 z-10"
                   style={{
                     transform: "translate(calc(100% + 23px), 85%)",
                   }}

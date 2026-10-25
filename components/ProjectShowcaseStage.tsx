@@ -134,7 +134,7 @@ export function ProjectShowcaseStage({
               type="button"
               onClick={(e) => openLightbox(e.currentTarget)}
               aria-label={`Inspect screen ${activeIdx + 1} in full resolution`}
-              className="absolute bottom-3 right-3 z-20 inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/25 bg-black/75 px-3.5 py-2 text-xs font-bold text-white shadow-lg backdrop-blur-xs transition hover:bg-black hover:scale-105 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] cursor-pointer"
+              className="absolute bottom-3 right-3 z-30 inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/25 bg-black/75 px-3.5 py-2 text-xs font-bold text-white shadow-lg backdrop-blur-xs transition hover:bg-black hover:scale-105 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--ca-orange)] cursor-pointer"
             >
               <Maximize2 size={14} className="text-[var(--ca-yellow)]" />
               <span className="ca-mono text-[10px] tracking-wider uppercase">Inspect</span>
