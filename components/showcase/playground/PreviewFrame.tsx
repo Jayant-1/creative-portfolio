@@ -68,18 +68,47 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
   const [internalIsFullscreen, setInternalIsFullscreen] = useState(false);
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
 
-  // Check if iframe is already loaded on mount (handles fast cache hits or hydration timing)
+  // Check if iframe is already loaded on mount or whenever it reaches interactive/complete
   useEffect(() => {
-    if (iframeRef?.current) {
-      try {
-        if (iframeRef.current.contentDocument?.readyState === "complete") {
-          setIsIframeLoaded(true);
+    if (isIframeLoaded) return;
+
+    const checkReady = () => {
+      if (iframeRef?.current) {
+        try {
+          const doc = iframeRef.current.contentDocument;
+          if (doc && (doc.readyState === "interactive" || doc.readyState === "complete")) {
+            setIsIframeLoaded(true);
+            return true;
+          }
+        } catch {
+          // Cross-origin fallback
         }
-      } catch {
-        // Cross-origin fallback
       }
-    }
-  }, [iframeRef]);
+      return false;
+    };
+
+    if (checkReady()) return;
+
+    const interval = setInterval(() => {
+      if (checkReady()) {
+        clearInterval(interval);
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [iframeRef, isIframeLoaded]);
+
+  // Listen for PREVIEW_READY handshake from PreviewClient
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type === "PREVIEW_READY") {
+        setIsIframeLoaded(true);
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   const userSelectedModeRef = useRef(false);
   const stageMeasureRef = useRef<HTMLDivElement>(null);
@@ -662,7 +691,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                   </div>
                 )}
 
-                {hasMeasuredStage && <iframe
+                <iframe
                   ref={iframeRef}
                   src={initialIframeSrc}
                   title={`${slug} interactive component preview`}
@@ -680,7 +709,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({
                       ? "pointer-events-auto"
                       : "pointer-events-none sm:pointer-events-auto"
                   }`}
-                />}
+                />
 
                 {/* Mobile Touch Overlay */}
                 {!isTouchInteracting && isIframeLoaded && (

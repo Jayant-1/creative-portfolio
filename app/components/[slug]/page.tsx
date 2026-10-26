@@ -109,6 +109,8 @@ export default async function ComponentDetailPage({ params }: PageProps) {
         }}
       />
 
+      <link rel="prefetch" href={`/preview/${component.slug === "radial-gradient-animate-card" ? "radial-gradient-card" : component.slug}`} />
+
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Trail */}
         <nav

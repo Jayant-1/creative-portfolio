@@ -11,41 +11,12 @@ import {
   normalizeSlug,
 } from "@/lib/preview-params";
 
-const OverlappingTextHero = React.lazy(() =>
-  import("@/components/showcase/OverlappingTextHero").then((mod) => ({
-    default: mod.OverlappingTextHero,
-  }))
-);
-
-const TelescopeHero = React.lazy(() =>
-  import("@/components/showcase/TelescopeHero").then((mod) => ({
-    default: mod.TelescopeHero,
-  }))
-);
-
-const BinaryGrid = React.lazy(() =>
-  import("@/components/showcase/BinaryGrid").then((mod) => ({
-    default: mod.BinaryGrid,
-  }))
-);
-
-const BubbleText = React.lazy(() =>
-  import("@/components/showcase/BubbleText").then((mod) => ({
-    default: mod.BubbleText,
-  }))
-);
-
-const MagneticButton = React.lazy(() =>
-  import("@/components/showcase/MagneticButton").then((mod) => ({
-    default: mod.MagneticButton,
-  }))
-);
-
-const RadialGradientAnimateCard = React.lazy(() =>
-  import("@/components/showcase/RadialGradientAnimateCard").then((mod) => ({
-    default: mod.RadialGradientAnimateCard,
-  }))
-);
+import { OverlappingTextHero } from "@/components/showcase/OverlappingTextHero";
+import { TelescopeHero } from "@/components/showcase/TelescopeHero";
+import { BinaryGrid } from "@/components/showcase/BinaryGrid";
+import { BubbleText } from "@/components/showcase/BubbleText";
+import { MagneticButton } from "@/components/showcase/MagneticButton";
+import { RadialGradientAnimateCard } from "@/components/showcase/RadialGradientAnimateCard";
 
 interface PreviewClientProps {
   slug: string;

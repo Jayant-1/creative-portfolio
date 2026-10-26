@@ -245,7 +245,11 @@ export function InkTransitionProvider({ children }: { children: ReactNode }) {
       document.removeEventListener("click", handleDocumentClick, { capture: true });
       clearFailsafe();
     };
-  }, [startTransition]);
+  }, [startTransition, pathname]);
+
+  if (pathname && pathname.startsWith("/preview")) {
+    return <>{children}</>;
+  }
 
   return (
     <InkTransitionContext.Provider value={{ navigate, pageAnimationReady, prewarmShader }}>
